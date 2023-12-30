@@ -1,6 +1,6 @@
 import { Link as ScrollLink } from "react-scroll";
 import { SpriteSVG } from "../../images/SpriteSVG";
-import RRR from "../RRR.js/RRR";
+// import RRR from "../RRR.js/RRR";
 import {
   FooterS,
   FooterBoxS,
@@ -115,7 +115,7 @@ const Footer = () => {
             </LiItemS>
           </UlListS>
           <ChapterSpan className="bottomSpan">
-            &copy; ТОВ «Auto-ins», 2023. Всі права захищені.
+            &copy; ТОВ «Auto-ins», 2024. Всі права захищені.
           </ChapterSpan>
         </FooterBoxS>
       </FooterS>
