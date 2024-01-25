@@ -2,14 +2,14 @@ import { Alert, Snackbar, styled } from "@mui/material";
 
 export const SnackbarS = styled(Snackbar)(({ theme }) => ({
   "&.MuiSnackbar-anchorOriginTopRight": {
-    top: "60px",
+    top: "50px",
     right: "6px",
     [theme.breakpoints.up("sm")]: {
-      top: "90px",
+      top: "60px",
       right: "20px",
     },
     [theme.breakpoints.up("lg")]: {
-      top: "120px",
+      top: "90px",
       right: "40px",
     },
   },
@@ -18,8 +18,8 @@ export const SnackbarS = styled(Snackbar)(({ theme }) => ({
 export const AlertS = styled(Alert)`
   &.MuiAlert-root {
     padding: 0 10px;
-  }  
-  &.MuiAlert-action{
+  }
+  &.MuiAlert-action {
     padding: 0;
     width: 22px;
     height: 22px;
