@@ -17,8 +17,6 @@ const FormPage = () => {
   // const isContractOSAGO = useSelector(getIsContractOSAGO);
   const isContractOSAGO = true;
 
-  useEffect(() => {}, []);
-
   return (
     <OutletPageWrapper className="formPage">
       {isContractOSAGO || type === orderMessagesKeys.ORDER_EMMITED ? (
