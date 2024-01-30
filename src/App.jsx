@@ -5,6 +5,8 @@ import Loader from "./components/Loader/Loader";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { uk } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
+import OrderPayment from "./components/OrderPayment/OrderPayment.jsx";
+import { orderMessagesKeys } from "./components/BlockThank/BlockThank.jsx";
 
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PricesPage = lazy(() => import("./pages/PricesPage.jsx"));
@@ -39,7 +41,12 @@ function App() {
               <FormPage />
             </Suspense>
           }
-        />
+        >
+          <Route
+            index
+            element={<OrderPayment type={orderMessagesKeys.ORDER_EMMITED} />}
+          />
+        </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Route>
     </Routes>

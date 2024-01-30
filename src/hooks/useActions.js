@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
+import { bindActionCreators } from "@reduxjs/toolkit";
 import { calculatorSlice } from "../redux/Calculator/calculatorSlice";
 import { byParameters } from "../redux/byParameters/byParametersSlice";
 import * as byParametersOperations from "../redux/byParameters/operations";

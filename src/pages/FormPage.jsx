@@ -3,20 +3,25 @@ import CompanySmall from "../components/CompanySmall/CompanySmall";
 import { Wrapper } from "./FormPageStyled";
 import Stepper from "../components/Stepper/Stepper";
 import { Box } from "@mui/material";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import OutletPageWrapper from "../components/OutletPageWrapper";
-import { useSelector } from "react-redux";
-import { getIsContractOSAGO } from "../redux/Global/selectors";
-import BlockThank from "../components/BlockThank/index.js";
+// import { useSelector } from "react-redux";
+// import { getIsContractOSAGO } from "../redux/Global/selectors";
+import BlockThank, {
+  orderMessagesKeys,
+} from "../components/BlockThank/BlockThank.jsx";
 
 const FormPage = () => {
   const location = useLocation();
   const backLinkRef = useRef(location.state?.from);
-  const isContractOSAGO = useSelector(getIsContractOSAGO);
+  // const isContractOSAGO = useSelector(getIsContractOSAGO);
+  const isContractOSAGO = true;
+
+  useEffect(() => {}, []);
 
   return (
     <OutletPageWrapper className="formPage">
-      {isContractOSAGO ? (
+      {isContractOSAGO || type === orderMessagesKeys.ORDER_EMMITED ? (
         <BlockThank />
       ) : (
         <Wrapper>
