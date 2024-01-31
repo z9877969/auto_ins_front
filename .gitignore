@@ -28,3 +28,6 @@ dist-ssr
 # adv
 tasks
 .backup
+
+# Local Netlify folder
+.netlify

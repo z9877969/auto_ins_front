@@ -2,7 +2,9 @@ const portmoneFormProps = {
   PAYEE_ID: "133520",
   SUCCESS_URL: "http://localhost:5173/form?type=order-emmited",
   // FAILURE_URL: "http://localhost:5173/form?type=order-payment",
-  FAILURE_URL: "http://localhost:5173/form",
+  // FAILURE_URL: "http://localhost:5173/form",
+  FAILURE_URL: "https://z9877969.github.io/auto_ins_front/form",
+  
 };
 
 export const getPortmoneValue = ({

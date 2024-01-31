@@ -8,5 +8,6 @@ dotenv.config();
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/",
+  // base: "/",
+  base: "/auto_ins_front",
 });

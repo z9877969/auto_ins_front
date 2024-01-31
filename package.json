@@ -1,14 +1,16 @@
 {
   "name": "auto-ins",
-  "homepage": "https://apazient.github.io/auto-ins/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://z9877969.github.io/auto_ins_front",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -19,6 +21,7 @@
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "formik": "^2.4.5",
+    "gh-pages": "^6.1.1",
     "lodash.isequal": "^4.5.0",
     "moment": "^2.29.4",
     "nanoid": "^5.0.1",

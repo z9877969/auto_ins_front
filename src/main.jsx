@@ -12,7 +12,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <BrowserRouter basename="/">
+      {/* <BrowserRouter basename="/"> */}
+      <BrowserRouter basename="/auto_ins_front">
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <App />
