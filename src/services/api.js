@@ -6,11 +6,11 @@ export const instance = axios.create({
 });
 
 export const getOrderPasswordApi = async (contractId) => {
-  await instance.get(`orders/${contractId}`);
+  return await instance.get(`orders/${contractId}`);
 };
 
 export const checkOrderPasswordApi = async ({ contractId, password }) => {
-  await instance.get(`orders/${contractId}`, {
+  return await instance.get(`orders/${contractId}`, {
     params: {
       password,
     },

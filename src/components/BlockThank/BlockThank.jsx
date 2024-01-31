@@ -6,6 +6,9 @@ import { SpriteSVG } from "../../images/SpriteSVG";
 import { BoxImgS, ButtonS, FormContainerS } from "./BlockThankStyled";
 import GeneralInput from "../GeneralInput/GeneralInput";
 import PortmoneForm from "../PortmoneForm/PortmoneForm";
+import { YellowButton } from "../../style/Global.styled";
+import { getOrderPasswordApi, checkOrderPasswordApi } from "../../services/api";
+import { useFormik } from "formik";
 
 export const orderMessagesKeys = {
   ORDER_GET: "order-get",
@@ -42,63 +45,39 @@ const content = {
   },
 };
 
-const getOrder = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve("PASSWORD SEND");
-    }, 350);
-  });
-};
-const checkOrder = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve("PASSWORD CHECK");
-    }, 350);
-  });
-};
-const redirectToPayment = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve("REDIRECT TO PAYMENT");
-    }, 350);
-  });
-};
-const emmitedOrder = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve("ORDER EMMITED");
-    }, 350);
-  });
-};
-
 const BlockThank = () => {
   const [search, setSearch] = useSearchParams();
+  const formik = useFormik({
+    initialValues: { password: "123456" },
+  });
+
+  const type = search.get("type");
+
+  const handleOrderClick = ({ orderId }) => {
+    if (type === orderMessagesKeys.ORDER_GET) {
+      getOrderPasswordApi(orderId)
+        .then(() => setSearch({ type: "order-check" }))
+        .catch(() => {
+          // ПРИБРАТИ
+          setSearch({ type: "order-check" });
+        });
+    }
+    if (type === orderMessagesKeys.ORDER_CHECK) {
+      checkOrderPasswordApi({ orderId, password: formik.values.password })
+        .then(() => setSearch({ type: "order-payment" }))
+        .catch(() => {
+          // ПРИБРАТИ
+          setSearch({ type: "order-payment" });
+        });
+    }
+  };
 
   useEffect(() => {
     !type && setSearch({ type: orderMessagesKeys.ORDER_GET });
   }, []);
 
-  const type = search.get("type");
-
-  const typeToNextAction =
-    type === orderMessagesKeys.ORDER_GET
-      ? orderMessagesKeys.ORDER_CHECK
-      : type === orderMessagesKeys.ORDER_CHECK
-      ? orderMessagesKeys.ORDER_PAYMENT
-      : "";
-
-  useEffect(() => {
-    type === orderMessagesKeys.ORDER_CHECK &&
-      getOrder().then((d) => console.log(d));
-    type === orderMessagesKeys.ORDER_PAYMENT &&
-      checkOrder().then((d) => {
-        console.log(d);
-        return redirectToPayment();
-      });
-  }, [type]);
-
   const billAmount = 1500;
-  const orderNumber = "ORDER_NUMBER";
+  const shopOrderNumber = "ORDER_NUMBER";
 
   return (
     <FormContainerS component="article">
@@ -142,21 +121,20 @@ const BlockThank = () => {
       >
         {type && content[type].descr}
       </Typography>
-      {type && type !== orderMessagesKeys.ORDER_PAYMENT && (
-        <ButtonS
-          to={
-            type === orderMessagesKeys.ORDER_EMMITED
-              ? "/"
-              : {
-                  search: `type=${typeToNextAction}`,
-                }
-          }
-        >
+      {type && type === orderMessagesKeys.ORDER_EMMITED && (
+        <ButtonS to={"/"}>{type && content[type].btn}</ButtonS>
+      )}
+      {(type === orderMessagesKeys.ORDER_GET ||
+        type === orderMessagesKeys.ORDER_CHECK) && (
+        <YellowButton onClick={handleOrderClick}>
           {type && content[type].btn}
-        </ButtonS>
+        </YellowButton>
       )}
       {type === orderMessagesKeys.ORDER_PAYMENT && (
-        <PortmoneForm billAmount={billAmount} orderNumber={orderNumber} />
+        <PortmoneForm
+          billAmount={billAmount}
+          shopOrderNumber={shopOrderNumber}
+        />
       )}
     </FormContainerS>
   );

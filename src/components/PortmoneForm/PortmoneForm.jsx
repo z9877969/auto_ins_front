@@ -13,11 +13,10 @@ import { YellowButton } from "../../style/Global.styled";
 
 const PortmoneForm = ({
   billAmount,
-  orderNumber = "SHP-00445401",
+  shopOrderNumber = "SHP-00445401",
   description = "Test Payment",
   emailAddress = "test@ukr.net",
   lang = "uk",
-  payeeId = "3048",
   billCurrency = "UAH",
 }) => {
   const value = JSON.stringify(
@@ -25,9 +24,8 @@ const PortmoneForm = ({
       description,
       emailAddress,
       billAmount,
-      shopOrderNumber: orderNumber,
+      shopOrderNumber,
       lang,
-      payeeId,
       billCurrency,
     })
   );
