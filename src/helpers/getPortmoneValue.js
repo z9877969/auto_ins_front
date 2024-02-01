@@ -1,10 +1,7 @@
 const portmoneFormProps = {
   PAYEE_ID: "133520",
-  SUCCESS_URL: "http://localhost:5173/form?type=order-emmited",
-  // FAILURE_URL: "http://localhost:5173/form?type=order-payment",
-  // FAILURE_URL: "http://localhost:5173/form",
-  FAILURE_URL: "https://z9877969.github.io/auto_ins_front/form",
-  
+  FAILURE_URL: "https://auto-ins.com.ua/form?type=order-emmited",
+  SUCCESS_URL: "https://auto-ins.com.ua/form?type=order-payment",
 };
 
 export const getPortmoneValue = ({
@@ -17,7 +14,7 @@ export const getPortmoneValue = ({
 }) => ({
   paymentTypes: {
     card: "Y",
-    // portmone: "Y",
+    portmone: "Y",
     privat: "Y",
     gpay: "Y",
     token: "N",
@@ -25,10 +22,12 @@ export const getPortmoneValue = ({
     createtokenonly: "N",
   },
   priorityPaymentTypes: {
-    card: "1",
-    portmone: "2",
+    gpay: "1",
+    privat: "2",
+    card: "3",
+    portmone: "4",
     token: "0",
-    clicktopay: "1",
+    clicktopay: "0",
     createtokenonly: "0",
   },
   payee: {
@@ -67,7 +66,8 @@ export const getPortmoneValue = ({
     emailAddress,
   },
   style: {
-    type: "light",
+    // type: "light",
+    type: "portmone",
     logo: "",
     logoWidth: "300px",
     backgroundColorHeader: "#ff0000",

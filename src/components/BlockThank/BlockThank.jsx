@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { SpriteSVG } from "../../images/SpriteSVG";
 
@@ -9,6 +9,9 @@ import PortmoneForm from "../PortmoneForm/PortmoneForm";
 import { YellowButton } from "../../style/Global.styled";
 import { getOrderPasswordApi, checkOrderPasswordApi } from "../../services/api";
 import { useFormik } from "formik";
+import { useSelector } from "react-redux";
+import { selectOrderData } from "../../redux/Global/selectors";
+import { useActions } from "../../hooks/useActions";
 
 export const orderMessagesKeys = {
   ORDER_GET: "order-get",
@@ -46,38 +49,48 @@ const content = {
 };
 
 const BlockThank = () => {
+  const navigate = useNavigate();
+  const orderData = useSelector(selectOrderData);
   const [search, setSearch] = useSearchParams();
+  const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
-    initialValues: { password: "123456" },
+    initialValues: { password: "" },
   });
 
   const type = search.get("type");
 
-  const handleOrderClick = ({ orderId }) => {
+  const nextStep = useCallback((type) => {
+    setSearch({ type }, { replace: true });
+  }, []);
+  const goBack = useCallback(() => navigate(-1, { replace: true }), []);
+
+  const handleOrderClick = () => {
     if (type === orderMessagesKeys.ORDER_GET) {
-      getOrderPasswordApi(orderId)
-        .then(() => setSearch({ type: "order-check" }))
+      setIsLoading(true);
+      getOrderPasswordApi(orderData.orderId)
+        .then(() => nextStep(orderMessagesKeys.ORDER_CHECK))
         .catch(() => {
-          // ПРИБРАТИ
-          setSearch({ type: "order-check" });
-        });
+          nextStep(orderMessagesKeys.ORDER_CHECK);
+        })
+        .finally(() => setIsLoading(false));
     }
     if (type === orderMessagesKeys.ORDER_CHECK) {
-      checkOrderPasswordApi({ orderId, password: formik.values.password })
-        .then(() => setSearch({ type: "order-payment" }))
+      setIsLoading(true);
+      checkOrderPasswordApi({
+        contractId: orderData.orderId,
+        password: formik.values.password,
+      })
+        .then(() => nextStep(orderMessagesKeys.ORDER_PAYMENT))
         .catch(() => {
-          // ПРИБРАТИ
-          setSearch({ type: "order-payment" });
-        });
+          goBack();
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
   useEffect(() => {
     !type && setSearch({ type: orderMessagesKeys.ORDER_GET });
   }, []);
-
-  const billAmount = 1500;
-  const shopOrderNumber = "ORDER_NUMBER";
 
   return (
     <FormContainerS component="article">
@@ -88,7 +101,7 @@ const BlockThank = () => {
         )}
         {type === orderMessagesKeys.ORDER_CHECK && (
           <GeneralInput
-            id="block-thank-send-paassword"
+            id="password"
             lableText="Пароль:"
             type="text"
             color=""
@@ -98,13 +111,11 @@ const BlockThank = () => {
             isDisabled={false}
             isReadOnly={false}
             formikData={{
-              values: { password: "" },
-              handleChange: null,
-              errors: { password: "" },
-              touched: { password: "" },
+              values: formik.values,
+              handleChange: formik.handleChange,
+              errors: formik.errors,
+              touched: formik.touched,
             }}
-            className={orderMessagesKeys.ORDER_CHECK}
-            style={{}}
           />
         )}
       </BoxImgS>
@@ -132,8 +143,9 @@ const BlockThank = () => {
       )}
       {type === orderMessagesKeys.ORDER_PAYMENT && (
         <PortmoneForm
-          billAmount={billAmount}
-          shopOrderNumber={shopOrderNumber}
+          billAmount={orderData.billAmount}
+          shopOrderNumber={orderData.shopOrderNumber}
+          emailAddress={orderData.email}
         />
       )}
     </FormContainerS>

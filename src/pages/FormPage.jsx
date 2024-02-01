@@ -5,27 +5,33 @@ import Stepper from "../components/Stepper/Stepper";
 import { Box } from "@mui/material";
 import { useCallback, useEffect, useRef } from "react";
 import OutletPageWrapper from "../components/OutletPageWrapper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getIsContractOSAGO } from "../redux/Global/selectors";
 import BlockThank, {
   orderMessagesKeys,
 } from "../components/BlockThank/BlockThank.jsx";
+import { useActions } from "../hooks/useActions.js";
 
 const FormPage = () => {
-  const location = useLocation();
   const navigate = useNavigate();
+  const actions = useActions();
+  const location = useLocation();
   const backLinkRef = useRef(location.state?.from);
-  // const isContractOSAGO = useSelector(getIsContractOSAGO);
-  const [search] = useSearchParams();
-  const isContractOSAGO = true;
+  const isContractOSAGO = useSelector(getIsContractOSAGO);
+  const [search, setSearch] = useSearchParams();
   const type = search.get("type");
-  const redirect = useCallback((path) => navigate(path), []);
 
   useEffect(() => {
-    !isContractOSAGO &&
-      type !== orderMessagesKeys.ORDER_EMMITED &&
-      redirect("/");
-  }, []);
+    isContractOSAGO &&
+      !type &&
+      setSearch({ type: orderMessagesKeys.ORDER_GET });
+  }, [isContractOSAGO, type]);
+
+  // useEffect(() => {
+  //   () => {
+  //     actions.clearGlobal();
+  //   };
+  // }, []);
 
   return (
     <OutletPageWrapper className="formPage">
