@@ -1,7 +1,7 @@
 const portmoneFormProps = {
   PAYEE_ID: "133520",
-  FAILURE_URL: "https://auto-ins.com.ua/form?type=order-emmited",
-  SUCCESS_URL: "https://auto-ins.com.ua/form?type=order-payment",
+  FAILURE_URL: "https://auto-ins.com.ua/form?type=order-payment",
+  SUCCESS_URL: "https://auto-ins.com.ua/form?type=order-emmited",
 };
 
 export const getPortmoneValue = ({
