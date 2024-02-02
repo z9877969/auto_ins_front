@@ -13,7 +13,6 @@ import BlockThank, {
 import { useActions } from "../hooks/useActions.js";
 
 const FormPage = () => {
-  const navigate = useNavigate();
   const actions = useActions();
   const location = useLocation();
   const backLinkRef = useRef(location.state?.from);
@@ -21,21 +20,29 @@ const FormPage = () => {
   const [search, setSearch] = useSearchParams();
   const type = search.get("type");
 
-  useEffect(() => {
-    isContractOSAGO &&
-      !type &&
-      setSearch({ type: orderMessagesKeys.ORDER_GET });
-  }, [isContractOSAGO, type]);
-
   // useEffect(() => {
-  //   () => {
-  //     actions.clearGlobal();
-  //   };
-  // }, []);
+  //   isContractOSAGO &&
+  //     !type &&
+  //     setSearch({ type: orderMessagesKeys.ORDER_GET });
+  // }, [isContractOSAGO, type]);
+
+  useEffect(() => {
+    console.log("useEffect");
+    return () => {
+      console.log("Unmount");
+      actions.clearGlobal();
+    };
+  }, []);
+  useEffect(() => {
+    if (isContractOSAGO) {
+      setSearch({ type: orderMessagesKeys.ORDER_GET });
+    }
+  }, [isContractOSAGO]);
 
   return (
     <OutletPageWrapper className="formPage">
-      {isContractOSAGO || type === orderMessagesKeys.ORDER_EMMITED ? (
+      {/* {isContractOSAGO || type === orderMessagesKeys.ORDER_EMMITED ? ( */}
+      {type ? (
         <BlockThank />
       ) : (
         <Wrapper>

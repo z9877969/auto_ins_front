@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   isModalErrorOpen: false,
   isContractOSAGO: false,
+  // isContractOSAGO: true,
   isContractDGO: false,
   globalCustomerData: {},
   paramsFromUrl: null,
@@ -42,9 +43,7 @@ export const globalSlice = createSlice({
       state.error = payload;
     },
     clearGlobal: (state) => {
-      if (state.order) {
-      }
-      return { ...initialState };
+      return initialState;
     },
   },
   extraReducers: (builder) => {

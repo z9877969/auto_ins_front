@@ -23,7 +23,12 @@ export const checkOrderPasswordApi = async ({ contractId, password }) => {
   "number": "207965102",
   warning: []
 */
-export const emmitOrderApi = async (contractId) => {
-  const { data } = await instance.post(`orders/${contractId}/state`);
+export const requestOrderApi = async (contractId) => {
+  const { data } = await instance.post(`orders/${contractId}/request`);
   return data;
+};
+
+export const emmitOrderApi = async (contractId) => {
+  await instance.post(`orders/${contractId}/emmit`);
+  return true;
 };

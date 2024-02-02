@@ -1,7 +1,8 @@
 const portmoneFormProps = {
   PAYEE_ID: "133520",
+  GET_SUCCESS_URL: (orderId) =>
+    `https://api.auto-ins.com.ua/api/orders/${orderId}/emmit`,
   FAILURE_URL: "https://auto-ins.com.ua/form?type=order-payment",
-  SUCCESS_URL: "https://auto-ins.com.ua/form?type=order-emmited",
 };
 
 export const getPortmoneValue = ({
@@ -11,6 +12,7 @@ export const getPortmoneValue = ({
   lang,
   billAmount,
   billCurrency,
+  orderId,
 }) => ({
   paymentTypes: {
     card: "Y",
@@ -42,7 +44,7 @@ export const getPortmoneValue = ({
     shopOrderNumber,
     billAmount,
     billCurrency,
-    successUrl: portmoneFormProps.SUCCESS_URL,
+    successUrl: portmoneFormProps.GET_SUCCESS_URL(orderId),
     failureUrl: portmoneFormProps.FAILURE_URL,
     preauthFlag: "N",
     expTime: 1200,

@@ -20,7 +20,7 @@ const persistInsurer = {
   key: "insurer",
   version: 1,
   storage,
-  whitelist: ["paramsFromUrl", "isContractOSAGO"],
+  whitelist: ["paramsFromUrl"],
 };
 
 export const store = configureStore({

@@ -13,9 +13,10 @@ import { YellowButton } from "../../style/Global.styled";
 
 const PortmoneForm = ({
   billAmount,
-  shopOrderNumber = "SHP-00445401",
-  description = "Test Payment",
-  emailAddress = "test@ukr.net",
+  orderId,
+  shopOrderNumber = "",
+  description = "",
+  emailAddress = "",
   lang = "uk",
   billCurrency = "UAH",
 }) => {
@@ -27,6 +28,7 @@ const PortmoneForm = ({
       shopOrderNumber,
       lang,
       billCurrency,
+      orderId,
     })
   );
   return (

@@ -7,7 +7,11 @@ import { BoxImgS, ButtonS, FormContainerS } from "./BlockThankStyled";
 import GeneralInput from "../GeneralInput/GeneralInput";
 import PortmoneForm from "../PortmoneForm/PortmoneForm";
 import { YellowButton } from "../../style/Global.styled";
-import { getOrderPasswordApi, checkOrderPasswordApi } from "../../services/api";
+import {
+  getOrderPasswordApi,
+  checkOrderPasswordApi,
+  requestOrderApi,
+} from "../../services/api";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
 import { selectOrderData } from "../../redux/Global/selectors";
@@ -64,33 +68,38 @@ const BlockThank = () => {
   }, []);
   const goBack = useCallback(() => navigate(-1, { replace: true }), []);
 
-  const handleOrderClick = () => {
+  const handleOrderClick = async () => {
     if (type === orderMessagesKeys.ORDER_GET) {
       setIsLoading(true);
-      getOrderPasswordApi(orderData.orderId)
-        .then(() => nextStep(orderMessagesKeys.ORDER_CHECK))
-        .catch(() => {
-          nextStep(orderMessagesKeys.ORDER_CHECK);
-        })
-        .finally(() => setIsLoading(false));
+      try {
+        await getOrderPasswordApi(orderData.orderId);
+        nextStep(orderMessagesKeys.ORDER_CHECK);
+      } catch (error) {
+        nextStep(orderMessagesKeys.ORDER_CHECK);
+      } finally {
+        setIsLoading(false);
+      }
     }
     if (type === orderMessagesKeys.ORDER_CHECK) {
-      setIsLoading(true);
-      checkOrderPasswordApi({
-        contractId: orderData.orderId,
-        password: formik.values.password,
-      })
-        .then(() => nextStep(orderMessagesKeys.ORDER_PAYMENT))
-        .catch(() => {
-          goBack();
-        })
-        .finally(() => setIsLoading(false));
+      try {
+        setIsLoading(true);
+        await checkOrderPasswordApi({
+          contractId: orderData.orderId,
+          password: formik.values.password,
+        });
+        await requestOrderApi(orderData.orderId);
+        nextStep(orderMessagesKeys.ORDER_PAYMENT);
+      } catch (error) {
+        goBack();
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
-  useEffect(() => {
-    !type && setSearch({ type: orderMessagesKeys.ORDER_GET });
-  }, []);
+  // useEffect(() => {
+  //   !type && setSearch({ type: orderMessagesKeys.ORDER_GET });
+  // }, []);
 
   return (
     <FormContainerS component="article">
@@ -143,9 +152,10 @@ const BlockThank = () => {
       )}
       {type === orderMessagesKeys.ORDER_PAYMENT && (
         <PortmoneForm
-          billAmount={orderData.billAmount}
-          shopOrderNumber={orderData.shopOrderNumber}
-          emailAddress={orderData.email}
+          orderId={orderData?.orderId}
+          billAmount={orderData?.billAmount}
+          shopOrderNumber={orderData?.shopOrderNumber}
+          emailAddress={orderData?.email}
         />
       )}
     </FormContainerS>
