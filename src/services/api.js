@@ -10,7 +10,7 @@ export const getOrderPasswordApi = async (contractId) => {
 };
 
 export const checkOrderPasswordApi = async ({ contractId, password }) => {
-  return await instance.get(`orders/${contractId}`, {
+  return await instance.get(`orders/${contractId}/check`, {
     params: {
       password,
     },
