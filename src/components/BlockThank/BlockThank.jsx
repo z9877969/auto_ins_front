@@ -1,27 +1,26 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useFormik } from "formik";
+import { useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
 import { SpriteSVG } from "../../images/SpriteSVG";
-
 import { BoxImgS, ButtonS, FormContainerS } from "./BlockThankStyled";
 import GeneralInput from "../GeneralInput/GeneralInput";
 import PortmoneForm from "../PortmoneForm/PortmoneForm";
-import { YellowButton } from "../../style/Global.styled";
 import {
   getOrderPasswordApi,
   checkOrderPasswordApi,
   requestOrderApi,
 } from "../../services/api";
-import { useFormik } from "formik";
-import { useSelector } from "react-redux";
 import { selectOrderData } from "../../redux/Global/selectors";
 import { useActions } from "../../hooks/useActions";
+import CustomButtonLoading from "../Stepper/CustomButtonLoading";
 
 export const orderMessagesKeys = {
-  ORDER_GET: "order-get",
-  ORDER_CHECK: "order-check",
-  ORDER_PAYMENT: "order-payment",
-  ORDER_EMMITED: "order-emmited",
+  ORDER_GET: "get",
+  ORDER_CHECK: "check",
+  ORDER_PAYMENT: "payment",
+  ORDER_EMMITED: "emmited",
 };
 
 const content = {
@@ -46,30 +45,28 @@ const content = {
   [orderMessagesKeys.ORDER_EMMITED]: {
     icon: "icon-check-circle",
     title: "Дякуємо за замовлення!",
-    descr:
-      "На Вашу електронну пошту надіслано договір страхування.",
+    descr: "На Вашу електронну пошту надіслано договір страхування.",
     btn: "На головну",
   },
 };
 
 const BlockThank = () => {
   const navigate = useNavigate();
+  const actions = useActions();
   const orderData = useSelector(selectOrderData);
-  const [search, setSearch] = useSearchParams();
+  const { orderStage } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues: { password: "" },
   });
 
-  const type = search.get("type");
-
-  const nextStep = useCallback((type) => {
-    setSearch({ type }, { replace: true });
+  const nextStep = useCallback((orderStage) => {
+    navigate("/order/" + orderStage, { replace: true });
   }, []);
   const goBack = useCallback(() => navigate(-1, { replace: true }), []);
 
   const handleOrderClick = async () => {
-    if (type === orderMessagesKeys.ORDER_GET) {
+    if (orderStage === orderMessagesKeys.ORDER_GET) {
       setIsLoading(true);
       try {
         await getOrderPasswordApi(orderData.orderId);
@@ -80,7 +77,7 @@ const BlockThank = () => {
         setIsLoading(false);
       }
     }
-    if (type === orderMessagesKeys.ORDER_CHECK) {
+    if (orderStage === orderMessagesKeys.ORDER_CHECK) {
       try {
         setIsLoading(true);
         await checkOrderPasswordApi({
@@ -97,18 +94,20 @@ const BlockThank = () => {
     }
   };
 
-  // useEffect(() => {
-  //   !type && setSearch({ type: orderMessagesKeys.ORDER_GET });
-  // }, []);
+  useEffect(() => {
+    return () => {
+      actions.clearGlobal();
+    };
+  }, []);
 
   return (
     <FormContainerS component="article">
       <BoxImgS>
-        {(type === orderMessagesKeys.ORDER_EMMITED ||
-          type === orderMessagesKeys.ORDER_PAYMENT) && (
-          <SpriteSVG name={content[type].icon}></SpriteSVG>
+        {(orderStage === orderMessagesKeys.ORDER_EMMITED ||
+          orderStage === orderMessagesKeys.ORDER_PAYMENT) && (
+          <SpriteSVG name={content[orderStage].icon}></SpriteSVG>
         )}
-        {type === orderMessagesKeys.ORDER_CHECK && (
+        {orderStage === orderMessagesKeys.ORDER_CHECK && (
           <GeneralInput
             id="password"
             lableText="Пароль:"
@@ -133,24 +132,26 @@ const BlockThank = () => {
         variant="formTitle"
         sx={{ marginBottom: { xs: "4px", sm: "8px" } }}
       >
-        {type && content[type].title}
+        {orderStage && content[orderStage].title}
       </Typography>
       <Typography
         variant="body1"
         sx={{ marginBottom: { xs: "16px", sm: "32px", lg: "48px" } }}
       >
-        {type && content[type].descr}
+        {orderStage && content[orderStage].descr}
       </Typography>
-      {type && type === orderMessagesKeys.ORDER_EMMITED && (
-        <ButtonS to={"/"}>{type && content[type].btn}</ButtonS>
+      {orderStage && orderStage === orderMessagesKeys.ORDER_EMMITED && (
+        <ButtonS to={"/"}>{orderStage && content[orderStage].btn}</ButtonS>
       )}
-      {(type === orderMessagesKeys.ORDER_GET ||
-        type === orderMessagesKeys.ORDER_CHECK) && (
-        <YellowButton onClick={handleOrderClick}>
-          {type && content[type].btn}
-        </YellowButton>
+      {(orderStage === orderMessagesKeys.ORDER_GET ||
+        orderStage === orderMessagesKeys.ORDER_CHECK) && (
+        <CustomButtonLoading
+          onCLick={handleOrderClick}
+          btnTitle={orderStage && content[orderStage].btn}
+          isLoadingProp={isLoading}
+        />
       )}
-      {type === orderMessagesKeys.ORDER_PAYMENT && (
+      {orderStage === orderMessagesKeys.ORDER_PAYMENT && (
         <PortmoneForm
           orderId={orderData?.orderId}
           billAmount={orderData?.billAmount}

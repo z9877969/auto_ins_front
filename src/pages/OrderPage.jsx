@@ -1,9 +1,9 @@
 import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import BlockThank, {
   orderMessagesKeys,
 } from "../components/BlockThank/BlockThank";
 import { ContainerSectionPage, PageContainerS } from "../style/Global.styled";
-import { useNavigate, useParams } from "react-router-dom";
 
 const OrderPage = () => {
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ const OrderPage = () => {
     orderStage && Object.values(orderMessagesKeys).includes(orderStage);
 
   useEffect(() => {
+    console.log("isBlockRender :>> ", isBlockRender);
     if (!isBlockRender) {
       navigate("/");
       return;
