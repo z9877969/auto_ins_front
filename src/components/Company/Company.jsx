@@ -24,7 +24,7 @@ import { useActions } from "../../hooks/useActions";
 
 const content = {
   label: {
-    FRANSHISE_TEXT: "Додаткове покриття",
+    FRANSHISE_TEXT: "Франшиза",
     FRANSHISE_HELPER: "Сума збитку, яка не відшкодовується страховою компанією",
     ADDITIONAL_COVER_TEXT: "Додаткове покриття",
     ADDITIONAL_COVER_HELPER:
