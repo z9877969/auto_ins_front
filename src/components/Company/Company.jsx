@@ -22,6 +22,16 @@ import { useSelector } from "react-redux";
 import { getUser } from "../../redux/Calculator/selectors";
 import { useActions } from "../../hooks/useActions";
 
+const content = {
+  label: {
+    FRANSHISE_TEXT: "Франшиза",
+    FRANSHISE_HELPER: "Сума збитку, яка не відшкодовується страховою компанією",
+    ADDITIONAL_COVER_TEXT: "Додаткове покриття",
+    ADDITIONAL_COVER_HELPER:
+      "Рекомендуємо збільшувати суму покриття, оскільки при значних дтп,  або дтп з дорогим автомобілем стандартної суми може не вистачити",
+  },
+};
+
 const Company = ({ proposal }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -127,8 +137,8 @@ const Company = ({ proposal }) => {
             <BoxSelect className="franchise">
               <GeneralSelect
                 id="franchise"
-                lableText="Франшиза"
-                helper="Пояснення до франчизи"
+                lableText={content.label.FRANSHISE_TEXT}
+                helper={content.label.FRANSHISE_HELPER}
                 color={theme.palette.primary.main}
                 optionsArr={tariff}
                 changeCB={handleChangeSelect}
@@ -140,8 +150,8 @@ const Company = ({ proposal }) => {
             <BoxSelect>
               <GeneralSelect
                 id="2"
-                lableText="Додаткове покриття"
-                helper="Пояснення до додаткове покриття"
+                lableText={content.label.ADDITIONAL_COVER_TEXT}
+                helper={content.label.ADDITIONAL_COVER_HELPER}
                 color={theme.palette.primary.main}
                 optionsArr={proposal?.dgo?.tariff || []}
                 changeCB={handleChangeDgoSelect}

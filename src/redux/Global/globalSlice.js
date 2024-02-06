@@ -10,6 +10,7 @@ const initialState = {
   paramsFromUrl: null,
   homeAddress: { label: "", value: "" },
   error: "",
+  order: null,
 };
 
 export const globalSlice = createSlice({
@@ -40,18 +41,23 @@ export const globalSlice = createSlice({
     setGlobError: (state, { payload }) => {
       state.error = payload;
     },
+    clearGlobal: () => {
+      return initialState;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(contractSave.fulfilled, (state) => {
+      .addCase(contractSave.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(contractSave.fulfilled, (state, { payload }) => {
+        state.error = initialState.error;
         state.isLoading = false;
+        state.order = payload;
       })
       .addCase(contractSave.rejected, (state, { payload }) => {
         state.error = payload?.message;
         state.isLoading = false;
-      })
-      .addCase(contractSave.pending, (state) => {
-        state.isLoading = true;
       });
   },
 });

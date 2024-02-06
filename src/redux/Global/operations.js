@@ -13,15 +13,13 @@ export const contractSave = createAsyncThunk(
           ...body,
         }
       );
-
       if (data.tariff.type === "epolicy") {
         dispatch(setIsContractOSAGO(true));
       }
-
       if (data.tariff.type === "vcl") {
         dispatch(setIsContractDGO(true));
       }
-      //   return true;
+      return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

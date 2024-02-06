@@ -3,8 +3,8 @@ import { YellowButtonStyled } from "../../forms/InsuredDataForm/InsuredDataForm.
 import { CircularProgress } from "@mui/material";
 import { getIsLoading } from "../../redux/Global/selectors";
 
-const CustomButtonLoading = ({ onCLick, btnTitle }) => {
-  const isLoading = useSelector(getIsLoading);
+const CustomButtonLoading = ({ onCLick, btnTitle, isLoadingProp }) => {
+  const isLoading = isLoadingProp ? isLoadingProp : useSelector(getIsLoading);
   return isLoading ? (
     <YellowButtonStyled>
       <CircularProgress />

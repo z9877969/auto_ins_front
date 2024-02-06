@@ -1,31 +1,34 @@
-import { useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Box } from "@mui/material";
 import CompanySmall from "../components/CompanySmall/CompanySmall";
 import { Wrapper } from "./FormPageStyled";
 import Stepper from "../components/Stepper/Stepper";
-import { Box } from "@mui/material";
-import { useRef } from "react";
 import OutletPageWrapper from "../components/OutletPageWrapper";
-import { useSelector } from "react-redux";
 import { getIsContractOSAGO } from "../redux/Global/selectors";
-import BlockThank from "../components/BlockThank/index.js";
+import { useActions } from "../hooks/useActions.js";
 
 const FormPage = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const backLinkRef = useRef(location.state?.from);
   const isContractOSAGO = useSelector(getIsContractOSAGO);
 
+  useEffect(() => {
+    if (isContractOSAGO) {
+      navigate("/order/get", { replace: true });
+    }
+  }, [isContractOSAGO]);
+
   return (
     <OutletPageWrapper className="formPage">
-      {isContractOSAGO ? (
-        <BlockThank />
-      ) : (
-        <Wrapper>
-          <CompanySmall />
-          <Box sx={{ display: "block" }}>
-            <Stepper backLinkRef={backLinkRef} />
-          </Box>
-        </Wrapper>
-      )}
+      <Wrapper>
+        <CompanySmall />
+        <Box sx={{ display: "block" }}>
+          <Stepper backLinkRef={backLinkRef} />
+        </Box>
+      </Wrapper>
     </OutletPageWrapper>
   );
 };
