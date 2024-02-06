@@ -14,6 +14,8 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+// import storageSession from 'redux-persist/lib/storage/session'
+
 const persistInsurer = {
   key: "insurer",
   version: 1,

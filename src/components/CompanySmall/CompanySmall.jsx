@@ -12,16 +12,8 @@ import { ContentBox, FormContainerS } from "./CompanySmallStyled";
 import { getSubmitObject } from "../../redux/byParameters/selectors";
 
 const CompanySmall = React.memo(() => {
-  const paramsFromUrl =
-    useSelector(getParamsFromUrl) ||
-    JSON.parse(localStorage.getItem("insurer")); // потрібно додати збереження даного стейту в LS та його очистку після оформлення стархування
+  const paramsFromUrl = useSelector(getParamsFromUrl);
   const { dateFrom, outsideUkraine } = useSelector(getSubmitObject);
-
-  useEffect(() => {
-    // додає дані для відображення зображення після рефрешу сторінки
-    paramsFromUrl &&
-      localStorage.setItem("insurer", JSON.stringify(paramsFromUrl));
-  }, [paramsFromUrl]);
 
   return (
     <FormContainerS component="article">

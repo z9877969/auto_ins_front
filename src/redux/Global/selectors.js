@@ -23,3 +23,20 @@ export const combineError = createSelector(
     return error || calculatorError || referencesError;
   }
 );
+
+export const selectOrderData = createSelector(
+  [(state) => state.global.order],
+  (order) => {
+    if (order) {
+      const {
+        id: orderId,
+        brokerDiscountedPayment: billAmount,
+        code: shopOrderNumber,
+        customer: { email },
+        state,
+      } = order;
+      return { orderId, billAmount, shopOrderNumber, email, orderState: state };
+    }
+    return null;
+  }
+);
