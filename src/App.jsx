@@ -5,11 +5,11 @@ import Loader from "./components/Loader/Loader";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { uk } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
-import OrderPage from "./pages/OrderPage.jsx";
 
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PricesPage = lazy(() => import("./pages/PricesPage.jsx"));
 const FormPage = lazy(() => import("./pages/FormPage.jsx"));
+const OrderPage = lazy(() => import("./pages/OrderPage.jsx"));
 
 function App() {
   registerLocale("uk", uk);

@@ -13,7 +13,6 @@ const OrderPage = () => {
     orderStage && Object.values(orderMessagesKeys).includes(orderStage);
 
   useEffect(() => {
-    console.log("isBlockRender :>> ", isBlockRender);
     if (!isBlockRender) {
       navigate("/");
       return;
