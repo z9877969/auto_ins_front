@@ -1,23 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TabStyled,
   TabsContainer,
   TabsStyled,
   TitleStaled,
 } from "./HeroTabs.styled";
-
 import { useMediaQuery } from "@mui/material";
-import ByParameters from "../ByParameters/ByParameters";
-import ByLicensePlate from "../ByLicensePlate/ByLicensePlate";
-import HeroPicture from "../HeroPicture/HeroPicture";
 
-const HeroTabs = () => {
+const HeroTabs = ({ setActiveTab }) => {
   const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   const isMobile = useMediaQuery("(max-width: 767px)");
+
+  const handleChange = (_, newValue) => {
+    setValue(newValue);
+    setActiveTab(newValue);
+  };
+
+  useEffect(() => {
+    setActiveTab(value);
+  }, []);
+
   return (
     <section>
       <TabsContainer>
@@ -29,11 +31,7 @@ const HeroTabs = () => {
           <TabStyled label="За параметрами" />
           <TabStyled label="За держ. номерним знаком" wrapped />
         </TabsStyled>
-        {/* Вміст для вкладок */}
-        {value === 0 && <ByParameters />}
-        {value === 1 && <ByLicensePlate />}
       </TabsContainer>
-      <HeroPicture />
     </section>
   );
 };

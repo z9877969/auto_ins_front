@@ -3,6 +3,7 @@ import { Typography, useTheme } from "@mui/material";
 import PropTypes from "prop-types";
 import HelpCircle from "../HelpCircle/HelpCircle";
 import { SpriteSVG } from "../../images/SpriteSVG";
+import { useEffect, useRef } from "react";
 
 const GeneralSelect = ({
   id,
@@ -20,6 +21,13 @@ const GeneralSelect = ({
   getOptionValue,
   isValid = true,
 }) => {
+  const selectRef = useRef(null);
+
+  useEffect(() => {
+    if (selectRef.current.inputRef) {
+      selectRef.current.inputRef.setAttribute("readonly", true);
+    }
+  }, []);
   const theme = useTheme();
   return (
     <InputContStyled className="select-container">
@@ -35,6 +43,7 @@ const GeneralSelect = ({
         {helper && <HelpCircle lableText={helper} color={color ? color : ""} />}
       </Typography>
       <SelectStyled
+        ref={selectRef}
         $isValid={isValid}
         $find={inputChangeCB}
         components={
