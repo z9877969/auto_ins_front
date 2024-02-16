@@ -155,7 +155,6 @@ const ByParameters = () => {
             selected={dateFrom}
             onSelect={setDateFrom}
             closeOnScroll={(e) => e.target === document}
-            customInput={<InputStyled />}
             name="date"
             dateFormat="dd/MM/yyyy"
             showIcon={true}

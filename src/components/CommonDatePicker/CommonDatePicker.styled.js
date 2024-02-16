@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { styled, Button } from "@mui/material";
 
 export const InputContStyled = styled("div")(({ theme }) => ({
   display: "flex",
@@ -6,6 +6,9 @@ export const InputContStyled = styled("div")(({ theme }) => ({
   gap: 8,
   [theme.breakpoints.up("sm")]: {
     gap: 16,
+  },
+  [theme.breakpoints.up("lg")]: {
+    width: 250,
   },
 }));
 
@@ -186,5 +189,44 @@ export const DataContainerStyled = styled(InputContStyled)(({ theme }) => ({
     display: "flex",
     alignItem: "center",
     justifyContent: "center",
+  },
+}));
+
+export const ButtonStyled = styled(Button)(({ theme }) => ({
+  width: "100%",
+  // height: 156,
+  padding: 16,
+  borderRadius: 50,
+  backgroundColor: `${theme.palette.primary.white}`,
+  outline: `none`,
+
+  "&.MuiButton-root": {
+    color: `${theme.palette.primary.main}`,
+    fontWeight: 600,
+    fontFamily: "Open Sans",
+    fontSize: 16,
+    lineHeight: "150%" /* 24px */,
+    outline: "none",
+    border: "none",
+
+    "&:-webkit-autofill": {
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: theme.palette.primary.main,
+    },
+    "&:-webkit-autofill:focus": {
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: theme.palette.primary.main,
+    },
+    [theme.breakpoints.up("sm")]: {
+      fontSize: 18,
+    },
+  },
+
+  "& fieldset.MuiOutlinedInput-notchedOutline": {
+    outline: "none",
+    border: "none",
+  },
+  [theme.breakpoints.up("sm")]: {
+    height: 59,
   },
 }));

@@ -1,5 +1,18 @@
+import { forwardRef } from "react";
 import ReactDatePicker from "react-datepicker";
-import { DataContainerStyled } from "./CommonDatePicker.styled";
+import {
+  ButtonStyled,
+  DataContainerStyled,
+  InputContStyled,
+} from "./CommonDatePicker.styled";
+
+const CustomInputAsButton = forwardRef(({ value, onClick }, ref) => {
+  return (
+    <ButtonStyled onClick={onClick} ref={ref}>
+      {value}
+    </ButtonStyled>
+  );
+});
 
 const CommonDatePicker = ({
   label,
@@ -26,7 +39,7 @@ const CommonDatePicker = ({
         selected={selected}
         onSelect={onSelect}
         closeOnScroll={closeOnScroll}
-        customInput={customInput}
+        customInput={customInput ? customInput : <CustomInputAsButton />}
         name={name}
         dateFormat={dateFormat}
         showIcon={showIcon}

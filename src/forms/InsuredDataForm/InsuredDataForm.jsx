@@ -133,7 +133,6 @@ const InsuredDataForm = ({ formik, selectData }) => {
             startDate={date}
             name="date"
             maxDate={new Date()}
-            customInput={<InputStyled />}
             dateFormat="dd/MM/yyyy"
             showIcon={true}
             locale="uk"
