@@ -3,8 +3,10 @@ import {
   DNUMBER_REGEX,
   NAME_REGEX,
   REQUIRED_FIELD,
-  SERIES_PASSPORT_REGEX,
+  // SERIES_PASSPORT_REGEX,
+  SERIES_DRIVING_LICENSE_REGEX,
   VIN_REGEX,
+  SERIES_PASSPORT_AND_DRIVING_LICENSE_REGEX,
 } from "../constants";
 
 export const validationName = () =>
@@ -47,7 +49,18 @@ export const homeAddressFormValidationSchema = () =>
     apartmentNumber: Yup.string(),
   });
 // ===========================================================================
-export const insuredDataFormValidationSchema = () =>
+const getErrorMessageByDocType = (docType) => {
+  switch (docType) {
+    case "DRIVING_LICENSE":
+      return [SERIES_DRIVING_LICENSE_REGEX, "Введіть три літери кирилиці"];
+    default:
+      return [
+        SERIES_PASSPORT_AND_DRIVING_LICENSE_REGEX,
+        "Серія може містити дві або три літери кирилиці",
+      ];
+  }
+};
+export const insuredDataFormValidationSchema = ({ docType } = {}) =>
   Yup.object().shape({
     surname: validationName(),
     name: validationName(),
@@ -61,7 +74,8 @@ export const insuredDataFormValidationSchema = () =>
       .max(10, "ІПН повинен мати 10 символів"),
     series: Yup.string()
       .required(REQUIRED_FIELD)
-      .matches(SERIES_PASSPORT_REGEX, "Введіть дві букви кирилиці"),
+      // !!!!!!!!!
+      .matches(...getErrorMessageByDocType(docType)),
     number: Yup.string()
       .required(REQUIRED_FIELD)
       .min(6, "Введіть 6 цифр")
