@@ -208,6 +208,9 @@ export const ButtonStyled = styled(Button)(({ theme }) => ({
     lineHeight: "150%" /* 24px */,
     outline: "none",
     border: "none",
+    "&:hover": {
+      backgroundColor: `${theme.palette.primary.white}`,
+    },
 
     "&:-webkit-autofill": {
       WebkitBackgroundClip: "text",
