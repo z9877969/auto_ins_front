@@ -1,5 +1,5 @@
 const portmoneFormProps = {
-  PAYEE_ID: "133520",
+  PAYEE_ID: VITE_PAYEE_ID,
   GET_SUCCESS_URL: (orderId) =>
     `https://api.auto-ins.com.ua/api/orders/${orderId}/emmit`,
   FAILURE_URL: "https://auto-ins.com.ua/form?type=order-payment",

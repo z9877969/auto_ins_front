@@ -3,7 +3,6 @@ import addMonths from "date-fns/addMonths";
 import { useFormik } from "formik";
 import { Box, Typography } from "@mui/material";
 import {
-  DatePickerWrapper,
   FormStyled,
   InputStyled,
   InputWrapperStyled,
@@ -19,6 +18,7 @@ import { useActions } from "../../hooks/useActions";
 import { SpriteSVG } from "../../images/SpriteSVG";
 import { useState } from "react";
 import format from "date-fns/format";
+import CommonDatePicker from "../CommonDatePicker/CommonDatePicker";
 
 const ByLicensePlate = () => {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ const ByLicensePlate = () => {
       const stateNumber = values.licensePlate
         .trim()
         .toUpperCase()
-        .match(DNUMBER_REGEX);     
+        .match(DNUMBER_REGEX);
       if (!stateNumber) {
         setIsModalErrorOpen(true);
         return;
@@ -106,24 +106,24 @@ const ByLicensePlate = () => {
             />
           </Box>
           <Box className="box">
-            <label htmlFor="dateFrom">Дата початку дії поліса:</label>
-            <DatePickerWrapper
+            <CommonDatePicker
               id="dateFrom"
-              mode="single"
+              label="Дата початку дії поліса:"
               selected={dateFrom}
+              mode="single"
               onSelect={setDateFrom}
               closeOnScroll={(e) => e.target === document}
               name="date"
-              withPortal
               dateFormat="dd/MM/yyyy"
               showIcon={true}
               minDate={addDays(new Date(), 1)}
               maxDate={addMonths(new Date(), 3)}
               startDate={dateFrom}
               locale="uk"
+              withPortal
               icon={
                 <Box className="iconCalender">
-                  <SpriteSVG name={"icon-calendar"} />
+                  <SpriteSVG name="icon-calendar" />
                 </Box>
               }
             />

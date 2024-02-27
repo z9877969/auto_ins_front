@@ -2,7 +2,6 @@ import { useFormik } from "formik";
 import {
   AllCheckboxContStyled,
   AllInputContStyled,
-  DataContainerStyled,
   FormStyled,
   SubmitButton,
 } from "./ByParameters.styled";
@@ -18,7 +17,6 @@ import { useSelector } from "react-redux";
 import HelperImg from "../HelpCircle/HelperImg/HelperImg";
 import HelperList from "../HelpCircle/HelperList/HelperList";
 import { Box } from "@mui/material";
-import ReactDatePicker from "react-datepicker";
 import { useState } from "react";
 import { SpriteSVG } from "../../images/SpriteSVG";
 import { addMonths } from "date-fns/esm";
@@ -150,6 +148,8 @@ const ByParameters = () => {
             inputChangeCB={handleChangeQueryText}
             helper={<HelperImg />}
             isDisabled={formik.values.foreignNumber}
+            readOnly={false}
+            noOptionsMessage="Почніть вводити"
           />
           <CommonDatePicker
             label="Дата початку дії поліса:"
@@ -157,7 +157,6 @@ const ByParameters = () => {
             selected={dateFrom}
             onSelect={setDateFrom}
             closeOnScroll={(e) => e.target === document}
-            customInput={<InputStyled />}
             name="date"
             dateFormat="dd/MM/yyyy"
             showIcon={true}

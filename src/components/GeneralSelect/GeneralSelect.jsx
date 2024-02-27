@@ -3,6 +3,7 @@ import { Typography, useTheme } from "@mui/material";
 import PropTypes from "prop-types";
 import HelpCircle from "../HelpCircle/HelpCircle";
 import { SpriteSVG } from "../../images/SpriteSVG";
+import { useEffect, useRef } from "react";
 
 const GeneralSelect = ({
   id,
@@ -19,7 +20,16 @@ const GeneralSelect = ({
   getOptionLabel,
   getOptionValue,
   isValid = true,
+  readOnly = true,
+  noOptionsMessage = "",
 }) => {
+  const selectRef = useRef(null);
+
+  useEffect(() => {
+    if (selectRef.current.inputRef && readOnly) {
+      selectRef.current.inputRef.setAttribute("readonly", true);
+    }
+  }, []);
   const theme = useTheme();
   return (
     <InputContStyled className="select-container">
@@ -35,6 +45,7 @@ const GeneralSelect = ({
         {helper && <HelpCircle lableText={helper} color={color ? color : ""} />}
       </Typography>
       <SelectStyled
+        ref={selectRef}
         $isValid={isValid}
         $find={inputChangeCB}
         components={
@@ -43,6 +54,7 @@ const GeneralSelect = ({
             : true
         }
         isDisabled={isDisabled}
+        noOptionsMessage={() => noOptionsMessage}
         variant="body1"
         component="label"
         classNamePrefix="customSelect"
@@ -53,9 +65,7 @@ const GeneralSelect = ({
         value={currentValue}
         inputValue={inputValue}
         onInputChange={inputChangeCB}
-        onChange={(e) => {
-          changeCB(e);
-        }}
+        onChange={changeCB}
         getOptionLabel={getOptionLabel}
         getOptionValue={getOptionValue}
       />

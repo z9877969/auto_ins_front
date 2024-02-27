@@ -133,7 +133,6 @@ const InsuredDataForm = ({ formik, selectData }) => {
             startDate={date}
             name="date"
             maxDate={new Date()}
-            customInput={<InputStyled />}
             dateFormat="dd/MM/yyyy"
             showIcon={true}
             locale="uk"
@@ -147,34 +146,6 @@ const InsuredDataForm = ({ formik, selectData }) => {
               </Box>
             }
           />
-          {/* <DataContainerWrapper>
-            <label htmlFor="dateFrom">Дата видачі*:</label>
-            <ReactDatePicker
-              id="date"
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              onChange={hadleChangeDate}
-              closeOnScroll={(e) => e.target === document}
-              startDate={date}
-              name="date"
-              minDate={birthDate}
-              maxDate={new Date()}
-              customInput={<InputStyled />}
-              dateFormat="dd/MM/yyyy"
-              showIcon={true}
-              locale="uk"
-              withPortal
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-              icon={
-                <Box className="iconCalender">
-                  <SpriteSVG name={"icon-calendar"} />
-                </Box>
-              }
-            />
-          </DataContainerWrapper> */}
         </DocInputsStyled>
       </InputContBoxStyled>
     </>
