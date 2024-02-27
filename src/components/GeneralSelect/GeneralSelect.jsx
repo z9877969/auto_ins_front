@@ -20,11 +20,13 @@ const GeneralSelect = ({
   getOptionLabel,
   getOptionValue,
   isValid = true,
+  readOnly = true,
+  noOptionsMessage = "",
 }) => {
   const selectRef = useRef(null);
 
   useEffect(() => {
-    if (selectRef.current.inputRef) {
+    if (selectRef.current.inputRef && readOnly) {
       selectRef.current.inputRef.setAttribute("readonly", true);
     }
   }, []);
@@ -52,19 +54,22 @@ const GeneralSelect = ({
             : true
         }
         isDisabled={isDisabled}
+        noOptionsMessage={() => noOptionsMessage}
         variant="body1"
         component="label"
         classNamePrefix="customSelect"
         id={id}
         placeholder="Enter the text"
-        options={optionsArr}
+        options={
+          optionsArr
+            ? optionsArr
+            : [{ label: "Label text", value: "label-text" }]
+        }
         defaultValue={defaultValue}
         value={currentValue}
         inputValue={inputValue}
         onInputChange={inputChangeCB}
-        onChange={(e) => {
-          changeCB(e);
-        }}
+        onChange={changeCB}
         getOptionLabel={getOptionLabel}
         getOptionValue={getOptionValue}
       />

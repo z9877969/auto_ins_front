@@ -148,6 +148,8 @@ const ByParameters = () => {
             inputChangeCB={handleChangeQueryText}
             helper={<HelperImg />}
             isDisabled={formik.values.foreignNumber}
+            readOnly={false}
+            noOptionsMessage="Почніть вводити"
           />
           <CommonDatePicker
             label="Дата початку дії поліса:"
