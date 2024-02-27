@@ -60,11 +60,7 @@ const GeneralSelect = ({
         classNamePrefix="customSelect"
         id={id}
         placeholder="Enter the text"
-        options={
-          optionsArr
-            ? optionsArr
-            : [{ label: "Label text", value: "label-text" }]
-        }
+        options={optionsArr}
         defaultValue={defaultValue}
         value={currentValue}
         inputValue={inputValue}
