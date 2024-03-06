@@ -42,7 +42,7 @@ const GeneralSelect = ({
         htmlFor={id}
       >
         {lableText}
-        {helper && <HelpCircle lableText={helper} color={color ? color : ""} />}
+        {helper && <HelpCircle lableText={helper} color={color ? color : ""}  />}
       </Typography>
       <SelectStyled
         ref={selectRef}
