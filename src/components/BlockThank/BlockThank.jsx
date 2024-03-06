@@ -1,52 +1,52 @@
-import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useFormik } from "formik";
-import { useSelector } from "react-redux";
-import Typography from "@mui/material/Typography";
-import { SpriteSVG } from "../../images/SpriteSVG";
-import { BoxImgS, ButtonS, FormContainerS } from "./BlockThankStyled";
-import GeneralInput from "../GeneralInput/GeneralInput";
-import PortmoneForm from "../PortmoneForm/PortmoneForm";
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
+import Typography from '@mui/material/Typography';
+import { SpriteSVG } from '../../images/SpriteSVG';
+import { BoxImgS, ButtonS, FormContainerS } from './BlockThankStyled';
+import GeneralInput from '../GeneralInput/GeneralInput';
+import PortmoneForm from '../PortmoneForm/PortmoneForm';
 import {
   getOrderPasswordApi,
   checkOrderPasswordApi,
   requestOrderApi,
-} from "../../services/api";
-import { selectOrderData } from "../../redux/Global/selectors";
-import { useActions } from "../../hooks/useActions";
-import CustomButtonLoading from "../Stepper/CustomButtonLoading";
+} from '../../services/api';
+import { selectOrderData } from '../../redux/Global/selectors';
+import { useActions } from '../../hooks/useActions';
+import CustomButtonLoading from '../Stepper/CustomButtonLoading';
 
 export const orderMessagesKeys = {
-  ORDER_GET: "get",
-  ORDER_CHECK: "check",
-  ORDER_PAYMENT: "payment",
-  ORDER_EMMITED: "emmited",
+  ORDER_GET: 'get',
+  ORDER_CHECK: 'check',
+  ORDER_PAYMENT: 'payment',
+  ORDER_EMMITED: 'emmited',
 };
 
 const content = {
   [orderMessagesKeys.ORDER_GET]: {
-    title: "Пройдіть верифікацію!",
-    descr: "На ваш телефон буде надіслано смс з паролем.",
-    btn: "Надіслати СМС",
+    title: 'Пройдіть верифікацію!',
+    descr: 'На ваш телефон буде надіслано смс з паролем.',
+    btn: 'Надіслати СМС',
   },
   [orderMessagesKeys.ORDER_CHECK]: {
-    title: "Відправте пароль з СМС!",
+    title: 'Відправте пароль з СМС!',
     descr:
-      "Введіть і відправте пароль отриманий в СМС для переходу на сторінку оплати!",
-    btn: "Відправити пароль",
+      'Введіть і відправте пароль отриманий в СМС для переходу на сторінку оплати!',
+    btn: 'Відправити пароль',
   },
   [orderMessagesKeys.ORDER_PAYMENT]: {
-    icon: "icon-money",
-    title: "Перейдіть на сторінку оплати!",
+    icon: 'icon-money',
+    title: 'Перейдіть на сторінку оплати!',
     descr:
-      "Вам потрібно перейти на сторінку оплати для завершення оформлення договору",
-    btn: "Portmone.com",
+      'Вам потрібно перейти на сторінку оплати для завершення оформлення договору',
+    btn: 'Portmone.com',
   },
   [orderMessagesKeys.ORDER_EMMITED]: {
-    icon: "icon-check-circle",
-    title: "Дякуємо за замовлення!",
-    descr: "На Вашу електронну пошту надіслано договір страхування.",
-    btn: "На головну",
+    icon: 'icon-check-circle',
+    title: 'Дякуємо за замовлення!',
+    descr: 'На Вашу електронну пошту надіслано договір страхування.',
+    btn: 'На головну',
   },
 };
 
@@ -57,11 +57,11 @@ const BlockThank = () => {
   const { orderStage } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
-    initialValues: { password: "" },
+    initialValues: { password: '' },
   });
 
   const nextStep = useCallback((orderStage) => {
-    navigate("/order/" + orderStage, { replace: true });
+    navigate('/order/' + orderStage, { replace: true });
   }, []);
   const goBack = useCallback(() => navigate(-1, { replace: true }), []);
 
@@ -130,18 +130,18 @@ const BlockThank = () => {
       <Typography
         component="h2"
         variant="formTitle"
-        sx={{ marginBottom: { xs: "4px", sm: "8px" } }}
+        sx={{ marginBottom: { xs: '4px', sm: '8px' } }}
       >
         {orderStage && content[orderStage].title}
       </Typography>
       <Typography
         variant="body1"
-        sx={{ marginBottom: { xs: "16px", sm: "32px", lg: "48px" } }}
+        sx={{ marginBottom: { xs: '16px', sm: '32px', lg: '48px' } }}
       >
         {orderStage && content[orderStage].descr}
       </Typography>
       {orderStage && orderStage === orderMessagesKeys.ORDER_EMMITED && (
-        <ButtonS to={"/"}>{orderStage && content[orderStage].btn}</ButtonS>
+        <ButtonS to={'/'}>{orderStage && content[orderStage].btn}</ButtonS>
       )}
       {(orderStage === orderMessagesKeys.ORDER_GET ||
         orderStage === orderMessagesKeys.ORDER_CHECK) && (

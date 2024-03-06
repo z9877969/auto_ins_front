@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { contractSave } from "./operations";
+import { createSlice } from '@reduxjs/toolkit';
+import { contractSave } from './operations';
 
 const initialState = {
   isLoading: false,
@@ -8,13 +8,13 @@ const initialState = {
   isContractDGO: false,
   globalCustomerData: {},
   paramsFromUrl: null,
-  homeAddress: { label: "", value: "" },
-  error: "",
+  homeAddress: { label: '', value: '' },
+  error: '',
   order: null,
 };
 
 export const globalSlice = createSlice({
-  name: "global",
+  name: 'global',
   initialState,
   reducers: {
     setIsLoading: (state, { payload }) => {
@@ -53,7 +53,10 @@ export const globalSlice = createSlice({
       .addCase(contractSave.fulfilled, (state, { payload }) => {
         state.error = initialState.error;
         state.isLoading = false;
-        state.order = payload;
+        if (!state.order) {
+          state.order = {};
+        }
+        state.order[payload.type] = payload;
       })
       .addCase(contractSave.rejected, (state, { payload }) => {
         state.error = payload?.message;
