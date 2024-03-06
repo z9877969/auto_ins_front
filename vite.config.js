@@ -11,8 +11,8 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     base: "/",
-    define: {
-      __APP_ENV__: JSON.stringify(env.APP_ENV),
-    },
+    // define: {
+    //   __APP_ENV__: JSON.stringify(env.APP_ENV),
+    // },
   };
 });
