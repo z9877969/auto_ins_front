@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const instance = axios.create({
   // baseURL: "http://localhost:4040/api",
-  baseURL: "https://api.auto-ins.com.ua/api",
+  baseURL: 'https://api.auto-ins.com.ua/api',
 });
 
 export const getOrderPasswordApi = async (contractId) => {
@@ -23,12 +23,30 @@ export const checkOrderPasswordApi = async ({ contractId, password }) => {
   "number": "207965102",
   warning: []
 */
-export const requestOrderApi = async (contractId) => {
-  const { data } = await instance.post(`orders/${contractId}/request`);
+export const requestOrderApi = async ({ epolicy, vcl }) => {
+  const { data } = await instance.post(
+    `orders/${epolicy}/request`,
+    {},
+    {
+      params: {
+        epolicy,
+        vcl,
+      },
+    }
+  );
   return data;
 };
 
-export const emmitOrderApi = async (contractId) => {
-  await instance.post(`orders/${contractId}/emmit`);
+export const emmitOrderApi = async ({ epolicy, vcl }) => {
+  await instance.post(
+    `orders/${epolicy}/emmit`,
+    {},
+    {
+      params: {
+        epolicy,
+        vcl,
+      },
+    }
+  );
   return true;
 };

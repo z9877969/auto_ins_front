@@ -1,7 +1,7 @@
-import { createSelector } from "@reduxjs/toolkit";
-import { getError as calculatorError } from "../../redux/Calculator/selectors";
+import { createSelector } from '@reduxjs/toolkit';
+import { getError as calculatorError } from '../../redux/Calculator/selectors';
 
-import { getError as referencesError } from "../../redux/References/selectors";
+import { getError as referencesError } from '../../redux/References/selectors';
 
 export const getIsModalErrorOpen = (state) => state.global.isModalErrorOpen;
 export const getIsLoading = (state) => state.global.isLoading;
@@ -24,18 +24,26 @@ export const combineError = createSelector(
   }
 );
 
+export const orderType = {
+  VCL: 'vcl',
+  EPOLICY: 'epolicy', // needing for id
+};
+
 export const selectOrderData = createSelector(
   [(state) => state.global.order],
   (order) => {
     if (order) {
-      const {
-        id: orderId,
-        brokerDiscountedPayment: billAmount,
-        code: shopOrderNumber,
-        customer: { email },
-        state,
-      } = order;
-      return { orderId, billAmount, shopOrderNumber, email, orderState: state };
+      return {
+        epolicyOrderId: order[orderType.EPOLICY].id,
+        vclOrderId: order[orderType.VCL].id,
+        billAmount: orderType.VCL
+          ? order[orderType.VCL].brokerDiscountedPayment +
+            order[orderType.EPOLICY].brokerDiscountedPayment
+          : order[orderType.EPOLICY].brokerDiscountedPayment,
+        shopOrderNumber: order[orderType.EPOLICY].code,
+        email: order[orderType.EPOLICY].customer.email,
+        orderState: order[orderType.EPOLICY].state,
+      };
     }
     return null;
   }
