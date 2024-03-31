@@ -62,14 +62,16 @@ const BlockThank = () => {
 
   const nextStep = useCallback((orderStage) => {
     navigate('/order/' + orderStage, { replace: true });
+    // eslint-disable-next-line
   }, []);
+  // eslint-disable-next-line
   const goBack = useCallback(() => navigate(-1, { replace: true }), []);
 
   const handleOrderClick = async () => {
     if (orderStage === orderMessagesKeys.ORDER_GET) {
       setIsLoading(true);
       try {
-        await getOrderPasswordApi(orderData.orderId);
+        await getOrderPasswordApi(orderData.epolicyOrderId);
         nextStep(orderMessagesKeys.ORDER_CHECK);
       } catch (error) {
         nextStep(orderMessagesKeys.ORDER_CHECK);
@@ -81,10 +83,13 @@ const BlockThank = () => {
       try {
         setIsLoading(true);
         await checkOrderPasswordApi({
-          contractId: orderData.orderId,
+          contractId: orderData.epolicyOrderId,
           password: formik.values.password,
         });
-        await requestOrderApi(orderData.orderId);
+        await requestOrderApi({
+          epolicy: orderData.epolicyOrderId,
+          vcl: orderData.vclOrderId,
+        });
         nextStep(orderMessagesKeys.ORDER_PAYMENT);
       } catch (error) {
         goBack();
@@ -153,7 +158,7 @@ const BlockThank = () => {
       )}
       {orderStage === orderMessagesKeys.ORDER_PAYMENT && (
         <PortmoneForm
-          orderId={orderData?.orderId}
+          orderId={orderData?.epolicyOrderId}
           billAmount={orderData?.billAmount}
           shopOrderNumber={orderData?.shopOrderNumber}
           emailAddress={orderData?.email}
