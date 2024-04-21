@@ -122,7 +122,6 @@ const InsuredDataForm = ({ formik, selectData }) => {
             <div style={{ color: "red" }}>{formik.errors.date}</div>
           ) : null}
           <CommonDatePicker
-            className="input-container"
             label="Дата видачі*:"
             id="date"
             mode="single"
