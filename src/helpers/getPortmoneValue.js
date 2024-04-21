@@ -1,6 +1,7 @@
 import { ENV } from '../constants';
 
-const URL = ENV.DEV ? 'http://localhost:4040' : 'https://api.auto-ins.com.ua';
+// const URL = ENV.DEV ? 'http://localhost:4040' : 'https://api.auto-ins.com.ua';
+const URL = 'https://api.auto-ins.com.ua';
 
 const portmoneFormProps = {
   PAYEE_ID: ENV.VITE_PAYEE_ID,
