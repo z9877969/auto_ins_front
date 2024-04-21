@@ -91,7 +91,7 @@ const Footer = () => {
             </LiItemS>
             <LiItemS disablePadding={true}>
               <LinkS
-                href="https://t.me/@auto_ins_ua"
+                href="https://t.me/auto_ins_ua"
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label="telegram"
