@@ -103,7 +103,7 @@ const Footer = () => {
             </LiItemS>
             <LiItemS disablePadding={true}>
               <LinkS
-                href="mailto:help.autoins@gmail.com"
+                href="mailto:admin@auto-ins.com.ua"
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label="mail"
