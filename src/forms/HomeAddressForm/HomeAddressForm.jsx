@@ -1,22 +1,22 @@
 import {
   DocInputsStyled,
   InputContBoxStyled,
-} from "../InsuredDataForm/InsuredDataForm.styled";
-import GeneralInput from "../../components/GeneralInput/GeneralInput";
-import PropTypes from "prop-types";
-import GeneralSelect from "../../components/GeneralSelect/GeneralSelect";
-import { useState } from "react";
-import { fetchAddress } from "../../redux/byParameters/operations";
-import { useSelector } from "react-redux";
+} from '../InsuredDataForm/InsuredDataForm.styled';
+import GeneralInput from '../../components/GeneralInput/GeneralInput';
+import PropTypes from 'prop-types';
+import GeneralSelect from '../../components/GeneralSelect/GeneralSelect';
+import { useState } from 'react';
+import { fetchAddress } from '../../redux/byParameters/operations';
+import { useSelector } from 'react-redux';
 
-import { useActions } from "../../hooks/useActions";
+import { useActions } from '../../hooks/useActions';
 
 const HomeAddressForm = ({ formik }) => {
   const { setHomeAddress } = useActions();
   const address = useSelector((state) => state.global.homeAddress);
 
   const [allAddress, setAllAddress] = useState([]);
-  const [queryText, setQueryText] = useState("");
+  const [queryText, setQueryText] = useState('');
 
   const getHomeAddress = async (e) => {
     setQueryText(e);
@@ -39,6 +39,7 @@ const HomeAddressForm = ({ formik }) => {
           inputValue={queryText}
           inputChangeCB={getHomeAddress}
           isValid={address.label}
+          readOnly={false}
         />
         <GeneralInput id="street" lableText="Вулиця*:" formikData={formik} />
         <DocInputsStyled>

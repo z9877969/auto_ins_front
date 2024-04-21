@@ -1,16 +1,16 @@
-import { InputContStyled, SelectStyled } from "./GeneralSelect.styled";
-import { Typography, useTheme } from "@mui/material";
-import PropTypes from "prop-types";
-import HelpCircle from "../HelpCircle/HelpCircle";
-import { SpriteSVG } from "../../images/SpriteSVG";
-import { useEffect, useRef } from "react";
+import { InputContStyled, SelectStyled } from './GeneralSelect.styled';
+import { Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import HelpCircle from '../HelpCircle/HelpCircle';
+import { SpriteSVG } from '../../images/SpriteSVG';
+import { useEffect, useRef } from 'react';
 
 const GeneralSelect = ({
   id,
   lableText, //текст елемента lable
   optionsArr, //масив елементів які відображає SElect
-  helper = "", //якщо текст присутній то показується елемент <HelpCircle/>
-  color = "", //базовий колір для елемента <HelpCircle/>
+  helper = '', //якщо текст присутній то показується елемент <HelpCircle/>
+  color = '', //базовий колір для елемента <HelpCircle/>
   changeCB, //функція що повертає вибране значення (піднесення)
   currentValue,
   inputChangeCB,
@@ -21,28 +21,28 @@ const GeneralSelect = ({
   getOptionValue,
   isValid = true,
   readOnly = true,
-  noOptionsMessage = "",
+  noOptionsMessage = '',
 }) => {
   const selectRef = useRef(null);
 
   useEffect(() => {
     if (selectRef.current.inputRef && readOnly) {
-      selectRef.current.inputRef.setAttribute("readonly", true);
+      selectRef.current.inputRef.setAttribute('readonly', true);
     }
   }, []);
-  const theme = useTheme();
+  // const theme = useTheme();
   return (
     <InputContStyled className="select-container">
       <Typography
         sx={{
-          color: isDisabled ? "darkgray!important" : null,
+          color: isDisabled ? 'darkgray!important' : null,
         }}
         variant="body1"
         component="label"
         htmlFor={id}
       >
         {lableText}
-        {helper && <HelpCircle lableText={helper} color={color ? color : ""}  />}
+        {helper && <HelpCircle lableText={helper} color={color ? color : ''} />}
       </Typography>
       <SelectStyled
         ref={selectRef}
@@ -84,4 +84,10 @@ GeneralSelect.propTypes = {
   optionsArr: PropTypes.array.isRequired,
   changeCB: PropTypes.func,
   inputChangeCB: PropTypes.func,
+  defaultValue: PropTypes.object,
+  getOptionLabel: PropTypes.func,
+  getOptionValue: PropTypes.func,
+  isValid: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  noOptionsMessage: PropTypes.string,
 };
