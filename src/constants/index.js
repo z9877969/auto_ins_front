@@ -8,12 +8,16 @@ export const SERIES_DRIVING_LICENSE_REGEX = /^[а-яіїйєґА-ЯІЇЙЄҐ]{3
 export const SERIES_PASSPORT_AND_DRIVING_LICENSE_REGEX =
   /^[а-яіїйєґА-ЯІЇЙЄҐ]{2,3}$/;
 export const REQUIRED_FIELD = "Обов'язкове поле";
-export const CATEGORY = ["A1", "A2", "B1", "B2", "B3", "B4", "B5", "E", "F"];
+export const CATEGORY = ['A1', 'A2', 'B1', 'B2', 'B3', 'B4', 'B5', 'E', 'F'];
 export const CATEGORY_ERROR =
-  "Транспорний засіб повиннен проходити обовязкове технічне обслуговування. Для прорахунку полісу зверніться будь-ласка до наших консультантів.";
+  'Транспорний засіб повиннен проходити обовязкове технічне обслуговування. Для прорахунку полісу зверніться будь-ласка до наших консультантів.';
 export const mainRoutes = {
-  CALCULATOR: "/calculator",
-  AUTO_MODEL: "/automodel",
-  GLOBAL: "/global",
+  CALCULATOR: '/calculator',
+  AUTO_MODEL: '/automodel',
+  GLOBAL: '/global',
 };
 Object.freeze(mainRoutes);
+export const ENV = {
+  VITE_PAYEE_ID: import.meta.env.VITE_PAYEE_ID,
+  DEV: import.meta.env.DEV,
+};

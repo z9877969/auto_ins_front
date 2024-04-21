@@ -16,11 +16,15 @@ import { selectOrderData } from '../../redux/Global/selectors';
 import { useActions } from '../../hooks/useActions';
 import CustomButtonLoading from '../Stepper/CustomButtonLoading';
 
+// eslint-disable-next-line
 export const orderMessagesKeys = {
   ORDER_GET: 'get',
   ORDER_CHECK: 'check',
+  ORDER_GET_VCL: 'get-vcl',
+  ORDER_CHECK_VCL: 'check-vcl',
   ORDER_PAYMENT: 'payment',
   ORDER_EMMITED: 'emmited',
+  ORDER_ERROR: 'error',
 };
 
 const content = {
@@ -30,6 +34,17 @@ const content = {
     btn: 'Надіслати СМС',
   },
   [orderMessagesKeys.ORDER_CHECK]: {
+    title: 'Відправте пароль з СМС!',
+    descr:
+      'Введіть і відправте пароль отриманий в СМС для продовження оформлення договору!',
+    btn: 'Відправити пароль',
+  },
+  [orderMessagesKeys.ORDER_GET_VCL]: {
+    title: 'Пройдіть верифікацію для додаткового покриття!',
+    descr: 'На ваш телефон буде надіслано смс з паролем.',
+    btn: 'Надіслати СМС',
+  },
+  [orderMessagesKeys.ORDER_CHECK_VCL]: {
     title: 'Відправте пароль з СМС!',
     descr:
       'Введіть і відправте пароль отриманий в СМС для переходу на сторінку оплати!',
@@ -86,13 +101,46 @@ const BlockThank = () => {
           contractId: orderData.epolicyOrderId,
           password: formik.values.password,
         });
+        if (!orderData.vclOrderId) {
+          await requestOrderApi({
+            epolicy: orderData.epolicyOrderId,
+          });
+          nextStep(orderMessagesKeys.ORDER_PAYMENT);
+        } else {
+          nextStep(orderMessagesKeys.ORDER_GET_VCL);
+        }
+      } catch (error) {
+        return goBack();
+      } finally {
+        formik.resetForm();
+        setIsLoading(false);
+      }
+    }
+    if (orderStage === orderMessagesKeys.ORDER_GET_VCL) {
+      setIsLoading(true);
+      try {
+        await getOrderPasswordApi(orderData.vclOrderId);
+        nextStep(orderMessagesKeys.ORDER_CHECK_VCL);
+      } catch (error) {
+        nextStep(orderMessagesKeys.ORDER_CHECK_VCL);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    if (orderStage === orderMessagesKeys.ORDER_CHECK_VCL) {
+      try {
+        setIsLoading(true);
+        await checkOrderPasswordApi({
+          contractId: orderData.vclOrderId,
+          password: formik.values.password,
+        });
         await requestOrderApi({
           epolicy: orderData.epolicyOrderId,
           vcl: orderData.vclOrderId,
         });
         nextStep(orderMessagesKeys.ORDER_PAYMENT);
       } catch (error) {
-        goBack();
+        return goBack();
       } finally {
         setIsLoading(false);
       }
@@ -103,6 +151,7 @@ const BlockThank = () => {
     return () => {
       actions.clearGlobal();
     };
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -112,7 +161,8 @@ const BlockThank = () => {
           orderStage === orderMessagesKeys.ORDER_PAYMENT) && (
           <SpriteSVG name={content[orderStage].icon}></SpriteSVG>
         )}
-        {orderStage === orderMessagesKeys.ORDER_CHECK && (
+        {(orderStage === orderMessagesKeys.ORDER_CHECK ||
+          orderStage === orderMessagesKeys.ORDER_CHECK_VCL) && (
           <GeneralInput
             id="password"
             lableText="Пароль:"
@@ -149,7 +199,9 @@ const BlockThank = () => {
         <ButtonS to={'/'}>{orderStage && content[orderStage].btn}</ButtonS>
       )}
       {(orderStage === orderMessagesKeys.ORDER_GET ||
-        orderStage === orderMessagesKeys.ORDER_CHECK) && (
+        orderStage === orderMessagesKeys.ORDER_CHECK ||
+        orderStage === orderMessagesKeys.ORDER_GET_VCL ||
+        orderStage === orderMessagesKeys.ORDER_CHECK_VCL) && (
         <CustomButtonLoading
           onCLick={handleOrderClick}
           btnTitle={orderStage && content[orderStage].btn}
@@ -158,7 +210,10 @@ const BlockThank = () => {
       )}
       {orderStage === orderMessagesKeys.ORDER_PAYMENT && (
         <PortmoneForm
-          orderId={orderData?.epolicyOrderId}
+          orderId={{
+            epolicyId: orderData?.epolicyOrderId,
+            vclId: orderData?.vclOrderId,
+          }}
           billAmount={orderData?.billAmount}
           shopOrderNumber={orderData?.shopOrderNumber}
           emailAddress={orderData?.email}

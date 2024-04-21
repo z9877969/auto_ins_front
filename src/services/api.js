@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { ENV } from '../constants';
 
 export const instance = axios.create({
-  // baseURL: "http://localhost:4040/api",
-  baseURL: 'https://api.auto-ins.com.ua/api',
+  baseURL: ENV.DEV
+    ? 'http://localhost:4040/api'
+    : 'https://api.auto-ins.com.ua/api',
 });
 
 export const getOrderPasswordApi = async (contractId) => {
