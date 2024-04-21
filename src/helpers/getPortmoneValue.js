@@ -1,8 +1,15 @@
+import { ENV } from '../constants';
+
+// const URL = ENV.DEV ? 'http://localhost:4040' : 'https://api.auto-ins.com.ua';
+const URL = 'https://api.auto-ins.com.ua';
+
 const portmoneFormProps = {
-  PAYEE_ID: import.meta.env.VITE_PAYEE_ID,
-  GET_SUCCESS_URL: (orderId) =>
-    `https://api.auto-ins.com.ua/api/orders/${orderId}/emmit`,
-  FAILURE_URL: 'https://auto-ins.com.ua/form?type=order-payment',
+  PAYEE_ID: ENV.VITE_PAYEE_ID,
+  GET_SUCCESS_URL: ({ vclId, epolicyId }) =>
+    `${URL}/api/orders/${epolicyId}/emmit?epolicy=${epolicyId}${
+      vclId ? `&vcl=${vclId}` : ''
+    }`,
+  FAILURE_URL: URL + '/order/payment',
 };
 
 export const getPortmoneValue = ({
@@ -12,7 +19,7 @@ export const getPortmoneValue = ({
   lang,
   billAmount,
   billCurrency,
-  orderId,
+  orderId: { epolicyId, vclId },
 }) => ({
   paymentTypes: {
     card: 'Y',
@@ -44,7 +51,7 @@ export const getPortmoneValue = ({
     shopOrderNumber,
     billAmount,
     billCurrency,
-    successUrl: portmoneFormProps.GET_SUCCESS_URL(orderId),
+    successUrl: portmoneFormProps.GET_SUCCESS_URL({ epolicyId, vclId }),
     failureUrl: portmoneFormProps.FAILURE_URL,
     preauthFlag: 'N',
     expTime: 1200,

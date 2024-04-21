@@ -16,7 +16,7 @@ const AdvatagesSection = lazy(() =>
 );
 const Partners = lazy(() => import("../components/Partners/Partners"));
 
-import HeroTabs from "../components/HeroTabs/HeroTabs";
+// import HeroTabs from "../components/HeroTabs/HeroTabs";
 import ModalError from "../components/ModalError/ModalError";
 import AlertMUI from "../components/Alert/AlertMUI";
 import Hero from "../components/Hero/Hero";

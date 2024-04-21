@@ -99,12 +99,12 @@ const ModalError = () => {
         </DialogContent>
         <DialogActions>
           <BlueButton
-            arai-label="Розрахувати по єврономеру"
+            arai-label="Розрахувати за параметрами"
             className="buttonDesktop"
             onClick={handleBack}
             sx={{ width: { xs: "100%" } }}
           >
-            Розрахувати по єврономеру
+            Розрахувати за параметрами
           </BlueButton>
           <ButtonCancel
             className="buttonDesktop"
