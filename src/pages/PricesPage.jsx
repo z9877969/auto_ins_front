@@ -1,20 +1,20 @@
-import { useNavigate } from "react-router-dom";
-import { CostCalculation } from "../components/CostCalculation/CostCalculation";
-import { useEffect } from "react";
-import OutletPageWrapper from "../components/OutletPageWrapper";
-import ProposalsFilter from "../components/ProposalsFilter/ProposalsFilter";
-import CompanyList from "../components/CompanyList/CompanyList";
-import { useSelector } from "react-redux";
-import { getSubmitObject } from "../redux/byParameters/selectors";
+import { useNavigate } from 'react-router-dom';
+import { CostCalculation } from '../components/CostCalculation/CostCalculation';
+import { useEffect } from 'react';
+import OutletPageWrapper from '../components/OutletPageWrapper';
+import ProposalsFilter from '../components/ProposalsFilter/ProposalsFilter';
+import CompanyList from '../components/CompanyList/CompanyList';
+import { useSelector } from 'react-redux';
+import { getSubmitObject } from '../redux/byParameters/selectors';
 import {
   getStateCalculator,
   getStateNumber,
-} from "../redux/Calculator/selectors";
-import { LinearProgress } from "@mui/material";
-import LineSection from "../components/LineSection/LineSection";
+} from '../redux/Calculator/selectors';
+import { LinearProgress } from '@mui/material';
+import LineSection from '../components/LineSection/LineSection';
 
-import ModalError from "../components/ModalError/ModalError";
-import { getIsModalErrorOpen } from "../redux/Global/selectors";
+import ModalError from '../components/ModalError/ModalError';
+import { getIsModalErrorOpen } from '../redux/Global/selectors';
 
 const PricesPage = () => {
   const navigate = useNavigate();
@@ -28,10 +28,10 @@ const PricesPage = () => {
     let subscribed = true;
     if (subscribed) {
       if (
-        !Object.hasOwn(userParams, "customerCategory") &&
-        stateNumber === ""
+        !Object.hasOwn(userParams, 'customerCategory') &&
+        stateNumber === ''
       ) {
-        navigate("/");
+        navigate('/');
         return;
       }
     }
@@ -49,7 +49,7 @@ const PricesPage = () => {
       <OutletPageWrapper>
         <CostCalculation />
         <ProposalsFilter />
-        <LineSection />
+        <LineSection isLoading={isLoadingCalculator} />
         {isLoadingCalculator && <LinearProgress />}
         <CompanyList />
       </OutletPageWrapper>
