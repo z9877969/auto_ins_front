@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
-import { Box, Collapse, Zoom, useMediaQuery } from "@mui/material";
-import { SpriteSVG } from "../../images/SpriteSVG";
+import { useEffect, useState } from 'react';
+import { Box, Collapse, Zoom, useMediaQuery } from '@mui/material';
+import { SpriteSVG } from '../../images/SpriteSVG';
 import {
   FilterButtonStyled,
   ResetFilterButtonStyled,
   SelectsContStyled,
   TooltipStyled,
-} from "./ProposalsFilter.styled";
-import GeneralSelect from "../GeneralSelect/GeneralSelect";
-import { useTheme } from "@emotion/react";
+} from './ProposalsFilter.styled';
+import GeneralSelect from '../GeneralSelect/GeneralSelect';
+import { useTheme } from '@emotion/react';
 import {
   createSelectOptionsByCompaniName,
-  filteredByPrice,
+  filterByPrice,
   priceSortOptionsGeneral,
-} from "../../helpers/proposalsFilter";
-import PropTypes from "prop-types";
-import FilterByCompany from "../SelectFilterByCompany/FilterByCompany";
-import { useSelector } from "react-redux";
-import { getTariffPolicyChoose } from "../../redux/Calculator/selectors";
+} from '../../helpers/proposalsFilter';
+import PropTypes from 'prop-types';
+import FilterByCompany from '../SelectFilterByCompany/FilterByCompany';
+import { useSelector } from 'react-redux';
+import { getTariffPolicyChoose } from '../../redux/Calculator/selectors';
 
-import { useActions } from "../../hooks/useActions";
+import { useActions } from '../../hooks/useActions';
 
 const ProposalsFilter = () => {
   const companies = useSelector(getTariffPolicyChoose);
   const theme = useTheme();
-  const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
+  const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
   const [isShowFilter, setIsShowFilter] = useState(false);
   const [companiesNameOptions, setCompaniesNameOptions] = useState([]);
   const [selectedCompanieName, setSelectedCompanieName] = useState([]);
@@ -43,7 +43,7 @@ const ProposalsFilter = () => {
       target: { value },
     } = event;
     setSelectedCompanieName(
-      typeof value === "string" ? value.split(",") : value
+      typeof value === 'string' ? value.split(',') : value
     );
   };
 
@@ -59,7 +59,7 @@ const ProposalsFilter = () => {
       );
     }
     if (selectedPriceSort.value) {
-      filteredByPrice(filteredCompanies, selectedPriceSort.value);
+      filterByPrice(filteredCompanies, selectedPriceSort.value);
     }
     if (selectedCompanieName || selectedPriceSort.value) {
       setFilteredCompanies(filteredCompanies);
@@ -75,7 +75,7 @@ const ProposalsFilter = () => {
   return (
     <>
       <Box
-        sx={{ backgroundColor: "#BCC3E7", padding: "20px 0", color: "black" }}
+        sx={{ backgroundColor: '#BCC3E7', padding: '20px 0', color: 'black' }}
       >
         {!smScreen && (
           <FilterButtonStyled aria-label="showFilter" onClick={handleChange}>
@@ -83,8 +83,8 @@ const ProposalsFilter = () => {
               sx={{
                 width: 24,
                 height: 24,
-                fill: "transparent",
-                stroke: "black",
+                fill: 'transparent',
+                stroke: 'black',
                 marginRight: 0.5,
               }}
             >
@@ -97,7 +97,7 @@ const ProposalsFilter = () => {
           <SelectsContStyled>
             <GeneralSelect
               id="price"
-              lableText="Ціна"
+              lableText="Сортувати за:"
               optionsArr={priceSortOptionsGeneral}
               changeCB={setSelectedPriceSort}
               currentValue={selectedPriceSort}

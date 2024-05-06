@@ -1,16 +1,17 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import {
   getFilteredCompanies,
   getTariffsStatus,
   getTariffVcl,
-} from "../../redux/Calculator/selectors";
+} from '../../redux/Calculator/selectors';
 
-import Company from "../Company/Company";
+import Company from '../Company/Company';
 
 const CompanyList = () => {
   let dgo = null;
 
   const proposals = useSelector(getFilteredCompanies);
+
   let dgos = useSelector(getTariffVcl);
   const status = useSelector(getTariffsStatus);
   const insurerProposal = proposals?.map((companyObject) => {
