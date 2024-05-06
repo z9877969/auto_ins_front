@@ -38,7 +38,7 @@ const HomeAddressForm = ({ formik }) => {
           currentValue={address}
           inputValue={queryText}
           inputChangeCB={getHomeAddress}
-          isValid={address.label}
+          isValid={Boolean(address.label)}
           readOnly={false}
         />
         <GeneralInput id="street" lableText="Вулиця*:" formikData={formik} />
