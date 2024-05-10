@@ -30,25 +30,25 @@ export const orderMessagesKeys = {
 const content = {
   [orderMessagesKeys.ORDER_GET]: {
     title: 'Підтвердіть укладання договору!',
-    descr: 'На ваш телефон буде надіслано смс з паролем.',
+    descr: 'На ваш телефон буде надіслано СМС з кодом.',
     btn: 'Надіслати СМС',
   },
   [orderMessagesKeys.ORDER_CHECK]: {
     title: 'Введіть код з повідомлення',
     descr:
       'Введіть і відправте код отриманий в СМС для продовження оформлення договору!',
-    btn: 'Відправити пароль',
+    btn: 'Відправити код',
   },
   [orderMessagesKeys.ORDER_GET_VCL]: {
     title: 'Підтвердіть придбання додаткового покриття.',
-    descr: 'На ваш телефон буде надіслано смс з паролем.',
+    descr: 'На ваш телефон буде надіслано СМС з кодом.',
     btn: 'Надіслати СМС',
   },
   [orderMessagesKeys.ORDER_CHECK_VCL]: {
     title: 'Введіть код з повідомлення',
     descr:
       'Введіть і відправте код отриманий в СМС для переходу на сторінку оплати!',
-    btn: 'Відправити пароль',
+    btn: 'Відправити код',
   },
   [orderMessagesKeys.ORDER_PAYMENT]: {
     icon: 'icon-money',
@@ -165,7 +165,7 @@ const BlockThank = () => {
           orderStage === orderMessagesKeys.ORDER_CHECK_VCL) && (
           <GeneralInput
             id="password"
-            lableText="Пароль:"
+            lableText="Код:"
             type="text"
             color=""
             handleBlur={null}

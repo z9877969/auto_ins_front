@@ -24,7 +24,7 @@ import { addMonths } from 'date-fns/esm';
 import { useActions } from '../../hooks/useActions';
 import format from 'date-fns/format';
 import CommonDatePicker from '../CommonDatePicker/CommonDatePicker';
-import { CATEGORY, CATEGORY_ERROR } from '../../constants';
+import { CATEGORY, CATEGORY_ERROR, ORDER_TYPE } from '../../constants';
 
 const ByParameters = () => {
   const navigate = useNavigate();
@@ -108,10 +108,8 @@ const ByParameters = () => {
       setAutoModelByMaker([]);
       setTariffPolicyChoose([]);
       setTariffVcl([]);
-      osagoByParams(sendObj);
-
       navigate('/prices', {
-        state: { from: locationPath },
+        state: { from: locationPath, params: sendObj, type: ORDER_TYPE.BY_PARAMS },
       });
     },
   });

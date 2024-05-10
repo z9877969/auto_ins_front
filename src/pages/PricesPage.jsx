@@ -16,11 +16,12 @@ import LineSection from '../components/LineSection/LineSection';
 import ModalError from '../components/ModalError/ModalError';
 import { getIsModalErrorOpen } from '../redux/Global/selectors';
 import { useActions } from '../hooks/useActions';
+import { ORDER_TYPE } from '../constants';
 
 const PricesPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { osagoByDn, setIsModalErrorOpen } = useActions();
+  const { osagoByDn, setIsModalErrorOpen, osagoByParams } = useActions();
 
   const userParams = useSelector(getSubmitObject);
   const stateNumber = useSelector(getStateNumber);
@@ -47,7 +48,14 @@ const PricesPage = () => {
     if (location.state?.params) {
       const getOsagoData = async () => {
         try {
-          await osagoByDn(location.state.params).unwrap();
+          if (location.state.type === ORDER_TYPE.BY_PARAMS) {
+            await osagoByParams(location.state.params).unwrap();
+            return;
+          }
+          if (location.state.type === ORDER_TYPE.BY_LICENSE_PLATE) {
+            await osagoByDn(location.state.params).unwrap();
+            return;
+          }
         } catch (error) {
           setIsModalErrorOpen(true);
         }
@@ -56,7 +64,7 @@ const PricesPage = () => {
     } else {
       navigate('/');
     }
-  }, [location.state?.params, setIsModalErrorOpen, osagoByDn, navigate]);
+  }, [location.state, setIsModalErrorOpen, osagoByDn, osagoByParams, navigate]);
 
   if (isError) {
     return <ModalError />;

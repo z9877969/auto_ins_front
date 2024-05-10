@@ -21,3 +21,7 @@ export const ENV = {
   VITE_PAYEE_ID: import.meta.env.VITE_PAYEE_ID,
   DEV: import.meta.env.DEV,
 };
+export const ORDER_TYPE = {
+  BY_LICENSE_PLATE: 'by-license-plate',
+  BY_PARAMS: 'by-params',
+};

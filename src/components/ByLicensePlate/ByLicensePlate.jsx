@@ -11,7 +11,7 @@ import { SubmitButton } from '../ByParameters/ByParameters.styled';
 import HelpCircle from '../HelpCircle/HelpCircle';
 import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { DNUMBER_REGEX } from '../../constants';
+import { DNUMBER_REGEX, ORDER_TYPE } from '../../constants';
 import HelperList from '../HelpCircle/HelperList/HelperList';
 import { useActions } from '../../hooks/useActions';
 
@@ -75,7 +75,11 @@ const ByLicensePlate = () => {
         return;
       }
       navigate('/prices', {
-        state: { from: locationPath, params },
+        state: {
+          from: locationPath,
+          params,
+          type: ORDER_TYPE.BY_LICENSE_PLATE,
+        },
       });
     },
   });
