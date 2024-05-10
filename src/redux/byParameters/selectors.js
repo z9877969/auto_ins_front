@@ -1,6 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit';
 
 // export const getSubmitObject = (state) => state.byParameters.submitObj;
+export const getEngineType = (state) =>
+  state.byParameters?.engineCapacity?.value ?? null;
+
+export const getIsPrivilage = (state) => state.byParameters.benefits;
+
 export const getAddressAndAuto = createSelector(
   (state) => state.byParameters.address,
   (state) => state.byParameters.engineCapacity,
@@ -26,4 +31,3 @@ export const getRegistrationPlaceData = createSelector(
     };
   }
 );
-  

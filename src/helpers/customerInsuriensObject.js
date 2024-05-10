@@ -9,7 +9,8 @@ export const customerInsuriensObject = (
   carDataFormik,
   insurObject,
   registrationPlaceId,
-  fullCarModel
+  fullCarModel,
+  privilegeData
 ) => {
   const customer = customerNormalize(
     insuredDataFormik,
@@ -21,7 +22,8 @@ export const customerInsuriensObject = (
     carDataFormik,
     insurObject,
     registrationPlaceId,
-    fullCarModel
+    fullCarModel,
+    privilegeData
   );
   return { customer, insuranceObject };
 };

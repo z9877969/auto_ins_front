@@ -2,23 +2,23 @@ import {
   DataContainerWrapper,
   DocInputsStyled,
   InputContBoxStyled,
-} from "./InsuredDataForm.styled";
-import GeneralSelect from "../../components/GeneralSelect/GeneralSelect";
-import GeneralInput from "../../components/GeneralInput/GeneralInput";
-import PropTypes from "prop-types";
-import { Box } from "@mui/material";
-import { SpriteSVG } from "../../images/SpriteSVG";
-import ReactDatePicker from "react-datepicker";
-import { useState } from "react";
-import sub from "date-fns/sub";
-import { InputStyled } from "../../components/GeneralInput/GeneralInput.styled";
-import CommonDatePicker from "../../components/CommonDatePicker/CommonDatePicker";
+} from './InsuredDataForm.styled';
+import GeneralSelect from '../../components/GeneralSelect/GeneralSelect';
+import GeneralInput from '../../components/GeneralInput/GeneralInput';
+import PropTypes from 'prop-types';
+import { Box } from '@mui/material';
+import { SpriteSVG } from '../../images/SpriteSVG';
+import ReactDatePicker from 'react-datepicker';
+import { useState } from 'react';
+import sub from 'date-fns/sub';
+import { InputStyled } from '../../components/GeneralInput/GeneralInput.styled';
+import CommonDatePicker from '../../components/CommonDatePicker/CommonDatePicker';
 
 const InsuredDataForm = ({ formik, selectData }) => {
   const { InsuredDataSelectOptions, identityCard, setIdentityCard } =
     selectData;
 
-  const isID_PASSPORT = identityCard.value === "ID_PASSPORT";
+  const isID_PASSPORT = identityCard.value === 'ID_PASSPORT';
   const [birthDate, setBirthDate] = useState(
     sub(new Date(), {
       years: 18,
@@ -27,17 +27,12 @@ const InsuredDataForm = ({ formik, selectData }) => {
 
   const [date, setDate] = useState(new Date());
   const hadleChangeBirthDate = (e) => {
-    formik.setFieldValue("birthDate", e);
+    formik.setFieldValue('birthDate', e);
   };
   const hadleChangeDate = (e) => {
-    formik.setFieldValue("date", e);
+    formik.setFieldValue('date', e);
   };
 
-  // const handleChangeInput = (e) => {
-  //   const e2 = e.target.value.trim().toUpperCase();
-  //   e.target.value = e2;
-  //   formik.handleChange(e);
-  // };
   return (
     <>
       <InputContBoxStyled>
@@ -49,7 +44,7 @@ const InsuredDataForm = ({ formik, selectData }) => {
           formikData={formik}
         />
         {formik.errors.birthDate ? (
-          <div style={{ color: "red" }}>{formik.errors.birthDate}</div>
+          <div style={{ color: 'red' }}>{formik.errors.birthDate}</div>
         ) : null}
         <DataContainerWrapper>
           <label htmlFor="dateFrom">Дата народження*:</label>
@@ -76,7 +71,7 @@ const InsuredDataForm = ({ formik, selectData }) => {
             dropdownMode="select"
             icon={
               <Box className="iconCalender">
-                <SpriteSVG name={"icon-calendar"} />
+                <SpriteSVG name={'icon-calendar'} />
               </Box>
             }
           />
@@ -119,7 +114,7 @@ const InsuredDataForm = ({ formik, selectData }) => {
             formikData={formik}
           />
           {formik.errors.date ? (
-            <div style={{ color: "red" }}>{formik.errors.date}</div>
+            <div style={{ color: 'red' }}>{formik.errors.date}</div>
           ) : null}
           <CommonDatePicker
             label="Дата видачі*:"
@@ -141,7 +136,7 @@ const InsuredDataForm = ({ formik, selectData }) => {
             dropdownMode="select"
             icon={
               <Box className="iconCalender">
-                <SpriteSVG name={"icon-calendar"} />
+                <SpriteSVG name={'icon-calendar'} />
               </Box>
             }
           />

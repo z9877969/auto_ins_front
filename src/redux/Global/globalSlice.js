@@ -58,8 +58,25 @@ export const globalSlice = createSlice({
         }
         state.order[payload.type] = payload;
       })
-      .addCase(contractSave.rejected, (state, { payload }) => {
-        state.error = payload?.message;
+      .addCase(contractSave.rejected, (state, { payload = {} }) => {
+        const { message, errorResponse } = payload;
+        const combinedMessage = errorResponse.constraintViolations.filter(
+          ({ message }, i, arr) => {
+            if (i > 0 && arr[i - 1].message === message) {
+              return false;
+            }
+            return true;
+          }
+        );
+        const erroMessage =
+          combinedMessage.length === 0
+            ? message
+            : combinedMessage
+                .reduce((acc, el) => {
+                  return acc + el.message + ' ';
+                }, '')
+                .trim();
+        state.error = erroMessage;
         state.isLoading = false;
       });
   },

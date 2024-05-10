@@ -25,6 +25,7 @@ import { useActions } from '../../hooks/useActions';
 import format from 'date-fns/format';
 import CommonDatePicker from '../CommonDatePicker/CommonDatePicker';
 import { CATEGORY, CATEGORY_ERROR, ORDER_TYPE } from '../../constants';
+import { getEngineType } from '../../redux/byParameters/selectors';
 
 const ByParameters = () => {
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ const ByParameters = () => {
     foreignNumber,
     benefits,
   } = useSelector((state) => state.byParameters);
+  const engineType = useSelector(getEngineType);
   const [dateFrom, setDateFrom] = useState(addDays(new Date(), 1));
 
   const handleChangeengineCapacity = (e) => {
@@ -109,7 +111,11 @@ const ByParameters = () => {
       setTariffPolicyChoose([]);
       setTariffVcl([]);
       navigate('/prices', {
-        state: { from: locationPath, params: sendObj, type: ORDER_TYPE.BY_PARAMS },
+        state: {
+          from: locationPath,
+          params: sendObj,
+          type: ORDER_TYPE.BY_PARAMS,
+        },
       });
     },
   });
@@ -177,23 +183,33 @@ const ByParameters = () => {
             name="benefits"
             val={formik.values.benefits}
             changeCB={formik.handleChange}
-            isChecked={engineCapacity.value === 'B5' ? false : benefits}
-            color={
-              engineCapacity.value === 'B5' ? 'rgba(243, 243, 243, 0.40)' : null
+            isChecked={
+              engineCapacity.value === 'B5' ? false : formik.values.benefits
             }
-            isDisabled={engineCapacity.value === 'B5' ? true : false}
+            color={
+              engineCapacity.value === 'B5' || formik.values.foreignNumber
+                ? 'rgba(243, 243, 243, 0.40)'
+                : null
+            }
+            isDisabled={
+              engineCapacity.value === 'B5' || formik.values.foreignNumber
+                ? true
+                : false
+            }
             helper={<HelperList />}
           />
           <GeneralCheckbox
             lableText="Авто на іноземних номерах"
             name="foreignNumber"
             val={formik.values.foreignNumber}
-            isChecked={foreignNumber}
+            isChecked={!formik.values.benefits && formik.values.foreignNumber}
             changeCB={(e) => {
               setQueryText('');
               setAddress({ label: '', value: '' });
               formik.handleChange(e);
             }}
+            isDisabled={formik.values.benefits ? true : false}
+            color={formik.values.benefits ? 'rgba(243, 243, 243, 0.40)' : null}
           />
         </AllCheckboxContStyled>
 

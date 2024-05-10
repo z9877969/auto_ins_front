@@ -11,13 +11,13 @@ import {
 } from '../../redux/References/selectors';
 import { useEffect, useState } from 'react';
 import { useCallback } from 'react';
-import { getSubmitObject } from '../../redux/byParameters/selectors';
+import {
+  getIsPrivilage,
+  getSubmitObject,
+} from '../../redux/byParameters/selectors';
 import { useActions } from '../../hooks/useActions';
 
-import {
-  combineError,
-  getIsModalErrorOpen,
-} from '../../redux/Global/selectors';
+import { getIsModalErrorOpen } from '../../redux/Global/selectors';
 import ModalError from '../../components/ModalError/ModalError';
 
 const CarDataForm = ({ formik }) => {
@@ -34,8 +34,8 @@ const CarDataForm = ({ formik }) => {
   const autoByBrand = useSelector(getAutoByMakerAndModel);
   const { outsideUkraine } = useSelector(getSubmitObject);
   const [insuranceObject] = useSelector(getAutoByNumber);
-  const stateNumberError = useSelector(combineError);
   const isError = useSelector(getIsModalErrorOpen);
+  const isPrivilage = useSelector(getIsPrivilage);
 
   const [selectedAutoMaker, setSelectedAutoMaker] = useState({
     name: 'Оберіть марку авто',
@@ -98,6 +98,11 @@ const CarDataForm = ({ formik }) => {
     formik.handleChange(e);
   };
 
+  const handleChangeEngineVolume = (e) => {
+    const { value } = e.target;
+    formik.setFieldValue('engineVolume', Number(value));
+  };
+
   const findMakerAndModel = useCallback(() => {
     const maker = autoByBrand[0]?.autoMaker;
     setSelectedAutoMaker(maker);
@@ -134,7 +139,7 @@ const CarDataForm = ({ formik }) => {
         {formik.errors.stateNumber ? (
           <div className="errorMessage">{formik.errors.stateNumber}</div>
         ) : (
-          <div style={{ color: 'red' }}>{stateNumberError}</div>
+          ''
         )}
         <GeneralInput
           id="year"
@@ -152,9 +157,8 @@ const CarDataForm = ({ formik }) => {
           getOptionValue={(option) => option.id}
           changeCB={handleChangeBrand}
           isDisabled={disabled}
-          // readOnly={false}
-          readOnly={Boolean(insuranceObject?.stateNumber)}          
-          noOptionsMessage='Така марка відсутня'
+          readOnly={Boolean(insuranceObject?.stateNumber)}
+          noOptionsMessage="Така марка відсутня"
         />
 
         <GeneralSelect
@@ -170,10 +174,18 @@ const CarDataForm = ({ formik }) => {
             selectedAutoModel?.name === 'Оберіть модель авто' ? false : true
           }
           changeCB={handleChangeModel}
-          // readOnly={false}
           readOnly={Boolean(insuranceObject?.stateNumber)}
-          noOptionsMessage='Така модель відсутня'
+          noOptionsMessage="Така модель відсутня"
         />
+        {isPrivilage && (
+          <GeneralInput
+            id="engineVolume"
+            lableText="Об'єм двигуна*:"
+            formikData={formik}
+            customFunc={handleChangeEngineVolume}
+            isDisabled={disabled}
+          />
+        )}
         <GeneralInput
           id="bodyNumber"
           lableText="VIN Номер*:"

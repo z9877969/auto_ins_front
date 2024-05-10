@@ -25,3 +25,20 @@ export const ORDER_TYPE = {
   BY_LICENSE_PLATE: 'by-license-plate',
   BY_PARAMS: 'by-params',
 };
+export const ENGINE_VOLUME_TYPES = {
+  B1: {
+    min: 0,
+    max: 1600,
+  },
+  B2: {
+    min: 1601,
+    max: 2000,
+  },
+  B3: {
+    min: 2001,
+    max: 3000,
+  },
+  B4: {
+    min: 3001,
+  },
+};

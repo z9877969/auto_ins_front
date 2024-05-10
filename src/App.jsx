@@ -1,15 +1,17 @@
-import { Suspense, lazy } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import Layout from "./components/Layout";
-import Loader from "./components/Loader/Loader";
+import { Suspense, lazy } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import Layout from './components/Layout';
+import Loader from './components/Loader/Loader';
+import { useNotExistUser } from './hooks';
 
-const HomePage = lazy(() => import("./pages/HomePage.jsx"));
-const PricesPage = lazy(() => import("./pages/PricesPage.jsx"));
-const FormPage = lazy(() => import("./pages/FormPage.jsx"));
-const OrderPage = lazy(() => import("./pages/OrderPage.jsx"));
-const BaseSettings = lazy(() => import("./components/BaseSettings.jsx"));
+const HomePage = lazy(() => import('./pages/HomePage.jsx'));
+const PricesPage = lazy(() => import('./pages/PricesPage.jsx'));
+const FormPage = lazy(() => import('./pages/FormPage.jsx'));
+const OrderPage = lazy(() => import('./pages/OrderPage.jsx'));
+const BaseSettings = lazy(() => import('./components/BaseSettings.jsx'));
 
 function App() {
+  useNotExistUser();
   return (
     <>
       <Suspense fallback={null}>

@@ -1,15 +1,16 @@
-import format from "date-fns/format";
+import format from 'date-fns/format';
 
 export const contractSaveDGONormalize = (
   userParams,
   user,
   dgoTariff,
   insurObject,
-  customerInsuriensObject
+  customerInsuriensObject,
+  privilegeData
 ) => {
   const { customer, insuranceObject } = customerInsuriensObject;
-  return {
-    type: "vcl",
+  const requestBody = {
+    type: 'vcl',
     ...user,
     customer,
     tariff: { id: dgoTariff?.id, type: dgoTariff?.type },
@@ -22,8 +23,14 @@ export const contractSaveDGONormalize = (
       "yyyy-MM-dd'T'HH:mm:ss.SSSxxxx"
     ),
     date: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxxx"),
-    state: "DRAFT",
+    state: 'DRAFT',
 
     limit: dgoTariff?.limit,
   };
+
+  if (privilegeData) {
+    requestBody.privilegeType = privilegeData.customerStatus;
+  }
+
+  return requestBody;
 };

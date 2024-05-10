@@ -34,10 +34,12 @@ import {
   insuredDataFormValidationSchema,
 } from '../../helpers/formValidationSchema';
 import {
+  getEngineType,
+  getIsPrivilage,
   getRegistrationPlaceData,
   getSubmitObject,
 } from '../../redux/byParameters/selectors';
-import { useActions } from '../../hooks/useActions';
+import { useActions } from '../../hooks';
 
 import sub from 'date-fns/sub';
 import { contractSaveOSAGONormalize } from '../../helpers/dataNormalize/contractSaveOSAGONormalize';
@@ -74,15 +76,17 @@ const Stepper = ({ backLinkRef }) => {
   const homeAddress = useSelector(getHomeAddress);
   const userParams = useSelector(getSubmitObject);
   const registrationPlaceData = useSelector(getRegistrationPlaceData);
+  const [insurObject] = useSelector(getAutoByNumber);
+  const customerCategory = useSelector(getIsPrivilage);
+  const engineType = useSelector(getEngineType);
 
   const [activeStep, setActiveStep] = useState(0);
-  const [identityCard, setIdentityCard] = useState([]);
-  // const location = useLocation();
+  const [identityCard, setIdentityCard] = useState(null);
 
-  const customerCategory = useSelector((state) => state.byParameters.benefits);
   let InsuredDataSelectOptions = !customerCategory
     ? NATURALSelectOptions
     : PRIVILEGEDSelectOptions;
+
   useEffect(() => {
     setIdentityCard(InsuredDataSelectOptions[0]);
   }, [InsuredDataSelectOptions]);
@@ -104,7 +108,6 @@ const Stepper = ({ backLinkRef }) => {
       }),
       date: new Date(),
     },
-
     validationSchema: insuredDataFormValidationSchema(),
     onSubmit: () => {
       handleNext();
@@ -119,8 +122,6 @@ const Stepper = ({ backLinkRef }) => {
     },
   });
 
-  const [insurObject] = useSelector(getAutoByNumber);
-
   const carDataFormik = useFormik({
     initialValues: {
       stateNumber: insurObject?.stateNumber || '',
@@ -131,13 +132,25 @@ const Stepper = ({ backLinkRef }) => {
       maker: '',
       outsideUkraine: userParams?.outsideUkraine || false,
       category: insurObject?.category || userParams?.autoCategory,
+      engineVolume: insurObject?.engineVolume || '',
     },
-    validationSchema: carDataFormValidationSchema(),
+    validationSchema: carDataFormValidationSchema({
+      isPrivilege: identityCard?.privilegeType === 'PRIVILEGED',
+      engineType,
+    }),
     enableReinitialize: true,
     validateOnBlur: true,
     validateOnChange: false,
-    onSubmit: ({ model, maker }) => {
+    onSubmit: ({ model, maker, engineVolume }) => {
       const fullCarModel = `${maker.name} ${model.name}`;
+      const privilegeData =
+        identityCard.privilegeType === 'PRIVILEGED'
+          ? {
+              engineVolume,
+              privilegeType: identityCard.privilegeType,
+              customerStatus: identityCard.customerStatus,
+            }
+          : null;
       const customIsur = customerInsuriensObject(
         insuredDataFormik,
         homeAddressFormik,
@@ -146,10 +159,18 @@ const Stepper = ({ backLinkRef }) => {
         carDataFormik,
         insurObject,
         registrationPlaceData.id,
-        fullCarModel
+        fullCarModel,
+        privilegeData
       );
+
       contractSave(
-        contractSaveOSAGONormalize(userParams, user, tariff, customIsur)
+        contractSaveOSAGONormalize(
+          userParams,
+          user,
+          tariff,
+          customIsur,
+          privilegeData
+        )
       );
 
       if (dgoTarrif?.id) {
@@ -159,7 +180,8 @@ const Stepper = ({ backLinkRef }) => {
             user,
             dgoTarrif,
             insurObject,
-            customIsur
+            customIsur,
+            privilegeData
           )
         );
       }
