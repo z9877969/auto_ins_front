@@ -1,16 +1,15 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CATEGORY, CATEGORY_ERROR, mainRoutes } from "../../constants";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { CATEGORY, CATEGORY_ERROR, mainRoutes } from '../../constants';
 
-import { instance } from "../../services/api";
-import { setIsModalErrorOpen } from "../Global/globalSlice";
-import { setRefError } from "./referencesSlice";
+import { instance } from '../../services/api';
+import { setRefError } from './referencesSlice';
 
 export const allAutoMakers = createAsyncThunk(
-  "references/allAutoMakers",
+  'references/allAutoMakers',
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await instance.get(
-        mainRoutes.AUTO_MODEL + "/auto_model/makers"
+        mainRoutes.AUTO_MODEL + '/auto_model/makers'
       );
       return data;
     } catch (error) {
@@ -20,11 +19,11 @@ export const allAutoMakers = createAsyncThunk(
 );
 
 export const allAutoModelByMaker = createAsyncThunk(
-  "references/autoModelByMakers",
+  'references/autoModelByMakers',
   async (maker, { rejectWithValue }) => {
     try {
       const { data } = await instance.get(
-        mainRoutes.AUTO_MODEL + "/auto_model/models",
+        mainRoutes.AUTO_MODEL + '/auto_model/models',
         {
           params: {
             maker,
@@ -39,11 +38,11 @@ export const allAutoModelByMaker = createAsyncThunk(
 );
 
 export const autoByNumber = createAsyncThunk(
-  "references/autoByNumber",
+  'references/autoByNumber',
   async (query, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await instance.get(
-        mainRoutes.AUTO_MODEL + "/auto/mtibu/number",
+        mainRoutes.AUTO_MODEL + '/auto/mtibu/number',
         {
           params: {
             query,
@@ -51,8 +50,7 @@ export const autoByNumber = createAsyncThunk(
         }
       );
       if (data.length === 0) {
-        dispatch(setIsModalErrorOpen(true));
-        return data;
+        return [];
       } else {
         const [auto] = data;
         const a = CATEGORY.find((item) => item === auto.category);
@@ -60,7 +58,6 @@ export const autoByNumber = createAsyncThunk(
           return data;
         } else {
           dispatch(setRefError(CATEGORY_ERROR));
-          dispatch(setIsModalErrorOpen(true));
           return [];
         }
       }
@@ -71,11 +68,11 @@ export const autoByNumber = createAsyncThunk(
 );
 
 export const autoByMakerAndModel = createAsyncThunk(
-  "references/autoByMakerAndModel",
+  'references/autoByMakerAndModel',
   async (query, { rejectWithValue }) => {
     try {
       const { data } = await instance.get(
-        mainRoutes.AUTO_MODEL + "/auto_model/maker_and_model",
+        mainRoutes.AUTO_MODEL + '/auto_model/maker_and_model',
         {
           params: {
             query,

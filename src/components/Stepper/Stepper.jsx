@@ -1,77 +1,82 @@
-import PropTypes from "prop-types";
-import Stack from "@mui/material/Stack";
-import Step from "@mui/material/Step";
-import { lazy, Suspense } from "react";
-import { useEffect, useState } from "react";
-import { SpriteSVG } from "../../images/SpriteSVG";
-import { Connector, Lable, LableIcon, StepperStyled } from "./StepperStyled";
-import StepIcon from "./StepIcon";
-import { useFormik } from "formik";
+import PropTypes from 'prop-types';
+import Stack from '@mui/material/Stack';
+import Step from '@mui/material/Step';
+import { lazy, Suspense } from 'react';
+import { useEffect, useState } from 'react';
+import { SpriteSVG } from '../../images/SpriteSVG';
+import { Connector, Lable, LableIcon, StepperStyled } from './StepperStyled';
+import StepIcon from './StepIcon';
+import { useFormik } from 'formik';
 import {
   contactsInitialValues,
   homeAddressInitialValues,
   insuredDataInitialValues,
-} from "../../helpers/formikInitialValues";
+} from '../../helpers/formikInitialValues';
 
 import {
   ButtonContainerStyled,
   FormStyled,
   WhiteButtonSVGStyled,
   WhiteButtonStyled,
-} from "../../forms/InsuredDataForm/InsuredDataForm.styled";
-import { Typography } from "@mui/material";
-import BtnBack from "../../forms/Buttons/BtnBack";
+} from '../../forms/InsuredDataForm/InsuredDataForm.styled';
+import { Typography } from '@mui/material';
+import BtnBack from '../../forms/Buttons/BtnBack';
 import {
   NATURALSelectOptions,
   PRIVILEGEDSelectOptions,
-} from "../../assets/utils/isPrivilegedOptions";
-import { useSelector } from "react-redux";
-import { getAutoByNumber } from "../../redux/References/selectors";
+} from '../../assets/utils/isPrivilegedOptions';
+import { useSelector } from 'react-redux';
+import { getAutoByNumber } from '../../redux/References/selectors';
 import {
   carDataFormValidationSchema,
   contactsValidationSchema,
   homeAddressFormValidationSchema,
   insuredDataFormValidationSchema,
-} from "../../helpers/formValidationSchema";
-import { getSubmitObject } from "../../redux/byParameters/selectors";
-import { useActions } from "../../hooks/useActions";
+} from '../../helpers/formValidationSchema';
+import {
+  getRegistrationPlaceData,
+  getSubmitObject,
+} from '../../redux/byParameters/selectors';
+import { useActions } from '../../hooks/useActions';
 
-import sub from "date-fns/sub";
-import { contractSaveOSAGONormalize } from "../../helpers/dataNormalize/contractSaveOSAGONormalize";
+import sub from 'date-fns/sub';
+import { contractSaveOSAGONormalize } from '../../helpers/dataNormalize/contractSaveOSAGONormalize';
 import {
   getGlobalCustomerData,
   getHomeAddress,
-} from "../../redux/Global/selectors";
-import { getUser } from "../../redux/Calculator/selectors";
-import { customerInsuriensObject } from "../../helpers/customerInsuriensObject";
-import { contractSaveDGONormalize } from "../../helpers/dataNormalize/contractSaveDGONormalize";
-import CustomButtonLoading from "./CustomButtonLoading";
+} from '../../redux/Global/selectors';
+import { getUser } from '../../redux/Calculator/selectors';
+import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
+import { contractSaveDGONormalize } from '../../helpers/dataNormalize/contractSaveDGONormalize';
+import CustomButtonLoading from './CustomButtonLoading';
 
 const steps = [
-  { Контакти: "icon-email" },
-  { "Дані страхувальника": "icon-passport" },
-  { "Домашня адреса": "icon-home" },
-  { "Дані авто": "icon-car-little" },
+  { Контакти: 'icon-email' },
+  { 'Дані страхувальника': 'icon-passport' },
+  { 'Домашня адреса': 'icon-home' },
+  { 'Дані авто': 'icon-car-little' },
 ];
 const FormContacts = lazy(() =>
-  import("../../forms/FormContacts/FormContacts")
+  import('../../forms/FormContacts/FormContacts')
 );
 const InsuredDataForm = lazy(() =>
-  import("../../forms/InsuredDataForm/InsuredDataForm")
+  import('../../forms/InsuredDataForm/InsuredDataForm')
 );
 const HomeAddressForm = lazy(() =>
-  import("../../forms/HomeAddressForm/HomeAddressForm")
+  import('../../forms/HomeAddressForm/HomeAddressForm')
 );
-const CarDataForm = lazy(() => import("../../forms/CarDataForm/CarDataForm"));
+const CarDataForm = lazy(() => import('../../forms/CarDataForm/CarDataForm'));
 
 const Stepper = ({ backLinkRef }) => {
   const { contractSave } = useActions();
-  const [activeStep, setActiveStep] = useState(0);
-
-  const [identityCard, setIdentityCard] = useState([]);
   const user = useSelector(getUser);
   const { tariff, dgoTarrif } = useSelector(getGlobalCustomerData);
   const homeAddress = useSelector(getHomeAddress);
+  const userParams = useSelector(getSubmitObject);
+  const registrationPlaceData = useSelector(getRegistrationPlaceData);
+
+  const [activeStep, setActiveStep] = useState(0);
+  const [identityCard, setIdentityCard] = useState([]);
   // const location = useLocation();
 
   const customerCategory = useSelector((state) => state.byParameters.benefits);
@@ -115,27 +120,33 @@ const Stepper = ({ backLinkRef }) => {
   });
 
   const [insurObject] = useSelector(getAutoByNumber);
-  const userParams = useSelector(getSubmitObject);
+
   const carDataFormik = useFormik({
     initialValues: {
-      stateNumber: insurObject?.stateNumber || "",
-      year: insurObject?.year || "",
-      brand: insurObject?.modelText || "",
-      model: "",
-      bodyNumber: insurObject?.bodyNumber || "",
-      maker: "",
+      stateNumber: insurObject?.stateNumber || '',
+      year: insurObject?.year || '',
+      brand: insurObject?.modelText || '',
+      model: '',
+      bodyNumber: insurObject?.bodyNumber || '',
+      maker: '',
       outsideUkraine: userParams?.outsideUkraine || false,
-      category: insurObject?.category || getSubmitObject?.category,
+      category: insurObject?.category || userParams?.autoCategory,
     },
-
-    onSubmit: () => {
+    validationSchema: carDataFormValidationSchema(),
+    enableReinitialize: true,
+    validateOnBlur: true,
+    validateOnChange: false,
+    onSubmit: ({ model, maker }) => {
+      const fullCarModel = `${maker.name} ${model.name}`;
       const customIsur = customerInsuriensObject(
         insuredDataFormik,
         homeAddressFormik,
         contactsFormik,
         identityCard,
         carDataFormik,
-        insurObject
+        insurObject,
+        registrationPlaceData.id,
+        fullCarModel
       );
       contractSave(
         contractSaveOSAGONormalize(userParams, user, tariff, customIsur)
@@ -153,11 +164,6 @@ const Stepper = ({ backLinkRef }) => {
         );
       }
     },
-
-    validationSchema: carDataFormValidationSchema(),
-    enableReinitialize: true,
-    validateOnBlur: true,
-    validateOnChange: false,
   });
 
   const handleNext = () => {
@@ -215,16 +221,16 @@ const Stepper = ({ backLinkRef }) => {
       case 3:
         return (
           <Suspense>
-            <CarDataForm formik={carDataFormik} values={carDataFormik.values} />
+            <CarDataForm formik={carDataFormik} />
           </Suspense>
         );
       default:
-        return "Unknown step";
+        return 'Unknown step';
     }
   };
 
   return (
-    <Stack sx={{ width: "100%" }}>
+    <Stack sx={{ width: '100%' }}>
       <StepperStyled
         alternativeLabel
         activeStep={activeStep}
@@ -254,7 +260,7 @@ const Stepper = ({ backLinkRef }) => {
         {getStepContent(activeStep)}
         <ButtonContainerStyled component="div">
           <CustomButtonLoading
-            btnTitle={"Підтвердити"}
+            btnTitle={'Підтвердити'}
             onCLick={handleSubmit}
           />
           {activeStep === 0 ? (

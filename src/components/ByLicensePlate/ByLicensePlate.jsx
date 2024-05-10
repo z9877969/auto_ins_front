@@ -1,24 +1,24 @@
-import addDays from "date-fns/addDays";
-import addMonths from "date-fns/addMonths";
-import { useFormik } from "formik";
-import { Box, Typography } from "@mui/material";
+import addDays from 'date-fns/addDays';
+import addMonths from 'date-fns/addMonths';
+import { useFormik } from 'formik';
+import { Box, Typography } from '@mui/material';
 import {
   FormStyled,
   InputStyled,
   InputWrapperStyled,
-} from "./ByLicensePlate.styled";
-import { SubmitButton } from "../ByParameters/ByParameters.styled";
-import HelpCircle from "../HelpCircle/HelpCircle";
-import { GeneralCheckbox } from "../GeneralCheckbox/GeneralCheckbox";
-import { useLocation, useNavigate } from "react-router-dom";
-import { DNUMBER_REGEX } from "../../constants";
-import HelperList from "../HelpCircle/HelperList/HelperList";
-import { useActions } from "../../hooks/useActions";
+} from './ByLicensePlate.styled';
+import { SubmitButton } from '../ByParameters/ByParameters.styled';
+import HelpCircle from '../HelpCircle/HelpCircle';
+import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { DNUMBER_REGEX } from '../../constants';
+import HelperList from '../HelpCircle/HelperList/HelperList';
+import { useActions } from '../../hooks/useActions';
 
-import { SpriteSVG } from "../../images/SpriteSVG";
-import { useState } from "react";
-import format from "date-fns/format";
-import CommonDatePicker from "../CommonDatePicker/CommonDatePicker";
+import { SpriteSVG } from '../../images/SpriteSVG';
+import { useState } from 'react';
+import format from 'date-fns/format';
+import CommonDatePicker from '../CommonDatePicker/CommonDatePicker';
 
 const ByLicensePlate = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const ByLicensePlate = () => {
   const {
     setAddress,
     setIsModalErrorOpen,
-    setEngineCapacity,
+    // setEngineCapacity,
     setAutoModelByMaker,
     setStateNumber,
     setAutoMakers,
@@ -40,13 +40,13 @@ const ByLicensePlate = () => {
 
   const formik = useFormik({
     initialValues: {
-      licensePlate: "",
+      licensePlate: '',
       benefits: false,
       date: dateFrom,
     },
 
     validateOnChange: false,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const stateNumber = values.licensePlate
         .trim()
         .toUpperCase()
@@ -57,24 +57,25 @@ const ByLicensePlate = () => {
       }
       const params = {
         outsideUkraine: false,
-        customerCategory: values.benefits ? "PRIVILEGED" : "NATURAL",
+        customerCategory: values.benefits ? 'PRIVILEGED' : 'NATURAL',
         stateNumber: values.licensePlate,
-        dateFrom: format(dateFrom, "yyyy-MM-dd"),
+        dateFrom: format(dateFrom, 'yyyy-MM-dd'),
       };
       setAutoByNumber([]);
-      setAddress({ label: "", value: "" });
+      setAddress({ label: '', value: '' });
       setAutoModelByMaker([]);
       setAutoMakers([]);
       setStateNumber(params.stateNumber);
       setSubmitObj(params);
-      autoByNumber(params.stateNumber);
-      osagoByDn(params)
-        .unwrap()
-        .catch(() => {
-          setIsModalErrorOpen(true);
-        });
-      navigate("/prices", {
-        state: { from: locationPath },
+      const {
+        payload: [carInfo],
+      } = await autoByNumber(params.stateNumber);
+      if (!carInfo) {
+        setIsModalErrorOpen(true);
+        return;
+      }
+      navigate('/prices', {
+        state: { from: locationPath, params },
       });
     },
   });
@@ -98,7 +99,7 @@ const ByLicensePlate = () => {
               value={formik.values.licensePlate.trim().toUpperCase()}
               onChange={(e) => {
                 const e2 = e.target.value.trim().toUpperCase();
-                formik.setFieldValue("licensePlate", e2);
+                formik.setFieldValue('licensePlate', e2);
                 formik.handleChange(e);
               }}
               id="license-plate"

@@ -55,9 +55,9 @@ export const LableStyled = styled(Typography)(({ theme }) => ({
     position: "absolute",
     color: theme.palette.primary.red,
     textAlign: "end",
-    maxWidth: 200,
+    maxWidth: 300,
     right: 15,
-    textAlign: "left",
+    // textAlign: "left",
     lineHeight: "1.1",
   },
 }));

@@ -1,4 +1,4 @@
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector } from '@reduxjs/toolkit';
 
 // export const getSubmitObject = (state) => state.byParameters.submitObj;
 export const getAddressAndAuto = createSelector(
@@ -16,3 +16,14 @@ export const getSubmitObject = createSelector(
   (state) => state.byParameters.submitObj,
   (submitObj) => submitObj
 );
+
+export const getRegistrationPlaceData = createSelector(
+  (state) => state.byParameters.address,
+  ({ value, label }) => {
+    return {
+      city: label,
+      id: value,
+    };
+  }
+);
+  

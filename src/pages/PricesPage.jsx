@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CostCalculation } from '../components/CostCalculation/CostCalculation';
 import { useEffect } from 'react';
 import OutletPageWrapper from '../components/OutletPageWrapper';
@@ -15,9 +15,12 @@ import LineSection from '../components/LineSection/LineSection';
 
 import ModalError from '../components/ModalError/ModalError';
 import { getIsModalErrorOpen } from '../redux/Global/selectors';
+import { useActions } from '../hooks/useActions';
 
 const PricesPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { osagoByDn, setIsModalErrorOpen } = useActions();
 
   const userParams = useSelector(getSubmitObject);
   const stateNumber = useSelector(getStateNumber);
@@ -39,6 +42,21 @@ const PricesPage = () => {
       subscribed = false;
     };
   }, [navigate, userParams, stateNumber]);
+
+  useEffect(() => {
+    if (location.state?.params) {
+      const getOsagoData = async () => {
+        try {
+          await osagoByDn(location.state.params).unwrap();
+        } catch (error) {
+          setIsModalErrorOpen(true);
+        }
+      };
+      getOsagoData();
+    } else {
+      navigate('/');
+    }
+  }, [location.state?.params, setIsModalErrorOpen, osagoByDn, navigate]);
 
   if (isError) {
     return <ModalError />;

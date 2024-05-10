@@ -1,4 +1,4 @@
-export const errorMessage = (payload) => {
+export const errorMessage = (payload = {}) => {
   const {
     payload: { message },
   } = payload;

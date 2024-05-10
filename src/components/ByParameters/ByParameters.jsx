@@ -1,30 +1,30 @@
-import { useFormik } from "formik";
+import { useFormik } from 'formik';
 import {
   AllCheckboxContStyled,
   AllInputContStyled,
   FormStyled,
   SubmitButton,
-} from "./ByParameters.styled";
-import addDays from "date-fns/addDays";
-import GeneralSelect from "../GeneralSelect/GeneralSelect";
-import { GeneralCheckbox } from "../GeneralCheckbox/GeneralCheckbox";
-import { useLocation, useNavigate } from "react-router-dom";
+} from './ByParameters.styled';
+import addDays from 'date-fns/addDays';
+import GeneralSelect from '../GeneralSelect/GeneralSelect';
+import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  selectCategoryOptions,
+  // selectCategoryOptions,
+  withDisabledSelectCategoryOptions as selectCategoryOptions,
   selectAutoCategory,
-} from "../../helpers/ByParameters/selectOptions";
-import { useSelector } from "react-redux";
-import HelperImg from "../HelpCircle/HelperImg/HelperImg";
-import HelperList from "../HelpCircle/HelperList/HelperList";
-import { Box } from "@mui/material";
-import { useState } from "react";
-import { SpriteSVG } from "../../images/SpriteSVG";
-import { addMonths } from "date-fns/esm";
-import { InputStyled } from "../GeneralInput/GeneralInput.styled";
-import { useActions } from "../../hooks/useActions";
-import format from "date-fns/format";
-import CommonDatePicker from "../CommonDatePicker/CommonDatePicker";
-import { CATEGORY, CATEGORY_ERROR } from "../../constants";
+} from '../../helpers/ByParameters/selectOptions';
+import { useSelector } from 'react-redux';
+import HelperImg from '../HelpCircle/HelperImg/HelperImg';
+import HelperList from '../HelpCircle/HelperList/HelperList';
+import { Box } from '@mui/material';
+import { useState } from 'react';
+import { SpriteSVG } from '../../images/SpriteSVG';
+import { addMonths } from 'date-fns/esm';
+import { useActions } from '../../hooks/useActions';
+import format from 'date-fns/format';
+import CommonDatePicker from '../CommonDatePicker/CommonDatePicker';
+import { CATEGORY, CATEGORY_ERROR } from '../../constants';
 
 const ByParameters = () => {
   const navigate = useNavigate();
@@ -71,18 +71,18 @@ const ByParameters = () => {
       setIsModalErrorOpen(true);
     }
   };
-  const handleChangeQueryText = (e) => {
-    setQueryText(e.trim());
-    if (e) {
-      getAddress(e);
+  const handleChangeQueryText = (value) => {
+    setQueryText(value.trim());
+    if (value) {
+      getAddress(value);
     }
-    if (!e) {
+    if (!value) {
       setAddressOptions([]);
     }
   };
-  const changeAddress = (e) => {
+  const changeAddress = (selectOption) => {
     if (queryText) {
-      setAddress(e);
+      setAddress(selectOption);
     }
   };
 
@@ -93,16 +93,16 @@ const ByParameters = () => {
     },
     onSubmit: (values) => {
       let sendObj = {
-        customerCategory: values.benefits ? "PRIVILEGED" : "NATURAL",
+        customerCategory: values.benefits ? 'PRIVILEGED' : 'NATURAL',
         autoCategory: engineCapacity.value,
         outsideUkraine: values.foreignNumber,
         usageMonths: 0,
         taxi: false,
-        dateFrom: format(dateFrom, "yyyy-MM-dd"),
+        dateFrom: format(dateFrom, 'yyyy-MM-dd'),
       };
       address.value ? (sendObj.registrationPlace = address.value) : null;
       setSubmitObj(sendObj);
-      setStateNumber("");
+      setStateNumber('');
       setAutoMakers([]);
       setAutoByNumber([]);
       setAutoModelByMaker([]);
@@ -110,13 +110,13 @@ const ByParameters = () => {
       setTariffVcl([]);
       osagoByParams(sendObj);
 
-      navigate("/prices", {
+      navigate('/prices', {
         state: { from: locationPath },
       });
     },
   });
 
-  engineCapacity.value === "B5"
+  engineCapacity.value === 'B5'
     ? (formik.values.benefits = false)
     : formik.values.benefits;
 
@@ -149,7 +149,7 @@ const ByParameters = () => {
             helper={<HelperImg />}
             isDisabled={formik.values.foreignNumber}
             readOnly={false}
-            noOptionsMessage="Почніть вводити"
+            noOptionsMessage="Вкажіть місце реєстрації"
           />
           <CommonDatePicker
             label="Дата початку дії поліса:"
@@ -179,11 +179,11 @@ const ByParameters = () => {
             name="benefits"
             val={formik.values.benefits}
             changeCB={formik.handleChange}
-            isChecked={engineCapacity.value === "B5" ? false : benefits}
+            isChecked={engineCapacity.value === 'B5' ? false : benefits}
             color={
-              engineCapacity.value === "B5" ? "rgba(243, 243, 243, 0.40)" : null
+              engineCapacity.value === 'B5' ? 'rgba(243, 243, 243, 0.40)' : null
             }
-            isDisabled={engineCapacity.value === "B5" ? true : false}
+            isDisabled={engineCapacity.value === 'B5' ? true : false}
             helper={<HelperList />}
           />
           <GeneralCheckbox
@@ -192,8 +192,8 @@ const ByParameters = () => {
             val={formik.values.foreignNumber}
             isChecked={foreignNumber}
             changeCB={(e) => {
-              setQueryText("");
-              setAddress({ label: "", value: "" });
+              setQueryText('');
+              setAddress({ label: '', value: '' });
               formik.handleChange(e);
             }}
           />

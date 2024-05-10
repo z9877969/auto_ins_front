@@ -26,10 +26,16 @@ const GeneralSelect = ({
   const selectRef = useRef(null);
 
   useEffect(() => {
-    if (selectRef.current.inputRef && readOnly) {
-      selectRef.current.inputRef.setAttribute('readonly', true);
+    const inputRef = selectRef.current?.inputRef || null;
+    if (inputRef) {
+      if (!readOnly && inputRef.readOnly) {
+        inputRef.removeAttribute('readonly');
+      }
+      if (readOnly && !inputRef.readOnly) {
+        inputRef.setAttribute('readonly', '');
+      }
     }
-  }, []);
+  }, [readOnly]);
   // const theme = useTheme();
   return (
     <InputContStyled className="select-container">

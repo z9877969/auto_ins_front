@@ -40,6 +40,9 @@ const FormContacts = ({ formik }) => {
             formik.setFieldValue("phone", formatPhone(e.target.value));
           }}
         />
+        <SpanS variant="inputSpan">
+        *ПЕРЕКОНАЙТЕСЬ ЩО НОМЕР ВКАЗАНО КОРЕКТНО. НА ЦЕЙ НОМЕР БУДЕ НАДІСЛАНО КОД ДЛЯ ПІДТВЕРДЖЕННЯ УКЛАДАННЯ ПОЛІСУ.
+        </SpanS>
       </InputBoxS>
     </>
   );

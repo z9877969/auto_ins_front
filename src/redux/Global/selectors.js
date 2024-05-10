@@ -35,8 +35,8 @@ export const selectOrderData = createSelector(
     if (order) {
       return {
         epolicyOrderId: order[orderType.EPOLICY].id,
-        vclOrderId: order[orderType.VCL].id,
-        billAmount: orderType.VCL
+        vclOrderId: order[orderType.VCL]?.id ?? null,
+        billAmount: order[orderType.VCL]
           ? order[orderType.VCL].brokerDiscountedPayment +
             order[orderType.EPOLICY].brokerDiscountedPayment
           : order[orderType.EPOLICY].brokerDiscountedPayment,

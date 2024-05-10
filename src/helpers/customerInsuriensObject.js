@@ -1,5 +1,5 @@
-import { customerNormalize } from "./dataNormalize/customerNormalize";
-import { insuranceObjectNormalize } from "./dataNormalize/insuranceObjectNormalize";
+import { customerNormalize } from './dataNormalize/customerNormalize';
+import { insuranceObjectNormalize } from './dataNormalize/insuranceObjectNormalize';
 
 export const customerInsuriensObject = (
   insuredDataFormik,
@@ -7,7 +7,9 @@ export const customerInsuriensObject = (
   contactsFormik,
   identityCard,
   carDataFormik,
-  insurObject
+  insurObject,
+  registrationPlaceId,
+  fullCarModel
 ) => {
   const customer = customerNormalize(
     insuredDataFormik,
@@ -15,6 +17,11 @@ export const customerInsuriensObject = (
     contactsFormik,
     identityCard
   );
-  const insuranceObject = insuranceObjectNormalize(carDataFormik, insurObject);
+  const insuranceObject = insuranceObjectNormalize(
+    carDataFormik,
+    insurObject,
+    registrationPlaceId,
+    fullCarModel
+  );
   return { customer, insuranceObject };
 };

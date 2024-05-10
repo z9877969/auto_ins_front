@@ -40,6 +40,7 @@ const HomeAddressForm = ({ formik }) => {
           inputChangeCB={getHomeAddress}
           isValid={Boolean(address.label)}
           readOnly={false}
+          noOptionsMessage='Вкажіть місце проживання'
         />
         <GeneralInput id="street" lableText="Вулиця*:" formikData={formik} />
         <DocInputsStyled>
