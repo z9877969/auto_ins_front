@@ -1,7 +1,7 @@
 export const socialMedia = [
   {
     icon: "icon-instagram",
-    path: "https://instagram.com/autoins_info?igshid=NzZlODBkYWE4Ng==",
+    path: "https://instagram.com/autoins_info?utm_source=qr&igshid=MzNlNGNkZWQ4Mg%3D%3D",
   },
   {
     icon: "icon-facebook",
@@ -9,10 +9,10 @@ export const socialMedia = [
   },
   {
     icon: "icon-telegram-send",
-    path: "https://t.me/@auto_ins_ua",
+    path: "https://t.me/auto_ins_ua",
   },
   {
     icon: "icon-mail",
-    path: "mailto:help.autoins@gmail.com",
+    path: "mailto:admin@auto-ins.com.ua",
   },
 ];
