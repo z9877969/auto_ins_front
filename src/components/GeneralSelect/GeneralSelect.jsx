@@ -22,6 +22,7 @@ const GeneralSelect = ({
   isValid = true,
   readOnly = true,
   noOptionsMessage = '',
+  optionsOnTop = false,
 }) => {
   const selectRef = useRef(null);
 
@@ -54,6 +55,7 @@ const GeneralSelect = ({
         ref={selectRef}
         $isValid={isValid}
         $find={inputChangeCB}
+        $optionsOnTop={optionsOnTop}
         components={
           inputChangeCB
             ? { DropdownIndicator: () => <SpriteSVG name="icon-zoom-out" /> }
@@ -96,4 +98,5 @@ GeneralSelect.propTypes = {
   isValid: PropTypes.bool,
   readOnly: PropTypes.bool,
   noOptionsMessage: PropTypes.string,
+  optionsOnTop: PropTypes.bool,
 };

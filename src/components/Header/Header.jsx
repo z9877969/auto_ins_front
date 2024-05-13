@@ -87,7 +87,7 @@ const Header = () => {
                   <LinkS
                     href="https://instagram.com/autoins_info?utm_source=qr&igshid=MzNlNGNkZWQ4Mg%3D%3D"
                     target="_blank"
-                    rel="noreferrer noopener"
+                    rel="noreferrer noopener nofollow"
                     aria-label="instagram"
                   >
                     <BoxIconHS className="socialIconBox">
@@ -99,7 +99,7 @@ const Header = () => {
                   <LinkS
                     href="https://www.facebook.com/profile.php?id=61551725567425"
                     target="_blank"
-                    rel="noreferrer noopener"
+                    rel="noreferrer noopener nofollow"
                     aria-label="facebook"
                   >
                     <BoxIconHS className="socialIconBox">
@@ -111,7 +111,7 @@ const Header = () => {
                   <LinkS
                     href="https://t.me/@auto_ins_ua"
                     target="_blank"
-                    rel="noreferrer noopener"
+                    rel="noreferrer noopener nofollow"
                     aria-label="telegram"
                   >
                     <BoxIconHS className="socialIconBox">
@@ -123,7 +123,7 @@ const Header = () => {
                   <LinkS
                     href="mailto:help.autoins@gmail.com"
                     target="_blank"
-                    rel="noreferrer noopener"
+                    rel="noreferrer noopener nofollow"
                     aria-label="mail"
                   >
                     <BoxIconHS className="socialIconBox">

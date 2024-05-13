@@ -93,7 +93,7 @@ const InfoSection = () => {
         <Link
           href={href}
           target="_blank"
-          rel="noreferrer noopener"
+          rel="noreferrer noopener nofollow"
           className="link"
         >
           {text}

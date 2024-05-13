@@ -14,7 +14,7 @@ const CompanyList = () => {
 
   let dgos = useSelector(getTariffVcl);
   const status = useSelector(getTariffsStatus);
-  const insurerProposal = proposals?.map((companyObject) => {
+  const insurerProposal = proposals?.map((companyObject, idx, arr) => {
     dgo = dgos?.find((el) => el?.insurerId === companyObject?.insurerId);
     if (!dgo) {
       dgo = null;
@@ -25,7 +25,13 @@ const CompanyList = () => {
     }
     companyObject = { ...companyObject, dgo };
 
-    return <Company key={companyObject?.insurerId} proposal={companyObject} />;
+    return (
+      <Company
+        key={companyObject?.insurerId}
+        proposal={companyObject}
+        lastItem={idx === arr.length - 1}
+      />
+    );
   });
   return <ul>{status && insurerProposal}</ul>;
 };

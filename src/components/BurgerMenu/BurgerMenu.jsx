@@ -102,7 +102,7 @@ const BurgerMenu = () => {
                     <Link
                       to={path}
                       target="_blank"
-                      rel="noreferrer noopener"
+                      rel="noreferrer noopener nofollow"
                       onClick={toggleDrawer(false)}
                     >
                       <BoxIconS className="socialIconBox">

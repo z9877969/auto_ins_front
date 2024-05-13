@@ -33,7 +33,7 @@ const content = {
   },
 };
 
-const Company = ({ proposal }) => {
+const Company = ({ proposal, lastItem }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -152,6 +152,7 @@ const Company = ({ proposal }) => {
                 currentValue={franchise}
                 getOptionLabel={(option) => `${option.franchise} грн`}
                 getOptionValue={(option) => option.discountedPayment}
+                $optionsOnTop={lastItem}
               />
             </BoxSelect>
             <BoxSelect>
@@ -169,6 +170,7 @@ const Company = ({ proposal }) => {
                 getOptionValue={(option) => option.discountedPayment}
                 currentValue={chooseDgo}
                 isDisabled={!proposal?.dgo ? true : false}
+                optionsOnTop={lastItem}
               />
             </BoxSelect>
           </Box>
@@ -197,4 +199,5 @@ Company.propTypes = {
     autoCategory: PropTypes.string,
     registrationPlace: PropTypes.object,
   }),
+  lastItem: PropTypes.bool,
 };
