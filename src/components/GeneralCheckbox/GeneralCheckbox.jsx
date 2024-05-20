@@ -47,7 +47,7 @@ export const GeneralCheckbox = ({
             name={name}
             icon={<SpriteSVG name="icon-square" />}
             checkedIcon={<SpriteSVG name="icon-square-checked" />}
-            defaultChecked={isChecked}
+            // defaultChecked={isChecked}
             disabled={isDisabled}
             checked={isChecked}
           />

@@ -24,12 +24,12 @@ const getIsValidEngineType = (type) => {
       return Yup.number().max(ENGINE_VOLUME_TYPES[type].max, message);
     case 'B2':
       return Yup.number()
-        .max(ENGINE_VOLUME_TYPES[type].max, message)
-        .min(ENGINE_VOLUME_TYPES[type].min, message);
+        .min(ENGINE_VOLUME_TYPES[type].min, message)
+        .max(ENGINE_VOLUME_TYPES[type].max, message);
     case 'B3':
       return Yup.number()
-        .max(ENGINE_VOLUME_TYPES[type].max, message)
-        .min(ENGINE_VOLUME_TYPES[type].min, message);
+        .min(ENGINE_VOLUME_TYPES[type].min, message)
+        .max(ENGINE_VOLUME_TYPES[type].max, message);
     case 'B4':
       return Yup.number().min(ENGINE_VOLUME_TYPES[type].min, message);
   }
@@ -58,13 +58,15 @@ export const carDataFormValidationSchema = ({ isPrivilege, engineType } = {}) =>
     bodyNumber: Yup.string()
       .required(REQUIRED_FIELD)
       .matches(VIN_REGEX, 'VIN повинен містити 17 літер'),
-    engineVolume: engineType
-      ? getIsValidEngineType(engineType)
-      : isPrivilege
-      ? Yup.number()
-          .max(2500, "Об'єм двигуна для пільговиків не може перевищувати 2500")
-          .required(REQUIRED_FIELD)
-      : Yup.number().required(REQUIRED_FIELD),
+    engineVolume:
+      isPrivilege && engineType
+        ? getIsValidEngineType(engineType)
+            .max(
+              2500,
+              "Об'єм двигуна для пільговиків не може перевищувати 2500"
+            )
+            .required(REQUIRED_FIELD)
+        : Yup.number().required(REQUIRED_FIELD),
   });
 // ===========================================================================
 export const homeAddressFormValidationSchema = () =>

@@ -66,4 +66,8 @@ GeneralInput.propTypes = {
   formikData: PropTypes.object,
   customFunc: PropTypes.func,
   placeholder: PropTypes.string,
+  handleBlur: PropTypes.func,
+  isDisabled: PropTypes.bool,
+  isReadOnly: PropTypes.bool,
+  className: PropTypes.string
 };
