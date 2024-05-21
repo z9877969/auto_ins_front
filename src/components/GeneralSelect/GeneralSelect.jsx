@@ -23,11 +23,14 @@ const GeneralSelect = ({
   readOnly = true,
   noOptionsMessage = '',
   optionsOnTop = false,
+  ref,
+  components,
 }) => {
   const selectRef = useRef(null);
 
   useEffect(() => {
     const inputRef = selectRef.current?.inputRef || null;
+
     if (inputRef) {
       if (!readOnly && inputRef.readOnly) {
         inputRef.removeAttribute('readonly');
@@ -37,6 +40,12 @@ const GeneralSelect = ({
       }
     }
   }, [readOnly]);
+
+  useEffect(() => {
+    if (ref) {
+      ref.current = selectRef.current;
+    }
+  }, [ref]);
   // const theme = useTheme();
   return (
     <InputContStyled className="select-container">
@@ -57,9 +66,13 @@ const GeneralSelect = ({
         $find={inputChangeCB}
         $optionsOnTop={optionsOnTop}
         components={
-          inputChangeCB
-            ? { DropdownIndicator: () => <SpriteSVG name="icon-zoom-out" /> }
-            : true
+          components
+          // inputChangeCB
+          //   ? {
+          //       DropdownIndicator: () => <SpriteSVG name="icon-zoom-out" />,
+          //       ...components,
+          //     }
+          //   : true
         }
         isDisabled={isDisabled}
         noOptionsMessage={() => noOptionsMessage}
@@ -99,4 +112,5 @@ GeneralSelect.propTypes = {
   readOnly: PropTypes.bool,
   noOptionsMessage: PropTypes.string,
   optionsOnTop: PropTypes.bool,
+  ref: PropTypes.element,
 };
