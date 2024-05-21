@@ -66,7 +66,7 @@ export const carDataFormValidationSchema = ({ isPrivilege, engineType } = {}) =>
               "Об'єм двигуна для пільговиків не може перевищувати 2500"
             )
             .required(REQUIRED_FIELD)
-        : Yup.number().required(REQUIRED_FIELD),
+        : Yup.number(),
   });
 // ===========================================================================
 export const homeAddressFormValidationSchema = () =>
