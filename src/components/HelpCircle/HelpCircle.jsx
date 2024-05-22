@@ -2,7 +2,7 @@ import { Box, IconButton, Tooltip, Zoom } from '@mui/material';
 import { SpriteSVG } from '../../images/SpriteSVG';
 import PropTypes from 'prop-types';
 import { useTheme } from '@emotion/react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 const HelpCircle = ({ lableText = '', color = '' }) => {
   const [open, setOpen] = useState(false);
@@ -15,29 +15,6 @@ const HelpCircle = ({ lableText = '', color = '' }) => {
   if (!color) {
     color = theme.palette.primary.white;
   }
-
-  // logic for closing helper by click anywhere around helper button -Start
-  // useEffect(() => {
-  //   const handleClose = (e) => {
-  //     setOpen((p) => {
-  //       if (
-  //         p &&
-  //         e.target !== tooltipRef.current &&
-  //         e.target.closest('button') !== tooltipRef.current
-  //       ) {
-  //         return !p;
-  //       }
-  //       return p;
-  //     });
-  //   };
-
-  //   document.addEventListener('click', handleClose);
-
-  //   return () => {
-  //     document.removeEventListener('click', handleClose);
-  //   };
-  // }, []);
-  // logic for closing helper by click anywhere around helper button -End
 
   return (
     <Box component="span" sx={{ marginLeft: 1 }}>

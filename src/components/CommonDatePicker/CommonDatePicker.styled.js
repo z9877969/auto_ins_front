@@ -204,7 +204,7 @@ export const ButtonStyled = styled(Button)(({ theme }) => ({
   padding: 16,
   borderRadius: 50,
   backgroundColor: `${theme.palette.primary.white}`,
-  outline: `none`,
+  outline: 'none',
 
   '&.MuiButton-root': {
     color: `${theme.palette.primary.main}`,

@@ -1,8 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { calculatorReducer } from "./Calculator/calculatorSlice";
-import { globalReducer } from "./Global/globalSlice";
-import { byParametersReducer } from "./byParameters/byParametersSlice";
-import { referencesReducer } from "./References/referencesSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import { calculatorReducer } from './Calculator/calculatorSlice';
+import { globalReducer } from './Global/globalSlice';
+import { byParametersReducer } from './byParameters/byParametersSlice';
+import { referencesReducer } from './References/referencesSlice';
 import {
   persistStore,
   persistReducer,
@@ -12,15 +12,15 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
-import storage from "redux-persist/lib/storage";
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 // import storageSession from 'redux-persist/lib/storage/session'
 
 const persistInsurer = {
-  key: "insurer",
+  key: 'insurer',
   version: 1,
   storage,
-  whitelist: ["paramsFromUrl"],
+  whitelist: ['paramsFromUrl'],
 };
 
 export const store = configureStore({

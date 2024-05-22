@@ -1,4 +1,4 @@
-import { PictureContainer } from "./HeroPicture.styled";
+import { PictureContainer } from './HeroPicture.styled';
 
 const HeroPicture = () => {
   return <PictureContainer></PictureContainer>;

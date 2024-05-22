@@ -1,9 +1,9 @@
-import { useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import {
   ContainerSectionPage,
   PageContainerS,
-} from "../../style/Global.styled";
-import OutletNavigation from "../OutletNavigation/OutletNavigation";
+} from '../../style/Global.styled';
+import OutletNavigation from '../OutletNavigation/OutletNavigation';
 
 const OutletPageWrapper = ({ children }) => {
   const location = useLocation();

@@ -1,14 +1,14 @@
-import { useMemo } from "react";
-import { useDispatch } from "react-redux";
-import { bindActionCreators } from "@reduxjs/toolkit";
-import { calculatorSlice } from "../redux/Calculator/calculatorSlice";
-import { byParameters } from "../redux/byParameters/byParametersSlice";
-import * as byParametersOperations from "../redux/byParameters/operations";
-import * as calculatorOperations from "../redux/Calculator/operations";
-import * as globalOperations from "../redux/Global/operations";
-import * as referencesOperations from "../redux/References/operations";
-import { globalSlice } from "../redux/Global/globalSlice";
-import { referencesSlice } from "../redux/References/referencesSlice";
+import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from '@reduxjs/toolkit';
+import { calculatorSlice } from '../redux/Calculator/calculatorSlice';
+import { byParameters } from '../redux/byParameters/byParametersSlice';
+import * as byParametersOperations from '../redux/byParameters/operations';
+import * as calculatorOperations from '../redux/Calculator/operations';
+import * as globalOperations from '../redux/Global/operations';
+import * as referencesOperations from '../redux/References/operations';
+import { globalSlice } from '../redux/Global/globalSlice';
+import { referencesSlice } from '../redux/References/referencesSlice';
 
 const rootActions = {
   ...calculatorSlice.actions,

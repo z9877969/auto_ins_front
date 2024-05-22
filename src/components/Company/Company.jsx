@@ -58,6 +58,7 @@ const Company = ({ proposal, lastItem }) => {
 
   useEffect(() => {
     if (!proposal) return;
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -198,6 +199,7 @@ Company.propTypes = {
     tariff: PropTypes.array,
     autoCategory: PropTypes.string,
     registrationPlace: PropTypes.object,
+    dgo: PropTypes.any,
   }),
   lastItem: PropTypes.bool,
 };

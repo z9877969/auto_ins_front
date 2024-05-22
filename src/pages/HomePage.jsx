@@ -1,25 +1,25 @@
-import { lazy, Suspense, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getUser } from "../redux/Calculator/selectors";
-import { getIsModalErrorOpen } from "../redux/Global/selectors";
-import { useActions } from "../hooks/useActions";
+import { lazy, Suspense, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getUser } from '../redux/Calculator/selectors';
+import { getIsModalErrorOpen } from '../redux/Global/selectors';
+import { useActions } from '../hooks/useActions';
 const AccordionSection = lazy(() =>
-  import("../components/AccordionSection/index")
+  import('../components/AccordionSection/index')
 );
 const CheckInsSection = lazy(() =>
-  import("../components/CheckInsSection/index")
+  import('../components/CheckInsSection/index')
 );
-const InfoSection = lazy(() => import("../components/InfoSection/index"));
+const InfoSection = lazy(() => import('../components/InfoSection/index'));
 const AdvatagesSection = lazy(() =>
-  import("../components/AdvantagesSection/index")
+  import('../components/AdvantagesSection/index')
 );
-const Partners = lazy(() => import("../components/Partners/Partners"));
+const Partners = lazy(() => import('../components/Partners/Partners'));
 
 // import HeroTabs from "../components/HeroTabs/HeroTabs";
-import ModalError from "../components/ModalError/ModalError";
-import AlertMUI from "../components/Alert/AlertMUI";
-import Hero from "../components/Hero/Hero";
+import ModalError from '../components/ModalError/ModalError';
+import AlertMUI from '../components/Alert/AlertMUI';
+import Hero from '../components/Hero/Hero';
 
 const HomePage = () => {
   const location = useLocation();
@@ -34,10 +34,11 @@ const HomePage = () => {
       const { id } = location.state;
       let element = document.getElementById(id);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        element.scrollIntoView({ behavior: 'smooth' });
         location.state = null;
       }
     }
+    // eslint-disable-next-line
   }, [location.state]);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const HomePage = () => {
   }
   return (
     <>
-      <main style={{ height: "100%" }}>
+      <main style={{ height: '100%' }}>
         <AlertMUI type="info" message="Будь ласка, заповніть поля" />
         {/* <HeroTabs /> */}
         <Hero />

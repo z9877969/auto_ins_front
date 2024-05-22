@@ -1,24 +1,24 @@
-import Box from "@mui/material/Box";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useActions } from "../../hooks/useActions";
-import { SpriteSVG } from "../../images/SpriteSVG";
+import Box from '@mui/material/Box';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import Typography from '@mui/material/Typography';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useActions } from '../../hooks/useActions';
+import { SpriteSVG } from '../../images/SpriteSVG';
 import {
   combineError,
   getIsModalErrorOpen,
-} from "../../redux/Global/selectors";
-import { BlueButton } from "../../style/Global.styled";
+} from '../../redux/Global/selectors';
+import { BlueButton } from '../../style/Global.styled';
 import {
   BoxImgYellow,
   ButtonCancel,
   DialogStyled,
   TitleWrapper,
-} from "./ModalErrorStyled";
+} from './ModalErrorStyled';
 
 const ModalError = () => {
   const location = useLocation();
@@ -34,28 +34,28 @@ const ModalError = () => {
   const globalError = useSelector(combineError);
 
   const validError =
-    "Номер не відповідає вимогам оформлення Електронного поліса встановленим МТСБУ (Моторно-транспортне страхове бюро України).";
+    'Номер не відповідає вимогам оформлення Електронного поліса встановленим МТСБУ (Моторно-транспортне страхове бюро України).';
 
   const navigate = useNavigate();
   const handleBack = () => {
     setOpen(false);
-    navigate("/");
+    navigate('/');
     setIsModalErrorOpen(false);
-    setStateNumber("");
+    setStateNumber('');
   };
 
   const handleClose = () => {
     setOpen(false);
     // navigate("/");
-    navigate(location.pathname || "/");
+    navigate(location.pathname || '/');
     setIsModalErrorOpen(false);
-    setStateNumber("");
+    setStateNumber('');
   };
   useEffect(() => {
     return () => {
-      setCalcError("");
-      setGlobError("");
-      setRefError("");
+      setCalcError('');
+      setGlobError('');
+      setRefError('');
     };
   }, [setCalcError, setGlobError, setRefError]);
 
@@ -68,7 +68,7 @@ const ModalError = () => {
           component="button"
           onClick={handleClose}
         >
-          <SpriteSVG name={"icon-x"} />
+          <SpriteSVG name={'icon-x'} />
         </Box>
         <TitleWrapper>
           <BoxImgYellow>
@@ -87,7 +87,7 @@ const ModalError = () => {
             <Typography
               component="p"
               variant="subtitle1"
-              sx={{ padding: { xs: "8px 0", sm: "16px 0" } }}
+              sx={{ padding: { xs: '8px 0', sm: '16px 0' } }}
             >
               Будь ласка, перевірте правильність введення.
             </Typography>
@@ -102,7 +102,7 @@ const ModalError = () => {
             arai-label="Розрахувати за параметрами"
             className="buttonDesktop"
             onClick={handleBack}
-            sx={{ width: { xs: "100%" } }}
+            sx={{ width: { xs: '100%' } }}
           >
             Розрахувати за параметрами
           </BlueButton>

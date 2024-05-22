@@ -17,7 +17,7 @@ export const FilterDesktopTablet = () => {
         strokeLinejoin="round"
         strokeWidth="1.333"
         d="M22.667 20.222a5.556 5.556 0 1 0 0-11.112 5.556 5.556 0 0 0 0 11.112z"
-        style={{ fill: "var(--color1, #bcc3e7)" }}
+        style={{ fill: 'var(--color1, #bcc3e7)' }}
       />
       <path
         strokeLinecap="round"

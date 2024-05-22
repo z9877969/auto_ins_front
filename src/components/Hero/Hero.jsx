@@ -1,9 +1,9 @@
-import { useState } from "react";
-import HeroTabs from "../HeroTabs/HeroTabs";
-import { HeroContainer } from "./Hero.styled";
-import ByParameters from "../ByParameters/ByParameters";
-import ByLicensePlate from "../ByLicensePlate/ByLicensePlate";
-import HeroPicture from "../HeroPicture/HeroPicture";
+import { useState } from 'react';
+import HeroTabs from '../HeroTabs/HeroTabs';
+import { HeroContainer } from './Hero.styled';
+import ByParameters from '../ByParameters/ByParameters';
+import ByLicensePlate from '../ByLicensePlate/ByLicensePlate';
+import HeroPicture from '../HeroPicture/HeroPicture';
 
 const Hero = () => {
   const [activeTab, setActiveTab] = useState(0);

@@ -1,9 +1,9 @@
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Unstable_Grid2";
-import { SpriteSVG } from "../../images/SpriteSVG";
-import { BlueButton } from "../../style/Global.styled";
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Unstable_Grid2';
+import { SpriteSVG } from '../../images/SpriteSVG';
+import { BlueButton } from '../../style/Global.styled';
 
-import { BoxImg, ContainerSectionS, ContCheck } from "./CheckInsSectionStyle";
+import { BoxImg, ContainerSectionS, ContCheck } from './CheckInsSectionStyle';
 
 const CheckInsSection = () => {
   return (
@@ -11,7 +11,7 @@ const CheckInsSection = () => {
       <ContainerSectionS>
         <ContCheck>
           <BoxImg>
-            <SpriteSVG name={"icon-car"} />
+            <SpriteSVG name={'icon-car'} />
           </BoxImg>
           <Grid container className="container">
             <Grid xs={12} sm={12} md={12} lg={3.6}>

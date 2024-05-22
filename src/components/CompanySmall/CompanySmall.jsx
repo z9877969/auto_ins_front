@@ -1,17 +1,13 @@
 /* eslint-disable react/display-name */
-import React, { useEffect } from "react";
+import { memo } from 'react';
+import Typography from '@mui/material/Typography';
+import { useSelector } from 'react-redux';
+import { getParamsFromUrl } from '../../redux/Global/selectors';
+import CompanyCardMedia from '../CompanyCardMedia/index';
+import { ContentBox, FormContainerS } from './CompanySmallStyled';
+import { getSubmitObject } from '../../redux/byParameters/selectors';
 
-import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux";
-import {
-  getGlobalCustomerData,
-  getParamsFromUrl,
-} from "../../redux/Global/selectors";
-import CompanyCardMedia from "../CompanyCardMedia/index";
-import { ContentBox, FormContainerS } from "./CompanySmallStyled";
-import { getSubmitObject } from "../../redux/byParameters/selectors";
-
-const CompanySmall = React.memo(() => {
+const CompanySmall = memo(() => {
   const paramsFromUrl = useSelector(getParamsFromUrl);
   const { dateFrom, outsideUkraine } = useSelector(getSubmitObject);
 
@@ -26,7 +22,7 @@ const CompanySmall = React.memo(() => {
           alt={paramsFromUrl?.insurer.name}
         />
         <Typography component="span" className="leightText">
-          {paramsFromUrl?.insurer.name.replace(/,[^,]+$/, "")}
+          {paramsFromUrl?.insurer.name.replace(/,[^,]+$/, '')}
         </Typography>
       </ContentBox>
 
@@ -45,7 +41,7 @@ const CompanySmall = React.memo(() => {
         </Typography>
         <Typography component="span" variant="body1">
           {outsideUkraine
-            ? "Без реєстрації"
+            ? 'Без реєстрації'
             : paramsFromUrl?.registrationPlace?.name}
         </Typography>
       </ContentBox>

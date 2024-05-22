@@ -1,13 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { getAddress } from "./operations";
+import { createSlice } from '@reduxjs/toolkit';
+import { getAddress } from './operations';
 import {
   selectAutoCategory,
   selectCategoryOptions,
-} from "../../helpers/ByParameters/selectOptions";
+} from '../../helpers/ByParameters/selectOptions';
 
 const initialState = {
-  queryText: "",
-  address: { label: "", value: "" },
+  queryText: '',
+  address: { label: '', value: '' },
   vehicle: selectCategoryOptions[0],
   engineCapacity: selectAutoCategory(selectCategoryOptions[0].value)[0],
   addressOptions: [],
@@ -16,7 +16,7 @@ const initialState = {
   submitObj: {},
 };
 export const byParameters = createSlice({
-  name: "byParameters",
+  name: 'byParameters',
   initialState,
   reducers: {
     setQueryText: (state, { payload }) => {
@@ -24,7 +24,7 @@ export const byParameters = createSlice({
     },
     setSubmitObj: (state, { payload }) => {
       state.submitObj = payload;
-      state.benefits = payload.customerCategory === "PRIVILEGED" ? true : false;
+      state.benefits = payload.customerCategory === 'PRIVILEGED' ? true : false;
       state.foreignNumber = payload.outsideUkraine;
     },
     setAddress: (state, { payload }) => {

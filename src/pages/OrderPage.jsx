@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import BlockThank, {
   orderMessagesKeys,
-} from "../components/BlockThank/BlockThank";
-import { ContainerSectionPage, PageContainerS } from "../style/Global.styled";
+} from '../components/BlockThank/BlockThank';
+import { ContainerSectionPage, PageContainerS } from '../style/Global.styled';
 
 const OrderPage = () => {
   const navigate = useNavigate();
@@ -14,9 +14,10 @@ const OrderPage = () => {
 
   useEffect(() => {
     if (!isBlockRender) {
-      navigate("/");
+      navigate('/');
       return;
     }
+    // eslint-disable-next-line
   }, [orderStage]);
 
   return (

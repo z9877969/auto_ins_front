@@ -1,8 +1,8 @@
-import { lazy, Suspense } from "react";
-import { Link as ScrollLink } from "react-scroll";
-import { useTheme } from "@mui/material";
-import { useMediaQuery } from "@mui/material";
-import { SpriteSVG } from "../../images/SpriteSVG";
+import { lazy, Suspense } from 'react';
+import { Link as ScrollLink } from 'react-scroll';
+import { useTheme } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
+import { SpriteSVG } from '../../images/SpriteSVG';
 import {
   BoxIconHS,
   ChapterSpanHS,
@@ -13,17 +13,17 @@ import {
   LogoBoxS,
   LogoTextHS,
   UlListHS,
-} from "./HeaderStyled";
+} from './HeaderStyled';
 // import BurgerMenu from "../BurgerMenu/BurgerMenu";
-const BurgerMenu = lazy(() => import("../BurgerMenu/BurgerMenu"));
-import { useNavigate } from "react-router-dom";
+const BurgerMenu = lazy(() => import('../BurgerMenu/BurgerMenu'));
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery(`${theme.breakpoints.up("lg")}`);
+  const isLargeScreen = useMediaQuery(`${theme.breakpoints.up('lg')}`);
   const navigate = useNavigate();
   const handleScrollToSection = (chapter) => {
-    navigate("/", { state: { id: chapter } });
+    navigate('/', { state: { id: chapter } });
   };
 
   return (
@@ -32,7 +32,7 @@ const Header = () => {
         <HeaderBoxS>
           <LogoBoxS href="/" rel="noreferrer noopener">
             <BoxIconHS className="logoIcon">
-              <SpriteSVG name={"icon-logo"} />
+              <SpriteSVG name={'icon-logo'} />
             </BoxIconHS>
             <LogoTextHS>AUTO-INS</LogoTextHS>
           </LogoBoxS>
@@ -44,9 +44,9 @@ const Header = () => {
                     to="переваги"
                     smooth={true}
                     duration={700}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                     activeClass="active"
-                    onClick={() => handleScrollToSection("переваги")}
+                    onClick={() => handleScrollToSection('переваги')}
                   >
                     <ChapterSpanHS className="chapterSpan">
                       Переваги
@@ -58,9 +58,9 @@ const Header = () => {
                     to="партнери"
                     smooth={true}
                     duration={700}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                     activeClass="active"
-                    onClick={() => handleScrollToSection("партнери")}
+                    onClick={() => handleScrollToSection('партнери')}
                   >
                     <ChapterSpanHS className="chapterSpan">
                       Партнери
@@ -72,9 +72,9 @@ const Header = () => {
                     to="питання-відповіді"
                     smooth={true}
                     duration={700}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                     activeClass="active"
-                    onClick={() => handleScrollToSection("питання-відповіді")}
+                    onClick={() => handleScrollToSection('питання-відповіді')}
                   >
                     <ChapterSpanHS className="chapterSpan">
                       Питання-відповіді
@@ -91,7 +91,7 @@ const Header = () => {
                     aria-label="instagram"
                   >
                     <BoxIconHS className="socialIconBox">
-                      <SpriteSVG name={"icon-instagram"} />
+                      <SpriteSVG name={'icon-instagram'} />
                     </BoxIconHS>
                   </LinkS>
                 </LiItemHS>
@@ -103,7 +103,7 @@ const Header = () => {
                     aria-label="facebook"
                   >
                     <BoxIconHS className="socialIconBox">
-                      <SpriteSVG name={"icon-facebook"} />
+                      <SpriteSVG name={'icon-facebook'} />
                     </BoxIconHS>
                   </LinkS>
                 </LiItemHS>
@@ -115,7 +115,7 @@ const Header = () => {
                     aria-label="telegram"
                   >
                     <BoxIconHS className="socialIconBox">
-                      <SpriteSVG name={"icon-telegram-send"} />
+                      <SpriteSVG name={'icon-telegram-send'} />
                     </BoxIconHS>
                   </LinkS>
                 </LiItemHS>
@@ -127,7 +127,7 @@ const Header = () => {
                     aria-label="mail"
                   >
                     <BoxIconHS className="socialIconBox">
-                      <SpriteSVG name={"icon-mail"} />
+                      <SpriteSVG name={'icon-mail'} />
                     </BoxIconHS>
                   </LinkS>
                 </LiItemHS>
@@ -135,7 +135,7 @@ const Header = () => {
             </>
           ) : (
             <Suspense>
-              <BurgerMenu sx={{ width: "32px" }} />
+              <BurgerMenu sx={{ width: '32px' }} />
             </Suspense>
           )}
         </HeaderBoxS>

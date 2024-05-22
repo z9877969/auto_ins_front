@@ -1,6 +1,6 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
-import { AlertS, SnackbarS } from "./AlertMUIStyled";
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { AlertS, SnackbarS } from './AlertMUIStyled';
 
 /* <AlertMUI type="error" message="ERROR text"/> */
 /* <AlertMUI type="warning" message="WARNING text"/> */
@@ -11,7 +11,7 @@ const AlertMUI = ({ type, message }) => {
   const [open, setOpen] = useState(true);
 
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
     setOpen(false);
@@ -22,7 +22,7 @@ const AlertMUI = ({ type, message }) => {
       open={open}
       autoHideDuration={3000}
       onClose={handleClose}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
     >
       <AlertS
         onClose={handleClose}

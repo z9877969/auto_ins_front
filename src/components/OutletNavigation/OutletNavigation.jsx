@@ -1,33 +1,32 @@
-import PropTypes from "prop-types";
-import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { SpriteSVG } from "../../images/SpriteSVG";
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { SpriteSVG } from '../../images/SpriteSVG';
 import {
   BoxImg,
   BoxImgRotate,
   BreadcrumbsStyled,
-} from "./OutletNavigationStyled";
-import { NavLink } from "react-router-dom";
+} from './OutletNavigationStyled';
+import { NavLink } from 'react-router-dom';
 
 const OutletNavigation = ({ locationPath }) => {
-  const [location, _] = useState(locationPath);
+  const [location] = useState(locationPath);
   const currentLink = (location) => {
     switch (location.pathname) {
-      case "/prices":
-        return "/prices";
-      case "/form":
-        return "/prices/form";
+      case '/prices':
+        return '/prices';
+      case '/form':
+        return '/prices/form';
       default:
-        "/";
+        '/';
     }
   };
 
   const crumbs = currentLink(location)
-    .split("/")
-    .filter((crumb) => crumb !== "")
+    .split('/')
+    .filter((crumb) => crumb !== '')
     .map((crumb) => {
       // currentLink = +`/${crumb}`;
-      crumb === "prices" ? (crumb = "Калькулятор") : (crumb = "Ваші дані");
+      crumb === 'prices' ? (crumb = 'Калькулятор') : (crumb = 'Ваші дані');
 
       return (
         <NavLink

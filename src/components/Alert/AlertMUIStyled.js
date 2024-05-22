@@ -1,16 +1,16 @@
-import { Alert, Snackbar, styled } from "@mui/material";
+import { Alert, Snackbar, styled } from '@mui/material';
 
 export const SnackbarS = styled(Snackbar)(({ theme }) => ({
-  "&.MuiSnackbar-anchorOriginTopRight": {
-    top: "50px",
-    right: "6px",
-    [theme.breakpoints.up("sm")]: {
-      top: "60px",
-      right: "20px",
+  '&.MuiSnackbar-anchorOriginTopRight': {
+    top: '50px',
+    right: '6px',
+    [theme.breakpoints.up('sm')]: {
+      top: '60px',
+      right: '20px',
     },
-    [theme.breakpoints.up("lg")]: {
-      top: "90px",
-      right: "40px",
+    [theme.breakpoints.up('lg')]: {
+      top: '90px',
+      right: '40px',
     },
   },
 }));

@@ -1,6 +1,6 @@
-import { Container, List, Typography, styled } from "@mui/material";
+import { Container, List, Typography, styled } from '@mui/material';
 
-export const SectionS = styled("section")(({ theme }) => ({
+export const SectionS = styled('section')(({ theme }) => ({
   backgroundColor: theme.palette.primary.background,
 }));
 
@@ -12,23 +12,23 @@ export const PartnersContainerS = styled(Container)`
 `
 
 export const TitleS = styled(Typography)(({ theme }) => ({
-  "&.titleBlack": {
+  '&.titleBlack': {
     color: theme.palette.primary.main,
-    marginBottom: "72px",
+    marginBottom: '72px',
   },
 }));
 
 export const UlPartnersListS = styled(List)(({ theme }) => ({
   padding: '0',
-  marginBottom: "48px",
-  display: "flex",  
-  justifyContent: "center",
-  gap: "20px",
-  flexWrap: "wrap",
-  [theme.breakpoints.up("sm")]: {    
-    gap: "24px",
+  marginBottom: '48px',
+  display: 'flex',  
+  justifyContent: 'center',
+  gap: '20px',
+  flexWrap: 'wrap',
+  [theme.breakpoints.up('sm')]: {    
+    gap: '24px',
   },
   '&.additionalPartners':{
-    marginBottom: "0",    
+    marginBottom: '0',    
   }
 }));

@@ -1,20 +1,20 @@
 export const contactsInitialValues = {
-  email: "",
-  phone: "",
+  email: '',
+  phone: '',
 };
 
 export const insuredDataInitialValues = {
-  surname: "", //
-  name: "", //
-  middleName: "", //
-  birthDate: "", //
-  taxNumber: "", //
-  record: "", //
-  type: "", //document{}
-  series: "", //document{}
-  number: "", //document{}
-  issuedBy: "", //document{}
-  date: "", //document{}
+  surname: '', //
+  name: '', //
+  middleName: '', //
+  birthDate: '', //
+  taxNumber: '', //
+  record: '', //
+  type: '', //document{}
+  series: '', //document{}
+  number: '', //document{}
+  issuedBy: '', //document{}
+  date: '', //document{}
 
   // type: "", //document{}
   //series: "", //document{}
@@ -24,10 +24,10 @@ export const insuredDataInitialValues = {
 };
 
 export const homeAddressInitialValues = {
-  regionANDcity: "",
-  street: "",
-  houseNumber: "",
-  apartmentNumber: "",
+  regionANDcity: '',
+  street: '',
+  houseNumber: '',
+  apartmentNumber: '',
 };
 
 // export const carDataFormikInitialValues = {

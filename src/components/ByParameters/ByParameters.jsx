@@ -25,7 +25,6 @@ import { useActions } from '../../hooks/useActions';
 import format from 'date-fns/format';
 import CommonDatePicker from '../CommonDatePicker/CommonDatePicker';
 import { CATEGORY, CATEGORY_ERROR, ORDER_TYPE } from '../../constants';
-// import { getEngineType } from '../../redux/byParameters/selectors';
 
 const ByParameters = () => {
   const navigate = useNavigate();
@@ -44,7 +43,6 @@ const ByParameters = () => {
     setAutoModelByMaker,
     setTariffPolicyChoose,
     setTariffVcl,
-    // osagoByParams,
     setRefError,
     setIsModalErrorOpen,
   } = useActions();
@@ -57,7 +55,6 @@ const ByParameters = () => {
     foreignNumber,
     benefits,
   } = useSelector((state) => state.byParameters);
-  // const engineType = useSelector(getEngineType);
   const [dateFrom, setDateFrom] = useState(addDays(new Date(), 1));
 
   const handleChangeengineCapacity = (e) => {

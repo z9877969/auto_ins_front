@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { AbsatzS } from "./InfoSectionStyle";
-import PropTypes from "prop-types";
+import { useState } from 'react';
+import { AbsatzS } from './InfoSectionStyle';
+import PropTypes from 'prop-types';
 
 const Text = ({ text }) => {
-  const [constent, _] = useState(text);
+  const [constent] = useState(text);
   return (
     <>
       {constent.map((item, index) => (

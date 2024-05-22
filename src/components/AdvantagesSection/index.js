@@ -1,1 +1,1 @@
-export { default } from "./AdvantagesSection";
+export { default } from './AdvantagesSection';

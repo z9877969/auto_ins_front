@@ -1,28 +1,28 @@
-import { Box, Checkbox, styled } from "@mui/material";
+import { Box, Checkbox, styled } from '@mui/material';
 
 export const CheckboxStyled = styled(Checkbox)(({ theme }) => ({
-  "& svg": {
+  '& svg': {
     height: 24,
     width: 24,
     stroke: theme.palette.primary.white,
   },
 }));
 export const CheckboxContainerStyled = styled(Box)(({ theme }) => ({
-  display: "inline-flex",
-  alignItems: "center",
+  display: 'inline-flex',
+  alignItems: 'center',
   stroke: theme.palette.primary.white,
 
-  "& .MuiFormControlLabel-root": {
+  '& .MuiFormControlLabel-root': {
     marginRight: 0,
-    width: "fit-content",
+    width: 'fit-content',
   },
-  "& .MuiButtonBase-root": {
-    "&svg": {
+  '& .MuiButtonBase-root': {
+    '&svg': {
       height: 16,
       width: 16,
     },
   },
-  [theme.breakpoints.up("lg")]: {
+  [theme.breakpoints.up('lg')]: {
     // order: 1,
   },
 }));

@@ -1,46 +1,46 @@
-import { useEffect, useRef, useState } from "react";
-import { useTheme } from "@emotion/react";
+import { useEffect, useRef, useState } from 'react';
+import { useTheme } from '@emotion/react';
 
-import CardMedia from "@mui/material/CardMedia";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import CardMedia from '@mui/material/CardMedia';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-import Car320Webp from "../../images/infoCar/carMob.webp";
-import Car320Webp2x from "../../images/infoCar/carMob2x.webp";
-import Car320Webp3x from "../../images/infoCar/carMob3x.webp";
-import Car320Jpg from "../../images/infoCar/carMob.jpg";
-import Car320Jpg2x from "../../images/infoCar/carMob2x.jpg";
-import Car320Jpg3x from "../../images/infoCar/carMob3x.jpg";
+import Car320Webp from '../../images/infoCar/carMob.webp';
+import Car320Webp2x from '../../images/infoCar/carMob2x.webp';
+import Car320Webp3x from '../../images/infoCar/carMob3x.webp';
+import Car320Jpg from '../../images/infoCar/carMob.jpg';
+import Car320Jpg2x from '../../images/infoCar/carMob2x.jpg';
+import Car320Jpg3x from '../../images/infoCar/carMob3x.jpg';
 
-import Car768Web from "../../images/infoCar/carTab.webp";
-import Car768Web2x from "../../images/infoCar/carTab2x.webp";
-import Car768Web3x from "../../images/infoCar/carTab3x.webp";
-import Car768Jpg from "../../images/infoCar/carTab.jpg";
-import Car768Jpg2x from "../../images/infoCar/carTab2x.jpg";
-import Car768Jpg3x from "../../images/infoCar/carTab3x.jpg";
+import Car768Web from '../../images/infoCar/carTab.webp';
+import Car768Web2x from '../../images/infoCar/carTab2x.webp';
+import Car768Web3x from '../../images/infoCar/carTab3x.webp';
+import Car768Jpg from '../../images/infoCar/carTab.jpg';
+import Car768Jpg2x from '../../images/infoCar/carTab2x.jpg';
+import Car768Jpg3x from '../../images/infoCar/carTab3x.jpg';
 
-import Car1400Webp from "../../images/infoCar/carDes.webp";
-import Car1400Webp2x from "../../images/infoCar/carDes2x.webp";
-import Car1400Webp3x from "../../images/infoCar/carDes3x.webp";
-import Car1400Jpg from "../../images/infoCar/carDes.jpg";
-import Car1400Jpg2x from "../../images/infoCar/carDes2x.jpg";
-import Car1400Jpg3x from "../../images/infoCar/carDes3x.jpg";
+import Car1400Webp from '../../images/infoCar/carDes.webp';
+import Car1400Webp2x from '../../images/infoCar/carDes2x.webp';
+import Car1400Webp3x from '../../images/infoCar/carDes3x.webp';
+import Car1400Jpg from '../../images/infoCar/carDes.jpg';
+import Car1400Jpg2x from '../../images/infoCar/carDes2x.jpg';
+import Car1400Jpg3x from '../../images/infoCar/carDes3x.jpg';
 
-import { YellowButton } from "../../style/Global.styled";
+import { YellowButton } from '../../style/Global.styled';
 import {
   AbsatzS,
   CollapseContainer,
   InfoSectionContainer,
   SectionS,
   WrapperS,
-} from "./InfoSectionStyle";
+} from './InfoSectionStyle';
 
-import Text from "./Text";
-import { infoTextStart, infoTextTitle } from "../../assets/texts/index";
-import { infoTextMiddleFirst } from "../../assets/texts/index";
-import { infoTextMiddleSecond } from "../../assets/texts/index";
-import { links } from "../../assets/texts/index";
-import { infoTextEnd } from "../../assets/texts/index";
-import { Link } from "@mui/material";
+import Text from './Text';
+import { infoTextStart, infoTextTitle } from '../../assets/texts/index';
+import { infoTextMiddleFirst } from '../../assets/texts/index';
+import { infoTextMiddleSecond } from '../../assets/texts/index';
+import { links } from '../../assets/texts/index';
+import { infoTextEnd } from '../../assets/texts/index';
+import { Link } from '@mui/material';
 
 const InfoSection = () => {
   const [checked, setChecked] = useState(false);
@@ -48,7 +48,7 @@ const InfoSection = () => {
   const ref = useRef();
   const n = [{ id: 1 }];
 
-  let callback = (entries, observer) => {
+  let callback = (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         setInView(true);
@@ -67,9 +67,9 @@ const InfoSection = () => {
   }, []);
 
   const theme = useTheme();
-  const MOBILE = useMediaQuery(theme.breakpoints.down("sm"));
-  const TABLET = useMediaQuery(theme.breakpoints.between("sm", "lg"));
-  const DESKTOP = useMediaQuery(theme.breakpoints.up("lg"));
+  const MOBILE = useMediaQuery(theme.breakpoints.down('sm'));
+  const TABLET = useMediaQuery(theme.breakpoints.between('sm', 'lg'));
+  const DESKTOP = useMediaQuery(theme.breakpoints.up('lg'));
 
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -77,13 +77,13 @@ const InfoSection = () => {
 
   const display = () => {
     if (MOBILE) {
-      return "8.64em";
+      return '8.64em';
     }
     if (TABLET) {
-      return "200px";
+      return '200px';
     }
     if (DESKTOP) {
-      return "750px";
+      return '750px';
     }
   };
 
@@ -187,7 +187,7 @@ const InfoSection = () => {
         </WrapperS>
 
         <YellowButton onClick={handleChange} className="button">
-          {!checked ? "Читати далі" : "Приховати текст"}
+          {!checked ? 'Читати далі' : 'Приховати текст'}
         </YellowButton>
         {(MOBILE || TABLET) &&
           (inView ? (

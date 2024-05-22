@@ -66,6 +66,7 @@ const ProposalsFilter = () => {
     } else {
       setFilteredCompanies(companies);
     }
+    // eslint-disable-next-line
   }, [selectedCompanieName, companies, selectedPriceSort]);
 
   const handleChange = () => {

@@ -1,4 +1,4 @@
-import img from "../../../images/helperText/addressByDoc.jpg"
+import img from '../../../images/helperText/addressByDoc.jpg'
 
 const HelperImg = () => {
   return (
