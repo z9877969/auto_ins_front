@@ -1,10 +1,10 @@
-import { useMediaQuery, useTheme } from "@mui/material";
-import PropTypes from "prop-types";
+import { useMediaQuery, useTheme } from '@mui/material';
+import PropTypes from 'prop-types';
 import {
   InputContStyled,
   InputStyled,
   LableStyled,
-} from "./GeneralInput.styled";
+} from './GeneralInput.styled';
 
 const GeneralInput = ({
   id,
@@ -20,13 +20,13 @@ const GeneralInput = ({
   className,
 }) => {
   const theme = useTheme();
-  const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
+  const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <InputContStyled className={className}>
       <LableStyled
         sx={{
-          color: isDisabled ? "darkgray!important" : null,
+          color: isDisabled ? 'darkgray!important' : null,
         }}
         variant="inputLable"
         component="label"
@@ -35,18 +35,18 @@ const GeneralInput = ({
         <span>{lableText}</span>
         {touched[id] && Boolean(errors[id]) && (
           <span className="errorMessages">
-            {smScreen ? errors[id] : "Помилка введення"}
+            {smScreen ? errors[id] : 'Помилка введення'}
           </span>
         )}
       </LableStyled>
       <InputStyled
         name={id}
-        type={type || "text"}
+        type={type || 'text'}
         value={values[id]}
         onChange={customFunc || handleChange}
         onBlur={handleBlur}
         id={id}
-        color={color || "inputBase"}
+        color={color || 'inputBase'}
         error={touched[id] && Boolean(errors[id])}
         placeholder={placeholder}
         disabled={isDisabled}

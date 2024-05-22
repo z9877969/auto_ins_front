@@ -16,7 +16,7 @@ export const contractSaveOSAGONormalize = (
     insuranceObject,
     dateFrom: format(
       new Date(userParams?.dateFrom),
-      "yyyy-MM-dd'T'HH:mm:ss.SSSxxxx"
+      'yyyy-MM-dd\'T\'HH:mm:ss.SSSxxxx'
     ),
     state: 'DRAFT',
   };

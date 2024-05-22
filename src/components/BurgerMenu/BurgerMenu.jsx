@@ -1,12 +1,12 @@
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 
-import { Fragment, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { SpriteSVG } from "../../images/SpriteSVG";
-import { socialMedia } from "../../assets/utils/socialMedia";
+import { Fragment, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { SpriteSVG } from '../../images/SpriteSVG';
+import { socialMedia } from '../../assets/utils/socialMedia';
 
 import {
   BodyMenu,
@@ -17,8 +17,8 @@ import {
   LiItemS,
   MenuContainer,
   UlListS,
-} from "./BurgerMenuStyled";
-import { BoxIconHS, LogoBoxS, LogoTextHS } from "../Header/HeaderStyled";
+} from './BurgerMenuStyled';
+import { BoxIconHS, LogoBoxS, LogoTextHS } from '../Header/HeaderStyled';
 
 const BurgerMenu = () => {
   const [open, setOpen] = useState(false);
@@ -26,8 +26,8 @@ const BurgerMenu = () => {
 
   const toggleDrawer = (open) => (event) => {
     if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
@@ -35,7 +35,7 @@ const BurgerMenu = () => {
   };
 
   const onNavClick = (event) => {
-    navigate("/", { state: { id: event.target.textContent.toLowerCase() } });
+    navigate('/', { state: { id: event.target.textContent.toLowerCase() } });
     setOpen(false);
   };
   return (
@@ -45,18 +45,18 @@ const BurgerMenu = () => {
         color="inherit"
         aria-label="open drawer"
         onClick={toggleDrawer(true)}
-        sx={{ padding: "0px" }}
+        sx={{ padding: '0px' }}
       >
         <BoxImg>
-          <SpriteSVG name={"icon-burger"} />
+          <SpriteSVG name={'icon-burger'} />
         </BoxImg>
       </IconButton>
       <MenuContainer anchor="right" open={open} onClose={() => setOpen(false)}>
-        <Box sx={{ height: "100%" }}>
+        <Box sx={{ height: '100%' }}>
           <HeaderMenu>
-            <LogoBoxS sx={{ display: { sm: "none", lg: "none" } }}>
+            <LogoBoxS sx={{ display: { sm: 'none', lg: 'none' } }}>
               <BoxIconHS className="logoIcon">
-                <SpriteSVG name={"icon-logo"} />
+                <SpriteSVG name={'icon-logo'} />
               </BoxIconHS>
               <LogoTextHS>AUTO-INS</LogoTextHS>
             </LogoBoxS>
@@ -67,21 +67,21 @@ const BurgerMenu = () => {
               onClick={toggleDrawer(false)}
             >
               <BoxImg>
-                <SpriteSVG name={"icon-x"} />
+                <SpriteSVG name={'icon-x'} />
               </BoxImg>
             </IconButton>
           </HeaderMenu>
 
           <Box className="menuBodyWrapper">
             <BodyMenu>
-              {["Переваги", "Партнери", "Питання-відповіді"].map(
+              {['Переваги', 'Партнери', 'Питання-відповіді'].map(
                 (text, index) => {
                   return (
                     <Fragment key={text + index}>
                       <ListItemButton
                         key={text + index}
                         onClick={onNavClick}
-                        sx={{ p: "0" }}
+                        sx={{ p: '0' }}
                       >
                         <ListItemText primary={text} sx={{ m: 0 }} />
                       </ListItemButton>

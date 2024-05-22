@@ -1,1 +1,1 @@
-export { default } from "./CheckInsSection";
+export { default } from './CheckInsSection';

@@ -1,22 +1,22 @@
 /* eslint-disable react/display-name */
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import React from 'react';
+import { Box, Typography } from '@mui/material';
 import {
   FormContainerS,
   Item,
   StackS,
   YellowButtonS,
-} from "./CostCalculationStyled";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getStateNumber } from "../../redux/Calculator/selectors";
-import { useEffect, useState } from "react";
-import { getAddressAndAuto } from "../../redux/byParameters/selectors";
-import { getAutoByNumber } from "../../redux/References/selectors";
+} from './CostCalculationStyled';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getStateNumber } from '../../redux/Calculator/selectors';
+import { useEffect, useState } from 'react';
+import { getAddressAndAuto } from '../../redux/byParameters/selectors';
+import { getAutoByNumber } from '../../redux/References/selectors';
 import {
   paramsByNumberNormalize,
   pramsByParamsNormalize,
-} from "../../helpers/dataNormalize/paramsNormalize";
+} from '../../helpers/dataNormalize/paramsNormalize';
 
 export const CostCalculation = React.memo(() => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export const CostCalculation = React.memo(() => {
     if (autoByNumber?.length > 0) {
       setItems(paramsByNumberNormalize(autoByNumber));
     }
-    if (autoByNumber?.length === 0 && stateNumber === "") {
+    if (autoByNumber?.length === 0 && stateNumber === '') {
       setItems(pramsByParamsNormalize(autoByParams));
     }
   }, [stateNumber, autoByParams, autoByNumber]);
@@ -60,7 +60,7 @@ export const CostCalculation = React.memo(() => {
             );
           })}
         </StackS>
-        <YellowButtonS type="submit" onClick={() => navigate("/")}>
+        <YellowButtonS type="submit" onClick={() => navigate('/')}>
           Змінити параметри
         </YellowButtonS>
       </Box>

@@ -1,6 +1,6 @@
-import { BallTriangle } from "react-loader-spinner";
-import { SpriteSVG } from "../../images/SpriteSVG";
-import { LoaderBox } from "./LoaderStyled";
+import { BallTriangle } from 'react-loader-spinner';
+import { SpriteSVG } from '../../images/SpriteSVG';
+import { LoaderBox } from './LoaderStyled';
 
 const Loader = () => {
   return (

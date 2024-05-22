@@ -1,5 +1,5 @@
-import { getPortmoneValue } from "../../helpers/getPortmoneValue";
-import { YellowButton } from "../../style/Global.styled";
+import { getPortmoneValue } from '../../helpers/getPortmoneValue';
+import { YellowButton } from '../../style/Global.styled';
 
 /* 
     description = "Test Payment",
@@ -14,11 +14,11 @@ import { YellowButton } from "../../style/Global.styled";
 const PortmoneForm = ({
   billAmount,
   orderId,
-  shopOrderNumber = "",
-  description = "",
-  emailAddress = "",
-  lang = "uk",
-  billCurrency = "UAH",
+  shopOrderNumber = '',
+  description = '',
+  emailAddress = '',
+  lang = 'uk',
+  billCurrency = 'UAH',
 }) => {
   const value = JSON.stringify(
     getPortmoneValue({

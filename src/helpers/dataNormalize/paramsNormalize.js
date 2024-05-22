@@ -5,8 +5,8 @@ export const paramsByNumberNormalize = (params) => {
 
 export const pramsByParamsNormalize = (params) => {
   const { address, engineCapacity } = params;
-  if (address === "") {
-    return [...engineCapacity.split(" - ")];
+  if (address === '') {
+    return [...engineCapacity.split(' - ')];
   }
-  return [...engineCapacity.split(" - "), address.split(",")[0]];
+  return [...engineCapacity.split(' - '), address.split(',')[0]];
 };

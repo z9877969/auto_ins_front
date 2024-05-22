@@ -16,5 +16,11 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    quotes: ['error', 'single'],
   },
-}
+  overrides: [
+    {
+      files: ['src/**/*.{js,jsx,ts,tsx}'],
+    },
+  ],
+};

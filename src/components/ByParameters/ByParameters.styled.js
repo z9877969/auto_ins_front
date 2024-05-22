@@ -4,31 +4,31 @@ import {
   InputAdornment,
   OutlinedInput,
   styled,
-} from "@mui/material";
+} from '@mui/material';
 
-import { BlueButton } from "../../style/Global.styled";
+import { BlueButton } from '../../style/Global.styled';
 
 export const InputStyled = styled(OutlinedInput)(({ theme }) => ({
-  width: "100%",
+  width: '100%',
   height: 56,
   padding: 16,
   borderRadius: 50,
   backgroundColor: `${theme.palette.primary.white}`,
-  outline: `none`,
-  "& .MuiInputBase-input.MuiOutlinedInput-input": {
+  outline: 'none',
+  '& .MuiInputBase-input.MuiOutlinedInput-input': {
     color: `${theme.palette.primary.main}`,
     fontWeight: 600,
-    fontFamily: "Open Sans",
+    fontFamily: 'Open Sans',
     fontSize: 16,
-    lineHeight: "150%" /* 24px */,
-    [theme.breakpoints.up("sm")]: {
+    lineHeight: '150%' /* 24px */,
+    [theme.breakpoints.up('sm')]: {
       fontSize: 18,
     },
   },
-  [theme.breakpoints.up("sm")]: {
+  [theme.breakpoints.up('sm')]: {
     height: 59,
   },
-  [theme.breakpoints.up("lg")]: {
+  [theme.breakpoints.up('lg')]: {
     width: 272,
   },
 }));
@@ -36,217 +36,217 @@ export const InputStyled = styled(OutlinedInput)(({ theme }) => ({
 export const InputSerchIcon = styled(InputAdornment)(({ theme }) => ({
   width: 24,
   height: 24,
-  display: "block",
+  display: 'block',
   stroke: theme.palette.primary.main,
-  fill: "none",
+  fill: 'none',
 }));
 export const SubmitButton = styled(BlueButton)(({ theme }) => ({
-  display: "block",
-  marginLeft: "auto",
-  marginRight: "auto",
+  display: 'block',
+  marginLeft: 'auto',
+  marginRight: 'auto',
   fontSize: 16,
-  width: "100%",
+  width: '100%',
 
-  [theme.breakpoints.up("sm")]: {
+  [theme.breakpoints.up('sm')]: {
     marginTop: 8,
     fontSize: 18,
   },
-  [theme.breakpoints.up("lg")]: {
+  [theme.breakpoints.up('lg')]: {
     height: 59,
-    marginTop: "auto",
+    marginTop: 'auto',
     width: 569,
-    marginLeft: "calc(100% - 569px)",
+    marginLeft: 'calc(100% - 569px)',
   },
 }));
 
-export const InputContStyled = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
+export const InputContStyled = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
   gap: 8,
-  [theme.breakpoints.up("sm")]: {
+  [theme.breakpoints.up('sm')]: {
     gap: 16,
   },
 }));
 
-export const AllInputContStyled = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
+export const AllInputContStyled = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
   gap: 8,
 
-  [theme.breakpoints.up("lg")]: {
-    flexDirection: "row",
-    alignItems: "flex-end",
+  [theme.breakpoints.up('lg')]: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
     gap: 24,
   },
 }));
 
-export const FormStyled = styled("form")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
+export const FormStyled = styled('form')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
   gap: 16,
-  [theme.breakpoints.up("lg")]: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+  [theme.breakpoints.up('lg')]: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 24,
   },
 }));
-export const AllCheckboxContStyled = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
+export const AllCheckboxContStyled = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
   gap: 16,
 
-  [theme.breakpoints.up("sm")]: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  [theme.breakpoints.up('sm')]: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  [theme.breakpoints.up("lg")]: {
+  [theme.breakpoints.up('lg')]: {
     // order: 1,
     width: 557,
   },
 }));
 export const CheckboxStyled = styled(Checkbox)(({ theme }) => ({
-  "& svg": {
+  '& svg': {
     height: 24,
     width: 24,
     stroke: theme.palette.primary.white,
   },
 }));
 export const CheckboxContainerStyled = styled(Box)(({ theme }) => ({
-  display: "inline-flex",
-  alignItems: "center",
+  display: 'inline-flex',
+  alignItems: 'center',
   stroke: theme.palette.primary.white,
   order: 1,
-  "& .MuiFormControlLabel-root": {
+  '& .MuiFormControlLabel-root': {
     marginRight: 0,
-    width: "fit-content",
+    width: 'fit-content',
   },
-  "& .MuiButtonBase-root": {
-    "&svg": {
+  '& .MuiButtonBase-root': {
+    '&svg': {
       height: 16,
       width: 16,
     },
   },
 }));
 export const DataContainerStyled = styled(InputContStyled)(({ theme }) => ({
-  position: "relative",
+  position: 'relative',
 
-  "& .react-datepicker__tab-loop": {
-    position: "absolute",
+  '& .react-datepicker__tab-loop': {
+    position: 'absolute',
   },
-  "& .react-datepicker__day--selected": {
+  '& .react-datepicker__day--selected': {
     backgroundColor: theme.palette.primary.blue,
   },
-  "& .iconCalender": {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  '& .iconCalender': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 24,
     right: 16,
     top: 16,
     zIndex: 1,
-    pointerEvents: "none",
-    "& svg": {
+    pointerEvents: 'none',
+    '& svg': {
       width: 24,
       height: 24,
     },
   },
-  "& .react-datepicker__view-calendar-icon input": {
+  '& .react-datepicker__view-calendar-icon input': {
     padding: 16,
-    borderRadius: "50px",
-    outline: "none",
-    borderColor: "transparent",
+    borderRadius: '50px',
+    outline: 'none',
+    borderColor: 'transparent',
     fontSize: 16,
     fontWeight: 600,
-    lineHeight: "1.5",
-    "&:hover": {
-      cursor: "pointer",
+    lineHeight: '1.5',
+    '&:hover': {
+      cursor: 'pointer',
     },
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       fontSize: 18,
     },
   },
-  "& .react-datepicker": {
-    fontFamily: "Open Sans",
+  '& .react-datepicker': {
+    fontFamily: 'Open Sans',
     fontSize: 16,
     borderRadius: 50,
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       fontSize: 18,
     },
-    "&__header": {
-      borderTopRightRadius: "50px!important",
+    '&__header': {
+      borderTopRightRadius: '50px!important',
       borderTopLeftRadius: 50,
-      padding: "15px 15px 0 15px",
+      padding: '15px 15px 0 15px',
     },
-    "&__current-month": {
-      fontSize: "1.5rem",
+    '&__current-month': {
+      fontSize: '1.5rem',
     },
-    "&__navigation": {
+    '&__navigation': {
       top: 15,
-      "&--next": {
+      '&--next': {
         right: 22,
       },
-      "&--previous": {
+      '&--previous': {
         left: 22,
       },
-      "&:hover": {
-        "*::before": {
+      '&:hover': {
+        '*::before': {
           borderColor: theme.palette.primary.blue,
         },
       },
     },
-    "&__navigation-icon": {
-      "&::before": {
+    '&__navigation-icon': {
+      '&::before': {
         borderColor: theme.palette.primary.main,
       },
     },
-    "&__day-name, &__day, &__time-name": {
-      fontSize: "1.5rem",
+    '&__day-name, &__day, &__time-name': {
+      fontSize: '1.5rem',
       lineHeight: 1.5,
-      margin: "0.31em",
+      margin: '0.31em',
     },
-    "&__day, __month, __quarter, __year": {
-      transition: "background-color 250ms ease-in-out",
-      "&:hover, &:focus": {
+    '&__day, __month, __quarter, __year': {
+      transition: 'background-color 250ms ease-in-out',
+      '&:hover, &:focus': {
         backgroundColor: theme.palette.primary.blue,
         color: theme.palette.primary.white,
       },
-      "&--keyboard-selected": {
+      '&--keyboard-selected': {
         color: theme.palette.primary.white,
         backgroundColor: theme.palette.primary.tertiaryBlue,
       },
     },
-    "&__month": {
-      padding: "0 15px 15px 15px",
+    '&__month': {
+      padding: '0 15px 15px 15px',
     },
-    "&__triangle": {
-      display: "none",
+    '&__triangle': {
+      display: 'none',
     },
-    "&__day": {
-      width: "fit-content",
-      margin: "auto",
+    '&__day': {
+      width: 'fit-content',
+      margin: 'auto',
       padding: 7.5,
       flex: 1,
       flexBasis: 0,
     },
-    "&__week": {
-      display: "flex",
+    '&__week': {
+      display: 'flex',
     },
-    "&__calendar-icon": {
+    '&__calendar-icon': {
       width: 24,
       height: 24,
       right: 16,
       top: 16 / 2,
       // pointerEvents: "auto",
-      "&:hover": {
-        cursor: "pointer",
+      '&:hover': {
+        cursor: 'pointer',
         // pointerEvents: "auto",
       },
     },
-    "&-wrapper": {
-      width: "100%",
+    '&-wrapper': {
+      width: '100%',
     },
-    "&-popper": {
-      transform: "translate3d(0px, 0px, 0px)",
+    '&-popper': {
+      transform: 'translate3d(0px, 0px, 0px)',
     },
   },
 }));

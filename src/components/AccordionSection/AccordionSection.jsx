@@ -1,14 +1,14 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { SpriteSVG } from "../../images/SpriteSVG";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { useState } from 'react';
+import { SpriteSVG } from '../../images/SpriteSVG';
 import {
   Accordions,
   AccordionsDetails,
   AccordionsSummary,
   ContAccordion,
-} from "./AccordionSectionStyle";
-import { faq } from "../../assets/utils/faq";
+} from './AccordionSectionStyle';
+import { faq } from '../../assets/utils/faq';
 
 const AccordionSection = () => {
   const [expanded, setExpanded] = useState(false);
@@ -32,11 +32,11 @@ const AccordionSection = () => {
               TransitionProps={{ unmountOnExit: true }}
             >
               <AccordionsSummary
-                aria-controls={index + "-content"}
-                id={index + "-header"}
+                aria-controls={index + '-content'}
+                id={index + '-header'}
                 expandIcon={
-                  <Box sx={{ stroke: "#FFFF", width: "32px", height: "32px" }}>
-                    <SpriteSVG name={"icon-chevron-down"} />
+                  <Box sx={{ stroke: '#FFFF', width: '32px', height: '32px' }}>
+                    <SpriteSVG name={'icon-chevron-down'} />
                   </Box>
                 }
               >

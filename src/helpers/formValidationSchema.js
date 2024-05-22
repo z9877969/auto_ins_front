@@ -18,7 +18,7 @@ export const validationName = () =>
     .max(50, 'Занадто довге поле');
 
 const getIsValidEngineType = (type) => {
-  const message = "Об'єм двигуна не відповідає вибраній категорій";
+  const message = 'Об\'єм двигуна не відповідає вибраній категорій';
   switch (type) {
     case 'B1':
       return Yup.number().max(ENGINE_VOLUME_TYPES[type].max, message);
@@ -63,7 +63,7 @@ export const carDataFormValidationSchema = ({ isPrivilege, engineType } = {}) =>
         ? getIsValidEngineType(engineType)
             .max(
               2500,
-              "Об'єм двигуна для пільговиків не може перевищувати 2500"
+              'Об\'єм двигуна для пільговиків не може перевищувати 2500'
             )
             .required(REQUIRED_FIELD)
         : Yup.number(),

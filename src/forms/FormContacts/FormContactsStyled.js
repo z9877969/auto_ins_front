@@ -1,12 +1,12 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Typography, styled } from '@mui/material';
 
 export const InputBoxS = styled(Box)(({ theme }) => ({
-  marginBottom: "24px",
-  [theme.breakpoints.up("md")]: {
-    marginBottom: "28px",
+  marginBottom: '24px',
+  [theme.breakpoints.up('md')]: {
+    marginBottom: '28px',
   },
-  [theme.breakpoints.up("lg")]: {
-    marginBottom: "48px",
+  [theme.breakpoints.up('lg')]: {
+    marginBottom: '48px',
   },
 }));
 

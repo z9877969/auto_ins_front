@@ -1,20 +1,20 @@
-import { useEffect } from "react";
-import { patternFormatter } from "react-number-format";
-import PropTypes from "prop-types";
-import { InputBoxS, SpanS } from "./FormContactsStyled";
-import GeneralInput from "../../components/GeneralInput/GeneralInput";
+import { useEffect } from 'react';
+import { patternFormatter } from 'react-number-format';
+import PropTypes from 'prop-types';
+import { InputBoxS, SpanS } from './FormContactsStyled';
+import GeneralInput from '../../components/GeneralInput/GeneralInput';
 
-const formatPhone = (value = "") =>
+const formatPhone = (value = '') =>
   patternFormatter(value.slice(3), {
-    format: "+38##########",
+    format: '+38##########',
     allowEmptyFormatting: true,
-    mask: "",
-    type: "phone",
+    mask: '',
+    type: 'phone',
   });
 
 const FormContacts = ({ formik }) => {
   useEffect(() => {
-    formik.setFieldValue("phone", formatPhone());
+    formik.setFieldValue('phone', formatPhone());
   }, []);
   return (
     <>
@@ -25,7 +25,7 @@ const FormContacts = ({ formik }) => {
           lableText="Електронна пошта* :"
           formikData={formik}
           customFunc={(e) =>
-            formik.setFieldValue("email", e.target.value.trim())
+            formik.setFieldValue('email', e.target.value.trim())
           }
         />
         <SpanS variant="inputSpan">
@@ -37,7 +37,7 @@ const FormContacts = ({ formik }) => {
           lableText="Телефон* :"
           formikData={formik}
           customFunc={(e) => {
-            formik.setFieldValue("phone", formatPhone(e.target.value));
+            formik.setFieldValue('phone', formatPhone(e.target.value));
           }}
         />
         <SpanS variant="inputSpan">

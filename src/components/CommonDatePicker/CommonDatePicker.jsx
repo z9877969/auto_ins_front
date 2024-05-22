@@ -1,10 +1,10 @@
-import { forwardRef } from "react";
-import ReactDatePicker from "react-datepicker";
+import { forwardRef } from 'react';
+import ReactDatePicker from 'react-datepicker';
 import {
   ButtonStyled,
   DataContainerStyled,
   // InputContStyled,
-} from "./CommonDatePicker.styled";
+} from './CommonDatePicker.styled';
 
 const CustomInputAsButton = forwardRef(({ value, onClick }, ref) => {
   return (

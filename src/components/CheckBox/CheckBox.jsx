@@ -1,9 +1,9 @@
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { SpriteSVG } from "../../images/SpriteSVG";
-import { CheckboxContainerStyled, CheckboxStyled } from "./CheckBoxStyled";
-import { useTheme } from "@emotion/react";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { SpriteSVG } from '../../images/SpriteSVG';
+import { CheckboxContainerStyled, CheckboxStyled } from './CheckBoxStyled';
+import { useTheme } from '@emotion/react';
 
-export const CheckBox = (color = "") => {
+export const CheckBox = (color = '') => {
   const theme = useTheme();
   if (!color) {
     color = theme.palette.primary.white;
@@ -22,7 +22,7 @@ export const CheckBox = (color = "") => {
             checkedIcon={<SpriteSVG name="icon-square-checked" />}
             type="checkbox"
             sx={{
-              "& svg": {
+              '& svg': {
                 stroke: color,
               },
             }}

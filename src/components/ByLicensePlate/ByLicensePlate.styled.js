@@ -1,185 +1,185 @@
-import { OutlinedInput, styled } from "@mui/material";
-import ReactDatePicker from "react-datepicker";
-import { InputContStyled } from "../ByParameters/ByParameters.styled";
+import { OutlinedInput, styled } from '@mui/material';
+import ReactDatePicker from 'react-datepicker';
+import { InputContStyled } from '../ByParameters/ByParameters.styled';
 
 export const InputWrapperStyled = styled(InputContStyled)(({ theme }) => ({
-  [theme.breakpoints.up("lg")]: {
-    flexDirection: "row",
+  [theme.breakpoints.up('lg')]: {
+    flexDirection: 'row',
   },
 
-  "&  .box": {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
+  '&  .box': {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
     gap: 8,
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       gap: 16,
     },
   },
-  "& .react-datepicker__view-calendar-icon input": {
+  '& .react-datepicker__view-calendar-icon input': {
     padding: 16,
-    borderRadius: "50px",
-    outline: "none",
-    borderColor: "transparent",
+    borderRadius: '50px',
+    outline: 'none',
+    borderColor: 'transparent',
     fontSize: 16,
     fontWeight: 600,
-    lineHeight: "1.5",
-    "&:hover": {
-      cursor: "pointer",
+    lineHeight: '1.5',
+    '&:hover': {
+      cursor: 'pointer',
     },
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       fontSize: 18,
     },
   },
-  "& .react-datepicker__day--selected": {
+  '& .react-datepicker__day--selected': {
     backgroundColor: theme.palette.primary.blue,
   },
-  "& .react-datepicker__tab-loop": {
-    position: "absolute",
+  '& .react-datepicker__tab-loop': {
+    position: 'absolute',
   },
-  "& .iconCalender": {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  '& .iconCalender': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 24,
     right: 16,
     top: 16,
     zIndex: 1,
-    pointerEvents: "none",
-    "& svg": {
+    pointerEvents: 'none',
+    '& svg': {
       width: 24,
       height: 24,
     },
   },
-  "& .react-datepicker": {
-    fontFamily: "Open Sans",
+  '& .react-datepicker': {
+    fontFamily: 'Open Sans',
     fontSize: 16,
     borderRadius: 50,
 
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       fontSize: 18,
     },
-    "&__header": {
-      borderTopRightRadius: "50px!important",
+    '&__header': {
+      borderTopRightRadius: '50px!important',
       borderTopLeftRadius: 50,
-      padding: "15px 15px 0 15px",
+      padding: '15px 15px 0 15px',
     },
-    "&__navigation": {
+    '&__navigation': {
       top: 15,
-      "&--next": {
+      '&--next': {
         right: 22,
       },
-      "&--previous": {
+      '&--previous': {
         left: 22,
       },
-      "&:hover": {
-        "*::before": {
+      '&:hover': {
+        '*::before': {
           borderColor: theme.palette.primary.blue,
         },
       },
     },
-    "&__navigation-icon": {
-      "&::before": {
+    '&__navigation-icon': {
+      '&::before': {
         borderColor: theme.palette.primary.main,
       },
     },
-    "&__day-name, &__day, &__time-name": {
-      fontSize: "1.5rem",
+    '&__day-name, &__day, &__time-name': {
+      fontSize: '1.5rem',
       lineHeight: 1.5,
-      margin: "0.31em",
+      margin: '0.31em',
     },
-    "&__day, __month, __quarter, __year": {
-      transition: "background-color 250ms ease-in-out",
-      "&:hover, &:focus": {
+    '&__day, __month, __quarter, __year': {
+      transition: 'background-color 250ms ease-in-out',
+      '&:hover, &:focus': {
         backgroundColor: theme.palette.primary.blue,
         color: theme.palette.primary.white,
       },
-      "&--keyboard-selected": {
+      '&--keyboard-selected': {
         color: theme.palette.primary.white,
         backgroundColor: theme.palette.primary.tertiaryBlue,
       },
     },
-    "&__month": {
-      padding: "0 15px 15px 15px",
+    '&__month': {
+      padding: '0 15px 15px 15px',
     },
-    "&__triangle": {
-      display: "none",
+    '&__triangle': {
+      display: 'none',
     },
-    "&__day": {
-      width: "fit-content",
-      margin: "auto",
+    '&__day': {
+      width: 'fit-content',
+      margin: 'auto',
       padding: 7.5,
       flex: 1,
       flexBasis: 0,
     },
-    "&__week": {
-      display: "flex",
+    '&__week': {
+      display: 'flex',
     },
-    "&__calendar-icon": {
+    '&__calendar-icon': {
       width: 24,
       height: 24,
       right: 16,
       top: 16 / 2,
-      cursor: "pointer",
+      cursor: 'pointer',
     },
-    "&-wrapper": {
-      width: "100%",
+    '&-wrapper': {
+      width: '100%',
     },
-    "&-popper": {
-      transform: "translate3d(0px, 0px, 0px)",
+    '&-popper': {
+      transform: 'translate3d(0px, 0px, 0px)',
     },
   },
 }));
 
 export const InputStyled = styled(OutlinedInput)(({ theme }) => ({
-  width: "100%",
+  width: '100%',
   height: 56,
   padding: 16,
   borderRadius: 50,
   backgroundColor: `${theme.palette.primary.white}`,
-  outline: `none`,
+  outline: 'none',
 
-  "& .MuiInputBase-input.MuiOutlinedInput-input": {
+  '& .MuiInputBase-input.MuiOutlinedInput-input': {
     color: `${theme.palette.primary.main}`,
     fontWeight: 600,
-    fontFamily: "Open Sans",
+    fontFamily: 'Open Sans',
     fontSize: 16,
-    lineHeight: "150%" /* 24px */,
-    outline: "none",
-    border: "none",
-    "&:-webkit-autofill": {
-      WebkitBackgroundClip: "text",
+    lineHeight: '150%' /* 24px */,
+    outline: 'none',
+    border: 'none',
+    '&:-webkit-autofill': {
+      WebkitBackgroundClip: 'text',
       WebkitTextFillColor: theme.palette.primary.main,
     },
-    "&:-webkit-autofill:focus": {
-      WebkitBackgroundClip: "text",
+    '&:-webkit-autofill:focus': {
+      WebkitBackgroundClip: 'text',
       WebkitTextFillColor: theme.palette.primary.main,
     },
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
       fontSize: 18,
     },
   },
 
-  "& fieldset.MuiOutlinedInput-notchedOutline": {
-    outline: "none",
-    border: "none",
+  '& fieldset.MuiOutlinedInput-notchedOutline': {
+    outline: 'none',
+    border: 'none',
   },
-  [theme.breakpoints.up("sm")]: {
+  [theme.breakpoints.up('sm')]: {
     height: 59,
   },
 }));
-export const FormStyled = styled("form")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
+export const FormStyled = styled('form')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
   gap: 16,
-  [theme.breakpoints.up("lg")]: {
+  [theme.breakpoints.up('lg')]: {
     gap: 15,
   },
-  "& .checkbox": {
+  '& .checkbox': {
     order: null,
   },
 }));
 
-export const DatePickerWrapper = styled(ReactDatePicker)(({ theme }) => ({
-  width: "100%",
+export const DatePickerWrapper = styled(ReactDatePicker)(() => ({
+  width: '100%',
 }));

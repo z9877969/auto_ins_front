@@ -20,9 +20,9 @@ export const contractSaveDGONormalize = (
     },
     dateFrom: format(
       new Date(userParams?.dateFrom),
-      "yyyy-MM-dd'T'HH:mm:ss.SSSxxxx"
+      'yyyy-MM-dd\'T\'HH:mm:ss.SSSxxxx'
     ),
-    date: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxxx"),
+    date: format(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss.SSSxxxx'),
     state: 'DRAFT',
 
     limit: dgoTariff?.limit,

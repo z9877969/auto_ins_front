@@ -7,8 +7,8 @@ export const findMakerByName = (name, allAutoMakers) => {
 export const findModelByName = (name, autoModelByMaker) => {
   return autoModelByMaker?.filter((model) => {
     return (
-      model?.name.toUpperCase().replace(/\s/g, "").slice(0, 3) ===
-      name.toUpperCase().replace(/\s/g, "").slice(0, 3)
+      model?.name.toUpperCase().replace(/\s/g, '').slice(0, 3) ===
+      name.toUpperCase().replace(/\s/g, '').slice(0, 3)
     );
   });
 };

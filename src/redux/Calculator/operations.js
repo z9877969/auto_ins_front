@@ -1,25 +1,25 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { addYearToDate } from "../../helpers/addYearToDate";
-import { autoKindAndLimit } from "../../helpers/autoKindAndLimit";
-import { responseDGONormalize } from "../../helpers/dataNormalize/responseDGONormalize";
-import { responseOSAGONormalize } from "../../helpers/dataNormalize/responseOSAGONormalize";
-import { userNormalize } from "../../helpers/dataNormalize/userNormalize";
-import { mergeObjectsById } from "../../helpers/mergeObjectsById";
-import { sortAndFilterTariff } from "../../helpers/sortAndFilterTariff";
-import { instance } from "../../services/api";
-import { mainRoutes } from "../../constants";
+import { addYearToDate } from '../../helpers/addYearToDate';
+import { autoKindAndLimit } from '../../helpers/autoKindAndLimit';
+import { responseDGONormalize } from '../../helpers/dataNormalize/responseDGONormalize';
+import { responseOSAGONormalize } from '../../helpers/dataNormalize/responseOSAGONormalize';
+import { userNormalize } from '../../helpers/dataNormalize/userNormalize';
+import { mergeObjectsById } from '../../helpers/mergeObjectsById';
+import { sortAndFilterTariff } from '../../helpers/sortAndFilterTariff';
+import { instance } from '../../services/api';
+import { mainRoutes } from '../../constants';
 
 // const setSalePoint = (salePoint) => {
 //   instance.defaults.params = { ...instance.defaults.params, salePoint };
 // };
 
 export const loginThunk = createAsyncThunk(
-  "auth/login",
+  'auth/login',
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await instance.get(
-        mainRoutes.CALCULATOR + "/user/getByEmail"
+        mainRoutes.CALCULATOR + '/user/getByEmail'
       );
 
       return userNormalize(data);
@@ -30,7 +30,7 @@ export const loginThunk = createAsyncThunk(
 );
 
 export const osagoByParams = createAsyncThunk(
-  "calculator/osagoByParams",
+  'calculator/osagoByParams',
   async (body, { rejectWithValue, dispatch, getState }) => {
     try {
       const { calculator } = getState();
@@ -39,7 +39,7 @@ export const osagoByParams = createAsyncThunk(
 
       const dateTo = addYearToDate(dateFrom);
       const { data } = await instance.get(
-        mainRoutes.CALCULATOR + "/tariff/choose/policy",
+        mainRoutes.CALCULATOR + '/tariff/choose/policy',
         {
           params: {
             ...body,
@@ -69,18 +69,18 @@ export const osagoByParams = createAsyncThunk(
 );
 
 export const osagoByDn = createAsyncThunk(
-  "calculator/osagoByDn",
+  'calculator/osagoByDn',
   async (body, { rejectWithValue, dispatch, getState }) => {
     try {
       const { customerCategory, stateNumber, dateFrom } = body;
       const { data } = await instance.get(
-        mainRoutes.CALCULATOR + "/tariff/choose/policy/statenumber",
+        mainRoutes.CALCULATOR + '/tariff/choose/policy/statenumber',
         {
           params: {
             customerCategory,
             stateNumber,
             dateFrom,
-            registrationType: "PERMANENT_WITHOUT_OTK",
+            registrationType: 'PERMANENT_WITHOUT_OTK',
             taxi: false,
           },
         }
@@ -120,7 +120,7 @@ export const osagoByDn = createAsyncThunk(
 );
 
 export const chooseVclTariffDGO = createAsyncThunk(
-  "calculator/tariffDGO",
+  'calculator/tariffDGO',
   async (body, { rejectWithValue }) => {
     try {
       const { autoCategory, dateFrom, ...rest } = body;
@@ -128,7 +128,7 @@ export const chooseVclTariffDGO = createAsyncThunk(
       const cat = autoKindAndLimit(autoCategory);
 
       const { data } = await instance.post(
-        mainRoutes.CALCULATOR + "/tariff/choose/vcl",
+        mainRoutes.CALCULATOR + '/tariff/choose/vcl',
         {
           ...rest,
           ...cat,

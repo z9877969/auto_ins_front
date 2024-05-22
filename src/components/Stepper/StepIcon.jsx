@@ -1,4 +1,4 @@
-import { StepIconRoot } from "./StepperStyled";
+import { StepIconRoot } from './StepperStyled';
 
 const StepIcon = (props) => {
   const { active, completed, className } = props;

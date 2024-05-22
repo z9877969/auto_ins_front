@@ -31,7 +31,7 @@ const ByLicensePlate = () => {
     setStateNumber,
     setAutoMakers,
     setSubmitObj,
-    osagoByDn,
+    // osagoByDn,
     autoByNumber,
     setAutoByNumber,
   } = useActions();
