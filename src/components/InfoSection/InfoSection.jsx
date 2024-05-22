@@ -48,7 +48,7 @@ const InfoSection = () => {
   const ref = useRef();
   const n = [{ id: 1 }];
 
-  let callback = (entries, observer) => {
+  let callback = (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         setInView(true);

@@ -17,6 +17,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     quotes: ['error', 'single'],
+    'react/prop-types': 'off',
   },
   overrides: [
     {

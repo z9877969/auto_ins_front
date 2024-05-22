@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { SpriteSVG } from '../../images/SpriteSVG';
 import {
@@ -10,7 +9,7 @@ import {
 import { NavLink } from 'react-router-dom';
 
 const OutletNavigation = ({ locationPath }) => {
-  const [location, _] = useState(locationPath);
+  const [location] = useState(locationPath);
   const currentLink = (location) => {
     switch (location.pathname) {
       case '/prices':

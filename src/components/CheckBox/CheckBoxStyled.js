@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import { styled } from '@mui/material/styles';
 
-export const CheckboxContainerStyled = styled(Box)(({ theme }) => ({
+export const CheckboxContainerStyled = styled(Box)(() => ({
   display: 'inline-flex',
   alignItems: 'center',
   //   stroke: theme.palette.primary.white,
@@ -18,7 +18,7 @@ export const CheckboxContainerStyled = styled(Box)(({ theme }) => ({
     },
   },
 }));
-export const CheckboxStyled = styled(Checkbox)(({ theme }) => ({
+export const CheckboxStyled = styled(Checkbox)(() => ({
   '& svg': {
     height: 24,
     width: 24,

@@ -38,6 +38,7 @@ const HomePage = () => {
         location.state = null;
       }
     }
+    // eslint-disable-next-line
   }, [location.state]);
 
   useEffect(() => {

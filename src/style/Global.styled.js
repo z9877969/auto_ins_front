@@ -114,15 +114,17 @@ export const ContainerSection = styled(Container)(({ theme }) => ({
   },
 }));
 
-export const ContainerSectionPage = styled(ContainerSection)(({ theme }) => ({
+export const ContainerSectionPage = styled(ContainerSection)(() => ({
   '&.MuiContainer-root': { paddingTop: '16px' },
 }));
+
 export const PageContainerS = styled('main')(({ theme }) => ({
   backgroundColor: theme.palette.primary.lightBlue2,
   color: theme.palette.primary.main,
   display: 'flex',
   flex: 'auto',
 }));
+
 export const FormContainer = styled(Container)(({ theme }) => ({
   width: '100%',
   overflow: 'hidden',

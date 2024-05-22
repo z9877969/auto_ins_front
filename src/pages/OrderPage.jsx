@@ -17,6 +17,7 @@ const OrderPage = () => {
       navigate('/');
       return;
     }
+    // eslint-disable-next-line
   }, [orderStage]);
 
   return (

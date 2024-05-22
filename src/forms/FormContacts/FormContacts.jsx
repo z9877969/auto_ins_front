@@ -13,9 +13,12 @@ const formatPhone = (value = '') =>
   });
 
 const FormContacts = ({ formik }) => {
+  
   useEffect(() => {
     formik.setFieldValue('phone', formatPhone());
+    // eslint-disable-next-line
   }, []);
+
   return (
     <>
       <InputBoxS>

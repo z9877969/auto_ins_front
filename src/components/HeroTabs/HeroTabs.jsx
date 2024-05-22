@@ -18,6 +18,7 @@ const HeroTabs = ({ setActiveTab }) => {
 
   useEffect(() => {
     setActiveTab(value);
+  // eslint-disable-next-line
   }, []);
 
   return (

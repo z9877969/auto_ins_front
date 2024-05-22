@@ -1,11 +1,10 @@
+import DatePicker from 'react-datepicker';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import { FormContainer, YellowButton } from '../../style/Global.styled';
-
-import { blue } from '@mui/material/colors';
 import { Box } from '@mui/material';
-import DatePicker from 'react-datepicker';
+
 export const FormContainerS = styled(FormContainer)(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     display: 'flex',
