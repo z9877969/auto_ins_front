@@ -10,5 +10,8 @@ export default defineConfig(() => {
   return {
     plugins: [react()],
     base: '/',
+    optimizeDeps: {
+      include: ['@mui/icons-material', '@emotion/styled'],
+    },
   };
 });

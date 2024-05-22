@@ -28,6 +28,8 @@ const GeneralSelect = ({
 }) => {
   const selectRef = useRef(null);
 
+  console.log('currentValue :>> ', currentValue);
+
   useEffect(() => {
     const inputRef = selectRef.current?.inputRef || null;
 
@@ -66,13 +68,12 @@ const GeneralSelect = ({
         $find={inputChangeCB}
         $optionsOnTop={optionsOnTop}
         components={
-          components
-          // inputChangeCB
-          //   ? {
-          //       DropdownIndicator: () => <SpriteSVG name="icon-zoom-out" />,
-          //       ...components,
-          //     }
-          //   : true
+          inputChangeCB
+            ? {
+                DropdownIndicator: () => <SpriteSVG name="icon-zoom-out" />,
+                ...components,
+              }
+            : components
         }
         isDisabled={isDisabled}
         noOptionsMessage={() => noOptionsMessage}
@@ -113,4 +114,5 @@ GeneralSelect.propTypes = {
   noOptionsMessage: PropTypes.string,
   optionsOnTop: PropTypes.bool,
   ref: PropTypes.element,
+  components: PropTypes.object,
 };

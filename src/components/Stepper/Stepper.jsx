@@ -51,6 +51,7 @@ import { getUser } from '../../redux/Calculator/selectors';
 import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
 import { contractSaveDGONormalize } from '../../helpers/dataNormalize/contractSaveDGONormalize';
 import CustomButtonLoading from './CustomButtonLoading';
+import SelectOrInputProvider from '../../context/SelectOrInputProvider';
 
 const steps = [
   { Контакти: 'icon-email' },
@@ -243,7 +244,9 @@ const Stepper = ({ backLinkRef }) => {
       case 3:
         return (
           <Suspense>
-            <CarDataForm formik={carDataFormik} />
+            <SelectOrInputProvider>
+              <CarDataForm formik={carDataFormik} />
+            </SelectOrInputProvider>
           </Suspense>
         );
       default:

@@ -1,7 +1,8 @@
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { InputContBoxStyled } from '../InsuredDataForm/InsuredDataForm.styled';
 import GeneralInput from '../../components/GeneralInput/GeneralInput';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import GeneralSelect from '../../components/GeneralSelect/GeneralSelect';
 import {
   getAutoByMakerAndModel,
@@ -9,35 +10,19 @@ import {
   getAutoMakers,
   getAutoModelByMaker,
 } from '../../redux/References/selectors';
-import { useEffect, useId, useMemo, useRef, useState } from 'react';
-import { useCallback } from 'react';
 import {
   getIsPrivilage,
   getSubmitObject,
 } from '../../redux/byParameters/selectors';
 import { useActions } from '../../hooks/useActions';
-
 import { getIsModalErrorOpen } from '../../redux/Global/selectors';
 import ModalError from '../../components/ModalError/ModalError';
-import { components } from 'react-select';
-
-const NoOptionsMessage = ({ children, ...props }) => {
-  const handleClick = () => {
-    // Ваш хендлер
-    console.log('No options message clicked!');
-  };
-
-  return (
-    <components.NoOptionsMessage {...props}>
-      <div onClick={handleClick} style={{ cursor: 'pointer' }}>
-        {children}
-      </div>
-    </components.NoOptionsMessage>
-  );
-};
+import { useSelectOrInput } from '../../context/SelectOrInputProvider';
+import SelectNoOptionsMessage from '../../components/SelectNoOptionsMessage/SelectNoOptionsMessage';
+import InputInsteadSelect from '../../components/InputInsteadSelect/InputInsteadSelect';
 
 const customComponents = {
-  NoOptionsMessage,
+  NoOptionsMessage: SelectNoOptionsMessage,
 };
 
 const CarDataForm = ({ formik }) => {
@@ -66,21 +51,14 @@ const CarDataForm = ({ formik }) => {
   const [disabled, setDisabled] = useState(
     insuranceObject?.stateNumber ? false : true
   );
-  const [modelInputData, setModelInputData] = useState(null);
+  const selectOrInput = useSelectOrInput();
 
   const modelSelectRef = useRef(null);
   const modelInputId = useId();
 
   const modelOptions = useMemo(() => {
-    const models = allAutoModel?.length > 0 ? allAutoModel : autoByBrand;
-    return [
-      ...models,
-      {
-        value: modelInputId,
-        label: modelSelectRef.current?.inputRef.value,
-      },
-    ];
-  }, [allAutoModel, autoByBrand, modelInputId]);
+    return allAutoModel?.length > 0 ? allAutoModel : autoByBrand;
+  }, [allAutoModel, autoByBrand]);
 
   const handleBlurStateNumber = (e) => {
     setRefError('');
@@ -132,17 +110,10 @@ const CarDataForm = ({ formik }) => {
   const handleChangeModelByInput = (e) => {
     const { name, value } = e.target;
     formik.setFieldValue(name, {
-      value: Date.now(),
+      value: modelInputId,
       label: value,
     });
   };
-
-  // const changeModelSelectToInput = () => {
-  //   setModelInputData({
-  //     value: modelInputId,
-  //     label: modelSelectRef.current?.inputRef.value,
-  //   });
-  // };
 
   const findMakerAndModel = useCallback(() => {
     const maker = autoByBrand[0]?.autoMaker;
@@ -166,7 +137,6 @@ const CarDataForm = ({ formik }) => {
   }, [findMakerAndModel]);
 
   useEffect(() => {
-    console.log('selectRef.current?.inputRef :>> ', modelSelectRef.current);
     const maker = formik.values?.brand?.replace(/ .*/, '');
     const model = formik.values?.brand?.replace(/^[^\s]+\s/, '').slice(0, 1);
 
@@ -214,25 +184,13 @@ const CarDataForm = ({ formik }) => {
           noOptionsMessage="Така марка відсутня"
         />
 
-        {!modelInputData ? (
+        {!selectOrInput.isModelInput ? (
           <GeneralSelect
             ref={modelSelectRef}
             id="model"
             lableText="Модель*:"
             currentValue={selectedAutoModel}
             optionsArr={modelOptions}
-            // optionsArr={
-            //   allAutoModel?.length > 0
-            //     ? allAutoModel
-            //     : autoByBrand.length > 0
-            //     ? autoByBrand
-            //     : [
-            //         {
-            //           value: modelInputId,
-            //           label: modelSelectRef.current?.inputRef.value,
-            //         },
-            //       ]
-            // }
             defaultValue={{ name: 'Оберіть модель авто' }}
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.id}
@@ -244,14 +202,14 @@ const CarDataForm = ({ formik }) => {
             readOnly={Boolean(insuranceObject?.stateNumber)}
             noOptionsMessage="Така модель відсутня"
             components={customComponents}
-            
           />
         ) : (
-          <GeneralInput
-            id="model"
-            lableText="Модель*:"
-            formikData={formik}
-            customFunc={handleChangeModelByInput}
+          <InputInsteadSelect
+            formik={formik}
+            label="Модель*:"
+            name="model"
+            onChange={handleChangeModelByInput}
+            closeInput={() => selectOrInput.setIsModelInput(false)}
           />
         )}
         {isPrivilage && (
