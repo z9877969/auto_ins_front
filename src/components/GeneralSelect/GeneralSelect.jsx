@@ -23,12 +23,10 @@ const GeneralSelect = ({
   readOnly = true,
   noOptionsMessage = '',
   optionsOnTop = false,
-  ref,
+  handleSelectRef,
   components,
 }) => {
   const selectRef = useRef(null);
-
-  console.log('currentValue :>> ', currentValue);
 
   useEffect(() => {
     const inputRef = selectRef.current?.inputRef || null;
@@ -44,10 +42,10 @@ const GeneralSelect = ({
   }, [readOnly]);
 
   useEffect(() => {
-    if (ref) {
-      ref.current = selectRef.current;
+    if (selectRef.current && handleSelectRef) {
+      handleSelectRef(selectRef.current.inputRef);
     }
-  }, [ref]);
+  }, [handleSelectRef]);
   // const theme = useTheme();
   return (
     <InputContStyled className="select-container">
@@ -94,7 +92,9 @@ const GeneralSelect = ({
     </InputContStyled>
   );
 };
+
 export default GeneralSelect;
+
 GeneralSelect.propTypes = {
   lableText: PropTypes.string.isRequired,
   currentValue: PropTypes.object,
@@ -115,4 +115,5 @@ GeneralSelect.propTypes = {
   optionsOnTop: PropTypes.bool,
   ref: PropTypes.element,
   components: PropTypes.object,
+  handleSelectRef: PropTypes.func,
 };

@@ -22,8 +22,6 @@ const GeneralInput = ({
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
-  console.log('values[id] :>> ', values[id]);
-
   return (
     <InputContStyled className={className}>
       <LableStyled

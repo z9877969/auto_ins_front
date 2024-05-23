@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { InputContBoxStyled } from '../InsuredDataForm/InsuredDataForm.styled';
@@ -51,10 +58,15 @@ const CarDataForm = ({ formik }) => {
   const [disabled, setDisabled] = useState(
     insuranceObject?.stateNumber ? false : true
   );
+
   const selectOrInput = useSelectOrInput();
 
-  const modelSelectRef = useRef(null);
+  const modelInputRef = useRef(null);
   const modelInputId = useId();
+  
+  const handleSelectRef = useCallback((elementRef) => {
+    modelInputRef.current = elementRef;
+  }, []);
 
   const modelOptions = useMemo(() => {
     return allAutoModel?.length > 0 ? allAutoModel : autoByBrand;
@@ -145,6 +157,17 @@ const CarDataForm = ({ formik }) => {
     }
   }, [formik.values?.brand, autoByMakerAndModel, outsideUkraine]);
 
+  const { setFieldValue } = formik;
+
+  useEffect(() => {
+    if (selectOrInput.isModelInput) {
+      setFieldValue('model', {
+        value: modelInputId,
+        label: modelInputRef.current.value,
+      });
+    }
+  }, [selectOrInput.isModelInput, setFieldValue, modelInputId]);
+
   if (isError) {
     return <ModalError />;
   }
@@ -186,7 +209,7 @@ const CarDataForm = ({ formik }) => {
 
         {!selectOrInput.isModelInput ? (
           <GeneralSelect
-            ref={modelSelectRef}
+            handleSelectRef={handleSelectRef}
             id="model"
             lableText="Модель*:"
             currentValue={selectedAutoModel}
