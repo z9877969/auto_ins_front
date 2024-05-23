@@ -19,7 +19,7 @@ const SelectNoOptionsMessage = ({ children, ...props }) => {
 };
 
 SelectNoOptionsMessage.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.string,
 };
 
 export default SelectNoOptionsMessage;

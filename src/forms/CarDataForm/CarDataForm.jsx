@@ -223,7 +223,7 @@ const CarDataForm = ({ formik }) => {
             }
             changeCB={handleChangeModel}
             readOnly={Boolean(insuranceObject?.stateNumber)}
-            noOptionsMessage="Така модель відсутня"
+            noOptionsMessage="Така модель відсутня. Вкажіть її самостійно"
             components={customComponents}
           />
         ) : (
