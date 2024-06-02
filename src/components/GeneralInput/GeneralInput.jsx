@@ -18,6 +18,7 @@ const GeneralInput = ({
   isReadOnly = false,
   formikData: { values, handleChange, errors, touched },
   className,
+  valueKey,
 }) => {
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
@@ -44,7 +45,7 @@ const GeneralInput = ({
         type={type || 'text'}
         value={
           values[id] && typeof values[id] === 'object'
-            ? values[id].label
+            ? values[id][valueKey]
             : values[id]
         }
         onChange={customFunc || handleChange}

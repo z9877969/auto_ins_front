@@ -18,6 +18,7 @@ module.exports = {
     ],
     quotes: ['error', 'single'],
     'react/prop-types': 'off',
+    'no-console': 'warn',
   },
   overrides: [
     {

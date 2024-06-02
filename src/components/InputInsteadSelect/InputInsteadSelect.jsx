@@ -3,7 +3,14 @@ import { Box, IconButton } from '@mui/material';
 import GeneralInput from '../GeneralInput/GeneralInput';
 import CancelIcon from '@mui/icons-material/CancelOutlined';
 
-const InputInsteadSelect = ({ formik, onChange, name, label, closeInput }) => {
+const InputInsteadSelect = ({
+  formik,
+  onChange,
+  name,
+  label,
+  closeInput,
+  valueKey, // key of input value if this value consisted in select options
+}) => {
   return (
     <Box display={'flex'} width={'100%'} alignItems={'center'} columnGap={1}>
       <Box flexGrow={1}>
@@ -13,6 +20,7 @@ const InputInsteadSelect = ({ formik, onChange, name, label, closeInput }) => {
           formikData={formik}
           customFunc={onChange}
           placeholder={'Вкажіть модель авто'}
+          valueKey={valueKey}
         />
       </Box>
       {closeInput && (

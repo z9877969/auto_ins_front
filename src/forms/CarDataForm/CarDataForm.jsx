@@ -1,7 +1,6 @@
 import {
   useCallback,
   useEffect,
-  useId,
   useMemo,
   useRef,
   useState,
@@ -62,8 +61,8 @@ const CarDataForm = ({ formik }) => {
   const selectOrInput = useSelectOrInput();
 
   const modelInputRef = useRef(null);
-  const modelInputId = useId();
-  
+  const modelInputId = useRef('custom').current;
+
   const handleSelectRef = useCallback((elementRef) => {
     modelInputRef.current = elementRef;
   }, []);
@@ -96,7 +95,6 @@ const CarDataForm = ({ formik }) => {
     setSelectedAutoModel({
       name: 'Оберіть модель авто',
     });
-
     setSelectedAutoMaker(e);
     allAutoModelByMaker(e.id);
     formik.setFieldValue('maker', e.id);
@@ -122,8 +120,8 @@ const CarDataForm = ({ formik }) => {
   const handleChangeModelByInput = (e) => {
     const { name, value } = e.target;
     formik.setFieldValue(name, {
-      value: modelInputId,
-      label: value,
+      id: modelInputId,
+      name: value,
     });
   };
 
@@ -161,12 +159,18 @@ const CarDataForm = ({ formik }) => {
 
   useEffect(() => {
     if (selectOrInput.isModelInput) {
+      setFieldValue('maker', selectedAutoMaker);
       setFieldValue('model', {
-        value: modelInputId,
-        label: modelInputRef.current.value,
+        id: modelInputId,
+        name: modelInputRef.current.value,
       });
     }
-  }, [selectOrInput.isModelInput, setFieldValue, modelInputId]);
+  }, [
+    selectOrInput.isModelInput,
+    setFieldValue,
+    modelInputId,
+    selectedAutoMaker,
+  ]);
 
   if (isError) {
     return <ModalError />;
@@ -231,6 +235,7 @@ const CarDataForm = ({ formik }) => {
             formik={formik}
             label="Модель*:"
             name="model"
+            valueKey="name"
             onChange={handleChangeModelByInput}
             closeInput={() => selectOrInput.setIsModelInput(false)}
           />
