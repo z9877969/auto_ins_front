@@ -22,7 +22,7 @@ export const insuranceObjectNormalize = (
       autoMaker: { id: carDataFormik.values.maker.id },
       id: carDataFormik.values.model.id,
     };
-    insurObject.model = model;
+    insuranceObject.model = model;
   }
   if (privilegeData) {
     insuranceObject.engineVolume = privilegeData.engineVolume;

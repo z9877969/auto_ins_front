@@ -15,6 +15,7 @@ import {
 import { selectOrderData } from '../../redux/Global/selectors';
 import { useActions } from '../../hooks/useActions';
 import CustomButtonLoading from '../Stepper/CustomButtonLoading';
+import PushNotification from '../PushNotification/PushNotification';
 
 // eslint-disable-next-line
 export const orderMessagesKeys = {
@@ -71,6 +72,8 @@ const BlockThank = () => {
   const orderData = useSelector(selectOrderData);
   const { orderStage } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const formik = useFormik({
     initialValues: { password: '' },
   });
@@ -80,7 +83,7 @@ const BlockThank = () => {
     // eslint-disable-next-line
   }, []);
   // eslint-disable-next-line
-  const goBack = useCallback(() => navigate(-1, { replace: true }), []);
+  // const goBack = useCallback(() => navigate(-1, { replace: true }), []);
 
   const handleOrderClick = async () => {
     if (orderStage === orderMessagesKeys.ORDER_GET) {
@@ -89,6 +92,7 @@ const BlockThank = () => {
         await getOrderPasswordApi(orderData.epolicyOrderId);
         nextStep(orderMessagesKeys.ORDER_CHECK);
       } catch (error) {
+        setErrorMessage(JSON.stringify(error, null, 2));
         nextStep(orderMessagesKeys.ORDER_CHECK);
       } finally {
         setIsLoading(false);
@@ -110,7 +114,8 @@ const BlockThank = () => {
           nextStep(orderMessagesKeys.ORDER_GET_VCL);
         }
       } catch (error) {
-        return goBack();
+        setErrorMessage(JSON.stringify(error, null, 2));
+        // return goBack();
       } finally {
         formik.resetForm();
         setIsLoading(false);
@@ -122,6 +127,7 @@ const BlockThank = () => {
         await getOrderPasswordApi(orderData.vclOrderId);
         nextStep(orderMessagesKeys.ORDER_CHECK_VCL);
       } catch (error) {
+        setErrorMessage(JSON.stringify(error, null, 2));
         nextStep(orderMessagesKeys.ORDER_CHECK_VCL);
       } finally {
         setIsLoading(false);
@@ -140,7 +146,8 @@ const BlockThank = () => {
         });
         nextStep(orderMessagesKeys.ORDER_PAYMENT);
       } catch (error) {
-        return goBack();
+        setErrorMessage(JSON.stringify(error, null, 2));
+        // return goBack();
       } finally {
         setIsLoading(false);
       }
@@ -156,6 +163,13 @@ const BlockThank = () => {
 
   return (
     <FormContainerS component="article">
+      {errorMessage && (
+        <PushNotification.Error
+          message={errorMessage}
+          onClose={() => setErrorMessage(null)}
+          isOpen={Boolean(errorMessage)}
+        />
+      )}
       <BoxImgS>
         {(orderStage === orderMessagesKeys.ORDER_EMMITED ||
           orderStage === orderMessagesKeys.ORDER_PAYMENT) && (
