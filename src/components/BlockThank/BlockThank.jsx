@@ -82,7 +82,7 @@ const BlockThank = () => {
     navigate('/order/' + orderStage, { replace: true });
     // eslint-disable-next-line
   }, []);
-  // eslint-disable-next-line
+   
   // const goBack = useCallback(() => navigate(-1, { replace: true }), []);
 
   const handleOrderClick = async () => {
