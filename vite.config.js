@@ -9,7 +9,12 @@ dotenv.config();
 export default defineConfig(() => {
   return {
     plugins: [
-      react(),
+      react({
+        jsxImportSource: '@emotion/react',
+        babel: {
+          plugins: ['@emotion/babel-plugin'],
+        },
+      }),
     ],
     base: '/',
     optimizeDeps: {
