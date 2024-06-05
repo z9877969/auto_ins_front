@@ -8,10 +8,16 @@ dotenv.config();
 // https://vitejs.dev/config/
 export default defineConfig(() => {
   return {
-    plugins: [react()],
+    plugins: [
+      react(),
+    ],
     base: '/',
     optimizeDeps: {
-      include: ['@mui/icons-material', '@emotion/styled'],
+      include: [
+        '@mui/material/Tooltip',
+        '@mui/icons-material',
+        '@emotion/styled',
+      ],
     },
   };
 });

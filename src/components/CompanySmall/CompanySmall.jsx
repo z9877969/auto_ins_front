@@ -1,4 +1,4 @@
-/* eslint-disable react/display-name */
+ 
 import { memo } from 'react';
 import Typography from '@mui/material/Typography';
 import { useSelector } from 'react-redux';
