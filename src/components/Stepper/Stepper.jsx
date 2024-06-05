@@ -51,6 +51,7 @@ import { getUser } from '../../redux/Calculator/selectors';
 import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
 import { contractSaveDGONormalize } from '../../helpers/dataNormalize/contractSaveDGONormalize';
 import CustomButtonLoading from './CustomButtonLoading';
+import SelectOrInputProvider from '../../context/SelectOrInputProvider';
 
 const steps = [
   { Контакти: 'icon-email' },
@@ -196,19 +197,19 @@ const Stepper = ({ backLinkRef }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     switch (activeStep) {
       case 0:
-        contactsFormik.handleSubmit();
+        contactsFormik.handleSubmit(e);
         break;
       case 1:
-        insuredDataFormik.handleSubmit();
+        insuredDataFormik.handleSubmit(e);
         break;
       case 2:
-        homeAddressFormik.handleSubmit();
+        homeAddressFormik.handleSubmit(e);
         break;
       case 3:
-        carDataFormik.handleSubmit();
+        carDataFormik.handleSubmit(e);
         break;
     }
   };
@@ -243,7 +244,9 @@ const Stepper = ({ backLinkRef }) => {
       case 3:
         return (
           <Suspense>
-            <CarDataForm formik={carDataFormik} />
+            <SelectOrInputProvider>
+              <CarDataForm formik={carDataFormik} />
+            </SelectOrInputProvider>
           </Suspense>
         );
       default:
@@ -275,7 +278,7 @@ const Stepper = ({ backLinkRef }) => {
           );
         })}
       </StepperStyled>
-      <FormStyled component="form" autoComplete="off">
+      <FormStyled component="form" autoComplete="off" onSubmit={handleSubmit}>
         <Typography variant="formTitle" component="h2">
           {Object.keys(steps[activeStep])}
         </Typography>
@@ -283,7 +286,8 @@ const Stepper = ({ backLinkRef }) => {
         <ButtonContainerStyled component="div">
           <CustomButtonLoading
             btnTitle={'Підтвердити'}
-            onCLick={handleSubmit}
+            type={'submit'}
+            // onCLick={handleSubmit}
           />
           {activeStep === 0 ? (
             <BtnBack backLinkRef={backLinkRef} />

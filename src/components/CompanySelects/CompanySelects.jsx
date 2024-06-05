@@ -1,7 +1,7 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme } from '@mui/material';
 
-import { BoxSelect } from "../Company/CompanyStyled";
-import GeneralSelect from "../GeneralSelect/GeneralSelect";
+import { BoxSelect } from '../Company/CompanyStyled';
+import GeneralSelect from '../GeneralSelect/GeneralSelect';
 
 const CompanySelects = ({ props }) => {
   const {

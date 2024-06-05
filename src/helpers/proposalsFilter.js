@@ -38,6 +38,7 @@ export const filterByPrice = (arr, sortFrom) => {
       break;
 
     default:
+      // eslint-disable-next-line
       console.log('Oops we have some problem!!!');
       break;
   }

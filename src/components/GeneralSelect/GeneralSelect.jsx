@@ -23,11 +23,14 @@ const GeneralSelect = ({
   readOnly = true,
   noOptionsMessage = '',
   optionsOnTop = false,
+  handleSelectRef,
+  components,
 }) => {
   const selectRef = useRef(null);
 
   useEffect(() => {
     const inputRef = selectRef.current?.inputRef || null;
+
     if (inputRef) {
       if (!readOnly && inputRef.readOnly) {
         inputRef.removeAttribute('readonly');
@@ -37,6 +40,12 @@ const GeneralSelect = ({
       }
     }
   }, [readOnly]);
+
+  useEffect(() => {
+    if (selectRef.current && handleSelectRef) {
+      handleSelectRef(selectRef.current.inputRef);
+    }
+  }, [handleSelectRef]);
   // const theme = useTheme();
   return (
     <InputContStyled className="select-container">
@@ -58,8 +67,11 @@ const GeneralSelect = ({
         $optionsOnTop={optionsOnTop}
         components={
           inputChangeCB
-            ? { DropdownIndicator: () => <SpriteSVG name="icon-zoom-out" /> }
-            : true
+            ? {
+                DropdownIndicator: () => <SpriteSVG name="icon-zoom-out" />,
+                ...components,
+              }
+            : components
         }
         isDisabled={isDisabled}
         noOptionsMessage={() => noOptionsMessage}
@@ -80,7 +92,9 @@ const GeneralSelect = ({
     </InputContStyled>
   );
 };
+
 export default GeneralSelect;
+
 GeneralSelect.propTypes = {
   lableText: PropTypes.string.isRequired,
   currentValue: PropTypes.object,
@@ -99,4 +113,7 @@ GeneralSelect.propTypes = {
   readOnly: PropTypes.bool,
   noOptionsMessage: PropTypes.string,
   optionsOnTop: PropTypes.bool,
+  ref: PropTypes.element,
+  components: PropTypes.object,
+  handleSelectRef: PropTypes.func,
 };

@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
-import { SpriteSVG } from "../../images/SpriteSVG";
-import { BoxIconS } from "./BtnBackStyled";
-import { WhiteButton } from "../../style/Global.styled";
+import PropTypes from 'prop-types';
+import { SpriteSVG } from '../../images/SpriteSVG';
+import { BoxIconS } from './BtnBackStyled';
+import { WhiteButton } from '../../style/Global.styled';
 
 const BtnBack = ({backLinkRef}) => {
     
@@ -9,10 +9,10 @@ const BtnBack = ({backLinkRef}) => {
     <>
       {backLinkRef?.current ? (          
           <WhiteButton            
-            to={backLinkRef?.current ?? "/"}            
+            to={backLinkRef?.current ?? '/'}            
           >
             <BoxIconS>
-              <SpriteSVG name={"icon-arrow-left"} />
+              <SpriteSVG name={'icon-arrow-left'} />
             </BoxIconS>
             Назад
           </WhiteButton>        
@@ -20,7 +20,7 @@ const BtnBack = ({backLinkRef}) => {
         <>
           <WhiteButton className="Mui-disabled">
             <BoxIconS className="disabled">
-              <SpriteSVG name={"icon-arrow-left"} />
+              <SpriteSVG name={'icon-arrow-left'} />
             </BoxIconS>
             Назад
           </WhiteButton>

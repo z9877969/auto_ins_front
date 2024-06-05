@@ -20,7 +20,7 @@ export const FilterMobile = () => {
         strokeLinejoin="round"
         strokeWidth="2"
         d="M22.667 20.222c3.068 0 5.555-2.487 5.555-5.556a5.555 5.555 0 1 0-11.112 0 5.554 5.554 0 0 0 5.556 5.555z"
-        style={{ fill: "var(--color1, #bcc3e7)" }}
+        style={{ fill: 'var(--color1, #bcc3e7)' }}
       />
       <path
         strokeLinecap="round"

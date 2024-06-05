@@ -7,10 +7,6 @@ export const insuranceObjectNormalize = (
 ) => {
   const insuranceObject = {
     type: 'auto',
-    model: {
-      id: carDataFormik.values.model.id,
-      autoMaker: { id: carDataFormik.values.maker.id },
-    },
     modelText: carDataFormik.values.brand || fullCarModel,
     category: carDataFormik.values.category,
     bodyNumber: carDataFormik.values.bodyNumber,
@@ -21,6 +17,13 @@ export const insuranceObjectNormalize = (
     registrationType: 'PERMANENT_WITHOUT_OTK',
     year: carDataFormik.values.year,
   };
+  if (carDataFormik.values.model.id !== 'custom') {
+    const model = {
+      autoMaker: { id: carDataFormik.values.maker.id },
+      id: carDataFormik.values.model.id,
+    };
+    insuranceObject.model = model;
+  }
   if (privilegeData) {
     insuranceObject.engineVolume = privilegeData.engineVolume;
   }

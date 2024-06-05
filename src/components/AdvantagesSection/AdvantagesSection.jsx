@@ -1,14 +1,14 @@
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Unstable_Grid2";
-import { SpriteSVG } from "../../images/SpriteSVG";
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Unstable_Grid2';
+import { SpriteSVG } from '../../images/SpriteSVG';
 import {
   BoxImgS,
   GridContainer,
   ItemS,
   TextContainerS,
-} from "./AdvantagesSectionStyle";
-import { ContainerSection } from "../../style/Global.styled";
-import { advantages } from "../../assets/utils/advantages";
+} from './AdvantagesSectionStyle';
+import { ContainerSection } from '../../style/Global.styled';
+import { advantages } from '../../assets/utils/advantages';
 
 const AdvantagesSection = () => {
   return (

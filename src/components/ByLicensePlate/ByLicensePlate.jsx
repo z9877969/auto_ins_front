@@ -31,7 +31,7 @@ const ByLicensePlate = () => {
     setStateNumber,
     setAutoMakers,
     setSubmitObj,
-    osagoByDn,
+    // osagoByDn,
     autoByNumber,
     setAutoByNumber,
   } = useActions();
@@ -134,11 +134,11 @@ const ByLicensePlate = () => {
             />
           </Box>
         </InputWrapperStyled>
-
         <GeneralCheckbox
           lableText="Є пільги"
           name="benefits"
           val={formik.values.benefits}
+          isChecked={formik.values.benefits}
           changeCB={formik.handleChange}
           helper={<HelperList />}
           className="checkbox"

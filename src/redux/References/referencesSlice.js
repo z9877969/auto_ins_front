@@ -1,23 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { errorMessage } from "../../helpers/errorMessage";
+import { createSlice } from '@reduxjs/toolkit';
+import { errorMessage } from '../../helpers/errorMessage';
 
 import {
   allAutoMakers,
   allAutoModelByMaker,
   autoByMakerAndModel,
   autoByNumber,
-} from "./operations";
+} from './operations';
 
 const initialState = {
   autoMakers: [],
   autoModelByMaker: [],
   autoByNumber: [],
   autoByMakerAndModel: [],
-  error: "",
+  error: '',
 };
 
 export const referencesSlice = createSlice({
-  name: "references",
+  name: 'references',
   initialState,
   reducers: {
     setAutoModelByMaker: (state, { payload }) => {

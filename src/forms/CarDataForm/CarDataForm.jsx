@@ -1,7 +1,14 @@
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { InputContBoxStyled } from '../InsuredDataForm/InsuredDataForm.styled';
 import GeneralInput from '../../components/GeneralInput/GeneralInput';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import GeneralSelect from '../../components/GeneralSelect/GeneralSelect';
 import {
   getAutoByMakerAndModel,
@@ -9,16 +16,20 @@ import {
   getAutoMakers,
   getAutoModelByMaker,
 } from '../../redux/References/selectors';
-import { useEffect, useState } from 'react';
-import { useCallback } from 'react';
 import {
   getIsPrivilage,
   getSubmitObject,
 } from '../../redux/byParameters/selectors';
 import { useActions } from '../../hooks/useActions';
-
 import { getIsModalErrorOpen } from '../../redux/Global/selectors';
 import ModalError from '../../components/ModalError/ModalError';
+import { useSelectOrInput } from '../../context/SelectOrInputProvider';
+import SelectNoOptionsMessage from '../../components/SelectNoOptionsMessage/SelectNoOptionsMessage';
+import InputInsteadSelect from '../../components/InputInsteadSelect/InputInsteadSelect';
+
+const customComponents = {
+  NoOptionsMessage: SelectNoOptionsMessage,
+};
 
 const CarDataForm = ({ formik }) => {
   const {
@@ -47,6 +58,19 @@ const CarDataForm = ({ formik }) => {
     insuranceObject?.stateNumber ? false : true
   );
 
+  const selectOrInput = useSelectOrInput();
+
+  const modelInputRef = useRef(null);
+  const modelInputId = useRef('custom').current;
+
+  const handleSelectRef = useCallback((elementRef) => {
+    modelInputRef.current = elementRef;
+  }, []);
+
+  const modelOptions = useMemo(() => {
+    return allAutoModel?.length > 0 ? allAutoModel : autoByBrand;
+  }, [allAutoModel, autoByBrand]);
+
   const handleBlurStateNumber = (e) => {
     setRefError('');
     setAutoByMakerAndModel([]);
@@ -63,15 +87,6 @@ const CarDataForm = ({ formik }) => {
     formik.handleChange(e);
   };
 
-  useEffect(() => {
-    if (insuranceObject) {
-      setDisabled(false);
-    }
-    if (!insuranceObject) {
-      setDisabled(true);
-    }
-  }, [insuranceObject]);
-
   const handleChangeStateNumber = (e) => {
     const { value, name } = e.target;
     formik.setFieldValue(name, value.trim().toUpperCase());
@@ -80,7 +95,6 @@ const CarDataForm = ({ formik }) => {
     setSelectedAutoModel({
       name: 'Оберіть модель авто',
     });
-
     setSelectedAutoMaker(e);
     allAutoModelByMaker(e.id);
     formik.setFieldValue('maker', e.id);
@@ -103,6 +117,14 @@ const CarDataForm = ({ formik }) => {
     formik.setFieldValue('engineVolume', Number(value));
   };
 
+  const handleChangeModelByInput = (e) => {
+    const { name, value } = e.target;
+    formik.setFieldValue(name, {
+      id: modelInputId,
+      name: value,
+    });
+  };
+
   const findMakerAndModel = useCallback(() => {
     const maker = autoByBrand[0]?.autoMaker;
     setSelectedAutoMaker(maker);
@@ -110,6 +132,15 @@ const CarDataForm = ({ formik }) => {
       allAutoMakers();
     }
   }, [autoByBrand, allAutoMakers]);
+
+  useEffect(() => {
+    if (insuranceObject) {
+      setDisabled(false);
+    }
+    if (!insuranceObject) {
+      setDisabled(true);
+    }
+  }, [insuranceObject]);
 
   useEffect(() => {
     findMakerAndModel();
@@ -123,9 +154,28 @@ const CarDataForm = ({ formik }) => {
       autoByMakerAndModel(maker + ' ' + model);
     }
   }, [formik.values?.brand, autoByMakerAndModel, outsideUkraine]);
+
+  const { setFieldValue } = formik;
+
+  useEffect(() => {
+    if (selectOrInput.isModelInput) {
+      setFieldValue('maker', selectedAutoMaker);
+      setFieldValue('model', {
+        id: modelInputId,
+        name: modelInputRef.current.value,
+      });
+    }
+  }, [
+    selectOrInput.isModelInput,
+    setFieldValue,
+    modelInputId,
+    selectedAutoMaker,
+  ]);
+
   if (isError) {
     return <ModalError />;
   }
+
   return (
     <>
       <InputContBoxStyled>
@@ -161,22 +211,35 @@ const CarDataForm = ({ formik }) => {
           noOptionsMessage="Така марка відсутня"
         />
 
-        <GeneralSelect
-          id="model"
-          lableText="Модель*:"
-          currentValue={selectedAutoModel}
-          optionsArr={allAutoModel?.length > 0 ? allAutoModel : autoByBrand}
-          defaultValue={{ name: 'Оберіть модель авто' }}
-          getOptionLabel={(option) => option.name}
-          getOptionValue={(option) => option.id}
-          isDisabled={disabled}
-          isValid={
-            selectedAutoModel?.name === 'Оберіть модель авто' ? false : true
-          }
-          changeCB={handleChangeModel}
-          readOnly={Boolean(insuranceObject?.stateNumber)}
-          noOptionsMessage="Така модель відсутня"
-        />
+        {!selectOrInput.isModelInput ? (
+          <GeneralSelect
+            handleSelectRef={handleSelectRef}
+            id="model"
+            lableText="Модель*:"
+            currentValue={selectedAutoModel}
+            optionsArr={modelOptions}
+            defaultValue={{ name: 'Оберіть модель авто' }}
+            getOptionLabel={(option) => option.name}
+            getOptionValue={(option) => option.id}
+            isDisabled={disabled}
+            isValid={
+              selectedAutoModel?.name === 'Оберіть модель авто' ? false : true
+            }
+            changeCB={handleChangeModel}
+            readOnly={Boolean(insuranceObject?.stateNumber)}
+            noOptionsMessage="Така модель відсутня. Вкажіть її самостійно"
+            components={customComponents}
+          />
+        ) : (
+          <InputInsteadSelect
+            formik={formik}
+            label="Модель*:"
+            name="model"
+            valueKey="name"
+            onChange={handleChangeModelByInput}
+            closeInput={() => selectOrInput.setIsModelInput(false)}
+          />
+        )}
         {isPrivilage && (
           <GeneralInput
             id="engineVolume"

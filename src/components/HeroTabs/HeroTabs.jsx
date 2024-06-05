@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   TabStyled,
   TabsContainer,
   TabsStyled,
   TitleStaled,
-} from "./HeroTabs.styled";
-import { useMediaQuery } from "@mui/material";
+} from './HeroTabs.styled';
+import { useMediaQuery } from '@mui/material';
 
 const HeroTabs = ({ setActiveTab }) => {
   const [value, setValue] = useState(0);
-  const isMobile = useMediaQuery("(max-width: 767px)");
+  const isMobile = useMediaQuery('(max-width: 767px)');
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
@@ -18,6 +18,7 @@ const HeroTabs = ({ setActiveTab }) => {
 
   useEffect(() => {
     setActiveTab(value);
+  // eslint-disable-next-line
   }, []);
 
   return (

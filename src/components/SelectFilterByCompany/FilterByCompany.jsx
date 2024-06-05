@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import {
   Checkbox,
   ListItemText,
   MenuItem,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 import {
   ChevronBoxStyled,
   InputContStyled,
@@ -12,8 +12,8 @@ import {
   MenuItemStyled,
   MenuProps,
   SelectStyled,
-} from "./FilterByCompany.styled";
-import { SpriteSVG } from "../../images/SpriteSVG";
+} from './FilterByCompany.styled';
+import { SpriteSVG } from '../../images/SpriteSVG';
 
 const FilterByCompany = (props) => {
   const { id, lableText, changeCB, currentValue, optionsArr } = props;
@@ -30,12 +30,12 @@ const FilterByCompany = (props) => {
           displayEmpty
           value={currentValue}
           onChange={changeCB}
-          input={<InputStyled sx={{ color: "black" }} />}
+          input={<InputStyled sx={{ color: 'black' }} />}
           renderValue={(selected) => {
             if (selected.length === 0) {
               return <em>Усі компанії</em>;
             }
-            return selected.join(" | ");
+            return selected.join(' | ');
           }}
           MenuProps={MenuProps}
           IconComponent={() => (
@@ -44,7 +44,7 @@ const FilterByCompany = (props) => {
             </ChevronBoxStyled>
           )}
         >
-          <MenuItem disabled value="" sx={{ color: "black!important" }}>
+          <MenuItem disabled value="" sx={{ color: 'black!important' }}>
             Усі компанії
           </MenuItem>
           {optionsArr.map((value) => (
@@ -54,7 +54,7 @@ const FilterByCompany = (props) => {
             >
               <Checkbox
                 sx={{
-                  paddingBottom: "0", paddingTop: 0
+                  paddingBottom: '0', paddingTop: 0
                 }}
                 checked={currentValue.indexOf(value) > -1}
               />

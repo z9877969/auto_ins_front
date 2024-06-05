@@ -1,1 +1,1 @@
-export { default } from "./OutletPageWrapper";
+export { default } from './OutletPageWrapper';

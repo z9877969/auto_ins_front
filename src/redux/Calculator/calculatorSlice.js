@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { errorMessage } from "../../helpers/errorMessage";
+import { createSlice } from '@reduxjs/toolkit';
+import { errorMessage } from '../../helpers/errorMessage';
 import {
   chooseVclTariffDGO,
   loginThunk,
   osagoByDn,
   osagoByParams,
-} from "./operations";
+} from './operations';
 
 const initialState = {
   filteredCompanies: [],
   tariffPolicyChoose: [],
   tariffVcl: [],
-  stateNumber: "",
-  error: "",
+  stateNumber: '',
+  error: '',
   policyStatus: 0,
   vclStatus: 0,
   user: null,
@@ -20,7 +20,7 @@ const initialState = {
 };
 
 export const calculatorSlice = createSlice({
-  name: "calculator",
+  name: 'calculator',
   initialState,
   reducers: {
     setStateNumber: (state, { payload }) => {

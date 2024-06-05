@@ -1,1 +1,1 @@
-export { default } from "./CompanyCardMedia.jsx";
+export { default } from './CompanyCardMedia.jsx';

@@ -16,5 +16,14 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    quotes: ['error', 'single'],
+    'react/prop-types': 'off',
+    'no-console': 'warn',
+    'react/display-name': ['off', { ignoreTranspilerName: false }],
   },
-}
+  overrides: [
+    {
+      files: ['src/**/*.{js,jsx,ts,tsx}'],
+    },
+  ],
+};

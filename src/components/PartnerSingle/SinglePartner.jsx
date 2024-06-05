@@ -1,11 +1,11 @@
-import PropTypes from "prop-types";
-import { Rating } from "@mui/material";
+import PropTypes from 'prop-types';
+import { Rating } from '@mui/material';
 import {
   LogoBoxPartnerS,
   RatingBoxPartnersS,
   RatingTextS,
   SinglePartnerContainerS,
-} from "./SinglePartnerStyled";
+} from './SinglePartnerStyled';
 
 const SinglePartner = ({ partner }) => {
   const { id, imgSrc, imgAlt, rating } = partner;
@@ -18,7 +18,7 @@ const SinglePartner = ({ partner }) => {
               src={imgSrc}
               alt={imgAlt}
               id={id}
-              style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             />
           </LogoBoxPartnerS>
           <RatingBoxPartnersS>

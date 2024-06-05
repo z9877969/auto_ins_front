@@ -1,4 +1,4 @@
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector } from '@reduxjs/toolkit';
 
 export const getUser = (state) => state.calculator.user;
 export const getTariffPolicyChoose = (state) =>
