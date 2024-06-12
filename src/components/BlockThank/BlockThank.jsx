@@ -82,7 +82,7 @@ const BlockThank = () => {
     navigate('/order/' + orderStage, { replace: true });
     // eslint-disable-next-line
   }, []);
-   
+
   // const goBack = useCallback(() => navigate(-1, { replace: true }), []);
 
   const handleOrderClick = async () => {
@@ -106,9 +106,9 @@ const BlockThank = () => {
           password: formik.values.password,
         });
         if (!orderData.vclOrderId) {
-          await requestOrderApi({
-            epolicy: orderData.epolicyOrderId,
-          });
+          // await requestOrderApi({
+          //   epolicy: orderData.epolicyOrderId,
+          // });
           nextStep(orderMessagesKeys.ORDER_PAYMENT);
         } else {
           nextStep(orderMessagesKeys.ORDER_GET_VCL);
@@ -140,10 +140,10 @@ const BlockThank = () => {
           contractId: orderData.vclOrderId,
           password: formik.values.password,
         });
-        await requestOrderApi({
-          epolicy: orderData.epolicyOrderId,
-          vcl: orderData.vclOrderId,
-        });
+        // await requestOrderApi({
+        //   epolicy: orderData.epolicyOrderId,
+        //   vcl: orderData.vclOrderId,
+        // });
         nextStep(orderMessagesKeys.ORDER_PAYMENT);
       } catch (error) {
         setErrorMessage(JSON.stringify(error, null, 2));
@@ -160,6 +160,23 @@ const BlockThank = () => {
     };
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    const setOrdersRequestStatus = async () => {
+      try {
+        setIsLoading(true);
+        await requestOrderApi({
+          epolicy: orderData.epolicyOrderId,
+        });
+      } catch (error) {
+        setErrorMessage(error.message);
+      } finally {
+        setIsLoading(false);
+        setErrorMessage((err) => (err ? null : err));
+      }
+    };
+    setOrdersRequestStatus();
+  }, [orderData]);
 
   return (
     <FormContainerS component="article">
