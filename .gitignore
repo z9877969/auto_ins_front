@@ -33,3 +33,6 @@ tasks
 .netlify
 src/_trash/
 _backup/
+
+# local server
+server/

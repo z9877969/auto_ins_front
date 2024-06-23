@@ -9,7 +9,7 @@ const CustomButtonLoading = ({
   isLoadingProp,
   ...props
 }) => {
-  const storeIsLoading = useSelector(getIsLoading)
+  const storeIsLoading = useSelector(getIsLoading)  
   const isLoading = isLoadingProp ? isLoadingProp : storeIsLoading;
   return isLoading ? (
     <YellowButtonStyled {...props}>

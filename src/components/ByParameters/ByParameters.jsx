@@ -17,14 +17,17 @@ import {
 import { useSelector } from 'react-redux';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
 import HelperList from '../HelpCircle/HelperList/HelperList';
-import { Box } from '@mui/material';
-import { useState } from 'react';
-import { SpriteSVG } from '../../images/SpriteSVG';
-import { addMonths } from 'date-fns/esm';
+// import { Box, TextField, formControlClasses } from '@mui/material';
+// import { useEffect, useRef, useState } from 'react';
+// import { SpriteSVG } from '../../images/SpriteSVG';
+// import { addMonths } from 'date-fns/esm';
 import { useActions } from '../../hooks/useActions';
 import format from 'date-fns/format';
-import CommonDatePicker from '../CommonDatePicker/CommonDatePicker';
+// import CommonDatePicker from '../CommonDatePicker/CommonDatePicker';
 import { CATEGORY, CATEGORY_ERROR, ORDER_TYPE } from '../../constants';
+
+import CustomLabel from '../CustomLabel/CustomLabel';
+import CustomDateInput from '../CustomDateInput/CustomDateInput';
 
 const ByParameters = () => {
   const navigate = useNavigate();
@@ -55,8 +58,6 @@ const ByParameters = () => {
     foreignNumber,
     benefits,
   } = useSelector((state) => state.byParameters);
-  const [dateFrom, setDateFrom] = useState(addDays(new Date(), 1));
-
   const handleChangeengineCapacity = (e) => {
     setEngineCapacity(e);
   };
@@ -89,6 +90,7 @@ const ByParameters = () => {
     initialValues: {
       benefits,
       foreignNumber,
+      dateFrom: format(addDays(new Date(), 1), 'dd/MM/yyyy'),
     },
     onSubmit: (values) => {
       let sendObj = {
@@ -97,7 +99,7 @@ const ByParameters = () => {
         outsideUkraine: values.foreignNumber,
         usageMonths: 0,
         taxi: false,
-        dateFrom: format(dateFrom, 'yyyy-MM-dd'),
+        dateFrom: values.dateFrom.split('/').reverse().join('-'),
       };
       address.value ? (sendObj.registrationPlace = address.value) : null;
       setSubmitObj(sendObj);
@@ -152,18 +154,28 @@ const ByParameters = () => {
             readOnly={false}
             noOptionsMessage="Вкажіть місце реєстрації"
           />
-          <CommonDatePicker
+          <CustomLabel
+            lableText="Дата початку дії поліса:"
+            labelColor={'#ffffff!important'}
+          >
+            <CustomDateInput
+              value={formik.values.dateFrom}
+              setValue={(v) => formik.setFieldValue('dateFrom', v)}
+              placeholder={'дд/мм/рррр'}
+            />
+          </CustomLabel>
+          {/* <CommonDatePicker
             label="Дата початку дії поліса:"
             id="dateFrom"
-            selected={dateFrom}
-            onSelect={setDateFrom}
+            // selected={dateFrom}
+            // onSelect={setDateFrom}
             closeOnScroll={(e) => e.target === document}
             name="date"
             dateFormat="dd/MM/yyyy"
             showIcon={true}
             minDate={addDays(new Date(), 1)}
             maxDate={addMonths(new Date(), 3)}
-            startDate={dateFrom}
+            // startDate={dateFrom}
             locale="uk"
             withPortal
             icon={
@@ -171,7 +183,7 @@ const ByParameters = () => {
                 <SpriteSVG name="icon-calendar" />
               </Box>
             }
-          />
+          /> */}
         </AllInputContStyled>
 
         <AllCheckboxContStyled>
