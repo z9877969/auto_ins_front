@@ -43,8 +43,8 @@ export const ENGINE_VOLUME_TYPES = {
   },
 };
 export const DATE_MESSAGE_ERRORS = {
-  birthDate: 'Вік повинен бути більше ніж 18 років',
-  date: 'Повинно бути більше ніж 18 років',
-  startContract: 'Дата повинна бути більшою за поточний день',
+  birthDate: 'Вік має бути більше 18 років',
+  date: 'Має бути більше дати народження',
+  startContract: 'Дата має бути більшою за поточну',
   dateFormat: 'Не коректна дата'
 };

@@ -27,6 +27,7 @@ import format from 'date-fns/format';
 import CustomLabel from '../CustomLabel/CustomLabel';
 import CustomDateInput from '../CustomDateInput/CustomDateInput';
 import { validateContractStartDate } from '../../helpers/formValidationSchema';
+import { normalizeDate } from '../../helpers/normalizeDate';
 
 const ByLicensePlate = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const ByLicensePlate = () => {
         customerCategory: values.benefits ? 'PRIVILEGED' : 'NATURAL',
         stateNumber: values.licensePlate,
         // dateFrom: format(dateFrom, 'yyyy-MM-dd'),
-        dateFrom: values.dateFrom.split('/').reverse().join('-'),
+        dateFrom: normalizeDate(values.dateFrom),
       };
       setAutoByNumber([]);
       setAddress({ label: '', value: '' });
@@ -125,27 +126,23 @@ const ByLicensePlate = () => {
             <CustomLabel
               lableText="Дата початку дії поліса:"
               labelColor={'#ffffff!important'}
+              errorPosition={{
+                top: '100%',
+                right: '16px',
+              }}
             >
               <CustomDateInput
                 value={formik.values.dateFrom}
                 setValue={(v) => formik.setFieldValue('dateFrom', v)}
                 placeholder={'дд/мм/рррр'}
               />
-              {formik.errors.dateFrom ? (
-                <div
-                  style={{
-                    color: 'red',
-                    position: 'absolute',
-                    top: '100%',
-                    left: '16px',
-                    transform: 'translateY(-4px)',
-                  }}
-                >
+              {formik.errors.dateFrom && (
+                <div className="errorMessage">
                   {!formik.errors.dateFrom.includes('dateFrom')
                     ? formik.errors.dateFrom
                     : DATE_MESSAGE_ERRORS.dateFormat}
                 </div>
-              ) : null}
+              )}
             </CustomLabel>
             {/* <CommonDatePicker
               id="dateFrom"

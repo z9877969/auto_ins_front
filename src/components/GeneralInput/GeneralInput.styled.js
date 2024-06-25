@@ -58,6 +58,11 @@ export const LableStyled = styled(Typography)(({ theme }) => ({
     maxWidth: 300,
     right: 15,
     // textAlign: "left",
+    fontSize: '12px',
     lineHeight: '1.1',
+
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '16px',
+    },
   },
 }));

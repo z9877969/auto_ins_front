@@ -1,5 +1,5 @@
-import format from 'date-fns/format';
 import { homeAddress } from '../homeAddress';
+import { normalizeDate } from '../normalizeDate';
 
 export const customerNormalize = (
   insuredDataFormik,
@@ -28,13 +28,12 @@ export const customerNormalize = (
     address: homeAddress(homeAddressFormik),
     phone,
     email,
-    // birthDate: format(insuredDataFormik.values.birthDate, 'yyyy-MM-dd'),
-    birthDate: birthDate.split('/').reverse().join('-'),
+    birthDate: normalizeDate(birthDate),
     document: {
       type: identityCard.value,
       series: series,
       number: number,
-      date: format(date, 'yyyy-MM-dd'),
+      date: normalizeDate(date),
       issuedBy: issuedBy,
     },
   };

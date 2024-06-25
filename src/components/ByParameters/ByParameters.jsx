@@ -39,6 +39,7 @@ import {
   validateContractStartDate,
   // validateFullAgeDate,
 } from '../../helpers/formValidationSchema';
+import { normalizeDate } from '../../helpers/normalizeDate';
 
 const ByParameters = () => {
   const navigate = useNavigate();
@@ -114,7 +115,7 @@ const ByParameters = () => {
         outsideUkraine: values.foreignNumber,
         usageMonths: 0,
         taxi: false,
-        dateFrom: values.dateFrom.split('/').reverse().join('-'),
+        dateFrom: normalizeDate(values.dateFrom),
       };
       address.value ? (sendObj.registrationPlace = address.value) : null;
       setSubmitObj(sendObj);
@@ -172,27 +173,23 @@ const ByParameters = () => {
           <CustomLabel
             lableText="Дата початку дії поліса:"
             labelColor={'#ffffff!important'}
+            errorPosition={{
+              top: '100%',
+              right: '16px',
+            }}
           >
             <CustomDateInput
               value={formik.values.dateFrom}
               setValue={(v) => formik.setFieldValue('dateFrom', v)}
               placeholder={'дд/мм/рррр'}
             />
-            {formik.errors.dateFrom ? (
-              <div
-                style={{
-                  color: 'red',
-                  position: 'absolute',
-                  top: '100%',
-                  left: '16px',
-                  transform: 'translateY(-4px)',
-                }}
-              >
+            {formik.errors.dateFrom && (
+              <div className="errorMessage">
                 {!formik.errors.dateFrom.includes('dateFrom')
                   ? formik.errors.dateFrom
                   : DATE_MESSAGE_ERRORS.dateFormat}
               </div>
-            ) : null}
+            )}
           </CustomLabel>
           {/* <CommonDatePicker
             label="Дата початку дії поліса:"

@@ -17,25 +17,17 @@ import CustomLabel from '../../components/CustomLabel/CustomLabel';
 import CustomDateInput from '../../components/CustomDateInput/CustomDateInput';
 import { DATE_MESSAGE_ERRORS } from '../../constants';
 
+const errorPosition = {
+  right: '8px',
+  top: 0,
+  transform: 'translateY(-2px)',
+};
+
 const InsuredDataForm = ({ formik, selectData }) => {
   const { InsuredDataSelectOptions, identityCard, setIdentityCard } =
     selectData;
 
   const isID_PASSPORT = identityCard.value === 'ID_PASSPORT';
-
-  // const [birthDate, setBirthDate] = useState(
-  //   sub(new Date(), {
-  //     years: 18,
-  //   })
-  // );
-  // const [date, setDate] = useState(new Date());
-
-  // const hadleChangeBirthDate = (e) => {
-  //   formik.setFieldValue('birthDate', e);
-  // };
-  // const hadleChangeDate = (e) => {
-  //   formik.setFieldValue('date', e);
-  // };
 
   return (
     <>
@@ -49,7 +41,7 @@ const InsuredDataForm = ({ formik, selectData }) => {
         />
         <CustomLabel
           lableText="Дата народження*:"
-          // labelColor={'#ffffff!important'}
+          errorPosition={errorPosition}
         >
           <CustomDateInput
             value={formik.values.birthDate}
@@ -57,15 +49,7 @@ const InsuredDataForm = ({ formik, selectData }) => {
             placeholder={'дд/мм/рррр'}
           />
           {formik.errors.birthDate ? (
-            <div
-              style={{
-                color: 'red',
-                position: 'absolute',
-                top: '-4px',
-                right: '16px',
-                transform: 'translateY(4px)',
-              }}
-            >
+            <div className="errorMessage">
               {!formik.errors.birthDate.includes('birthDate')
                 ? formik.errors.birthDate
                 : DATE_MESSAGE_ERRORS.dateFormat}
@@ -139,30 +123,19 @@ const InsuredDataForm = ({ formik, selectData }) => {
             lableText="Ким виданий*:"
             formikData={formik}
           />
-          <CustomLabel
-            lableText="Дата видачі*:"
-            // labelColor={'#ffffff!important'}
-          >
+          <CustomLabel lableText="Дата видачі*:" errorPosition={errorPosition}>
             <CustomDateInput
               value={formik.values.date}
               setValue={(v) => formik.setFieldValue('date', v)}
               placeholder={'дд/мм/рррр'}
             />
-            {formik.errors.birthDate ? (
-              <div
-                style={{
-                  color: 'red',
-                  position: 'absolute',
-                  top: '-4px',
-                  right: '16px',
-                  transform: 'translateY(4px)',
-                }}
-              >
+            {formik.errors.date && (
+              <div className="errorMessage">
                 {!formik.errors.date.includes('date')
                   ? formik.errors.date
                   : DATE_MESSAGE_ERRORS.dateFormat}
               </div>
-            ) : null}
+            )}
           </CustomLabel>
           {/* <CommonDatePicker
             label="Дата видачі*:"

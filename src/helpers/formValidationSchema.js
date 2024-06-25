@@ -46,7 +46,7 @@ const parseDateString = (value, originalValue) => {
   return parsedDate;
 };
 
-export const validateFullAgeDate = (type) => {
+export const validateFullAgeDate = () => {
   const today = new Date();
   const date18YearsAgo = new Date(
     today.getFullYear() - 18,
@@ -55,8 +55,25 @@ export const validateFullAgeDate = (type) => {
   );
   return Yup.date()
     .transform(parseDateString)
-    .max(date18YearsAgo, DATE_MESSAGE_ERRORS[type])
+    .max(date18YearsAgo, DATE_MESSAGE_ERRORS['birthDate'])
     .required(REQUIRED_FIELD);
+};
+
+export const validateRegistrationDate = () => {
+  return Yup.date()
+    .transform(parseDateString)
+    .required('Date is required')
+    .when('birthDate', ([birthDate], schema) => {
+      return schema.test({
+        test: function (date) {
+          if (!birthDate || !date) {
+            return true; // Пропускаємо перевірку, якщо значення відсутнє
+          }
+          return date > birthDate;
+        },
+        message: DATE_MESSAGE_ERRORS['date'],
+      });
+    });
 };
 
 export const validateContractStartDate = () => {
@@ -134,7 +151,7 @@ export const insuredDataFormValidationSchema = ({ docType } = {}) =>
     name: validationName(),
     middleName: validationName(),
     // birthDate: Yup.date().required(REQUIRED_FIELD),
-    birthDate: validateFullAgeDate('birthDate'),
+    birthDate: validateFullAgeDate(),
     taxNumber: Yup.string()
       //  .required(REQUIRED_FIELD)
       //  !!!!!============>>>> Чому попередній рядок закоментований<<<<<<================= ???
@@ -151,7 +168,7 @@ export const insuredDataFormValidationSchema = ({ docType } = {}) =>
       .max(6, 'Введіть 6 цифр'),
     issuedBy: Yup.string().required(REQUIRED_FIELD),
     // date: Yup.date().required(REQUIRED_FIELD),
-    date: validateFullAgeDate('date'),
+    date: validateRegistrationDate(),
     record: Yup.string(),
   });
 // ===========================================================================

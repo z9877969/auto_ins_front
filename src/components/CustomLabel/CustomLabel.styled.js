@@ -1,6 +1,6 @@
 import { Box, Typography, styled } from '@mui/material';
 
-export const InputContStyled = styled(Box)(({ theme }) => ({
+export const InputContStyled = styled(Box)(({ theme, errorposition }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -9,18 +9,26 @@ export const InputContStyled = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     gap: 16,
   },
-}));
-
-export const LableStyled = styled(Typography)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  '& .errorMessages': {
+  '& .errorMessage': {
     position: 'absolute',
     color: theme.palette.primary.red,
     textAlign: 'end',
-    maxWidth: 300,
-    right: 15,
-    // textAlign: "left",
+    maxWidth: '50%',
     lineHeight: '1.1',
+    fontSize: '12px',
+    ...errorposition,
+
+    [theme.breakpoints.up('xs')]: {
+      maxWidth: '200px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: 'unset',
+      fontSize: '16px'
+    },
   },
+}));
+
+export const LableStyled = styled(Typography)(() => ({
+  display: 'flex',
+  justifyContent: 'space-between',
 }));
