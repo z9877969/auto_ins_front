@@ -1,4 +1,6 @@
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
 import {
   AllCheckboxContStyled,
   AllInputContStyled,
@@ -24,10 +26,19 @@ import HelperList from '../HelpCircle/HelperList/HelperList';
 import { useActions } from '../../hooks/useActions';
 import format from 'date-fns/format';
 // import CommonDatePicker from '../CommonDatePicker/CommonDatePicker';
-import { CATEGORY, CATEGORY_ERROR, ORDER_TYPE } from '../../constants';
+import {
+  CATEGORY,
+  CATEGORY_ERROR,
+  DATE_MESSAGE_ERRORS,
+  ORDER_TYPE,
+} from '../../constants';
 
 import CustomLabel from '../CustomLabel/CustomLabel';
 import CustomDateInput from '../CustomDateInput/CustomDateInput';
+import {
+  validateContractStartDate,
+  // validateFullAgeDate,
+} from '../../helpers/formValidationSchema';
 
 const ByParameters = () => {
   const navigate = useNavigate();
@@ -92,6 +103,10 @@ const ByParameters = () => {
       foreignNumber,
       dateFrom: format(addDays(new Date(), 1), 'dd/MM/yyyy'),
     },
+    validationSchema: Yup.object().shape({
+      dateFrom: validateContractStartDate(),
+    }),
+    // validateOnChange: false,
     onSubmit: (values) => {
       let sendObj = {
         customerCategory: values.benefits ? 'PRIVILEGED' : 'NATURAL',
@@ -163,6 +178,13 @@ const ByParameters = () => {
               setValue={(v) => formik.setFieldValue('dateFrom', v)}
               placeholder={'дд/мм/рррр'}
             />
+            {formik.errors.dateFrom ? (
+              <div style={{ color: 'red' }}>
+                {!formik.errors.dateFrom.includes('dateFrom')
+                  ? formik.errors.dateFrom
+                  : DATE_MESSAGE_ERRORS.dateFormat}
+              </div>
+            ) : null}
           </CustomLabel>
           {/* <CommonDatePicker
             label="Дата початку дії поліса:"

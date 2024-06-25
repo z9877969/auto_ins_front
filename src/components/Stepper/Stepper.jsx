@@ -52,6 +52,7 @@ import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
 import { contractSaveDGONormalize } from '../../helpers/dataNormalize/contractSaveDGONormalize';
 import CustomButtonLoading from './CustomButtonLoading';
 import SelectOrInputProvider from '../../context/SelectOrInputProvider';
+import { format } from 'date-fns';
 
 const steps = [
   { Контакти: 'icon-email' },
@@ -104,10 +105,13 @@ const Stepper = ({ backLinkRef }) => {
   const insuredDataFormik = useFormik({
     initialValues: {
       ...insuredDataInitialValues,
-      birthDate: sub(new Date(), {
-        years: 18,
-      }),
-      date: new Date(),
+      birthDate: format(
+        sub(new Date(), {
+          years: 18,
+        }),
+        'dd/MM/yyyy'
+      ),
+      date: format(new Date(), 'dd/MM/yyyy'),
     },
     validationSchema: insuredDataFormValidationSchema(),
     onSubmit: () => {

@@ -7,21 +7,35 @@ export const customerNormalize = (
   contactsFormik,
   identityCard
 ) => {
+  const {
+    taxNumber,
+    surname,
+    name,
+    middleName,
+    birthDate,
+    series,
+    number,
+    date,
+    issuedBy,
+  } = insuredDataFormik?.values || {};
+
+  const { phone, email } = contactsFormik?.values || {};
+
   const customer = {
-    code: insuredDataFormik.values.taxNumber,
-    nameLast: insuredDataFormik.values.surname,
-    nameFirst:
-      insuredDataFormik.values.name + ' ' + insuredDataFormik.values.middleName,
+    code: taxNumber,
+    nameLast: surname,
+    nameFirst: name + ' ' + middleName,
     address: homeAddress(homeAddressFormik),
-    phone: contactsFormik.values.phone,
-    email: contactsFormik.values.email,
-    birthDate: format(insuredDataFormik.values.birthDate, 'yyyy-MM-dd'),
+    phone,
+    email,
+    // birthDate: format(insuredDataFormik.values.birthDate, 'yyyy-MM-dd'),
+    birthDate: birthDate.split('/').reverse().join('-'),
     document: {
       type: identityCard.value,
-      series: insuredDataFormik.values.series,
-      number: insuredDataFormik.values.number,
-      date: format(insuredDataFormik.values.date, 'yyyy-MM-dd'),
-      issuedBy: insuredDataFormik.values.issuedBy,
+      series: series,
+      number: number,
+      date: format(date, 'yyyy-MM-dd'),
+      issuedBy: issuedBy,
     },
   };
   return customer;

@@ -1,37 +1,40 @@
 import {
-  DataContainerWrapper,
+  // DataContainerWrapper,
   DocInputsStyled,
   InputContBoxStyled,
 } from './InsuredDataForm.styled';
 import GeneralSelect from '../../components/GeneralSelect/GeneralSelect';
 import GeneralInput from '../../components/GeneralInput/GeneralInput';
 import PropTypes from 'prop-types';
-import { Box } from '@mui/material';
-import { SpriteSVG } from '../../images/SpriteSVG';
-import ReactDatePicker from 'react-datepicker';
-import { useState } from 'react';
-import sub from 'date-fns/sub';
-import { InputStyled } from '../../components/GeneralInput/GeneralInput.styled';
-import CommonDatePicker from '../../components/CommonDatePicker/CommonDatePicker';
+// import { Box } from '@mui/material';
+// import { SpriteSVG } from '../../images/SpriteSVG';
+// import ReactDatePicker from 'react-datepicker';
+// import { useState } from 'react';
+// import sub from 'date-fns/sub';
+// import { InputStyled } from '../../components/GeneralInput/GeneralInput.styled';
+// import CommonDatePicker from '../../components/CommonDatePicker/CommonDatePicker';
+import CustomLabel from '../../components/CustomLabel/CustomLabel';
+import CustomDateInput from '../../components/CustomDateInput/CustomDateInput';
 
 const InsuredDataForm = ({ formik, selectData }) => {
   const { InsuredDataSelectOptions, identityCard, setIdentityCard } =
     selectData;
 
   const isID_PASSPORT = identityCard.value === 'ID_PASSPORT';
-  const [birthDate, setBirthDate] = useState(
-    sub(new Date(), {
-      years: 18,
-    })
-  );
 
-  const [date, setDate] = useState(new Date());
-  const hadleChangeBirthDate = (e) => {
-    formik.setFieldValue('birthDate', e);
-  };
-  const hadleChangeDate = (e) => {
-    formik.setFieldValue('date', e);
-  };
+  // const [birthDate, setBirthDate] = useState(
+  //   sub(new Date(), {
+  //     years: 18,
+  //   })
+  // );
+  // const [date, setDate] = useState(new Date());
+
+  // const hadleChangeBirthDate = (e) => {
+  //   formik.setFieldValue('birthDate', e);
+  // };
+  // const hadleChangeDate = (e) => {
+  //   formik.setFieldValue('date', e);
+  // };
 
   return (
     <>
@@ -46,7 +49,17 @@ const InsuredDataForm = ({ formik, selectData }) => {
         {formik.errors.birthDate ? (
           <div style={{ color: 'red' }}>{formik.errors.birthDate}</div>
         ) : null}
-        <DataContainerWrapper>
+        <CustomLabel
+          lableText="Дата народження*:"
+          // labelColor={'#ffffff!important'}
+        >
+          <CustomDateInput
+            value={formik.values.birthDate}
+            setValue={(v) => formik.setFieldValue('birthDate', v)}
+            placeholder={'дд/мм/рррр'}
+          />
+        </CustomLabel>
+        {/* <DataContainerWrapper>
           <label htmlFor="dateFrom">Дата народження*:</label>
           <ReactDatePicker
             className="yearMonthPicker"
@@ -75,7 +88,7 @@ const InsuredDataForm = ({ formik, selectData }) => {
               </Box>
             }
           />
-        </DataContainerWrapper>
+        </DataContainerWrapper> */}
         <GeneralInput id="taxNumber" lableText="РНОКПП*:" formikData={formik} />
         <GeneralSelect
           id="licensDoc"
@@ -116,7 +129,17 @@ const InsuredDataForm = ({ formik, selectData }) => {
           {formik.errors.date ? (
             <div style={{ color: 'red' }}>{formik.errors.date}</div>
           ) : null}
-          <CommonDatePicker
+          <CustomLabel
+            lableText="Дата видачі*:"
+            // labelColor={'#ffffff!important'}
+          >
+            <CustomDateInput
+              value={formik.values.date}
+              setValue={(v) => formik.setFieldValue('date', v)}
+              placeholder={'дд/мм/рррр'}
+            />
+          </CustomLabel>
+          {/* <CommonDatePicker
             label="Дата видачі*:"
             id="date"
             mode="single"
@@ -139,7 +162,7 @@ const InsuredDataForm = ({ formik, selectData }) => {
                 <SpriteSVG name={'icon-calendar'} />
               </Box>
             }
-          />
+          /> */}
         </DocInputsStyled>
       </InputContBoxStyled>
     </>

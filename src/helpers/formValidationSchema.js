@@ -8,7 +8,9 @@ import {
   VIN_REGEX,
   SERIES_PASSPORT_AND_DRIVING_LICENSE_REGEX,
   ENGINE_VOLUME_TYPES,
+  DATE_MESSAGE_ERRORS,
 } from '../constants';
+import { isDate, parse } from 'date-fns';
 
 export const validationName = () =>
   Yup.string()
@@ -18,7 +20,7 @@ export const validationName = () =>
     .max(50, 'Занадто довге поле');
 
 const getIsValidEngineType = (type) => {
-  const message = 'Об\'єм двигуна не відповідає вибраній категорій';
+  const message = "Об'єм двигуна не відповідає вибраній категорій";
   switch (type) {
     case 'B1':
       return Yup.number().max(ENGINE_VOLUME_TYPES[type].max, message);
@@ -34,6 +36,43 @@ const getIsValidEngineType = (type) => {
       return Yup.number().min(ENGINE_VOLUME_TYPES[type].min, message);
   }
 };
+
+// === Date Validation -Start
+const parseDateString = (value, originalValue) => {
+  const parsedDate = isDate(originalValue)
+    ? originalValue
+    : parse(originalValue, 'dd/MM/yyyy', new Date());
+
+  return parsedDate;
+};
+
+export const validateFullAgeDate = (type) => {
+  const today = new Date();
+  const date18YearsAgo = new Date(
+    today.getFullYear() - 18,
+    today.getMonth(),
+    today.getDate()
+  );
+  return Yup.date()
+    .transform(parseDateString)
+    .max(date18YearsAgo, DATE_MESSAGE_ERRORS[type])
+    .required(REQUIRED_FIELD);
+};
+
+export const validateContractStartDate = () => {
+  const today = new Date();
+  const dateMoreThenToday = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 1
+  );
+  return Yup.date()
+    .transform(parseDateString)
+    .min(dateMoreThenToday, DATE_MESSAGE_ERRORS['startContract'])
+    .required(REQUIRED_FIELD);
+};
+
+// === Date Validation -End
 
 // =============================================================================
 export const carDataFormValidationSchema = ({ isPrivilege, engineType } = {}) =>
@@ -63,7 +102,8 @@ export const carDataFormValidationSchema = ({ isPrivilege, engineType } = {}) =>
         ? getIsValidEngineType(engineType)
             .max(
               2500,
-              'Об\'єм двигуна для пільговиків не може перевищувати 2500'
+              // eslint-disable-next-line
+              "Об'єм двигуна для пільговиків не може перевищувати 2500"
             )
             .required(REQUIRED_FIELD)
         : Yup.number(),
@@ -93,7 +133,8 @@ export const insuredDataFormValidationSchema = ({ docType } = {}) =>
     surname: validationName(),
     name: validationName(),
     middleName: validationName(),
-    birthDate: Yup.date().required(REQUIRED_FIELD),
+    // birthDate: Yup.date().required(REQUIRED_FIELD),
+    birthDate: validateFullAgeDate('birthDate'),
     taxNumber: Yup.string()
       //  .required(REQUIRED_FIELD)
       //  !!!!!============>>>> Чому попередній рядок закоментований<<<<<<================= ???
@@ -109,7 +150,8 @@ export const insuredDataFormValidationSchema = ({ docType } = {}) =>
       .min(6, 'Введіть 6 цифр')
       .max(6, 'Введіть 6 цифр'),
     issuedBy: Yup.string().required(REQUIRED_FIELD),
-    date: Yup.date().required(REQUIRED_FIELD),
+    // date: Yup.date().required(REQUIRED_FIELD),
+    date: validateFullAgeDate('date'),
     record: Yup.string(),
   });
 // ===========================================================================
