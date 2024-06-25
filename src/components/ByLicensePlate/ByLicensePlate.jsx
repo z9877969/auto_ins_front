@@ -132,7 +132,15 @@ const ByLicensePlate = () => {
                 placeholder={'дд/мм/рррр'}
               />
               {formik.errors.dateFrom ? (
-                <div style={{ color: 'red' }}>
+                <div
+                  style={{
+                    color: 'red',
+                    position: 'absolute',
+                    top: '100%',
+                    left: '16px',
+                    transform: 'translateY(-4px)',
+                  }}
+                >
                   {!formik.errors.dateFrom.includes('dateFrom')
                     ? formik.errors.dateFrom
                     : DATE_MESSAGE_ERRORS.dateFormat}

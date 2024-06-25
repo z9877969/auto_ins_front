@@ -15,6 +15,7 @@ import PropTypes from 'prop-types';
 // import CommonDatePicker from '../../components/CommonDatePicker/CommonDatePicker';
 import CustomLabel from '../../components/CustomLabel/CustomLabel';
 import CustomDateInput from '../../components/CustomDateInput/CustomDateInput';
+import { DATE_MESSAGE_ERRORS } from '../../constants';
 
 const InsuredDataForm = ({ formik, selectData }) => {
   const { InsuredDataSelectOptions, identityCard, setIdentityCard } =
@@ -46,9 +47,6 @@ const InsuredDataForm = ({ formik, selectData }) => {
           lableText="По батькові*:"
           formikData={formik}
         />
-        {formik.errors.birthDate ? (
-          <div style={{ color: 'red' }}>{formik.errors.birthDate}</div>
-        ) : null}
         <CustomLabel
           lableText="Дата народження*:"
           // labelColor={'#ffffff!important'}
@@ -58,6 +56,21 @@ const InsuredDataForm = ({ formik, selectData }) => {
             setValue={(v) => formik.setFieldValue('birthDate', v)}
             placeholder={'дд/мм/рррр'}
           />
+          {formik.errors.birthDate ? (
+            <div
+              style={{
+                color: 'red',
+                position: 'absolute',
+                top: '-4px',
+                right: '16px',
+                transform: 'translateY(4px)',
+              }}
+            >
+              {!formik.errors.birthDate.includes('birthDate')
+                ? formik.errors.birthDate
+                : DATE_MESSAGE_ERRORS.dateFormat}
+            </div>
+          ) : null}
         </CustomLabel>
         {/* <DataContainerWrapper>
           <label htmlFor="dateFrom">Дата народження*:</label>
@@ -126,9 +139,6 @@ const InsuredDataForm = ({ formik, selectData }) => {
             lableText="Ким виданий*:"
             formikData={formik}
           />
-          {formik.errors.date ? (
-            <div style={{ color: 'red' }}>{formik.errors.date}</div>
-          ) : null}
           <CustomLabel
             lableText="Дата видачі*:"
             // labelColor={'#ffffff!important'}
@@ -138,6 +148,21 @@ const InsuredDataForm = ({ formik, selectData }) => {
               setValue={(v) => formik.setFieldValue('date', v)}
               placeholder={'дд/мм/рррр'}
             />
+            {formik.errors.birthDate ? (
+              <div
+                style={{
+                  color: 'red',
+                  position: 'absolute',
+                  top: '-4px',
+                  right: '16px',
+                  transform: 'translateY(4px)',
+                }}
+              >
+                {!formik.errors.date.includes('date')
+                  ? formik.errors.date
+                  : DATE_MESSAGE_ERRORS.dateFormat}
+              </div>
+            ) : null}
           </CustomLabel>
           {/* <CommonDatePicker
             label="Дата видачі*:"

@@ -16,7 +16,11 @@ const CustomLabel = ({
   const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <InputContStyled className={className} ref={ref}>
+    <InputContStyled
+      className={className}
+      ref={ref}
+      sx={{ position: 'relative' }}
+    >
       <LableStyled
         sx={{
           color: labelColor
