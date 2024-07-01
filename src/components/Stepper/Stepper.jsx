@@ -54,6 +54,7 @@ import CustomButtonLoading from './CustomButtonLoading';
 import SelectOrInputProvider from '../../context/SelectOrInputProvider';
 import { format } from 'date-fns';
 import * as storage from '../../helpers/storage';
+import { FORMIK_DATA_KEYS as formikDataKeys } from '../../constants';
 
 const steps = [
   { Контакти: 'icon-email' },
@@ -71,13 +72,6 @@ const HomeAddressForm = lazy(() =>
   import('../../forms/HomeAddressForm/HomeAddressForm')
 );
 const CarDataForm = lazy(() => import('../../forms/CarDataForm/CarDataForm'));
-
-export const formikDataKeys = {
-  CONTACTS: 'contactsFormik',
-  INSURED: 'insuredDataFormik',
-  HOME_ADDRESS: 'homeAddressFormik',
-  CAR: 'carDataFormik',
-};
 
 const Stepper = ({ backLinkRef }) => {
   const { contractSave } = useActions();

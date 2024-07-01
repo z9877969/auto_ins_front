@@ -48,3 +48,9 @@ export const DATE_MESSAGE_ERRORS = {
   startContract: 'Дата має бути більшою за поточну',
   dateFormat: 'Не коректна дата'
 };
+export const FORMIK_DATA_KEYS = {
+  CONTACTS: 'contactsFormik',
+  INSURED: 'insuredDataFormik',
+  HOME_ADDRESS: 'homeAddressFormik',
+  CAR: 'carDataFormik',
+};

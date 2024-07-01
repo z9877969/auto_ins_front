@@ -17,7 +17,7 @@ import { useActions } from '../../hooks/useActions';
 import CustomButtonLoading from '../Stepper/CustomButtonLoading';
 import PushNotification from '../PushNotification/PushNotification';
 import { setToLS } from '../../helpers/storage';
-import { formikDataKeys } from '../Stepper/Stepper';
+import { FORMIK_DATA_KEYS as formikDataKeys } from '../../constants';
 
 // eslint-disable-next-line
 export const orderMessagesKeys = {
