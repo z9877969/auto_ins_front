@@ -16,6 +16,8 @@ import { selectOrderData } from '../../redux/Global/selectors';
 import { useActions } from '../../hooks/useActions';
 import CustomButtonLoading from '../Stepper/CustomButtonLoading';
 import PushNotification from '../PushNotification/PushNotification';
+import { setToLS } from '../../helpers/storage';
+import { formikDataKeys } from '../Stepper/Stepper';
 
 // eslint-disable-next-line
 export const orderMessagesKeys = {
@@ -160,6 +162,14 @@ const BlockThank = () => {
     };
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (orderStage === orderMessagesKeys.ORDER_EMMITED) {
+        Object.values(formikDataKeys).forEach((key) => setToLS(key, null));
+      }
+    };
+  }, [orderStage]);
 
   useEffect(() => {
     const setOrdersRequestStatus = async () => {

@@ -132,11 +132,21 @@ export const ChapterSpan = styled(Typography)(({ theme }) => ({
       fontSize: '1rem',
     },
   },
+  '& .link': {
+    [theme.breakpoints.up('xs')]: {
+      fontSize: '12px',
+      fontWeight: 400,
+      lineHeight: '1.5',
+      color: theme.palette.primary.white,
+      paddingBottom: '0!important',
+    },
+  },
   '&.bottomSpan': {
     [theme.breakpoints.up('xs')]: {
       fontSize: '12px',
       fontWeight: 400,
       lineHeight: '1.5',
+      paddingBottom: '32px',
     },
   },
 }));

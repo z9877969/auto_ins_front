@@ -53,6 +53,7 @@ import { contractSaveDGONormalize } from '../../helpers/dataNormalize/contractSa
 import CustomButtonLoading from './CustomButtonLoading';
 import SelectOrInputProvider from '../../context/SelectOrInputProvider';
 import { format } from 'date-fns';
+import * as storage from '../../helpers/storage';
 
 const steps = [
   { Контакти: 'icon-email' },
@@ -70,6 +71,13 @@ const HomeAddressForm = lazy(() =>
   import('../../forms/HomeAddressForm/HomeAddressForm')
 );
 const CarDataForm = lazy(() => import('../../forms/CarDataForm/CarDataForm'));
+
+export const formikDataKeys = {
+  CONTACTS: 'contactsFormik',
+  INSURED: 'insuredDataFormik',
+  HOME_ADDRESS: 'homeAddressFormik',
+  CAR: 'carDataFormik',
+};
 
 const Stepper = ({ backLinkRef }) => {
   const { contractSave } = useActions();
@@ -95,7 +103,8 @@ const Stepper = ({ backLinkRef }) => {
 
   // =======================Formik======================================
   const contactsFormik = useFormik({
-    initialValues: contactsInitialValues,
+    initialValues:
+      storage.getFromLS(formikDataKeys.CONTACTS) ?? contactsInitialValues,
     validationSchema: contactsValidationSchema(),
     onSubmit: () => {
       handleNext();
@@ -103,7 +112,7 @@ const Stepper = ({ backLinkRef }) => {
   });
 
   const insuredDataFormik = useFormik({
-    initialValues: {
+    initialValues: storage.getFromLS(formikDataKeys.INSURED) ?? {
       ...insuredDataInitialValues,
       birthDate: format(
         sub(new Date(), {
@@ -120,7 +129,10 @@ const Stepper = ({ backLinkRef }) => {
   });
 
   const homeAddressFormik = useFormik({
-    initialValues: { ...homeAddressInitialValues, regionANDcity: homeAddress },
+    initialValues: storage.getFromLS(formikDataKeys.HOME_ADDRESS) ?? {
+      ...homeAddressInitialValues,
+      regionANDcity: homeAddress,
+    },
     validationSchema: homeAddressFormValidationSchema(),
     onSubmit: () => {
       handleNext();
@@ -128,7 +140,7 @@ const Stepper = ({ backLinkRef }) => {
   });
 
   const carDataFormik = useFormik({
-    initialValues: {
+    initialValues: storage.getFromLS(formikDataKeys.CAR) ?? {
       stateNumber: insurObject?.stateNumber || '',
       year: insurObject?.year || '',
       brand: insurObject?.modelText || '',
@@ -257,6 +269,19 @@ const Stepper = ({ backLinkRef }) => {
         return 'Unknown step';
     }
   };
+
+  useEffect(() => {
+    storage.setToLS(formikDataKeys.CONTACTS, contactsFormik.values);
+  }, [contactsFormik.values]);
+  useEffect(() => {
+    storage.setToLS(formikDataKeys.INSURED, insuredDataFormik.values);
+  }, [insuredDataFormik.values]);
+  useEffect(() => {
+    storage.setToLS(formikDataKeys.HOME_ADDRESS, homeAddressFormik.values);
+  }, [homeAddressFormik.values]);
+  useEffect(() => {
+    storage.setToLS(formikDataKeys.CAR, carDataFormik.values);
+  }, [carDataFormik.values]);
 
   return (
     <Stack sx={{ width: '100%' }}>

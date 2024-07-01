@@ -112,6 +112,17 @@ const Footer = () => {
               </LinkS>
             </LiItemS>
           </UlListS>
+          <LinkS>
+          </LinkS>
+          <ChapterSpan className="bottomSpan">
+            <a
+              className="link"
+              href="https://docs.ewa.ua/insurance-products"
+              rel="nofollow"
+            >
+              Інформація про СК та страхові продукти
+            </a>
+          </ChapterSpan>
           <ChapterSpan className="bottomSpan">
             &copy; ТОВ «Auto-ins», 2024. Всі права захищені.
           </ChapterSpan>
