@@ -85,6 +85,7 @@ const Stepper = ({ backLinkRef }) => {
   const engineType = useSelector(getEngineType);
 
   const [activeStep, setActiveStep] = useState(0);
+  // const [activeStep, setActiveStep] = useState(3);
   const [identityCard, setIdentityCard] = useState(null);
 
   let InsuredDataSelectOptions = !customerCategory
@@ -138,9 +139,9 @@ const Stepper = ({ backLinkRef }) => {
       stateNumber: insurObject?.stateNumber || '',
       year: insurObject?.year || '',
       brand: insurObject?.modelText || '',
-      model: '',
+      model: { name: '', id: '' },
       bodyNumber: insurObject?.bodyNumber || '',
-      maker: '',
+      maker: { name: '', id: '' },
       outsideUkraine: userParams?.outsideUkraine || false,
       category: insurObject?.category || userParams?.autoCategory,
       engineVolume: insurObject?.engineVolume || '',
@@ -149,7 +150,7 @@ const Stepper = ({ backLinkRef }) => {
       isPrivilege: identityCard?.privilegeType === 'PRIVILEGED',
       engineType,
     }),
-    enableReinitialize: true,
+    // enableReinitialize: true,
     validateOnBlur: true,
     validateOnChange: false,
     onSubmit: ({ model, maker, engineVolume }) => {
@@ -264,19 +265,6 @@ const Stepper = ({ backLinkRef }) => {
     }
   };
 
-  useEffect(() => {
-    storage.setToLS(formikDataKeys.CONTACTS, contactsFormik.values);
-  }, [contactsFormik.values]);
-  useEffect(() => {
-    storage.setToLS(formikDataKeys.INSURED, insuredDataFormik.values);
-  }, [insuredDataFormik.values]);
-  useEffect(() => {
-    storage.setToLS(formikDataKeys.HOME_ADDRESS, homeAddressFormik.values);
-  }, [homeAddressFormik.values]);
-  useEffect(() => {
-    storage.setToLS(formikDataKeys.CAR, carDataFormik.values);
-  }, [carDataFormik.values]);
-
   return (
     <Stack sx={{ width: '100%' }}>
       <StepperStyled
@@ -285,11 +273,11 @@ const Stepper = ({ backLinkRef }) => {
         connector={<Connector />}
       >
         {steps.map((label) => {
-          const stepProps = {};
+          // const stepProps = {};
           // const labelProps = {};
 
           return (
-            <Step key={Object.keys(label)} {...stepProps}>
+            <Step key={Object.keys(label)}>
               <LableIcon>
                 <SpriteSVG
                   key={Object.values(label).toString()}

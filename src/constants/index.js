@@ -54,3 +54,7 @@ export const FORMIK_DATA_KEYS = {
   HOME_ADDRESS: 'homeAddressFormik',
   CAR: 'carDataFormik',
 };
+export const SAVED_ORDER_TYPE = {
+  VCL: 'vcl',
+  EPOLICY: 'epolicy', // needing for id
+};

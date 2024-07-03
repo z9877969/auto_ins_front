@@ -3,6 +3,8 @@ import { patternFormatter } from 'react-number-format';
 import PropTypes from 'prop-types';
 import { InputBoxS, SpanS } from './FormContactsStyled';
 import GeneralInput from '../../components/GeneralInput/GeneralInput';
+import * as storage from '../../helpers/storage';
+import { FORMIK_DATA_KEYS } from '../../constants';
 
 const formatPhone = (value = '') =>
   patternFormatter(value.slice(3), {
@@ -13,11 +15,15 @@ const formatPhone = (value = '') =>
   });
 
 const FormContacts = ({ formik }) => {
-  
   useEffect(() => {
-    formik.setFieldValue('phone', formatPhone());
+    const storedPhone = storage.getFromLS(FORMIK_DATA_KEYS.CONTACTS);
+    !storedPhone && formik.setFieldValue('phone', formatPhone());
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    storage.setToLS(FORMIK_DATA_KEYS.CONTACTS, formik.values);
+  }, [formik.values]);
 
   return (
     <>
@@ -44,7 +50,8 @@ const FormContacts = ({ formik }) => {
           }}
         />
         <SpanS variant="inputSpan">
-        *ПЕРЕКОНАЙТЕСЬ ЩО НОМЕР ВКАЗАНО КОРЕКТНО. НА ЦЕЙ НОМЕР БУДЕ НАДІСЛАНО КОД ДЛЯ ПІДТВЕРДЖЕННЯ УКЛАДАННЯ ПОЛІСУ.
+          *ПЕРЕКОНАЙТЕСЬ ЩО НОМЕР ВКАЗАНО КОРЕКТНО. НА ЦЕЙ НОМЕР БУДЕ НАДІСЛАНО
+          КОД ДЛЯ ПІДТВЕРДЖЕННЯ УКЛАДАННЯ ПОЛІСУ.
         </SpanS>
       </InputBoxS>
     </>

@@ -5,11 +5,12 @@ import {
 import GeneralInput from '../../components/GeneralInput/GeneralInput';
 import PropTypes from 'prop-types';
 import GeneralSelect from '../../components/GeneralSelect/GeneralSelect';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchAddress } from '../../redux/byParameters/operations';
 import { useSelector } from 'react-redux';
-
 import { useActions } from '../../hooks/useActions';
+import * as storage from '../../helpers/storage';
+import { FORMIK_DATA_KEYS } from '../../constants';
 
 const HomeAddressForm = ({ formik }) => {
   const { setHomeAddress } = useActions();
@@ -27,6 +28,10 @@ const HomeAddressForm = ({ formik }) => {
     setHomeAddress(e);
   };
 
+  useEffect(() => {
+    storage.setToLS(FORMIK_DATA_KEYS.HOME_ADDRESS, formik.values);
+  }, [formik.values]);
+
   return (
     <>
       <InputContBoxStyled>
@@ -40,7 +45,7 @@ const HomeAddressForm = ({ formik }) => {
           inputChangeCB={getHomeAddress}
           isValid={Boolean(address.label)}
           readOnly={false}
-          noOptionsMessage='Вкажіть місце проживання'
+          noOptionsMessage="Вкажіть місце проживання"
         />
         <GeneralInput id="street" lableText="Вулиця*:" formikData={formik} />
         <DocInputsStyled>
