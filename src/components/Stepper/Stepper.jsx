@@ -149,7 +149,7 @@ const Stepper = ({ backLinkRef }) => {
       isPrivilege: identityCard?.privilegeType === 'PRIVILEGED',
       engineType,
     }),
-    enableReinitialize: true,
+    // enableReinitialize: true,
     validateOnBlur: true,
     validateOnChange: false,
     onSubmit: ({ model, maker, engineVolume }) => {
