@@ -151,6 +151,14 @@ const CarDataForm = ({ formik }) => {
         category: insuranceObject.category || v.category,
         engineVolume: insuranceObject.engineVolume,
       }));
+      setSelectedAutoMaker({
+        id: insuranceObject.model.autoMaker.id,
+        name: insuranceObject.model.autoMaker.name,
+      });
+      setSelectedAutoModel({
+        id: insuranceObject.model.id,
+        name: insuranceObject.model.name,
+      });
       setDisabled(false);
     }
     if (!insuranceObject) {
