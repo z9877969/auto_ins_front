@@ -48,27 +48,6 @@ const CarDataForm = ({ formik }) => {
   const isPrivilage = useSelector(getIsPrivilage);
   const hasVclOrder = useSelector(getHasVclOrder);
   const { engineCapacity } = useSelector((state) => state.byParameters);
-
-  const [selectedAutoMaker, setSelectedAutoMaker] = useState(
-    insuranceObject
-      ? {
-          id: insuranceObject.model.autoMaker.id || '',
-          name: insuranceObject.model.autoMaker.name || '',
-        }
-      : {
-          name: 'Оберіть марку авто',
-        }
-  );
-  const [selectedAutoModel, setSelectedAutoModel] = useState(
-    insuranceObject
-      ? {
-          id: insuranceObject.model.id || '',
-          name: insuranceObject.model.name || '',
-        }
-      : {
-          name: 'Оберіть модель авто',
-        }
-  );
   const [disabled, setDisabled] = useState(
     insuranceObject?.stateNumber ? false : true
     // false
@@ -142,28 +121,28 @@ const CarDataForm = ({ formik }) => {
 
   useEffect(() => {
     if (insuranceObject) {
-      formik.setValues((v) => ({
-        ...v,
-        stateNumber: insuranceObject.stateNumber,
-        year: insuranceObject.year,
-        brand: insuranceObject.brand,
-        bodyNumber: insuranceObject.bodyNumber,
-        category: insuranceObject.category || v.category,
-        engineVolume: insuranceObject.engineVolume,
-      }));
-      setSelectedAutoMaker({
-        id: insuranceObject.model.autoMaker.id,
-        name: insuranceObject.model.autoMaker.name,
-      });
-      setSelectedAutoModel({
-        id: insuranceObject.model.id,
-        name: insuranceObject.model.name,
-      });
       setDisabled(false);
     }
     if (!insuranceObject) {
       setDisabled(true);
     }
+    formik.setValues((v) => ({
+      ...v,
+      // stateNumber: insuranceObject?.stateNumber ?? '',
+      year: insuranceObject?.year ?? '',
+      brand: insuranceObject?.brand ?? '',
+      maker: {
+        id: insuranceObject?.model.autoMaker.id ?? '',
+        name: insuranceObject?.model.autoMaker.name ?? '',
+      },
+      model: {
+        id: insuranceObject?.model.id ?? '',
+        name: insuranceObject?.model.name ?? '',
+      },
+      bodyNumber: insuranceObject?.bodyNumber ?? '',
+      category: insuranceObject?.category || v.category,
+      engineVolume: insuranceObject?.engineVolume ?? '',
+    }));
     // eslint-disable-next-line
   }, [insuranceObject]);
 
@@ -194,7 +173,6 @@ const CarDataForm = ({ formik }) => {
   }, [selectOrInput.isModelInput, setFieldValue, modelInputId]);
 
   useEffect(() => {
-    console.log('TEST');
     storage.setToLS(FORMIK_DATA_KEYS.CAR, values);
   }, [values]);
 

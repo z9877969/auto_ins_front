@@ -53,11 +53,7 @@ export const referencesSlice = createSlice({
         state.autoModelByMaker = errorMessage(payload);
       })
       .addCase(autoByNumber.fulfilled, (state, { payload }) => {
-        if (payload.length === 0) {
-          // state.error = "Aвтомобіль зa таким номером не знайдено";
-        } else {
-          state.autoByNumber = payload;
-        }
+        state.autoByNumber = payload;
       })
       .addCase(autoByNumber.rejected, (state, { payload }) => {
         state.error = errorMessage(payload);

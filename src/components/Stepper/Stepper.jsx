@@ -85,7 +85,6 @@ const Stepper = ({ backLinkRef }) => {
   const engineType = useSelector(getEngineType);
 
   const [activeStep, setActiveStep] = useState(0);
-  // const [activeStep, setActiveStep] = useState(3);
   const [identityCard, setIdentityCard] = useState(null);
 
   let InsuredDataSelectOptions = !customerCategory
@@ -139,9 +138,19 @@ const Stepper = ({ backLinkRef }) => {
       stateNumber: insurObject?.stateNumber || '',
       year: insurObject?.year || '',
       brand: insurObject?.modelText || '',
-      model: { name: '', id: '' },
+      maker: insurObject
+        ? {
+            id: insurObject.model.autoMaker.id,
+            name: insurObject.model.autoMaker.name,
+          }
+        : { name: '', id: '' },
+      model: insurObject
+        ? {
+            id: insurObject.model.id,
+            name: insurObject.model.name,
+          }
+        : { name: '', id: '' },
       bodyNumber: insurObject?.bodyNumber || '',
-      maker: { name: '', id: '' },
       outsideUkraine: userParams?.outsideUkraine || false,
       category: insurObject?.category || userParams?.autoCategory,
       engineVolume: insurObject?.engineVolume || '',

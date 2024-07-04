@@ -20,11 +20,11 @@ export const insuranceObjectNormalize = (
     year: year,
   };
   if (model.id !== 'custom') {
-    const model = {
+    const newModel = {
       autoMaker: { id: maker.id },
       id: model.id,
     };
-    insuranceObject.model = model;
+    insuranceObject.model = newModel;
   }
   if (privilegeData) {
     insuranceObject.engineVolume = privilegeData.engineVolume;
