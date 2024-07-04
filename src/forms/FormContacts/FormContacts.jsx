@@ -16,8 +16,8 @@ const formatPhone = (value = '') =>
 
 const FormContacts = ({ formik }) => {
   useEffect(() => {
-    const storedPhone = storage.getFromLS(FORMIK_DATA_KEYS.CONTACTS);
-    !storedPhone && formik.setFieldValue('phone', formatPhone());
+    const storedContacts = storage.getFromLS(FORMIK_DATA_KEYS.CONTACTS);
+    !storedContacts?.phone && formik.setFieldValue('phone', formatPhone());
     // eslint-disable-next-line
   }, []);
 

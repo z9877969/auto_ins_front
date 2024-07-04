@@ -49,6 +49,26 @@ const CarDataForm = ({ formik }) => {
   const hasVclOrder = useSelector(getHasVclOrder);
   const { engineCapacity } = useSelector((state) => state.byParameters);
 
+  const [selectedAutoMaker, setSelectedAutoMaker] = useState(
+    insuranceObject
+      ? {
+          id: insuranceObject.model.autoMaker.id || '',
+          name: insuranceObject.model.autoMaker.name || '',
+        }
+      : {
+          name: 'Оберіть марку авто',
+        }
+  );
+  const [selectedAutoModel, setSelectedAutoModel] = useState(
+    insuranceObject
+      ? {
+          id: insuranceObject.model.id || '',
+          name: insuranceObject.model.name || '',
+        }
+      : {
+          name: 'Оберіть модель авто',
+        }
+  );
   const [disabled, setDisabled] = useState(
     insuranceObject?.stateNumber ? false : true
     // false
@@ -72,7 +92,6 @@ const CarDataForm = ({ formik }) => {
   const handleBlurStateNumber = (e) => {
     setRefError('');
     setAutoByMakerAndModel([]);
-
     if (e.target.value && outsideUkraine) {
       setDisabled(false);
       allAutoMakers();
@@ -123,11 +142,29 @@ const CarDataForm = ({ formik }) => {
 
   useEffect(() => {
     if (insuranceObject) {
+      formik.setValues((v) => ({
+        ...v,
+        stateNumber: insuranceObject.stateNumber,
+        year: insuranceObject.year,
+        brand: insuranceObject.brand,
+        bodyNumber: insuranceObject.bodyNumber,
+        category: insuranceObject.category || v.category,
+        engineVolume: insuranceObject.engineVolume,
+      }));
+      setSelectedAutoMaker({
+        id: insuranceObject.model.autoMaker.id,
+        name: insuranceObject.model.autoMaker.name,
+      });
+      setSelectedAutoModel({
+        id: insuranceObject.model.id,
+        name: insuranceObject.model.name,
+      });
       setDisabled(false);
     }
     if (!insuranceObject) {
       setDisabled(true);
     }
+    // eslint-disable-next-line
   }, [insuranceObject]);
 
   useEffect(() => {
