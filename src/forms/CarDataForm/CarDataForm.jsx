@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { InputContBoxStyled } from '../InsuredDataForm/InsuredDataForm.styled';
@@ -48,12 +42,26 @@ const CarDataForm = ({ formik }) => {
   const isError = useSelector(getIsModalErrorOpen);
   const isPrivilage = useSelector(getIsPrivilage);
 
-  const [selectedAutoMaker, setSelectedAutoMaker] = useState({
-    name: 'Оберіть марку авто',
-  });
-  const [selectedAutoModel, setSelectedAutoModel] = useState({
-    name: 'Оберіть модель авто',
-  });
+  const [selectedAutoMaker, setSelectedAutoMaker] = useState(
+    insuranceObject
+      ? {
+          id: insuranceObject.model.autoMaker.id || '',
+          name: insuranceObject.model.autoMaker.name || '',
+        }
+      : {
+          name: 'Оберіть марку авто',
+        }
+  );
+  const [selectedAutoModel, setSelectedAutoModel] = useState(
+    insuranceObject
+      ? {
+          id: insuranceObject.model.id || '',
+          name: insuranceObject.model.name || '',
+        }
+      : {
+          name: 'Оберіть модель авто',
+        }
+  );
   const [disabled, setDisabled] = useState(
     insuranceObject?.stateNumber ? false : true
   );
@@ -74,7 +82,6 @@ const CarDataForm = ({ formik }) => {
   const handleBlurStateNumber = (e) => {
     setRefError('');
     setAutoByMakerAndModel([]);
-
     if (e.target.value && outsideUkraine) {
       setDisabled(false);
       allAutoMakers();
@@ -135,11 +142,21 @@ const CarDataForm = ({ formik }) => {
 
   useEffect(() => {
     if (insuranceObject) {
+      formik.setValues((v) => ({
+        ...v,
+        stateNumber: insuranceObject.stateNumber,
+        year: insuranceObject.year,
+        brand: insuranceObject.brand,
+        bodyNumber: insuranceObject.bodyNumber,
+        category: insuranceObject.category || v.category,
+        engineVolume: insuranceObject.engineVolume,
+      }));
       setDisabled(false);
     }
     if (!insuranceObject) {
       setDisabled(true);
     }
+    // eslint-disable-next-line
   }, [insuranceObject]);
 
   useEffect(() => {
