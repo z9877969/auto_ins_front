@@ -3,8 +3,8 @@ import { patternFormatter } from 'react-number-format';
 import PropTypes from 'prop-types';
 import { InputBoxS, SpanS } from './FormContactsStyled';
 import GeneralInput from '../../components/GeneralInput/GeneralInput';
-import { FORMIK_DATA_KEYS } from '../../constants';
 import * as storage from '../../helpers/storage';
+import { FORMIK_DATA_KEYS } from '../../constants';
 
 const formatPhone = (value = '') =>
   patternFormatter(value.slice(3), {
@@ -20,6 +20,10 @@ const FormContacts = ({ formik }) => {
     !storedContacts?.phone && formik.setFieldValue('phone', formatPhone());
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    storage.setToLS(FORMIK_DATA_KEYS.CONTACTS, formik.values);
+  }, [formik.values]);
 
   return (
     <>

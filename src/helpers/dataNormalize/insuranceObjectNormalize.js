@@ -5,24 +5,26 @@ export const insuranceObjectNormalize = (
   fullCarModel,
   privilegeData
 ) => {
+  const { brand, category, bodyNumber, stateNumber, year, model, maker } =
+    carDataFormik.values;
   const insuranceObject = {
     type: 'auto',
-    modelText: carDataFormik.values.brand || fullCarModel,
-    category: carDataFormik.values.category,
-    bodyNumber: carDataFormik.values.bodyNumber,
-    stateNumber: carDataFormik.values.stateNumber,
+    modelText: brand || fullCarModel,
+    category: category,
+    bodyNumber: bodyNumber,
+    stateNumber: stateNumber,
     registrationPlace: {
       id: insurObject?.registrationPlace?.id || registrationPlaceId,
     },
     registrationType: 'PERMANENT_WITHOUT_OTK',
-    year: carDataFormik.values.year,
+    year: year,
   };
-  if (carDataFormik.values.model.id !== 'custom') {
-    const model = {
-      autoMaker: { id: carDataFormik.values.maker.id },
-      id: carDataFormik.values.model.id,
+  if (model.id !== 'custom') {
+    const newModel = {
+      autoMaker: { id: maker.id },
+      id: model.id,
     };
-    insuranceObject.model = model;
+    insuranceObject.model = newModel;
   }
   if (privilegeData) {
     insuranceObject.engineVolume = privilegeData.engineVolume;

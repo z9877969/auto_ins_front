@@ -15,7 +15,9 @@ import PropTypes from 'prop-types';
 // import CommonDatePicker from '../../components/CommonDatePicker/CommonDatePicker';
 import CustomLabel from '../../components/CustomLabel/CustomLabel';
 import CustomDateInput from '../../components/CustomDateInput/CustomDateInput';
-import { DATE_MESSAGE_ERRORS } from '../../constants';
+import { DATE_MESSAGE_ERRORS, FORMIK_DATA_KEYS } from '../../constants';
+import { useEffect } from 'react';
+import * as storage from '../../helpers/storage';
 
 const errorPosition = {
   right: '8px',
@@ -28,6 +30,10 @@ const InsuredDataForm = ({ formik, selectData }) => {
     selectData;
 
   const isID_PASSPORT = identityCard.value === 'ID_PASSPORT';
+
+  useEffect(() => {
+    storage.setToLS(FORMIK_DATA_KEYS.INSURED, formik.values);
+  }, [formik.values]);
 
   return (
     <>

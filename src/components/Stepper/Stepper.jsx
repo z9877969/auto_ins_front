@@ -47,7 +47,7 @@ import {
   getGlobalCustomerData,
   getHomeAddress,
 } from '../../redux/Global/selectors';
-import { getUser } from '../../redux/Calculator/selectors';
+import { getHasVclOrder, getUser } from '../../redux/Calculator/selectors';
 import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
 import { contractSaveDGONormalize } from '../../helpers/dataNormalize/contractSaveDGONormalize';
 import CustomButtonLoading from './CustomButtonLoading';
@@ -83,6 +83,7 @@ const Stepper = ({ backLinkRef }) => {
   const [insurObject] = useSelector(getAutoByNumber);
   const customerCategory = useSelector(getIsPrivilage);
   const engineType = useSelector(getEngineType);
+  const hasVclOrder = useSelector(getHasVclOrder);
 
   const [activeStep, setActiveStep] = useState(0);
   const [identityCard, setIdentityCard] = useState(null);
@@ -138,9 +139,19 @@ const Stepper = ({ backLinkRef }) => {
       stateNumber: insurObject?.stateNumber || '',
       year: insurObject?.year || '',
       brand: insurObject?.modelText || '',
-      model: '',
+      maker: insurObject
+        ? {
+            id: insurObject.model.autoMaker.id,
+            name: insurObject.model.autoMaker.name,
+          }
+        : { name: '', id: '' },
+      model: insurObject
+        ? {
+            id: insurObject.model.id,
+            name: insurObject.model.name,
+          }
+        : { name: '', id: '' },
       bodyNumber: insurObject?.bodyNumber || '',
-      maker: '',
       outsideUkraine: userParams?.outsideUkraine || false,
       category: insurObject?.category || userParams?.autoCategory,
       engineVolume: insurObject?.engineVolume || '',
@@ -162,6 +173,12 @@ const Stepper = ({ backLinkRef }) => {
               customerStatus: identityCard.customerStatus,
             }
           : null;
+      const vclOrderData = hasVclOrder
+        ? {
+            engineVolume,
+            autoCategory: engineType,
+          }
+        : null;
       const customIsur = customerInsuriensObject(
         insuredDataFormik,
         homeAddressFormik,
@@ -192,7 +209,8 @@ const Stepper = ({ backLinkRef }) => {
             dgoTarrif,
             insurObject,
             customIsur,
-            privilegeData
+            privilegeData,
+            vclOrderData
           )
         );
       }
@@ -264,19 +282,6 @@ const Stepper = ({ backLinkRef }) => {
     }
   };
 
-  useEffect(() => {
-    storage.setToLS(formikDataKeys.CONTACTS, contactsFormik.values);
-  }, [contactsFormik.values]);
-  useEffect(() => {
-    storage.setToLS(formikDataKeys.INSURED, insuredDataFormik.values);
-  }, [insuredDataFormik.values]);
-  useEffect(() => {
-    storage.setToLS(formikDataKeys.HOME_ADDRESS, homeAddressFormik.values);
-  }, [homeAddressFormik.values]);
-  useEffect(() => {
-    storage.setToLS(formikDataKeys.CAR, carDataFormik.values);
-  }, [carDataFormik.values]);
-
   return (
     <Stack sx={{ width: '100%' }}>
       <StepperStyled
@@ -285,11 +290,11 @@ const Stepper = ({ backLinkRef }) => {
         connector={<Connector />}
       >
         {steps.map((label) => {
-          const stepProps = {};
+          // const stepProps = {};
           // const labelProps = {};
 
           return (
-            <Step key={Object.keys(label)} {...stepProps}>
+            <Step key={Object.keys(label)}>
               <LableIcon>
                 <SpriteSVG
                   key={Object.values(label).toString()}

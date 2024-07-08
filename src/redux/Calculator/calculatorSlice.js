@@ -15,6 +15,7 @@ const initialState = {
   error: '',
   policyStatus: 0,
   vclStatus: 0,
+  hasVclOrder: false,
   user: null,
   isLoading: false,
 };
@@ -40,6 +41,10 @@ export const calculatorSlice = createSlice({
     },
     setCalcError: (state, { payload }) => {
       state.error = payload;
+    },
+    changeVslOrderStatus: (state, { payload }) => {
+      // payload = true | false
+      state.hasVclOrder = payload;
     },
   },
   extraReducers: (builder) => {
@@ -99,5 +104,6 @@ export const {
   setFilteredCompanies,
   setTariffVcl,
   setCalcError,
+  changeVslOrderStatus,
 } = calculatorSlice.actions;
 export const calculatorReducer = calculatorSlice.reducer;

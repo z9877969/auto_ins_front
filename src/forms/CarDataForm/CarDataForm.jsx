@@ -20,6 +20,10 @@ import ModalError from '../../components/ModalError/ModalError';
 import { useSelectOrInput } from '../../context/SelectOrInputProvider';
 import SelectNoOptionsMessage from '../../components/SelectNoOptionsMessage/SelectNoOptionsMessage';
 import InputInsteadSelect from '../../components/InputInsteadSelect/InputInsteadSelect';
+// import { selectAutoCategory } from '../../helpers/ByParameters/selectOptions';
+import { getHasVclOrder } from '../../redux/Calculator/selectors';
+import { FORMIK_DATA_KEYS } from '../../constants';
+import * as storage from '../../helpers/storage';
 
 const customComponents = {
   NoOptionsMessage: SelectNoOptionsMessage,
@@ -33,6 +37,7 @@ const CarDataForm = ({ formik }) => {
     allAutoModelByMaker,
     autoByMakerAndModel,
     setRefError,
+    // setEngineCapacity,
   } = useActions();
   const autoMakers = useSelector(getAutoMakers);
   const allAutoModel = useSelector(getAutoModelByMaker);
@@ -41,27 +46,8 @@ const CarDataForm = ({ formik }) => {
   const [insuranceObject] = useSelector(getAutoByNumber);
   const isError = useSelector(getIsModalErrorOpen);
   const isPrivilage = useSelector(getIsPrivilage);
-
-  const [selectedAutoMaker, setSelectedAutoMaker] = useState(
-    insuranceObject
-      ? {
-          id: insuranceObject.model.autoMaker.id || '',
-          name: insuranceObject.model.autoMaker.name || '',
-        }
-      : {
-          name: 'Оберіть марку авто',
-        }
-  );
-  const [selectedAutoModel, setSelectedAutoModel] = useState(
-    insuranceObject
-      ? {
-          id: insuranceObject.model.id || '',
-          name: insuranceObject.model.name || '',
-        }
-      : {
-          name: 'Оберіть модель авто',
-        }
-  );
+  const hasVclOrder = useSelector(getHasVclOrder);
+  // const { engineCapacity } = useSelector((state) => state.byParameters);
   const [disabled, setDisabled] = useState(
     insuranceObject?.stateNumber ? false : true
   );
@@ -70,6 +56,8 @@ const CarDataForm = ({ formik }) => {
 
   const modelInputRef = useRef(null);
   const modelInputId = useRef('custom').current;
+
+  const { values, setFieldValue } = formik;
 
   const handleSelectRef = useCallback((elementRef) => {
     modelInputRef.current = elementRef;
@@ -93,113 +81,101 @@ const CarDataForm = ({ formik }) => {
     }
     formik.handleChange(e);
   };
-
   const handleChangeStateNumber = (e) => {
     const { value, name } = e.target;
     formik.setFieldValue(name, value.trim().toUpperCase());
   };
-  const handleChangeBrand = (e) => {
-    setSelectedAutoModel({
-      name: 'Оберіть модель авто',
-    });
-    setSelectedAutoMaker(e);
-    allAutoModelByMaker(e.id);
-    formik.setFieldValue('maker', e.id);
+  const handleChangeBrand = (maker) => {
+    const { id, name } = maker;
+    setFieldValue('maker', { id, name });
+    allAutoModelByMaker(id);
   };
 
-  const handleChangeModel = (e) => {
-    setSelectedAutoModel(e);
-    formik.setFieldValue('maker', e.autoMaker);
-    formik.setFieldValue('model', { id: e.id, name: e.name });
+  const handleChangeModel = (modelData) => {
+    const { id, name } = modelData;
+    setFieldValue('model', { id, name });
   };
 
   const handleChangeVinNumber = (e) => {
-    const e2 = e.target.value.trim().toUpperCase();
-    e.target.value = e2;
-    formik.handleChange(e);
+    const value = e.target.value.trim().toUpperCase();
+    setFieldValue('bodyNumber', value);
   };
 
   const handleChangeEngineVolume = (e) => {
     const { value } = e.target;
-    formik.setFieldValue('engineVolume', Number(value));
+    setFieldValue('engineVolume', Number(value));
   };
 
   const handleChangeModelByInput = (e) => {
-    const { name, value } = e.target;
-    formik.setFieldValue(name, {
+    const { value } = e.target;
+    setFieldValue('model', {
       id: modelInputId,
       name: value,
     });
   };
 
-  const findMakerAndModel = useCallback(() => {
-    const maker = autoByBrand[0]?.autoMaker;
-    setSelectedAutoMaker(maker);
-    if (autoByBrand?.length === 0) {
-      allAutoMakers();
-    }
-  }, [autoByBrand, allAutoMakers]);
-
   useEffect(() => {
     if (insuranceObject) {
-      formik.setValues((v) => ({
-        ...v,
-        stateNumber: insuranceObject.stateNumber,
-        year: insuranceObject.year,
-        brand: insuranceObject.brand,
-        bodyNumber: insuranceObject.bodyNumber,
-        category: insuranceObject.category || v.category,
-        engineVolume: insuranceObject.engineVolume,
-      }));
-      setSelectedAutoMaker({
-        id: insuranceObject.model.autoMaker.id,
-        name: insuranceObject.model.autoMaker.name,
-      });
-      setSelectedAutoModel({
-        id: insuranceObject.model.id,
-        name: insuranceObject.model.name,
-      });
       setDisabled(false);
     }
     if (!insuranceObject) {
       setDisabled(true);
     }
+    formik.setValues((v) => ({
+      ...v,
+      // stateNumber: insuranceObject?.stateNumber ?? '',
+      year: insuranceObject?.year ?? '',
+      brand: insuranceObject?.brand ?? '',
+      maker: {
+        id: insuranceObject?.model.autoMaker.id ?? '',
+        name: insuranceObject?.model.autoMaker.name ?? '',
+      },
+      model: {
+        id: insuranceObject?.model.id ?? '',
+        name: insuranceObject?.model.name ?? '',
+      },
+      bodyNumber: insuranceObject?.bodyNumber ?? '',
+      category: insuranceObject?.category || v.category,
+      engineVolume: insuranceObject?.engineVolume ?? '',
+    }));
     // eslint-disable-next-line
   }, [insuranceObject]);
 
   useEffect(() => {
-    findMakerAndModel();
-  }, [findMakerAndModel]);
+    const maker = autoByBrand[0]?.autoMaker;
+    maker && setFieldValue('maker', maker);
+    if (autoByBrand?.length === 0) {
+      allAutoMakers();
+    }
+  }, [autoByBrand, allAutoMakers, setFieldValue]);
 
   useEffect(() => {
-    const maker = formik.values?.brand?.replace(/ .*/, '');
-    const model = formik.values?.brand?.replace(/^[^\s]+\s/, '').slice(0, 1);
+    const maker = values?.brand?.replace(/ .*/, '');
+    const model = values?.brand?.replace(/^[^\s]+\s/, '').slice(0, 1);
 
     if (!outsideUkraine && maker?.length > 0) {
       autoByMakerAndModel(maker + ' ' + model);
     }
-  }, [formik.values?.brand, autoByMakerAndModel, outsideUkraine]);
-
-  const { setFieldValue } = formik;
+  }, [values?.brand, autoByMakerAndModel, outsideUkraine]);
 
   useEffect(() => {
     if (selectOrInput.isModelInput) {
-      setFieldValue('maker', selectedAutoMaker);
       setFieldValue('model', {
         id: modelInputId,
         name: modelInputRef.current.value,
       });
     }
-  }, [
-    selectOrInput.isModelInput,
-    setFieldValue,
-    modelInputId,
-    selectedAutoMaker,
-  ]);
+  }, [selectOrInput.isModelInput, setFieldValue, modelInputId]);
+
+  useEffect(() => {
+    storage.setToLS(FORMIK_DATA_KEYS.CAR, values);
+  }, [values]);
 
   if (isError) {
     return <ModalError />;
   }
+
+  // values={model: {name: "model" || "some model"}, maker: 1741 || {id: 1741, lastModified: "2019-08-...."}}
 
   return (
     <>
@@ -211,10 +187,8 @@ const CarDataForm = ({ formik }) => {
           customFunc={handleChangeStateNumber}
           formikData={formik}
         />
-        {formik.errors.stateNumber ? (
+        {formik.errors.stateNumber && (
           <div className="errorMessage">{formik.errors.stateNumber}</div>
-        ) : (
-          ''
         )}
         <GeneralInput
           id="year"
@@ -225,9 +199,10 @@ const CarDataForm = ({ formik }) => {
         <GeneralSelect
           id="brand"
           lableText="Марка*:"
-          currentValue={selectedAutoMaker}
+          currentValue={
+            values.maker.id ? values.maker : { name: 'Оберіть марку авто' }
+          }
           optionsArr={autoMakers}
-          defaultValue={{ name: 'Оберіть марку авто' }}
           getOptionLabel={(option) => option.name}
           getOptionValue={(option) => option.id}
           changeCB={handleChangeBrand}
@@ -241,14 +216,15 @@ const CarDataForm = ({ formik }) => {
             handleSelectRef={handleSelectRef}
             id="model"
             lableText="Модель*:"
-            currentValue={selectedAutoModel}
+            currentValue={
+              values.model.id ? values.model : { name: 'Оберіть модель авто' }
+            }
             optionsArr={modelOptions}
-            defaultValue={{ name: 'Оберіть модель авто' }}
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.id}
             isDisabled={disabled}
             isValid={
-              selectedAutoModel?.name === 'Оберіть модель авто' ? false : true
+              values.model?.name === 'Оберіть модель авто' ? false : true
             }
             changeCB={handleChangeModel}
             readOnly={Boolean(insuranceObject?.stateNumber)}
@@ -265,7 +241,7 @@ const CarDataForm = ({ formik }) => {
             closeInput={() => selectOrInput.setIsModelInput(false)}
           />
         )}
-        {isPrivilage && (
+        {(isPrivilage || hasVclOrder) && (
           <GeneralInput
             id="engineVolume"
             lableText="Об'єм двигуна*:"
@@ -274,6 +250,15 @@ const CarDataForm = ({ formik }) => {
             isDisabled={disabled}
           />
         )}
+        {/* {hasVclOrder && (
+          <GeneralSelect
+            id="engineCapacity"
+            lableText="Об’єм двигуна"
+            optionsArr={selectAutoCategory()}
+            changeCB={handleChangeengineCapacity}
+            currentValue={engineCapacity}
+          />
+        )} */}
         <GeneralInput
           id="bodyNumber"
           lableText="VIN Номер*:"

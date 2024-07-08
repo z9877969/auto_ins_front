@@ -39,7 +39,8 @@ const Company = ({ proposal, lastItem }) => {
 
   const user = useSelector(getUser);
   const theme = useTheme();
-  const { setGlobalCustomerData, setParamsFromUrl } = useActions();
+  const { setGlobalCustomerData, setParamsFromUrl, changeVslOrderStatus } =
+    useActions();
 
   const { insurerId, insurerName, tariff, autoCategory, registrationPlace } =
     proposal;
@@ -68,8 +69,14 @@ const Company = ({ proposal, lastItem }) => {
   const handleChangeSelect = (e) => {
     setFranchise(e);
   };
-  const handleChangeDgoSelect = (e) => {
-    setChooseDgo(e);
+  const handleChangeDgoSelect = (option) => {
+    const { limit, discountedPayment } = option;
+    if (limit === 0 && discountedPayment === 0) {
+      changeVslOrderStatus(false);
+    } else {
+      changeVslOrderStatus(true);
+    }
+    setChooseDgo(option);
   };
 
   const formik = useFormik({

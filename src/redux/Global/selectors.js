@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { getError as calculatorError } from '../../redux/Calculator/selectors';
 
 import { getError as referencesError } from '../../redux/References/selectors';
+import { SAVED_ORDER_TYPE } from '../../constants';
 
 export const getIsModalErrorOpen = (state) => state.global.isModalErrorOpen;
 export const getIsLoading = (state) => state.global.isLoading;
@@ -34,15 +35,15 @@ export const selectOrderData = createSelector(
   (order) => {
     if (order) {
       return {
-        epolicyOrderId: order[orderType.EPOLICY].id,
-        vclOrderId: order[orderType.VCL]?.id ?? null,
-        billAmount: order[orderType.VCL]
-          ? order[orderType.VCL].brokerDiscountedPayment +
-            order[orderType.EPOLICY].brokerDiscountedPayment
-          : order[orderType.EPOLICY].brokerDiscountedPayment,
-        shopOrderNumber: order[orderType.EPOLICY].code,
-        email: order[orderType.EPOLICY].customer.email,
-        orderState: order[orderType.EPOLICY].state,
+        epolicyOrderId: order[SAVED_ORDER_TYPE.EPOLICY].id,
+        vclOrderId: order[SAVED_ORDER_TYPE.VCL]?.id ?? null,
+        billAmount: order[SAVED_ORDER_TYPE.VCL]
+          ? order[SAVED_ORDER_TYPE.VCL].brokerDiscountedPayment +
+            order[SAVED_ORDER_TYPE.EPOLICY].brokerDiscountedPayment
+          : order[SAVED_ORDER_TYPE.EPOLICY].brokerDiscountedPayment,
+        shopOrderNumber: order[SAVED_ORDER_TYPE.EPOLICY].code,
+        email: order[SAVED_ORDER_TYPE.EPOLICY].customer.email,
+        orderState: order[SAVED_ORDER_TYPE.EPOLICY].state,
       };
     }
     return null;
