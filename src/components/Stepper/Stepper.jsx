@@ -47,7 +47,7 @@ import {
   getGlobalCustomerData,
   getHomeAddress,
 } from '../../redux/Global/selectors';
-import { getUser } from '../../redux/Calculator/selectors';
+import { getHasVclOrder, getUser } from '../../redux/Calculator/selectors';
 import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
 import { contractSaveDGONormalize } from '../../helpers/dataNormalize/contractSaveDGONormalize';
 import CustomButtonLoading from './CustomButtonLoading';
@@ -83,6 +83,7 @@ const Stepper = ({ backLinkRef }) => {
   const [insurObject] = useSelector(getAutoByNumber);
   const customerCategory = useSelector(getIsPrivilage);
   const engineType = useSelector(getEngineType);
+  const hasVclOrder = useSelector(getHasVclOrder);
 
   const [activeStep, setActiveStep] = useState(0);
   const [identityCard, setIdentityCard] = useState(null);
@@ -172,6 +173,12 @@ const Stepper = ({ backLinkRef }) => {
               customerStatus: identityCard.customerStatus,
             }
           : null;
+      const vclOrderData = hasVclOrder
+        ? {
+            engineVolume,
+            autoCategory: engineType,
+          }
+        : null;
       const customIsur = customerInsuriensObject(
         insuredDataFormik,
         homeAddressFormik,
@@ -202,7 +209,8 @@ const Stepper = ({ backLinkRef }) => {
             dgoTarrif,
             insurObject,
             customIsur,
-            privilegeData
+            privilegeData,
+            vclOrderData
           )
         );
       }

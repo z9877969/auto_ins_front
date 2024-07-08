@@ -6,7 +6,8 @@ export const contractSaveDGONormalize = (
   dgoTariff,
   insurObject,
   customerInsuriensObject,
-  privilegeData
+  privilegeData,
+  vclOrderData
 ) => {
   const { customer, insuranceObject } = customerInsuriensObject;
   const requestBody = {
@@ -16,13 +17,15 @@ export const contractSaveDGONormalize = (
     tariff: { id: dgoTariff?.id, type: dgoTariff?.type },
     insuranceObject: {
       ...insuranceObject,
-      engineVolume: insurObject?.engineVolume,
+      engineVolume: insurObject?.engineVolume || vclOrderData.engineVolume,
     },
     dateFrom: format(
       new Date(userParams?.dateFrom),
-      'yyyy-MM-dd\'T\'HH:mm:ss.SSSxxxx'
+      // eslint-disable-next-line
+      "yyyy-MM-dd'T'HH:mm:ss.SSSxxxx"
     ),
-    date: format(new Date(), 'yyyy-MM-dd\'T\'HH:mm:ss.SSSxxxx'),
+    // eslint-disable-next-line
+    date: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxxx"),
     state: 'DRAFT',
 
     limit: dgoTariff?.limit,
@@ -30,6 +33,14 @@ export const contractSaveDGONormalize = (
 
   if (privilegeData) {
     requestBody.privilegeType = privilegeData.customerStatus;
+  }
+  if (vclOrderData) {
+    requestBody.customFields = [
+      {
+        code: 'EWA_type_ts',
+        value: vclOrderData.autoCategory,
+      },
+    ];
   }
 
   return requestBody;

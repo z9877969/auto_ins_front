@@ -20,7 +20,7 @@ import ModalError from '../../components/ModalError/ModalError';
 import { useSelectOrInput } from '../../context/SelectOrInputProvider';
 import SelectNoOptionsMessage from '../../components/SelectNoOptionsMessage/SelectNoOptionsMessage';
 import InputInsteadSelect from '../../components/InputInsteadSelect/InputInsteadSelect';
-import { selectAutoCategory } from '../../helpers/ByParameters/selectOptions';
+// import { selectAutoCategory } from '../../helpers/ByParameters/selectOptions';
 import { getHasVclOrder } from '../../redux/Calculator/selectors';
 import { FORMIK_DATA_KEYS } from '../../constants';
 import * as storage from '../../helpers/storage';
@@ -37,7 +37,7 @@ const CarDataForm = ({ formik }) => {
     allAutoModelByMaker,
     autoByMakerAndModel,
     setRefError,
-    setEngineCapacity,
+    // setEngineCapacity,
   } = useActions();
   const autoMakers = useSelector(getAutoMakers);
   const allAutoModel = useSelector(getAutoModelByMaker);
@@ -47,10 +47,9 @@ const CarDataForm = ({ formik }) => {
   const isError = useSelector(getIsModalErrorOpen);
   const isPrivilage = useSelector(getIsPrivilage);
   const hasVclOrder = useSelector(getHasVclOrder);
-  const { engineCapacity } = useSelector((state) => state.byParameters);
+  // const { engineCapacity } = useSelector((state) => state.byParameters);
   const [disabled, setDisabled] = useState(
     insuranceObject?.stateNumber ? false : true
-    // false
   );
 
   const selectOrInput = useSelectOrInput();
@@ -113,10 +112,6 @@ const CarDataForm = ({ formik }) => {
       id: modelInputId,
       name: value,
     });
-  };
-
-  const handleChangeengineCapacity = (e) => {
-    setEngineCapacity(e);
   };
 
   useEffect(() => {
@@ -237,27 +232,16 @@ const CarDataForm = ({ formik }) => {
             components={customComponents}
           />
         ) : (
-          <>
-            <InputInsteadSelect
-              formik={formik}
-              label="Модель*:"
-              name="model"
-              valueKey="name"
-              onChange={handleChangeModelByInput}
-              closeInput={() => selectOrInput.setIsModelInput(false)}
-            />
-            {hasVclOrder && (
-              <GeneralSelect
-                id="engineCapacity"
-                lableText="Об’єм двигуна"
-                optionsArr={selectAutoCategory()}
-                changeCB={handleChangeengineCapacity}
-                currentValue={engineCapacity}
-              />
-            )}
-          </>
+          <InputInsteadSelect
+            formik={formik}
+            label="Модель*:"
+            name="model"
+            valueKey="name"
+            onChange={handleChangeModelByInput}
+            closeInput={() => selectOrInput.setIsModelInput(false)}
+          />
         )}
-        {isPrivilage && (
+        {(isPrivilage || hasVclOrder) && (
           <GeneralInput
             id="engineVolume"
             lableText="Об'єм двигуна*:"
@@ -266,6 +250,15 @@ const CarDataForm = ({ formik }) => {
             isDisabled={disabled}
           />
         )}
+        {/* {hasVclOrder && (
+          <GeneralSelect
+            id="engineCapacity"
+            lableText="Об’єм двигуна"
+            optionsArr={selectAutoCategory()}
+            changeCB={handleChangeengineCapacity}
+            currentValue={engineCapacity}
+          />
+        )} */}
         <GeneralInput
           id="bodyNumber"
           lableText="VIN Номер*:"

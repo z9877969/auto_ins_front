@@ -20,6 +20,7 @@ export const validationName = () =>
     .max(50, 'Занадто довге поле');
 
 const getIsValidEngineType = (type) => {
+  // eslint-disable-next-line
   const message = "Об'єм двигуна не відповідає вибраній категорій";
   switch (type) {
     case 'B1':

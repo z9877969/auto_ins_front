@@ -7,6 +7,7 @@ export const SERIES_PASSPORT_REGEX = /^[а-яіїйєґА-ЯІЇЙЄҐ]{2}$/;
 export const SERIES_DRIVING_LICENSE_REGEX = /^[а-яіїйєґА-ЯІЇЙЄҐ]{3}$/;
 export const SERIES_PASSPORT_AND_DRIVING_LICENSE_REGEX =
   /^[а-яіїйєґА-ЯІЇЙЄҐ]{2,3}$/;
+// eslint-disable-next-line
 export const REQUIRED_FIELD = "Обов'язкове поле";
 export const CATEGORY = ['A1', 'A2', 'B1', 'B2', 'B3', 'B4', 'B5', 'E', 'F'];
 export const CATEGORY_ERROR =
@@ -46,7 +47,7 @@ export const DATE_MESSAGE_ERRORS = {
   birthDate: 'Вік має бути більше 18 років',
   date: 'Має бути більше дати народження',
   startContract: 'Дата має бути більшою за поточну',
-  dateFormat: 'Не коректна дата'
+  dateFormat: 'Не коректна дата',
 };
 export const FORMIK_DATA_KEYS = {
   CONTACTS: 'contactsFormik',
