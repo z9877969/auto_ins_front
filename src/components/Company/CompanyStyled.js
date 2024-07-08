@@ -30,6 +30,9 @@ export const CardStyled = styled(Card)(({ theme }) => ({
 
 export const WrapperStyled = styled(Box)(({ theme }) => ({
   '&.MuiBox-root': {
+    [theme.breakpoints.up('sm')]: {
+      width: '-webkit-fill-available',
+    },
     '& .MuiTypography-root': {
       backgroundColor: theme.palette.primary.white,
       color: theme.palette.primary.main,
@@ -39,9 +42,6 @@ export const WrapperStyled = styled(Box)(({ theme }) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'flex',
       gap: '16px',
-    },
-    [theme.breakpoints.up('lg')]: {
-      gap: '24px',
     },
   },
   '& .gridContainer': {
@@ -121,6 +121,7 @@ export const BoxContent = styled(Box)(({ theme }) => ({
   '& .content': {
     [theme.breakpoints.up('lg')]: {
       display: 'flex',
+      columnGap: '8px',
     },
   },
 }));
@@ -128,27 +129,33 @@ export const BoxFooter = styled(Box)(({ theme }) => ({
   marginBottom: '16px',
   width: '100%',
   display: 'flex',
+  flexDirection: 'column',
   justifyContent: 'space-between',
 
   [theme.breakpoints.up('sm')]: {
-    width: '165px',
+    width: 'auto',
     flexDirection: 'column',
-    gap: '8px',
+    rowGap: '4px',
+  },
+
+  '& .rowWrapper': {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   '& .noDiscounted': {
+    color: '#7b7990!important',
     textDecoration: 'line-through',
-    alignSelf: 'flex-end',
     fontSize: '12px',
     [theme.breakpoints.up('sm')]: {
       fontSize: '12px',
-      // transform: 'translate(36px, 12px)',
     },
     [theme.breakpoints.up('lg')]: {
       fontSize: '16px',
     },
   },
   '& .price': {
-    color: 'red!important',
+    lineHeight: 1,
     [theme.breakpoints.up('sm')]: {
       fontSize: '18px',
     },
@@ -177,6 +184,9 @@ export const BoxSelect = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.up('sm')]: {
     width: '308px',
+  },
+  [theme.breakpoints.up('lg')]: {
+    width: 'auto',
   },
   '& .franchise': {
     marginBottom: '8px',

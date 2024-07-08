@@ -61,10 +61,12 @@ const Company = ({ proposal, lastItem }) => {
     [franchise.discountedPayment, chooseDgo.discountedPayment]
   );
   const fullPrice = useMemo(() => {
-    return Math.round(
-      franchise.discountedPayment / (1 - franchise.brokerDiscount) +
-        chooseDgo.discountedPayment
-    );
+    return franchise.brokerDiscount
+      ? Math.round(
+          franchise.discountedPayment / (1 - franchise.brokerDiscount) +
+            chooseDgo.discountedPayment
+        )
+      : null;
   }, [
     franchise.discountedPayment,
     chooseDgo.discountedPayment,
@@ -195,15 +197,28 @@ const Company = ({ proposal, lastItem }) => {
         </BoxContent>
         <WrapperStyled className="footer">
           <BoxFooter>
-            <Typography component="span">Вартість</Typography>
-            <Box display={'flex'} columnGap={1} alignItems={'center'}>
-              <Typography
-                variant="h4"
-                component="span"
-                className="noDiscounted"
-              >
-                {fullPrice} грн
-              </Typography>
+            {fullPrice && (
+              <>
+                <Box className="rowWrapper">
+                  <Typography component="span">Вартість</Typography>
+                  <Typography
+                    variant="h4"
+                    component="span"
+                    className="noDiscounted"
+                  >
+                    {fullPrice} грн
+                  </Typography>
+                </Box>
+                <Box className="rowWrapper">
+                  <Typography component="span">Вигода</Typography>
+                  <Typography variant="h3" component="span" className="price">
+                    {fullPrice - price} грн
+                  </Typography>
+                </Box>
+              </>
+            )}
+            <Box className="rowWrapper">
+              <Typography component="span">До сплати</Typography>
               <Typography variant="h3" component="span" className="price">
                 {Math.round(price)} грн
               </Typography>
