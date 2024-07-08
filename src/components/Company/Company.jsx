@@ -55,16 +55,26 @@ const Company = ({ proposal, lastItem }) => {
     limit: 0,
     discountedPayment: 0,
   });
-  const [price, setPrice] = useState([]);
+
+  const price = useMemo(
+    () => Math.round(franchise.discountedPayment + chooseDgo.discountedPayment),
+    [franchise.discountedPayment, chooseDgo.discountedPayment]
+  );
+  const fullPrice = useMemo(() => {
+    return Math.round(
+      franchise.discountedPayment / (1 - franchise.brokerDiscount) +
+        chooseDgo.discountedPayment
+    );
+  }, [
+    franchise.discountedPayment,
+    chooseDgo.discountedPayment,
+    franchise.brokerDiscount,
+  ]);
 
   useEffect(() => {
     if (!proposal) return;
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    setPrice(franchise.discountedPayment + chooseDgo.discountedPayment);
-  }, [chooseDgo.discountedPayment, franchise.discountedPayment]);
 
   const handleChangeSelect = (e) => {
     setFranchise(e);
@@ -186,9 +196,18 @@ const Company = ({ proposal, lastItem }) => {
         <WrapperStyled className="footer">
           <BoxFooter>
             <Typography component="span">Вартість</Typography>
-            <Typography variant="h3" component="span" className="price">
-              {Math.round(price)} грн
-            </Typography>
+            <Box display={'flex'} columnGap={1} alignItems={'center'}>
+              <Typography
+                variant="h4"
+                component="span"
+                className="noDiscounted"
+              >
+                {fullPrice} грн
+              </Typography>
+              <Typography variant="h3" component="span" className="price">
+                {Math.round(price)} грн
+              </Typography>
+            </Box>
           </BoxFooter>
           <ButtonStyled type="submit">Придбати</ButtonStyled>
         </WrapperStyled>

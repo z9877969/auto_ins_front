@@ -135,7 +135,20 @@ export const BoxFooter = styled(Box)(({ theme }) => ({
     flexDirection: 'column',
     gap: '8px',
   },
+  '& .noDiscounted': {
+    textDecoration: 'line-through',
+    alignSelf: 'flex-end',
+    fontSize: '12px',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '12px',
+      // transform: 'translate(36px, 12px)',
+    },
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '16px',
+    },
+  },
   '& .price': {
+    color: 'red!important',
     [theme.breakpoints.up('sm')]: {
       fontSize: '18px',
     },
