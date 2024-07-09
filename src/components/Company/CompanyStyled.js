@@ -30,12 +30,17 @@ export const CardStyled = styled(Card)(({ theme }) => ({
 
 export const WrapperStyled = styled(Box)(({ theme }) => ({
   '&.MuiBox-root': {
-    [theme.breakpoints.up('sm')]: {
-      width: '-webkit-fill-available',
-    },
+    // [theme.breakpoints.up('sm')]: {
+    //   'width': '-webkit-fill-available',
+    // },
     '& .MuiTypography-root': {
       backgroundColor: theme.palette.primary.white,
       color: theme.palette.primary.main,
+    },
+  },
+  '&.footer': {
+    [theme.breakpoints.up('lg')]: {
+      width: '350px',
     },
   },
   '&.wrapper': {
@@ -142,6 +147,10 @@ export const BoxFooter = styled(Box)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+
+    '& span': {
+      alignSelf: 'center',
+    },
   },
   '& .noDiscounted': {
     color: '#7b7990!important',
