@@ -273,7 +273,7 @@ const Stepper = ({ backLinkRef }) => {
         return (
           <Suspense>
             <SelectOrInputProvider>
-              <CarDataForm formik={carDataFormik} />
+              <CarDataForm formik={carDataFormik} userParams={userParams} />
             </SelectOrInputProvider>
           </Suspense>
         );

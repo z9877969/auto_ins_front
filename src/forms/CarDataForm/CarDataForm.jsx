@@ -29,7 +29,7 @@ const customComponents = {
   NoOptionsMessage: SelectNoOptionsMessage,
 };
 
-const CarDataForm = ({ formik }) => {
+const CarDataForm = ({ formik, userParams }) => {
   const {
     setAutoByMakerAndModel,
     allAutoMakers,
@@ -135,7 +135,8 @@ const CarDataForm = ({ formik }) => {
         name: insuranceObject?.model.name ?? '',
       },
       bodyNumber: insuranceObject?.bodyNumber ?? '',
-      category: insuranceObject?.category || v.category,
+      category:
+        insuranceObject?.category || userParams?.autoCategory || v.category,
       engineVolume: insuranceObject?.engineVolume ?? '',
     }));
     // eslint-disable-next-line
