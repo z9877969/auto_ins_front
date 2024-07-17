@@ -18,6 +18,7 @@ import CustomDateInput from '../../components/CustomDateInput/CustomDateInput';
 import { DATE_MESSAGE_ERRORS, FORMIK_DATA_KEYS } from '../../constants';
 import { useEffect } from 'react';
 import * as storage from '../../helpers/storage';
+import clsx from 'clsx';
 
 const errorPosition = {
   right: '8px',
@@ -62,36 +63,6 @@ const InsuredDataForm = ({ formik, selectData }) => {
             </div>
           ) : null}
         </CustomLabel>
-        {/* <DataContainerWrapper>
-          <label htmlFor="dateFrom">Дата народження*:</label>
-          <ReactDatePicker
-            className="yearMonthPicker"
-            id="birthDate"
-            mode="single"
-            selected={birthDate}
-            onSelect={setBirthDate}
-            onChange={hadleChangeBirthDate}
-            // closeOnScroll={(e) => e.target === document}
-            startDate={birthDate}
-            name="date"
-            maxDate={sub(new Date(), {
-              years: 18,
-            })}
-            customInput={<InputStyled />}
-            dateFormat="dd/MM/yyyy"
-            showIcon={true}
-            locale="uk"
-            withPortal
-            showMonthDropdown
-            showYearDropdown
-            dropdownMode="select"
-            icon={
-              <Box className="iconCalender">
-                <SpriteSVG name={'icon-calendar'} />
-              </Box>
-            }
-          />
-        </DataContainerWrapper> */}
         <GeneralInput id="taxNumber" lableText="РНОКПП*:" formikData={formik} />
         <GeneralSelect
           id="licensDoc"
@@ -136,14 +107,61 @@ const InsuredDataForm = ({ formik, selectData }) => {
               placeholder={'дд/мм/рррр'}
             />
             {formik.errors.date && (
-              <div className="errorMessage">
+              <div className={clsx('errorMessage', 'half')}>
                 {!formik.errors.date.includes('date')
                   ? formik.errors.date
                   : DATE_MESSAGE_ERRORS.dateFormat}
               </div>
             )}
           </CustomLabel>
-          {/* <CommonDatePicker
+        </DocInputsStyled>
+      </InputContBoxStyled>
+    </>
+  );
+};
+
+export default InsuredDataForm;
+
+InsuredDataForm.propTypes = {
+  formik: PropTypes.object,
+  selectData: PropTypes.object,
+};
+
+// comments with datepickers from form
+{
+  /* <DataContainerWrapper>
+          <label htmlFor="dateFrom">Дата народження*:</label>
+          <ReactDatePicker
+            className="yearMonthPicker"
+            id="birthDate"
+            mode="single"
+            selected={birthDate}
+            onSelect={setBirthDate}
+            onChange={hadleChangeBirthDate}
+            // closeOnScroll={(e) => e.target === document}
+            startDate={birthDate}
+            name="date"
+            maxDate={sub(new Date(), {
+              years: 18,
+            })}
+            customInput={<InputStyled />}
+            dateFormat="dd/MM/yyyy"
+            showIcon={true}
+            locale="uk"
+            withPortal
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+            icon={
+              <Box className="iconCalender">
+                <SpriteSVG name={'icon-calendar'} />
+              </Box>
+            }
+          />
+        </DataContainerWrapper> */
+}
+{
+  /* <CommonDatePicker
             label="Дата видачі*:"
             id="date"
             mode="single"
@@ -166,16 +184,5 @@ const InsuredDataForm = ({ formik, selectData }) => {
                 <SpriteSVG name={'icon-calendar'} />
               </Box>
             }
-          /> */}
-        </DocInputsStyled>
-      </InputContBoxStyled>
-    </>
-  );
-};
-
-export default InsuredDataForm;
-
-InsuredDataForm.propTypes = {
-  formik: PropTypes.object,
-  selectData: PropTypes.object,
-};
+          /> */
+}

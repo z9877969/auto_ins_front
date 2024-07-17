@@ -10,7 +10,7 @@ export const getStateNumber = (state) => state.calculator.stateNumber;
 export const getError = (state) => state.calculator.error;
 export const getPolicyStatus = (state) => state.calculator.policyStatus;
 export const getVclStatus = (state) => state.calculator.vclStatus;
-export const getHasVclOrder = (state) => state.calculator.vclStatus;
+export const getHasVclOrder = (state) => state.calculator.hasVclOrder;
 
 export const getTariffsStatus = createSelector(
   getPolicyStatus,

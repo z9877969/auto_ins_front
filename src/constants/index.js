@@ -45,6 +45,7 @@ export const ENGINE_VOLUME_TYPES = {
 };
 export const DATE_MESSAGE_ERRORS = {
   birthDate: 'Вік має бути більше 18 років',
+  '100yearsOldDate': 'Вік має бути не більше 100 років',
   date: 'Має бути більше дати народження',
   startContract: 'Дата має бути більшою за поточну',
   dateFormat: 'Не коректна дата',

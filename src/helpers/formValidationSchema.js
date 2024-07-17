@@ -54,9 +54,15 @@ export const validateFullAgeDate = () => {
     today.getMonth(),
     today.getDate()
   );
+  const date100YearsAgo = new Date(
+    today.getFullYear() - 100,
+    today.getMonth(),
+    today.getDate()
+  );
   return Yup.date()
     .transform(parseDateString)
     .max(date18YearsAgo, DATE_MESSAGE_ERRORS['birthDate'])
+    .min(date100YearsAgo, DATE_MESSAGE_ERRORS['100yearsOldDate'])
     .required(REQUIRED_FIELD);
 };
 
@@ -93,8 +99,12 @@ export const validateContractStartDate = () => {
 // === Date Validation -End
 
 // =============================================================================
-export const carDataFormValidationSchema = ({ isPrivilege, engineType } = {}) =>
-  Yup.object().shape({
+export const carDataFormValidationSchema = ({
+  isPrivilege,
+  engineType,
+  hasVclOrder,
+} = {}) => {
+  const schemaOptions = {
     outsideUkraine: Yup.boolean(),
     stateNumber: Yup.string()
       .required(REQUIRED_FIELD)
@@ -111,21 +121,35 @@ export const carDataFormValidationSchema = ({ isPrivilege, engineType } = {}) =>
       .typeError('Будь ласка, введіть рік')
       .required(REQUIRED_FIELD)
       .min(1900, 'Рік повинен бути не менше 1900'),
-    model: Yup.object().required(REQUIRED_FIELD),
+    maker: Yup.object()
+      .shape({
+        id: Yup.string().required(REQUIRED_FIELD),
+      })
+      .required(REQUIRED_FIELD),
+    model: Yup.object()
+      .shape({
+        id: Yup.string().required(REQUIRED_FIELD),
+      })
+      .required(REQUIRED_FIELD),
     bodyNumber: Yup.string()
       .required(REQUIRED_FIELD)
       .matches(VIN_REGEX, 'VIN повинен містити 17 літер'),
-    engineVolume:
-      isPrivilege && engineType
-        ? getIsValidEngineType(engineType)
-            .max(
-              2500,
-              // eslint-disable-next-line
-              "Об'єм двигуна для пільговиків не може перевищувати 2500"
-            )
-            .required(REQUIRED_FIELD)
-        : Yup.number(),
-  });
+  };
+  if (isPrivilege && engineType) {
+    schemaOptions.engineVolume = getIsValidEngineType(engineType)
+      .max(
+        2500,
+        // eslint-disable-next-line
+        "Об'єм двигуна для пільговиків не може перевищувати 2500"
+      )
+      .required(REQUIRED_FIELD);
+  } else if (hasVclOrder) {
+    schemaOptions.engineVolume = Yup.number()
+      .min(0, 'Повинно бути 0 або більше')
+      .required(REQUIRED_FIELD);
+  }
+  return Yup.object().shape(schemaOptions);
+};
 // ===========================================================================
 export const homeAddressFormValidationSchema = () =>
   Yup.object().shape({

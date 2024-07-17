@@ -34,7 +34,7 @@ const GeneralInput = ({
         htmlFor={id}
       >
         <span>{lableText}</span>
-        {touched[id] && Boolean(errors[id]) && (
+        {touched[id] && errors[id] && (
           <span className="errorMessages">
             {smScreen ? errors[id] : 'Помилка введення'}
           </span>

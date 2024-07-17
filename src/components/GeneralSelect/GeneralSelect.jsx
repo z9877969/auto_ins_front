@@ -25,6 +25,7 @@ const GeneralSelect = ({
   optionsOnTop = false,
   handleSelectRef,
   components,
+  errorMessage,
 }) => {
   const selectRef = useRef(null);
 
@@ -48,7 +49,10 @@ const GeneralSelect = ({
   }, [handleSelectRef]);
   // const theme = useTheme();
   return (
-    <InputContStyled className="select-container">
+    <InputContStyled
+      className="select-container"
+      errorPosition={{ right: '15px' }}
+    >
       <Typography
         sx={{
           color: isDisabled ? 'darkgray!important' : null,
@@ -89,6 +93,7 @@ const GeneralSelect = ({
         getOptionLabel={getOptionLabel}
         getOptionValue={getOptionValue}
       />
+      {errorMessage && <span className="errorMessage">{errorMessage}</span>}
     </InputContStyled>
   );
 };

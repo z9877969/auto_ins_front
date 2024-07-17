@@ -121,23 +121,31 @@ const CarDataForm = ({ formik, userParams }) => {
     if (!insuranceObject) {
       setDisabled(true);
     }
+    const storedValues = storage.getFromLS(FORMIK_DATA_KEYS.CAR);
     formik.setValues((v) => ({
       ...v,
       // stateNumber: insuranceObject?.stateNumber ?? '',
-      year: insuranceObject?.year ?? '',
-      brand: insuranceObject?.brand ?? '',
+      year: insuranceObject?.year || storedValues?.year || '',
+      brand: insuranceObject?.brand || storedValues?.brand || '',
       maker: {
-        id: insuranceObject?.model.autoMaker.id ?? '',
-        name: insuranceObject?.model.autoMaker.name ?? '',
+        id:
+          insuranceObject?.model.autoMaker.id ||
+          storedValues?.model?.autoMaker?.id ||
+          '',
+        name:
+          insuranceObject?.model.autoMaker.name ||
+          storedValues?.model?.autoMaker?.name ||
+          '',
       },
       model: {
-        id: insuranceObject?.model.id ?? '',
-        name: insuranceObject?.model.name ?? '',
+        id: insuranceObject?.model.id || storedValues?.model.id || '',
+        name: insuranceObject?.model.name || storedValues?.model.name || '',
       },
-      bodyNumber: insuranceObject?.bodyNumber ?? '',
+      bodyNumber: insuranceObject?.bodyNumber || storedValues?.bodyNumber || '',
       category:
         insuranceObject?.category || userParams?.autoCategory || v.category,
-      engineVolume: insuranceObject?.engineVolume ?? '',
+      engineVolume:
+        insuranceObject?.engineVolume || storedValues?.engineVolume || '',
     }));
     // eslint-disable-next-line
   }, [insuranceObject]);
@@ -210,6 +218,7 @@ const CarDataForm = ({ formik, userParams }) => {
           isDisabled={disabled}
           readOnly={Boolean(insuranceObject?.stateNumber)}
           noOptionsMessage="Така марка відсутня"
+          errorMessage={formik.errors['maker']?.id}
         />
 
         {!selectOrInput.isModelInput ? (
@@ -231,6 +240,7 @@ const CarDataForm = ({ formik, userParams }) => {
             readOnly={Boolean(insuranceObject?.stateNumber)}
             noOptionsMessage="Така модель відсутня. Вкажіть її самостійно"
             components={customComponents}
+            errorMessage={formik.errors['model']?.id}
           />
         ) : (
           <InputInsteadSelect
@@ -251,15 +261,6 @@ const CarDataForm = ({ formik, userParams }) => {
             isDisabled={disabled}
           />
         )}
-        {/* {hasVclOrder && (
-          <GeneralSelect
-            id="engineCapacity"
-            lableText="Об’єм двигуна"
-            optionsArr={selectAutoCategory()}
-            changeCB={handleChangeengineCapacity}
-            currentValue={engineCapacity}
-          />
-        )} */}
         <GeneralInput
           id="bodyNumber"
           lableText="VIN Номер*:"

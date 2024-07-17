@@ -159,10 +159,11 @@ const Stepper = ({ backLinkRef }) => {
     validationSchema: carDataFormValidationSchema({
       isPrivilege: identityCard?.privilegeType === 'PRIVILEGED',
       engineType,
+      hasVclOrder,
     }),
     // enableReinitialize: true,
-    validateOnBlur: true,
-    validateOnChange: false,
+    // validateOnBlur: true,
+    validateOnChange: true,
     onSubmit: ({ model, maker, engineVolume }) => {
       const fullCarModel = `${maker.name} ${model.name}`;
       const privilegeData =

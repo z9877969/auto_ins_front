@@ -137,11 +137,33 @@ export const SelectStyled = styled(Select)(
     },
   })
 );
-export const InputContStyled = styled(Box)(({ theme }) => ({
+export const InputContStyled = styled(Box)(({ theme, errorPosition }) => ({
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
   [theme.breakpoints.up('sm')]: {
     gap: 16,
+  },
+  '& .errorMessage': {
+    position: 'absolute',
+    fontWeight: 600,
+    color: theme.palette.primary.red,
+    textAlign: 'end',
+    maxWidth: '50%',
+    lineHeight: '1.1',
+    fontSize: '12px',
+    ...errorPosition,
+
+    [theme.breakpoints.up('xs')]: {
+      maxWidth: '200px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: 'unset',
+      fontSize: '16px',
+      '&.half': {
+        maxWidth: 'calc(100% / 2)',
+      },
+    },
   },
 }));

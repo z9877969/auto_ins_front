@@ -23,7 +23,10 @@ export const InputContStyled = styled(Box)(({ theme, errorposition }) => ({
     },
     [theme.breakpoints.up('sm')]: {
       maxWidth: 'unset',
-      fontSize: '16px'
+      fontSize: '16px',
+      '&.half': {
+        maxWidth: 'calc(100% / 2)',
+      },
     },
   },
 }));
