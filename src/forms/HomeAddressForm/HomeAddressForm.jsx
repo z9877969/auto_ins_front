@@ -23,9 +23,9 @@ const HomeAddressForm = ({ formik }) => {
     setQueryText(e);
     setAllAddress(await fetchAddress(e));
   };
-  const setAddress = async (e) => {
-    formik.values.regionANDcity = e.label;
-    setHomeAddress(e);
+  const setAddress = async (option) => {
+    formik.setFieldValue('regionANDcity', option.label);
+    setHomeAddress(option);
   };
 
   useEffect(() => {
@@ -40,19 +40,26 @@ const HomeAddressForm = ({ formik }) => {
           lableText="Адреса"
           optionsArr={allAddress}
           changeCB={setAddress} //функція що повертає вибране значення (піднесення)
-          currentValue={address}
+          currentValue={address.label && address.value ? address : undefined}
           inputValue={queryText}
           inputChangeCB={getHomeAddress}
           isValid={Boolean(address.label)}
           readOnly={false}
           noOptionsMessage="Вкажіть місце проживання"
+          placeholder={!queryText && 'м. Київ, Україна'}
         />
-        <GeneralInput id="street" lableText="Вулиця*:" formikData={formik} />
+        <GeneralInput
+          id="street"
+          lableText="Вулиця*:"
+          formikData={formik}
+          placeholder={'Хрещатик'}
+        />
         <DocInputsStyled>
           <GeneralInput
             id="houseNumber"
             lableText="Будинок*:"
             formikData={formik}
+            placeholder={'1'}
           />
           <GeneralInput
             id="apartmentNumber"

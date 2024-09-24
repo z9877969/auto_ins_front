@@ -26,6 +26,7 @@ const GeneralSelect = ({
   handleSelectRef,
   components,
   errorMessage,
+  placeholder,
 }) => {
   const selectRef = useRef(null);
 
@@ -51,7 +52,7 @@ const GeneralSelect = ({
   return (
     <InputContStyled
       className="select-container"
-      errorPosition={{ right: '15px' }}
+      errorposition={{ right: '15px' }}
     >
       <Typography
         sx={{
@@ -83,7 +84,7 @@ const GeneralSelect = ({
         component="label"
         classNamePrefix="customSelect"
         id={id}
-        placeholder="Enter the text"
+        placeholder={placeholder ? placeholder : ''}
         options={optionsArr}
         defaultValue={defaultValue}
         value={currentValue}

@@ -192,7 +192,8 @@ const BlockThank = () => {
     <FormContainerS component="article">
       {errorMessage && (
         <PushNotification.Error
-          message={errorMessage}
+          // message={errorMessage}
+          message="Щось пішло не так🤷🏽‍♂️. Спробуйте ще."
           onClose={() => setErrorMessage(null)}
           isOpen={Boolean(errorMessage)}
         />

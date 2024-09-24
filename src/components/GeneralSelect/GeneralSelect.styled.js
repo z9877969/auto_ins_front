@@ -137,7 +137,7 @@ export const SelectStyled = styled(Select)(
     },
   })
 );
-export const InputContStyled = styled(Box)(({ theme, errorPosition }) => ({
+export const InputContStyled = styled(Box)(({ theme, errorposition }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -153,7 +153,7 @@ export const InputContStyled = styled(Box)(({ theme, errorPosition }) => ({
     maxWidth: '50%',
     lineHeight: '1.1',
     fontSize: '12px',
-    ...errorPosition,
+    ...errorposition,
 
     [theme.breakpoints.up('xs')]: {
       maxWidth: '200px',

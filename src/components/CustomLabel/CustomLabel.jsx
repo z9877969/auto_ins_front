@@ -11,7 +11,7 @@ const CustomLabel = ({
   errorMessage,
   children,
   ref,
-  errorPosition,
+  errorposition,
 }) => {
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
@@ -20,7 +20,7 @@ const CustomLabel = ({
     <InputContStyled
       className={className}
       ref={ref}
-      errorposition={errorPosition}
+      errorposition={errorposition}
     >
       <LableStyled
         sx={{
@@ -54,5 +54,5 @@ CustomLabel.propTypes = {
   labelColor: PropTypes.string,
   touchedMessage: PropTypes.bool,
   errorMessage: PropTypes.string,
-  errorPosition: PropTypes.object,
+  errorposition: PropTypes.object,
 };

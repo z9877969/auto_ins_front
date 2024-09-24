@@ -283,6 +283,13 @@ const Stepper = ({ backLinkRef }) => {
     }
   };
 
+  const { setFieldValue } = carDataFormik;
+
+  useEffect(() => {
+    insurObject?.stateNumber &&
+      setFieldValue('stateNumber', insurObject?.stateNumber);
+  }, [insurObject, setFieldValue]);
+
   return (
     <Stack sx={{ width: '100%' }}>
       <StepperStyled

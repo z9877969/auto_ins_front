@@ -173,7 +173,7 @@ const ByParameters = () => {
           <CustomLabel
             lableText="Дата початку дії поліса:"
             labelColor={'#ffffff!important'}
-            errorPosition={{
+            errorposition={{
               top: '100%',
               right: '16px',
             }}

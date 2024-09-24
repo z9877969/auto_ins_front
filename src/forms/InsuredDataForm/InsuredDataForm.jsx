@@ -20,7 +20,7 @@ import { useEffect } from 'react';
 import * as storage from '../../helpers/storage';
 import clsx from 'clsx';
 
-const errorPosition = {
+const errorposition = {
   right: '8px',
   top: 0,
   transform: 'translateY(-2px)',
@@ -39,21 +39,32 @@ const InsuredDataForm = ({ formik, selectData }) => {
   return (
     <>
       <InputContBoxStyled>
-        <GeneralInput id="surname" lableText="Прізвище*:" formikData={formik} />
-        <GeneralInput id="name" lableText="Ім’я*:" formikData={formik} />
+        <GeneralInput
+          id="surname"
+          lableText="Прізвище*:"
+          formikData={formik}
+          placeholder={'Шевченко'}
+        />
+        <GeneralInput
+          id="name"
+          lableText="Ім’я*:"
+          formikData={formik}
+          placeholder={'Тарас'}
+        />
         <GeneralInput
           id="middleName"
           lableText="По батькові*:"
           formikData={formik}
+          placeholder={'Григорович'}
         />
         <CustomLabel
           lableText="Дата народження*:"
-          errorPosition={errorPosition}
+          errorposition={errorposition}
         >
           <CustomDateInput
             value={formik.values.birthDate}
             setValue={(v) => formik.setFieldValue('birthDate', v)}
-            placeholder={'дд/мм/рррр'}
+            placeholder={'09/03/1814'}
           />
           {formik.errors.birthDate ? (
             <div className="errorMessage">
@@ -63,7 +74,12 @@ const InsuredDataForm = ({ formik, selectData }) => {
             </div>
           ) : null}
         </CustomLabel>
-        <GeneralInput id="taxNumber" lableText="РНОКПП*:" formikData={formik} />
+        <GeneralInput
+          id="taxNumber"
+          lableText="РНОКПП(Ідентифікаційний код)*:"
+          formikData={formik}
+          placeholder={'1234567890'}
+        />
         <GeneralSelect
           id="licensDoc"
           lableText="Документ на вибір*:"
@@ -78,6 +94,7 @@ const InsuredDataForm = ({ formik, selectData }) => {
               id="series"
               lableText="Серія*:"
               formikData={formik}
+              placeholder={'AAA'}
             />
           )}
           <GeneralInput
@@ -85,6 +102,7 @@ const InsuredDataForm = ({ formik, selectData }) => {
             id="number"
             lableText="Номер*:"
             formikData={formik}
+            placeholder={'123456'}
           />
           {isID_PASSPORT && (
             <GeneralInput
@@ -99,12 +117,13 @@ const InsuredDataForm = ({ formik, selectData }) => {
             id="issuedBy"
             lableText="Ким виданий*:"
             formikData={formik}
+            placeholder={'МРЕВ'}
           />
-          <CustomLabel lableText="Дата видачі*:" errorPosition={errorPosition}>
+          <CustomLabel lableText="Дата видачі*:" errorposition={errorposition}>
             <CustomDateInput
               value={formik.values.date}
               setValue={(v) => formik.setFieldValue('date', v)}
-              placeholder={'дд/мм/рррр'}
+              placeholder={'25/07/2024'}
             />
             {formik.errors.date && (
               <div className={clsx('errorMessage', 'half')}>

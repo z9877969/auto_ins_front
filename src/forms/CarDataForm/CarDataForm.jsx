@@ -129,12 +129,10 @@ const CarDataForm = ({ formik, userParams }) => {
       brand: insuranceObject?.brand || storedValues?.brand || '',
       maker: {
         id:
-          insuranceObject?.model.autoMaker.id ||
-          storedValues?.model?.autoMaker?.id ||
-          '',
+          insuranceObject?.model.autoMaker.id || storedValues?.maker?.id || '',
         name:
           insuranceObject?.model.autoMaker.name ||
-          storedValues?.model?.autoMaker?.name ||
+          storedValues?.maker?.name ||
           '',
       },
       model: {
@@ -195,6 +193,7 @@ const CarDataForm = ({ formik, userParams }) => {
           handleBlur={handleBlurStateNumber}
           customFunc={handleChangeStateNumber}
           formikData={formik}
+          placeholder={'AA1234AA'}
         />
         {formik.errors.stateNumber && (
           <div className="errorMessage">{formik.errors.stateNumber}</div>
@@ -204,13 +203,14 @@ const CarDataForm = ({ formik, userParams }) => {
           lableText="Рік випуску*:"
           formikData={formik}
           isDisabled={disabled}
+          placeholder={'2005'}
         />
         <GeneralSelect
           id="brand"
           lableText="Марка*:"
-          currentValue={
-            values.maker.id ? values.maker : { name: 'Оберіть марку авто' }
-          }
+          // currentValue={values.maker.id ? values.maker : { name: 'Skoda' }}
+          currentValue={values.maker.id ? values.maker : undefined}
+          placeholder={'Skoda'}
           optionsArr={autoMakers}
           getOptionLabel={(option) => option.name}
           getOptionValue={(option) => option.id}
@@ -226,15 +226,16 @@ const CarDataForm = ({ formik, userParams }) => {
             handleSelectRef={handleSelectRef}
             id="model"
             lableText="Модель*:"
-            currentValue={
-              values.model.id ? values.model : { name: 'Оберіть модель авто' }
-            }
+            // currentValue={values.model.id ? values.model : { name: 'Fabia' }}
+            currentValue={values.model.id ? values.model : undefined}
+            placeholder={'Fabia'}
             optionsArr={modelOptions}
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.id}
             isDisabled={disabled}
             isValid={
-              values.model?.name === 'Оберіть модель авто' ? false : true
+              // values.model?.name === 'Оберіть модель авто' ? false : true
+              !values.model?.id ? false : true
             }
             changeCB={handleChangeModel}
             readOnly={Boolean(insuranceObject?.stateNumber)}
@@ -267,6 +268,7 @@ const CarDataForm = ({ formik, userParams }) => {
           formikData={formik}
           customFunc={handleChangeVinNumber}
           isDisabled={disabled}
+          placeholder={'WSXEDCRFV12345678'}
         />
       </InputContBoxStyled>
     </>

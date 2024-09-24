@@ -26,15 +26,15 @@ export const PRIVILEGEDSelectOptions = [
 ];
 export const NATURALSelectOptions = [
   {
+    value: 'DRIVING_LICENSE',
+    label: 'Посвідчення водія',
+  },
+  {
     value: 'PASSPORT',
     label: 'Паспорт',
   },
   {
     value: 'ID_PASSPORT',
     label: 'ID карта',
-  },
-  {
-    value: 'DRIVING_LICENSE',
-    label: 'Посвідчення водія',
   },
 ];
