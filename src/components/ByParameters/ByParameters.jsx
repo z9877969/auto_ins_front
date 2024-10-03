@@ -31,6 +31,7 @@ import {
   CATEGORY_ERROR,
   DATE_MESSAGE_ERRORS,
   ORDER_TYPE,
+  PRIVILEGED_TYPE,
 } from '../../constants';
 
 import CustomLabel from '../CustomLabel/CustomLabel';
@@ -110,7 +111,9 @@ const ByParameters = () => {
     // validateOnChange: false,
     onSubmit: (values) => {
       let sendObj = {
-        customerCategory: values.benefits ? 'PRIVILEGED' : 'NATURAL',
+        customerCategory: values.benefits
+          ? PRIVILEGED_TYPE.PRIVILEGED
+          : PRIVILEGED_TYPE.NATURAL,
         autoCategory: engineCapacity.value,
         outsideUkraine: values.foreignNumber,
         usageMonths: 0,

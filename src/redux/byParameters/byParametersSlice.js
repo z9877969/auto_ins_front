@@ -4,6 +4,7 @@ import {
   selectAutoCategory,
   selectCategoryOptions,
 } from '../../helpers/ByParameters/selectOptions';
+import { PRIVILEGED_TYPE } from '../../constants';
 
 const initialState = {
   queryText: '',
@@ -24,7 +25,8 @@ export const byParameters = createSlice({
     },
     setSubmitObj: (state, { payload }) => {
       state.submitObj = payload;
-      state.benefits = payload.customerCategory === 'PRIVILEGED' ? true : false;
+      state.benefits =
+        payload.customerCategory === PRIVILEGED_TYPE.PRIVILEGED ? true : false;
       state.foreignNumber = payload.outsideUkraine;
     },
     setAddress: (state, { payload }) => {
