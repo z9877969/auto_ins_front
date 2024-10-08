@@ -2,15 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getAddress } from './operations';
 import {
   selectAutoCategory,
-  selectCategoryOptions,
+  vehicleGroupsOptions,
 } from '../../helpers/ByParameters/selectOptions';
 import { PRIVILEGED_TYPE } from '../../constants';
 
 const initialState = {
   queryText: '',
   address: { label: '', value: '' },
-  vehicle: selectCategoryOptions[0],
-  engineCapacity: selectAutoCategory(selectCategoryOptions[0].value)[0],
+  vehicle: vehicleGroupsOptions[0],
+  engineCapacity: selectAutoCategory(vehicleGroupsOptions[0].value)[0],
   addressOptions: [],
   benefits: false,
   foreignNumber: false,

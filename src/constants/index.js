@@ -10,7 +10,6 @@ export const SERIES_PASSPORT_AND_DRIVING_LICENSE_REGEX =
   /^[а-яіїйєґА-ЯІЇЙЄҐ]{2,3}$/;
 // eslint-disable-next-line
 export const REQUIRED_FIELD = "Обов'язкове поле";
-export const CATEGORY = ['A1', 'A2', 'B1', 'B2', 'B3', 'B4', 'B5', 'E', 'F'];
 export const CATEGORY_ERROR =
   'Транспорний засіб повиннен проходити обовязкове технічне обслуговування. Для прорахунку полісу зверніться будь-ласка до наших консультантів.';
 export const mainRoutes = {
@@ -31,52 +30,86 @@ export const PRIVILEGED_TYPE = {
   PRIVILEGED: 'PRIVILEGED',
   NATURAL: 'NATURAL',
 };
-export const ENGINE_VOLUME_TYPES = {
-  B1: {
+
+export const VEHICLES_GROUPS = {
+  A: {
+    main: 'A',
+    A1: 'A1',
+    A2: 'A2',
+  },
+  B: {
+    main: 'B',
+    B1: 'B1',
+    B2: 'B2',
+    B3: 'B3',
+    B4: 'B4',
+  },
+  C: {
+    main: 'C',
+    C1: 'C1',
+    C2: 'C2',
+  },
+  D: {
+    main: 'D',
+    D1: 'D1',
+    D2: 'D2',
+  },
+  EF: {
+    main: 'EF',
+    E: 'E',
+    F: 'F',
+  },
+};
+
+export const CATEGORY = Object.values(VEHICLES_GROUPS).reduce((acc, el) => {
+  if (typeof el === 'object') {
+    for (const key in el) {
+      key !== 'main' && acc.push(el[key]);
+    }
+  } else {
+    acc.push(el);
+  }
+  return acc;
+}, []);
+
+export const VEHICLES_TYPES = {
+  [VEHICLES_GROUPS.A.A1]: {
+    min: 0,
+    max: 300,
+  },
+  [VEHICLES_GROUPS.A.A2]: {
+    min: 301,
+  },
+  [VEHICLES_GROUPS.B.B1]: {
     min: 0,
     max: 1600,
   },
-  B2: {
+  [VEHICLES_GROUPS.B.B2]: {
     min: 1601,
     max: 2000,
   },
-  B3: {
+  [VEHICLES_GROUPS.B.B3]: {
     min: 2001,
     max: 3000,
   },
-  B4: {
+  [VEHICLES_GROUPS.B.B4]: {
     min: 3001,
   },
-  C1: {
+  [VEHICLES_GROUPS.C.C1]: {
     min: 0,
     max: 2000,
   },
-  C2: {
+  [VEHICLES_GROUPS.C.C2]: {
     min: 2001,
   },
-  D1: {
+  [VEHICLES_GROUPS.D.D1]: {
     min: 0,
     max: 20,
   },
-  D2: {
+  [VEHICLES_GROUPS.D.D2]: {
     min: 21,
   },
 };
-/* 
-A1 - мотоцикл / моторолер - до 300 см3
-A2 - мотоцикл / моторолер - более 300 см3
-B1 - легковой автомобиль - до 1600 см3
-B2 - легковой автомобиль - 1601 - 2000 см3
-B3 - легковой автомобиль - 2001 - 3000
-B4 - легковой автомобиль - более 3000 см3
-B5 - легковой электромобиль (исключительно с силовым электродвигателем, кроме гибридных авто)
-C1 - грузовой автомобиль - до 2т
-C2 - грузовой автомобиль - более 2т
-D1 - автобус - до 20 человек
-D2 - автобус - более 20 человек
-E - прицеп к грузовому авто
-F - прицеп к легковому авто
-*/
 
 export const DATE_MESSAGE_ERRORS = {
   birthDate: 'Вік має бути більше 18 років',

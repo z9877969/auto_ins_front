@@ -1,30 +1,32 @@
-export const selectCategoryOptions = [
+import { VEHICLES_GROUPS } from '../../constants/index';
+
+export const vehicleGroupsOptions = [
   {
     label: 'Легковий автомобіль',
-    value: 'B',
+    value: VEHICLES_GROUPS.B.main,
   },
   {
     label: 'Вантажний автомобіль',
-    value: 'C',
+    value: VEHICLES_GROUPS.C.main,
   },
   {
     label: 'Автобус',
-    value: 'D',
+    value: VEHICLES_GROUPS.D.main,
   },
   {
     label: 'Мотоцикл',
-    value: 'A',
+    value: VEHICLES_GROUPS.A.main,
   },
   {
     label: 'Причеп',
-    value: 'EF',
+    value: VEHICLES_GROUPS.EF.main,
   },
   {
     label: 'Всі категорії',
     value: '',
   },
 ];
-export const selectAllCategoryOptions = [
+export const vehicleTypesOptions = [
   {
     label: 'Мотоцикл/моторолер - до 300 см3',
     value: 'A1',
@@ -81,41 +83,33 @@ export const selectAllCategoryOptions = [
 ];
 
 // disabled category that no supported -Start
-const disabledCategories = ['C', 'D', 'E', 'F'];
-export const withDisabledSelectCategoryOptions = selectCategoryOptions.map(
-  (option) =>
-    disabledCategories.some((c) => option.value.includes(c))
-      ? { ...option, isDisabled: true }
-      : option
-);
+// const disabledCategories = ['C', 'D', 'E', 'F'];
+// export const withDisabledSelectCategoryOptions = vehicleGroupsOptions.map(
+//   (option) =>
+//     disabledCategories.some((c) => option.value.includes(c))
+//       ? { ...option, isDisabled: true }
+//       : option
+// );
 
-const withDisabledSelectAllCategoryOptions = selectAllCategoryOptions.map(
-  (option) =>
-    disabledCategories.some((c) => option.value.includes(c))
-      ? { ...option, isDisabled: true }
-      : option
-);
+// const withDisabledSelectAllCategoryOptions = vehicleTypesOptions.map(
+//   (option) =>
+//     disabledCategories.some((c) => option.value.includes(c))
+//       ? { ...option, isDisabled: true }
+//       : option
+// );
 // disabled category that no supported -End
 
 export function selectAutoCategory(category) {
-  if (!category) {
-    // return selectAllCategoryOptions;
-    return withDisabledSelectAllCategoryOptions;
+  switch (category) {
+    case 'EF':
+      return vehicleTypesOptions.filter(
+        (categ) => categ.value.includes('E') || categ.value.includes('F')
+      );
+    default:
+      return category
+        ? vehicleTypesOptions.filter((categ) => categ.value.includes(category))
+        : vehicleTypesOptions;
   }
-  if (category === 'EF') {
-    // return selectAllCategoryOptions.filter(
-    //   (categ) => categ.value.includes('E') || categ.value.includes('F')
-    // );
-    return withDisabledSelectAllCategoryOptions.filter(
-      (categ) => categ.value.includes('E') || categ.value.includes('F')
-    );
-  }
-  // return selectAllCategoryOptions.filter((categ) =>
-  //   categ.value.includes(category)
-  // );
-  return withDisabledSelectAllCategoryOptions.filter((categ) =>
-    categ.value.includes(category)
-  );
 }
 export function selectAddressOptions(arr) {
   return arr.map((address) => ({
@@ -123,3 +117,19 @@ export function selectAddressOptions(arr) {
     value: address.id,
   }));
 }
+
+/* 
+A1 - мотоцикл / моторолер - до 300 см3
+A2 - мотоцикл / моторолер - более 300 см3
+B1 - легковой автомобиль - до 1600 см3
+B2 - легковой автомобиль - 1601 - 2000 см3
+B3 - легковой автомобиль - 2001 - 3000
+B4 - легковой автомобиль - более 3000 см3
+B5 - легковой электромобиль (исключительно с силовым электродвигателем, кроме гибридных авто)
+C1 - грузовой автомобиль - до 2т
+C2 - грузовой автомобиль - более 2т
+D1 - автобус - до 20 человек
+D2 - автобус - более 20 человек
+E - прицеп к грузовому авто
+F - прицеп к легковому авто
+*/
