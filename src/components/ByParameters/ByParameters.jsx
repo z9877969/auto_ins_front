@@ -108,6 +108,7 @@ const ByParameters = () => {
         taxi: false,
         dateFrom: normalizeDate(values.dateFrom),
       };
+      // a + 5;
       address.value ? (sendObj.registrationPlace = address.value) : null;
       setSubmitObj(sendObj);
       setStateNumber('');
@@ -132,7 +133,13 @@ const ByParameters = () => {
 
   return (
     <div>
-      <FormStyled onSubmit={formik.handleSubmit}>
+      <FormStyled
+        onSubmit={(e) => {
+          e.preventDefault();
+          a + 5;
+          formik.handleSubmit(e);
+        }}
+      >
         <AllInputContStyled>
           <GeneralSelect
             id="vehicle"
@@ -147,6 +154,15 @@ const ByParameters = () => {
             optionsArr={selectAutoCategory(vehicle.value)}
             changeCB={handleChangeVehicleSubtype}
             currentValue={engineCapacity}
+          />
+          <GeneralCheckbox
+            lableText="ОТК"
+            name="otk"
+            val={formik.values.otk}
+            // isChecked={!formik.values.benefits && formik.values.foreignNumber}
+            changeCB={formik.handleChange}
+            // isDisabled={formik.values.otk ? true : false}
+            // color={formik.values.benefits ? 'rgba(243, 243, 243, 0.40)' : null}
           />
           <GeneralSelect
             id="address"
