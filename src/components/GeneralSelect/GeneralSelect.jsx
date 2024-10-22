@@ -1,9 +1,10 @@
-import { InputContStyled, SelectStyled } from './GeneralSelect.styled';
+import { useEffect, useRef } from 'react';
+import clsx from 'clsx';
 import { Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import HelpCircle from '../HelpCircle/HelpCircle';
+import { InputContStyled, SelectStyled } from './GeneralSelect.styled';
 import { SpriteSVG } from '../../images/SpriteSVG';
-import { useEffect, useRef } from 'react';
 
 const GeneralSelect = ({
   id,
@@ -27,6 +28,7 @@ const GeneralSelect = ({
   components,
   errorMessage,
   placeholder,
+  className,
 }) => {
   const selectRef = useRef(null);
 
@@ -51,7 +53,7 @@ const GeneralSelect = ({
   // const theme = useTheme();
   return (
     <InputContStyled
-      className="select-container"
+      className={clsx('select-container', className && className)}
       errorposition={{ right: '15px' }}
     >
       <Typography
