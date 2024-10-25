@@ -28,7 +28,7 @@ dist-ssr
 # adv
 tasks
 .backup
-_aitoins_tasks
+_autoins_tasks
 
 # Local Netlify folder
 .netlify
