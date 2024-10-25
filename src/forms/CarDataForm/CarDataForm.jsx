@@ -129,15 +129,15 @@ const CarDataForm = ({ formik, userParams }) => {
       brand: insuranceObject?.brand || storedValues?.brand || '',
       maker: {
         id:
-          insuranceObject?.model.autoMaker.id || storedValues?.maker?.id || '',
+          insuranceObject?.model?.autoMaker?.id || storedValues?.maker?.id || '',
         name:
-          insuranceObject?.model.autoMaker.name ||
+          insuranceObject?.model?.autoMaker?.name ||
           storedValues?.maker?.name ||
           '',
       },
       model: {
-        id: insuranceObject?.model.id || storedValues?.model.id || '',
-        name: insuranceObject?.model.name || storedValues?.model.name || '',
+        id: insuranceObject?.model?.id || storedValues?.model?.id || '',
+        name: insuranceObject?.model?.name || storedValues?.model?.name || '',
       },
       bodyNumber: insuranceObject?.bodyNumber || storedValues?.bodyNumber || '',
       category:
