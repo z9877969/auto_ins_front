@@ -14,8 +14,9 @@ import {
 import GeneralSelect from '../GeneralSelect/GeneralSelect';
 import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
 import {
-  vehicleGroupsOptions,
+  // vehicleGroupsOptions,
   selectAutoCategory,
+  withDisabledSelectCategoryOptions as selectCategoryOptions,
 } from '../../helpers/ByParameters/selectOptions';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
 import HelperList from '../HelpCircle/HelperList/HelperList';
@@ -31,9 +32,11 @@ import CustomLabel from '../CustomLabel/CustomLabel';
 import CustomDateInput from '../CustomDateInput/CustomDateInput';
 import { validateContractStartDate } from '../../helpers/formValidationSchema';
 import { normalizeDate } from '../../helpers/normalizeDate';
+import { useErrorHandler } from '../../context/ErrorProvider';
 
 const ByParameters = () => {
   const navigate = useNavigate();
+  const handleError = useErrorHandler();
   const locationPath = useLocation();
   const {
     setEngineCapacity,
@@ -145,12 +148,24 @@ const ByParameters = () => {
 
   return (
     <div>
-      <FormStyled onSubmit={formik.handleSubmit}>
+      <FormStyled
+        onSubmit={(e) => {
+          try {
+            e.preventDefault();
+            formik.handleSubmit(e);
+          } catch (error) {
+            handleError(error, {
+              component: ByParameters.name,
+              cb: 'onSubmit',
+            });
+          }
+        }}
+      >
         <AllInputContStyled>
           <GeneralSelect
             id="vehicle"
             lableText="Транспортний засіб"
-            optionsArr={vehicleGroupsOptions}
+            optionsArr={selectCategoryOptions}
             changeCB={handleChangeVehicle}
             currentValue={vehicle}
             className={'baseLine'}
