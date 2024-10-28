@@ -8,6 +8,8 @@ dotenv.config();
 // https://vitejs.dev/config/
 export default defineConfig(() => {
   return {
+    // logLevel: 'info', // Інформаційний рівень логування, можна змінити на 'error' або 'warn'
+    // clearScreen: false, // Якщо true, то Vite буде очищати екран при перезавантаженні
     plugins: [
       react({
         jsxImportSource: '@emotion/react',

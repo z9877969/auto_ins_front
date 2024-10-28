@@ -7,21 +7,24 @@ import App from './App.jsx';
 import { theme } from './theme.js';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
-import { ErrorBoundary } from './ErrorBoundary.jsx';
+import { ErrorBoundary } from './components/ErrorBundary/ErrorBoundary.jsx';
+import ErrorProvider from './context/ErrorProvider.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
-  // <ErrorBoundary>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <App />
-          </ThemeProvider>
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
-  // {/* </ErrorBoundary> */}
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <ErrorBoundary>
+            <ErrorProvider>
+              <App />
+            </ErrorProvider>
+          </ErrorBoundary>
+        </ThemeProvider>
+      </BrowserRouter>
+    </PersistGate>
+  </Provider>
   // </React.StrictMode>
 );

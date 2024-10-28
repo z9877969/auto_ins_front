@@ -50,3 +50,12 @@ export const emmitOrderApi = async ({ epolicy, vcl }) => {
   );
   return true;
 };
+
+export const addLogApi = async (errorData) => {
+  try {
+    await instance.post('/logs/type-error', errorData);
+  } catch (error) {
+    // eslint-disable-next-line
+    console.log(error.message);
+  }
+};

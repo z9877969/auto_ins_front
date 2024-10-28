@@ -12,8 +12,9 @@ import GeneralSelect from '../GeneralSelect/GeneralSelect';
 import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  vehicleGroupsOptions,
+  // vehicleGroupsOptions,
   selectAutoCategory,
+  withDisabledSelectCategoryOptions as vehicleGroupsOptions,
 } from '../../helpers/ByParameters/selectOptions';
 import { useSelector } from 'react-redux';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
@@ -30,9 +31,11 @@ import CustomLabel from '../CustomLabel/CustomLabel';
 import CustomDateInput from '../CustomDateInput/CustomDateInput';
 import { validateContractStartDate } from '../../helpers/formValidationSchema';
 import { normalizeDate } from '../../helpers/normalizeDate';
+import { useErrorHandler } from '../../context/ErrorProvider';
 
 const ByParameters = () => {
   const navigate = useNavigate();
+  const handleError = useErrorHandler();
   const locationPath = useLocation();
   const {
     setEngineCapacity,
@@ -108,7 +111,6 @@ const ByParameters = () => {
         taxi: false,
         dateFrom: normalizeDate(values.dateFrom),
       };
-      // a + 5;
       address.value ? (sendObj.registrationPlace = address.value) : null;
       setSubmitObj(sendObj);
       setStateNumber('');
@@ -135,9 +137,15 @@ const ByParameters = () => {
     <div>
       <FormStyled
         onSubmit={(e) => {
-          e.preventDefault();
-          a + 5;
-          formik.handleSubmit(e);
+          try {
+            e.preventDefault();
+            formik.handleSubmit(e);
+          } catch (error) {
+            handleError(error, {
+              component: ByParameters.name,
+              cb: 'onSubmit',
+            });
+          }
         }}
       >
         <AllInputContStyled>
@@ -154,15 +162,6 @@ const ByParameters = () => {
             optionsArr={selectAutoCategory(vehicle.value)}
             changeCB={handleChangeVehicleSubtype}
             currentValue={engineCapacity}
-          />
-          <GeneralCheckbox
-            lableText="ОТК"
-            name="otk"
-            val={formik.values.otk}
-            // isChecked={!formik.values.benefits && formik.values.foreignNumber}
-            changeCB={formik.handleChange}
-            // isDisabled={formik.values.otk ? true : false}
-            // color={formik.values.benefits ? 'rgba(243, 243, 243, 0.40)' : null}
           />
           <GeneralSelect
             id="address"
