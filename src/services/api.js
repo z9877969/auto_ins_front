@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export const instance = axios.create({
-  // baseURL: 'http://localhost:4040/api',
-  baseURL: 'https://api.auto-ins.com.ua/api',
+  baseURL: 'http://localhost:4040/api',
+  // baseURL: 'https://api.auto-ins.com.ua/api',
 });
 
 export const getOrderPasswordApi = async (contractId) => {
@@ -49,4 +49,13 @@ export const emmitOrderApi = async ({ epolicy, vcl }) => {
     }
   );
   return true;
+};
+
+export const addLogApi = async (errorData) => {
+  try {
+    await instance.post('/logs/type-error', errorData);
+  } catch (error) {
+    // eslint-disable-next-line
+    console.log(error.message);
+  }
 };

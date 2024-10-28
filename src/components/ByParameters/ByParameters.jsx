@@ -12,37 +12,30 @@ import GeneralSelect from '../GeneralSelect/GeneralSelect';
 import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  // selectCategoryOptions,
-  withDisabledSelectCategoryOptions as selectCategoryOptions,
+  // vehicleGroupsOptions,
   selectAutoCategory,
+  withDisabledSelectCategoryOptions as selectCategoryOptions,
 } from '../../helpers/ByParameters/selectOptions';
 import { useSelector } from 'react-redux';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
 import HelperList from '../HelpCircle/HelperList/HelperList';
-// import { Box, TextField, formControlClasses } from '@mui/material';
-// import { useEffect, useRef, useState } from 'react';
-// import { SpriteSVG } from '../../images/SpriteSVG';
-// import { addMonths } from 'date-fns/esm';
 import { useActions } from '../../hooks/useActions';
 import format from 'date-fns/format';
-// import CommonDatePicker from '../CommonDatePicker/CommonDatePicker';
 import {
-  CATEGORY,
-  CATEGORY_ERROR,
   DATE_MESSAGE_ERRORS,
   ORDER_TYPE,
+  PRIVILEGED_TYPE,
 } from '../../constants';
 
 import CustomLabel from '../CustomLabel/CustomLabel';
 import CustomDateInput from '../CustomDateInput/CustomDateInput';
-import {
-  validateContractStartDate,
-  // validateFullAgeDate,
-} from '../../helpers/formValidationSchema';
+import { validateContractStartDate } from '../../helpers/formValidationSchema';
 import { normalizeDate } from '../../helpers/normalizeDate';
+import { useErrorHandler } from '../../context/ErrorProvider';
 
 const ByParameters = () => {
   const navigate = useNavigate();
+  const handleError = useErrorHandler();
   const locationPath = useLocation();
   const {
     setEngineCapacity,
@@ -58,9 +51,10 @@ const ByParameters = () => {
     setAutoModelByMaker,
     setTariffPolicyChoose,
     setTariffVcl,
-    setRefError,
-    setIsModalErrorOpen,
+    // setRefError,
+    // setIsModalErrorOpen,
   } = useActions();
+
   const {
     queryText,
     addressOptions: allAddress,
@@ -70,19 +64,16 @@ const ByParameters = () => {
     foreignNumber,
     benefits,
   } = useSelector((state) => state.byParameters);
-  const handleChangeengineCapacity = (e) => {
+
+  const handleChangeVehicle = (option) => {
+    setVehicle(option);
+    setEngineCapacity(selectAutoCategory(option.value)[0]);
+  };
+
+  const handleChangeVehicleSubtype = (e) => {
     setEngineCapacity(e);
   };
-  const handleChangeVehicle = (e) => {
-    const c = CATEGORY.find((item) => item.includes(e.value));
-    if (c) {
-      setVehicle(e);
-      setEngineCapacity(selectAutoCategory(e.value)[0]);
-    } else {
-      setRefError(CATEGORY_ERROR);
-      setIsModalErrorOpen(true);
-    }
-  };
+
   const handleChangeQueryText = (value) => {
     setQueryText(value.trim());
     if (value) {
@@ -92,6 +83,7 @@ const ByParameters = () => {
       setAddressOptions([]);
     }
   };
+
   const changeAddress = (selectOption) => {
     if (queryText) {
       setAddress(selectOption);
@@ -110,7 +102,9 @@ const ByParameters = () => {
     // validateOnChange: false,
     onSubmit: (values) => {
       let sendObj = {
-        customerCategory: values.benefits ? 'PRIVILEGED' : 'NATURAL',
+        customerCategory: values.benefits
+          ? PRIVILEGED_TYPE.PRIVILEGED
+          : PRIVILEGED_TYPE.NATURAL,
         autoCategory: engineCapacity.value,
         outsideUkraine: values.foreignNumber,
         usageMonths: 0,
@@ -141,7 +135,19 @@ const ByParameters = () => {
 
   return (
     <div>
-      <FormStyled onSubmit={formik.handleSubmit}>
+      <FormStyled
+        onSubmit={(e) => {
+          try {
+            e.preventDefault();
+            formik.handleSubmit(e);
+          } catch (error) {
+            handleError(error, {
+              component: ByParameters.name,
+              cb: 'onSubmit',
+            });
+          }
+        }}
+      >
         <AllInputContStyled>
           <GeneralSelect
             id="vehicle"
@@ -154,7 +160,7 @@ const ByParameters = () => {
             id="engineCapacity"
             lableText="Об’єм двигуна"
             optionsArr={selectAutoCategory(vehicle.value)}
-            changeCB={handleChangeengineCapacity}
+            changeCB={handleChangeVehicleSubtype}
             currentValue={engineCapacity}
           />
           <GeneralSelect

@@ -1,26 +1,28 @@
+import { PRIVILEGED_TYPE } from '../../constants';
+
 export const PRIVILEGEDSelectOptions = [
   {
     value: 'PENSION_CERTIFICATE',
     label: 'Пенсійне посвідчення',
-    privilegeType: 'PRIVILEGED',
+    privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
     customerStatus: 'PENSIONER',
   },
   {
     value: 'VETERAN_CERTIFICATE',
     label: 'Посвідчення учасника війни',
-    privilegeType: 'PRIVILEGED',
+    privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
     customerStatus: 'VETERAN',
   },
   {
     value: 'DISABILITY_CERTIFICATE.',
     label: 'Посвідчення інваліда 2гр.',
-    privilegeType: 'PRIVILEGED',
+    privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
     customerStatus: 'DISABLED',
   },
   {
     value: 'CHERNOBYL_CERTIFICATE',
     label: 'Посвідчення постраждалого на ЧАЕС (1,2 кат.)',
-    privilegeType: 'PRIVILEGED',
+    privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
     customerStatus: 'CHERNOBYLETS',
   },
 ];

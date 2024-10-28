@@ -16,6 +16,7 @@ import {
   DATE_MESSAGE_ERRORS,
   DNUMBER_REGEX,
   ORDER_TYPE,
+  PRIVILEGED_TYPE,
 } from '../../constants';
 import HelperList from '../HelpCircle/HelperList/HelperList';
 import { useActions } from '../../hooks/useActions';
@@ -68,7 +69,9 @@ const ByLicensePlate = () => {
       }
       const params = {
         outsideUkraine: false,
-        customerCategory: values.benefits ? 'PRIVILEGED' : 'NATURAL',
+        customerCategory: values.benefits
+          ? PRIVILEGED_TYPE.PRIVILEGED
+          : PRIVILEGED_TYPE.NATURAL,
         stateNumber: values.licensePlate,
         // dateFrom: format(dateFrom, 'yyyy-MM-dd'),
         dateFrom: normalizeDate(values.dateFrom),

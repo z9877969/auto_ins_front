@@ -7,6 +7,8 @@ import App from './App.jsx';
 import { theme } from './theme.js';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary.jsx';
+import ErrorProvider from './context/ErrorProvider.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
@@ -15,7 +17,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <App />
+          <ErrorBoundary>
+            <ErrorProvider>
+              <App />
+            </ErrorProvider>
+          </ErrorBoundary>
         </ThemeProvider>
       </BrowserRouter>
     </PersistGate>
