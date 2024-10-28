@@ -7,7 +7,7 @@ import App from './App.jsx';
 import { theme } from './theme.js';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
-import { ErrorBoundary } from './components/ErrorBundary/ErrorBoundary.jsx';
+import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary.jsx';
 import ErrorProvider from './context/ErrorProvider.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(

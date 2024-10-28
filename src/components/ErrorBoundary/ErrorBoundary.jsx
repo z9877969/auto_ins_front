@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { addLogApi } from '../../services/api';
 import ErrorBoundaryModal from '../ErrorBoundaryModal/ErrorBoundaryModal';
-import * as S from './ErrorBundary.styled';
+import * as S from './ErrorBoundary.styled';
 
 export class ErrorBoundary extends Component {
   constructor(props) {
