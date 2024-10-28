@@ -14,7 +14,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import {
   // vehicleGroupsOptions,
   selectAutoCategory,
-  withDisabledSelectCategoryOptions as vehicleGroupsOptions,
+  withDisabledSelectCategoryOptions as selectCategoryOptions,
 } from '../../helpers/ByParameters/selectOptions';
 import { useSelector } from 'react-redux';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
@@ -152,7 +152,7 @@ const ByParameters = () => {
           <GeneralSelect
             id="vehicle"
             lableText="Транспортний засіб"
-            optionsArr={vehicleGroupsOptions}
+            optionsArr={selectCategoryOptions}
             changeCB={handleChangeVehicle}
             currentValue={vehicle}
           />
