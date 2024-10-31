@@ -15,8 +15,10 @@ import {
   UlListHS,
 } from './HeaderStyled';
 // import BurgerMenu from "../BurgerMenu/BurgerMenu";
-const BurgerMenu = lazy(() => import('../BurgerMenu/BurgerMenu'));
 import { useNavigate } from 'react-router-dom';
+import { socialMediaDict } from '../../assets/utils/socialMedia';
+
+const BurgerMenu = lazy(() => import('../BurgerMenu/BurgerMenu'));
 
 const Header = () => {
   const theme = useTheme();
@@ -85,7 +87,7 @@ const Header = () => {
               <UlListHS className="socialIcons">
                 <LiItemHS disablePadding={true}>
                   <LinkS
-                    href="https://instagram.com/autoins_info?utm_source=qr&igshid=MzNlNGNkZWQ4Mg%3D%3D"
+                    href={socialMediaDict.instagram.path}
                     target="_blank"
                     rel="noreferrer noopener nofollow"
                     aria-label="instagram"
@@ -97,7 +99,7 @@ const Header = () => {
                 </LiItemHS>
                 <LiItemHS disablePadding={true}>
                   <LinkS
-                    href="https://www.facebook.com/profile.php?id=61551725567425"
+                    href={socialMediaDict.facebook.path}
                     target="_blank"
                     rel="noreferrer noopener nofollow"
                     aria-label="facebook"
@@ -109,7 +111,7 @@ const Header = () => {
                 </LiItemHS>
                 <LiItemHS disablePadding={true}>
                   <LinkS
-                    href="https://t.me/auto_ins_ua"
+                    href={socialMediaDict.telegram.path}
                     target="_blank"
                     rel="noreferrer noopener nofollow"
                     aria-label="telegram"
@@ -121,7 +123,7 @@ const Header = () => {
                 </LiItemHS>
                 <LiItemHS disablePadding={true}>
                   <LinkS
-                    href="mailto:help.autoins@gmail.com"
+                    href={socialMediaDict.mail.path}
                     target="_blank"
                     rel="noreferrer noopener nofollow"
                     aria-label="mail"
