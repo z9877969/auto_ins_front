@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import {format, addDays} from 'date-fns';
+import { format, addDays } from 'date-fns';
 
 import {
   AllCheckboxContStyled,
@@ -14,9 +14,9 @@ import {
 import GeneralSelect from '../GeneralSelect/GeneralSelect';
 import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
 import {
-  // vehicleGroupsOptions,
+  vehicleGroupsOptions,
   selectAutoCategory,
-  withDisabledSelectCategoryOptions as selectCategoryOptions,
+  // withDisabledSelectCategoryOptions as vehicleGroupsOptions,
 } from '../../helpers/ByParameters/selectOptions';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
 import HelperList from '../HelpCircle/HelperList/HelperList';
@@ -165,7 +165,7 @@ const ByParameters = () => {
           <GeneralSelect
             id="vehicle"
             lableText="Транспортний засіб"
-            optionsArr={selectCategoryOptions}
+            optionsArr={vehicleGroupsOptions}
             changeCB={handleChangeVehicle}
             currentValue={vehicle}
             className={'baseLine'}

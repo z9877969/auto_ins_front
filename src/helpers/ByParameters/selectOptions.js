@@ -83,13 +83,13 @@ export const vehicleTypesOptions = [
 ];
 
 // disabled category that no supported -Start
-const disabledCategories = ['C', 'D', 'E', 'F'];
-export const withDisabledSelectCategoryOptions = vehicleGroupsOptions.map(
-  (option) =>
-    disabledCategories.some((c) => option.value.includes(c))
-      ? { ...option, isDisabled: true }
-      : option
-);
+// const disabledCategories = ['C', 'D', 'E', 'F'];
+// export const withDisabledSelectCategoryOptions = vehicleGroupsOptions.map(
+//   (option) =>
+//     disabledCategories.some((c) => option.value.includes(c))
+//       ? { ...option, isDisabled: true }
+//       : option
+// );
 
 // const withDisabledSelectAllCategoryOptions = vehicleTypesOptions.map(
 //   (option) =>
