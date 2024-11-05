@@ -14,11 +14,30 @@ export const useErrorHandler = () => {
   return useContext(ErrorContext);
 };
 
+// eslint-disable-next-line
+export const useEventErrorWrapper = (componentName) => {
+  const errorHandler = useErrorHandler();
+  return useCallback(
+    (cb, errorOptions = {}) =>
+      async (e) => {
+        if (componentName) {
+          errorOptions.component = componentName;
+        }
+        try {
+          await cb(e);
+        } catch (error) {
+          errorHandler(error.message, errorOptions);
+        }
+      },
+    [errorHandler, componentName]
+  );
+};
+
 const ErrorProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
-  const errorHandler = useCallback((error, advErrorData = {}) => {
-    const newError = new Error(error.message);
+  const errorHandler = useCallback((message, advErrorData = {}) => {
+    const newError = new Error(message);
     for (const key in advErrorData) {
       newError[key] = advErrorData[key];
     }

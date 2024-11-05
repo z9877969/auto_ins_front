@@ -19,7 +19,7 @@ export class ErrorBoundary extends Component {
   }
 
   logErrorToMyService = async (error) => {
-    await addLogApi({ errorMessage: error.message, ...error });
+    await addLogApi({ message: error.message, ...error });
   };
 
   render() {
