@@ -129,15 +129,23 @@ const CarDataForm = ({ formik, userParams }) => {
       brand: insuranceObject?.brand || storedValues?.brand || '',
       maker: {
         id:
-          insuranceObject?.model?.autoMaker?.id || storedValues?.maker?.id || '',
+          insuranceObject?.model?.autoMaker?.id ||
+          // storedValues?.maker?.id ||
+          '',
         name:
           insuranceObject?.model?.autoMaker?.name ||
-          storedValues?.maker?.name ||
+          // storedValues?.maker?.name ||
           '',
       },
       model: {
-        id: insuranceObject?.model?.id || storedValues?.model?.id || '',
-        name: insuranceObject?.model?.name || storedValues?.model?.name || '',
+        id:
+          insuranceObject?.model?.id ||
+          //  storedValues?.model?.id ||
+          '',
+        name:
+          insuranceObject?.model?.name ||
+          // storedValues?.model?.name ||
+          '',
       },
       bodyNumber: insuranceObject?.bodyNumber || storedValues?.bodyNumber || '',
       category:
@@ -147,6 +155,20 @@ const CarDataForm = ({ formik, userParams }) => {
     }));
     // eslint-disable-next-line
   }, [insuranceObject]);
+
+  /* 
+  {
+  nocorrect insuranceObject:
+    category:"B3",
+    modelText:"MERCEDES-BENZ S 400",
+    bodyNumber:"WDD2221351A405324",
+    dontHaveBodyNumber:false,
+    stateNumber:"AA1111AA",
+    year:2018,
+    engineVolume:2925,
+    autoColor:"ЧОРНИЙ",
+  }
+  */
 
   useEffect(() => {
     const maker = autoByBrand[0]?.autoMaker;
@@ -216,7 +238,7 @@ const CarDataForm = ({ formik, userParams }) => {
           getOptionValue={(option) => option.id}
           changeCB={handleChangeBrand}
           isDisabled={disabled}
-          readOnly={Boolean(insuranceObject?.stateNumber)}
+          readOnly={Boolean(insuranceObject?.model)}
           noOptionsMessage="Така марка відсутня"
           errorMessage={formik.errors['maker']?.id}
         />
@@ -238,7 +260,7 @@ const CarDataForm = ({ formik, userParams }) => {
               !values.model?.id ? false : true
             }
             changeCB={handleChangeModel}
-            readOnly={Boolean(insuranceObject?.stateNumber)}
+            readOnly={Boolean(insuranceObject?.model)}
             noOptionsMessage="Така модель відсутня. Вкажіть її самостійно"
             components={customComponents}
             errorMessage={formik.errors['model']?.id}
