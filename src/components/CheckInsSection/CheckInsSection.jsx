@@ -28,7 +28,7 @@ const CheckInsSection = () => {
               <BlueButton
                 href="https://policy-web.mtsbu.ua/"
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noreferrer noopener nofollow"
                 aria-label="Перевірити коректність даних по ТЗ в базі МТСБУ"
                 className="button"
               >

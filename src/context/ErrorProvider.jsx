@@ -19,18 +19,28 @@ export const useEventErrorWrapper = (componentName) => {
   const errorHandler = useErrorHandler();
   return useCallback(
     (cb, errorOptions = {}) =>
-      async (e) => {
+      async (...args) => {
         if (componentName) {
           errorOptions.component = componentName;
         }
         try {
-          await cb(e);
+          await cb(...args);
         } catch (error) {
           errorHandler(error.message, errorOptions);
         }
       },
     [errorHandler, componentName]
   );
+};
+
+export const WithErrorCatchHandler = (Component, componentName) => {
+  const errorCatcherWrapper = useEventErrorWrapper(
+    componentName ?? Component.name
+  );
+
+  const NewComponent = useCallback((props) => <Component {...props} />, []);
+
+  return <>{errorCatcherWrapper(NewComponent)}</>;
 };
 
 const ErrorProvider = ({ children }) => {
