@@ -66,7 +66,7 @@ const AccordionSection = () => {
                           if (idx === 0) {
                             acc = acc.concat(
                               el,
-                              <a href={href} {...rest}>
+                              <a key={idx} href={href} {...rest}>
                                 {content}
                               </a>
                             );
