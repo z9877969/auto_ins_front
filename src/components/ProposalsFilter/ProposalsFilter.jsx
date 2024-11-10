@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Box, Collapse, Zoom, useMediaQuery } from '@mui/material';
+import { Box, Collapse, Zoom, 
+  // useMediaQuery
+ } from '@mui/material';
 import { SpriteSVG } from '../../images/SpriteSVG';
 import {
-  FilterButtonStyled,
+  // FilterButtonStyled,
   ResetFilterButtonStyled,
   SelectsContStyled,
   TooltipStyled,
 } from './ProposalsFilter.styled';
 import GeneralSelect from '../GeneralSelect/GeneralSelect';
-import { useTheme } from '@emotion/react';
+// import { useTheme } from '@emotion/react';
 import {
   createSelectOptionsByCompaniName,
   filterByPrice,
@@ -27,9 +29,9 @@ import { useActions } from '../../hooks/useActions';
 const ProposalsFilter = () => {
   const companies = useSelector(getTariffPolicyChoose);
   const isCompaniesExist = useSelector(getIsCompaniesExist);
-  const theme = useTheme();
-  const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
-  const [isShowFilter, setIsShowFilter] = useState(false);
+  // const theme = useTheme();
+  // const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
+  // const [isShowFilter, setIsShowFilter] = useState(false);
   const [companiesNameOptions, setCompaniesNameOptions] = useState([]);
   const [selectedCompanieName, setSelectedCompanieName] = useState([]);
   const [selectedPriceSort, setSelectedPriceSort] = useState(
@@ -51,9 +53,9 @@ const ProposalsFilter = () => {
     );
   };
 
-  useEffect(() => {
-    setIsShowFilter(smScreen);
-  }, [smScreen]);
+  // useEffect(() => {
+  //   setIsShowFilter(smScreen);
+  // }, [smScreen]);
 
   useEffect(() => {
     let filteredCompanies = [...companies];
@@ -73,9 +75,9 @@ const ProposalsFilter = () => {
     // eslint-disable-next-line
   }, [selectedCompanieName, companies, selectedPriceSort]);
 
-  const handleChange = () => {
-    setIsShowFilter((prev) => !prev);
-  };
+  // const handleChange = () => {
+  //   setIsShowFilter((prev) => !prev);
+  // };
 
   return (
     <>
@@ -90,7 +92,7 @@ const ProposalsFilter = () => {
           sm: 8,
         }}
       >
-        {!smScreen && (
+        {/* {!smScreen && (
           <FilterButtonStyled aria-label="showFilter" onClick={handleChange}>
             <Box
               sx={{
@@ -105,8 +107,9 @@ const ProposalsFilter = () => {
             </Box>
             Фільтри
           </FilterButtonStyled>
-        )}
-        <Collapse in={isShowFilter}>
+        )} */}
+        {/* <Collapse in={isShowFilter}> */}
+        <Collapse in={true}>
           <SelectsContStyled>
             <GeneralSelect
               id="price"
