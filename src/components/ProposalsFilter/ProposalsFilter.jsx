@@ -17,12 +17,16 @@ import {
 import PropTypes from 'prop-types';
 import FilterByCompany from '../SelectFilterByCompany/FilterByCompany';
 import { useSelector } from 'react-redux';
-import { getTariffPolicyChoose } from '../../redux/Calculator/selectors';
+import {
+  getIsCompaniesExist,
+  getTariffPolicyChoose,
+} from '../../redux/Calculator/selectors';
 
 import { useActions } from '../../hooks/useActions';
 
 const ProposalsFilter = () => {
   const companies = useSelector(getTariffPolicyChoose);
+  const isCompaniesExist = useSelector(getIsCompaniesExist);
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
   const [isShowFilter, setIsShowFilter] = useState(false);
@@ -76,7 +80,15 @@ const ProposalsFilter = () => {
   return (
     <>
       <Box
-        sx={{ backgroundColor: '#BCC3E7', padding: '20px 0', color: 'black' }}
+        sx={{
+          backgroundColor: '#BCC3E7',
+          padding: '20px 0',
+          color: 'black',
+        }}
+        marginBottom={{
+          xs: 0,
+          sm: 8,
+        }}
       >
         {!smScreen && (
           <FilterButtonStyled aria-label="showFilter" onClick={handleChange}>
@@ -102,6 +114,7 @@ const ProposalsFilter = () => {
               optionsArr={priceSortOptionsGeneral}
               changeCB={setSelectedPriceSort}
               currentValue={selectedPriceSort}
+              menuIsOpen={isCompaniesExist}
             />
 
             <FilterByCompany
