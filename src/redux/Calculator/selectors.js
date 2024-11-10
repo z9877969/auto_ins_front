@@ -5,6 +5,8 @@ export const getTariffPolicyChoose = (state) =>
   state.calculator.tariffPolicyChoose;
 export const getFilteredCompanies = (state) =>
   state.calculator.filteredCompanies;
+export const getIsCompaniesExist = (state) =>
+  getFilteredCompanies(state).length > 0;
 export const getTariffVcl = (state) => state.calculator.tariffVcl;
 export const getStateNumber = (state) => state.calculator.stateNumber;
 export const getError = (state) => state.calculator.error;

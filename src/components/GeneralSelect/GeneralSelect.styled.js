@@ -2,7 +2,7 @@ import { Box, styled } from '@mui/material';
 import Select from 'react-select';
 
 export const SelectStyled = styled(Select)(
-  ({ theme, $find, $isValid, $optionsOnTop }) => ({
+  ({ theme, $find, $isValid, $optionsOnTop, isMenuOpen }) => ({
     '& .customSelect__': {
       '&control': {
         color: theme.palette.primary.main,
@@ -19,6 +19,7 @@ export const SelectStyled = styled(Select)(
           : theme.palette.primary.main,
         backgroundColor: '#FEFEFF',
         boxShadow: '0 0 0 0',
+        display: isMenuOpen ? 'none' : 'flex',
 
         '&:hover, &:focus': {
           borderColor: theme.palette.primary.darkBlue,

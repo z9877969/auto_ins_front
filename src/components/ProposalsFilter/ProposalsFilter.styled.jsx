@@ -78,6 +78,10 @@ export const ResetFilterButtonStyled = styled(IconButton)(({ theme }) => ({
   fill: 'transparent',
   stroke: theme.palette.primary.main,
   padding: 0,
+  marginTop: 16,
+  [theme.breakpoints.up('sm')]: {
+    marginTop: 0,
+  },
 
   '& svg': {
     stroke: theme.palette.primary.main,
