@@ -179,6 +179,7 @@ const BlockThank = () => {
           epolicy: orderData.epolicyOrderId,
         });
       } catch (error) {
+        // console.log('error.message :>> ', error.message);
         setErrorMessage(error.message);
       } finally {
         setIsLoading(false);
