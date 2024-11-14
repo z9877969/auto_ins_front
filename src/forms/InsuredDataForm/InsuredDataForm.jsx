@@ -27,7 +27,7 @@ const errorposition = {
 };
 
 const InsuredDataForm = ({ formik, selectData }) => {
-  const { InsuredDataSelectOptions, identityCard, setIdentityCard } =
+  const { insurerDocsOptions, identityCard, setIdentityCard } =
     selectData;
 
   const isID_PASSPORT = identityCard.value === 'ID_PASSPORT';
@@ -83,7 +83,7 @@ const InsuredDataForm = ({ formik, selectData }) => {
         <GeneralSelect
           id="licensDoc"
           lableText="Документ на вибір*:"
-          optionsArr={InsuredDataSelectOptions}
+          optionsArr={insurerDocsOptions}
           changeCB={setIdentityCard} //функція що повертає вибране значення (піднесення)
           currentValue={identityCard}
         />

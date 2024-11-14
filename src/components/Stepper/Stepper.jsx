@@ -21,10 +21,7 @@ import {
 } from '../../forms/InsuredDataForm/InsuredDataForm.styled';
 import { Typography } from '@mui/material';
 import BtnBack from '../../forms/Buttons/BtnBack';
-import {
-  NATURALSelectOptions,
-  PRIVILEGEDSelectOptions,
-} from '../../assets/utils/isPrivilegedOptions';
+import { docsOptionsDict } from '../../assets/utils/isPrivilegedOptions';
 import { useSelector } from 'react-redux';
 import { getAutoByNumber } from '../../redux/References/selectors';
 import {
@@ -54,7 +51,10 @@ import CustomButtonLoading from './CustomButtonLoading';
 import SelectOrInputProvider from '../../context/SelectOrInputProvider';
 import { format } from 'date-fns';
 import * as storage from '../../helpers/storage';
-import { FORMIK_DATA_KEYS as formikDataKeys } from '../../constants';
+import {
+  FORMIK_DATA_KEYS as formikDataKeys,
+  PRIVILEGED_TYPE,
+} from '../../constants';
 
 const steps = [
   { Контакти: 'icon-email' },
@@ -81,20 +81,24 @@ const Stepper = ({ backLinkRef }) => {
   const userParams = useSelector(getSubmitObject);
   const registrationPlaceData = useSelector(getRegistrationPlaceData);
   const [insurObject] = useSelector(getAutoByNumber);
-  const customerCategory = useSelector(getIsPrivilage);
+  const isPrivilage = useSelector(getIsPrivilage);
   const engineType = useSelector(getEngineType);
   const hasVclOrder = useSelector(getHasVclOrder);
 
   const [activeStep, setActiveStep] = useState(0);
   const [identityCard, setIdentityCard] = useState(null);
 
-  let InsuredDataSelectOptions = !customerCategory
-    ? NATURALSelectOptions
-    : PRIVILEGEDSelectOptions;
+  const privilageType = isPrivilage
+    ? PRIVILEGED_TYPE.PRIVILEGED
+    : PRIVILEGED_TYPE.NATURAL;
+
+  const insurerDocsOptions = docsOptionsDict[tariff.id]
+    ? docsOptionsDict[tariff.id]
+    : docsOptionsDict[privilageType];
 
   useEffect(() => {
-    setIdentityCard(InsuredDataSelectOptions[0]);
-  }, [InsuredDataSelectOptions]);
+    setIdentityCard(insurerDocsOptions[0]);
+  }, [insurerDocsOptions]);
 
   // =======================Formik======================================
   const contactsFormik = useFormik({
@@ -257,7 +261,7 @@ const Stepper = ({ backLinkRef }) => {
             <InsuredDataForm
               formik={insuredDataFormik}
               selectData={{
-                InsuredDataSelectOptions,
+                insurerDocsOptions,
                 identityCard,
                 setIdentityCard,
               }}
