@@ -24,7 +24,8 @@ export const customerNormalize = (
   const customer = {
     code: taxNumber,
     nameLast: surname,
-    nameFirst: name + ' ' + middleName,
+    // nameFirst: name + ' ' + middleName,
+    nameFirst: name,
     nameMiddle: middleName,
     address: homeAddress(homeAddressFormik),
     phone,

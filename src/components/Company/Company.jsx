@@ -33,7 +33,7 @@ const content = {
   },
 };
 
-const Company = ({ proposal, lastItem }) => {
+const Company = ({ companyObject, lastItem }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ const Company = ({ proposal, lastItem }) => {
     useActions();
 
   const { insurerId, insurerName, tariff, autoCategory, registrationPlace } =
-    proposal;
+    companyObject;
 
   const sortedTarrif = useMemo(() => {
     return [...tariff].sort((a, b) => b.franchise - a.franchise);
@@ -74,7 +74,7 @@ const Company = ({ proposal, lastItem }) => {
   ]);
 
   useEffect(() => {
-    if (!proposal) return;
+    if (!companyObject) return;
     // eslint-disable-next-line
   }, []);
 
@@ -116,6 +116,7 @@ const Company = ({ proposal, lastItem }) => {
           id: chooseDgo.id,
           limit: chooseDgo.limit,
         },
+        allowedDocTypes: tariff[0].customerSettings.documentTypes
       });
 
       setParamsFromUrl({
@@ -181,7 +182,7 @@ const Company = ({ proposal, lastItem }) => {
                 lableText={content.label.ADDITIONAL_COVER_TEXT}
                 helper={content.label.ADDITIONAL_COVER_HELPER}
                 color={theme.palette.primary.main}
-                optionsArr={proposal?.dgo?.tariff || []}
+                optionsArr={companyObject?.dgo?.tariff || []}
                 changeCB={handleChangeDgoSelect}
                 // defaultValue={{ limit: 0, discountedPayment: 0 }}
                 getOptionLabel={(option) =>
@@ -189,7 +190,7 @@ const Company = ({ proposal, lastItem }) => {
                 }
                 getOptionValue={(option) => option.discountedPayment}
                 currentValue={chooseDgo}
-                isDisabled={!proposal?.dgo ? true : false}
+                isDisabled={!companyObject?.dgo ? true : false}
                 optionsOnTop={lastItem}
               />
             </BoxSelect>
@@ -234,7 +235,7 @@ const Company = ({ proposal, lastItem }) => {
 export default Company;
 
 Company.propTypes = {
-  proposal: PropTypes.shape({
+  companyObject: PropTypes.shape({
     insurerId: PropTypes.number,
     insurerName: PropTypes.string,
     tariff: PropTypes.array,
