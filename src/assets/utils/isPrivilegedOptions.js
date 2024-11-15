@@ -61,7 +61,6 @@ const NATURALSelectOptions = [
   або для всіх інших
 */
 export const docsOptionsDict = {
-  294450: [NATURAL_OPTIONS_DICT.PASSPORT, NATURAL_OPTIONS_DICT.ID_PASSPORT],
   NATURAL: NATURALSelectOptions,
   PRIVILEGED: PRIVILEGEDSelectOptions,
 };
