@@ -1,18 +1,24 @@
-import { Link as ScrollLink } from 'react-scroll';
-import { SpriteSVG } from '../../../../images/SpriteSVG';
+import { useNavigate } from 'react-router-dom';
+import ScrollLink from '../ScrollLink/ScrollLink';
+import SocialLink from '../SocialLink/SocialLink';
 import {
   FooterS,
   FooterBoxS,
-  UlListS,
   ChapterSpan,
   BoxIconS,
   LogoBox,
   LogoText,
-  LinkS,
-  LiItemS,
+  NavListsWrapper,
+  WithBanksIconsWrapper,
 } from './FooterStyled';
-import { useNavigate } from 'react-router-dom';
-import { socialMediaDict } from '../../../../assets/utils/socialMedia';
+import FooterNavList from '../FooterNavList/FooterNavList';
+import { SpriteSVG } from '../../../../images/SpriteSVG';
+import {
+  leftListOptions,
+  centerListOptions,
+  socialLinksOptions,
+} from 'modules/footer/data/footerNavLIstOptions';
+import SourceLink from '../SourceLink/SourceLink';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -31,89 +37,26 @@ const Footer = () => {
             </BoxIconS>
             <LogoText className="logoText">AUTO-INS</LogoText>
           </LogoBox>
-          <UlListS>
-            <LiItemS
-              disablePadding={true}
-              onClick={() => handleScrollToSection('переваги')}
-            >
-              <ScrollLink to="переваги" smooth={true} duration={700}>
-                <ChapterSpan className="chapterSpan" component="span">
-                  Переваги
-                </ChapterSpan>
-              </ScrollLink>
-            </LiItemS>
-            <LiItemS
-              disablePadding={true}
-              onClick={() => handleScrollToSection('партнери')}
-            >
-              <ScrollLink to="партнери" smooth={true} duration={700}>
-                <ChapterSpan className="chapterSpan" component="span">
-                  Партнери
-                </ChapterSpan>
-              </ScrollLink>
-            </LiItemS>
-            <LiItemS
-              disablePadding={true}
-              onClick={() => handleScrollToSection('питання-відповіді')}
-            >
-              <ScrollLink to="питання-відповіді" smooth={true} duration={700}>
-                <ChapterSpan className="chapterSpan" component="span">
-                  Питання-відповіді
-                </ChapterSpan>
-              </ScrollLink>
-            </LiItemS>
-          </UlListS>
-          <UlListS className="centered">
-            <LiItemS disablePadding={true}>
-              <LinkS
-                href={socialMediaDict.instagram.path}
-                target="_blank"
-                rel="noreferrer noopener nofollow"
-                aria-label="instagram"
-              >
-                <BoxIconS className="socialIconBox">
-                  <SpriteSVG name={'icon-instagram'} />
-                </BoxIconS>
-              </LinkS>
-            </LiItemS>
-            <LiItemS disablePadding={true}>
-              <LinkS
-                href={socialMediaDict.facebook.path}
-                target="_blank"
-                rel="noreferrer noopener nofollow"
-                aria-label="facebook"
-              >
-                <BoxIconS className="socialIconBox">
-                  <SpriteSVG name={'icon-facebook'} />
-                </BoxIconS>
-              </LinkS>
-            </LiItemS>
-            <LiItemS disablePadding={true}>
-              <LinkS
-                href={socialMediaDict.telegram.path}
-                target="_blank"
-                rel="noreferrer noopener nofollow"
-                aria-label="telegram"
-              >
-                <BoxIconS className="socialIconBox">
-                  <SpriteSVG name={'icon-telegram-send'} />
-                </BoxIconS>
-              </LinkS>
-            </LiItemS>
-            <LiItemS disablePadding={true}>
-              <LinkS
-                href={socialMediaDict.mail.path}
-                target="_blank"
-                rel="noreferrer noopener nofollow"
-                aria-label="mail"
-              >
-                <BoxIconS className="socialIconBox">
-                  <SpriteSVG name={'icon-mail'} />
-                </BoxIconS>
-              </LinkS>
-            </LiItemS>
-          </UlListS>
-          <LinkS></LinkS>
+          <NavListsWrapper>
+            <WithBanksIconsWrapper>
+              <FooterNavList
+                options={leftListOptions}
+                linkComponent={SourceLink}
+                itemsJustifyContent="center"
+              />
+            </WithBanksIconsWrapper>
+            <FooterNavList
+              onItemClick={handleScrollToSection}
+              options={centerListOptions}
+              linkComponent={ScrollLink}
+              itemsJustifyContent="center"
+            />
+            <FooterNavList
+              options={socialLinksOptions}
+              linkComponent={SocialLink}
+              sx={{ rowGap: '4px' }}
+            />
+          </NavListsWrapper>
           <ChapterSpan className="bottomSpan">
             <a
               className="link"
@@ -124,7 +67,7 @@ const Footer = () => {
             </a>
           </ChapterSpan>
           <ChapterSpan className="bottomSpan">
-            &copy; ТОВ «Auto-ins», 2024. Всі права захищені.
+            &copy; auto-ins.com.ua, 2024. Всі права захищені.
           </ChapterSpan>
         </FooterBoxS>
       </FooterS>

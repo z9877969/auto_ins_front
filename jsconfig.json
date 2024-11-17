@@ -11,6 +11,8 @@
       "context/*": ["context/*"],
       "services/*": ["services/*"],
       "constants/*": ["constants/*"],
+      "images/*": ["images/*"],
+      "assets/*": ["assets/*"]
     }
   },
   "exclude": ["node_modules", "dist", ".vite"]

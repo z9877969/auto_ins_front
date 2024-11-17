@@ -15,6 +15,10 @@ export const socialMediaDict = {
     icon: 'icon-mail',
     path: 'mailto:admin@auto-ins.com.ua',
   },
+  phone: {
+    icon: 'icon-phone',
+    path: 'tel:380999362925',
+  },
 };
 
 export const socialMedia = [

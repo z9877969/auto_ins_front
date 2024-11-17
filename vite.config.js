@@ -27,6 +27,8 @@ export default defineConfig(() => {
         context: '/src/context',
         services: '/src/services',
         constants: '/src/constants',
+        images: '/src/images',
+        assets: '/src/assets',
       },
     },
     base: '/',

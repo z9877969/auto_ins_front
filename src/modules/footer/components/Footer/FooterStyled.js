@@ -1,12 +1,5 @@
-import {
-  Box,
-  Container,
-  Link,
-  List,
-  ListItem,
-  Typography,
-  styled,
-} from '@mui/material';
+import { Box, Container, Typography, styled } from '@mui/material';
+import { masterCardIcon, visaIcon } from '../../images';
 
 export const FooterS = styled(Container)(({ theme }) => ({
   padding: '0',
@@ -87,34 +80,26 @@ export const BoxIconS = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const UlListS = styled(List)(({ theme }) => ({
-  width: '100%',
-  padding: '0px',
-  margin: '0px',
+export const NavListsWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
-  gap: '24px',
+  rowGap: '32px',
+
   [theme.breakpoints.up('sm')]: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: '0px',
-  },
-  '&.centered': {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    [theme.breakpoints.up('xs')]: {
-      gap: '17px',
-    },
-    [theme.breakpoints.up('sm')]: {
-      gap: '16px',
-    },
+    rowGap: 0,
   },
 }));
 
-export const LiItemS = styled(ListItem)`
-  cursor: pointer;
-  width: auto;
+export const WithBanksIconsWrapper = styled(Box)`
+  padding-bottom: 32px;
+  background-image: url(${masterCardIcon}), url(${visaIcon});
+  background-repeat: no-repeat;
+  background-position-y: bottom, bottom;
+  background-position-x: calc(100% / 4 * 1.6), calc(100% - 100% / 4 * 1.6);
+  background-size: auto 32px;
 `;
 
 export const ChapterSpan = styled(Typography)(({ theme }) => ({
@@ -151,18 +136,18 @@ export const ChapterSpan = styled(Typography)(({ theme }) => ({
   },
 }));
 
-export const LinkS = styled(Link)(({ theme }) => ({
-  width: '40px',
-  height: '40px',
-  backgroundColor: theme.palette.primary.white,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: '50%',
-  stroke: theme.palette.primary.main,
-  fill: 'none',
-  transition: 'stroke 250ms linear',
-  '&:hover': {
-    stroke: theme.palette.primary.blue,
-  },
-}));
+// export const LinkS = styled(Link)(({ theme }) => ({
+//   width: '40px',
+//   height: '40px',
+//   backgroundColor: theme.palette.primary.white,
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+//   borderRadius: '50%',
+//   stroke: theme.palette.primary.main,
+//   fill: 'none',
+//   transition: 'stroke 250ms linear',
+//   '&:hover': {
+//     stroke: theme.palette.primary.blue,
+//   },
+// }));
