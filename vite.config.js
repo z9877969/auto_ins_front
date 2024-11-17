@@ -8,8 +8,6 @@ dotenv.config();
 // https://vitejs.dev/config/
 export default defineConfig(() => {
   return {
-    // logLevel: 'info', // Інформаційний рівень логування, можна змінити на 'error' або 'warn'
-    // clearScreen: false, // Якщо true, то Vite буде очищати екран при перезавантаженні
     plugins: [
       react({
         jsxImportSource: '@emotion/react',
@@ -18,6 +16,21 @@ export default defineConfig(() => {
         },
       }),
     ],
+    resolve: {
+      alias: {
+        modules: '/src/modules',
+        hooks: '/src/hooks',
+        pages: '/src/pages',
+        '@redux': '/src/redux',
+        shared: '/src/shared',
+        helpers: '/src/helpers',
+        context: '/src/context',
+        services: '/src/services',
+        constants: '/src/constants',
+        images: '/src/images',
+        assets: '/src/assets',
+      },
+    },
     base: '/',
     optimizeDeps: {
       include: [
