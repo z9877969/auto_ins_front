@@ -1,5 +1,5 @@
 import { Link as ScrollLink } from 'react-scroll';
-import { SpriteSVG } from '../../images/SpriteSVG';
+import { SpriteSVG } from '../../../../images/SpriteSVG';
 import {
   FooterS,
   FooterBoxS,
@@ -12,7 +12,7 @@ import {
   LiItemS,
 } from './FooterStyled';
 import { useNavigate } from 'react-router-dom';
-import { socialMediaDict } from '../../assets/utils/socialMedia';
+import { socialMediaDict } from '../../../../assets/utils/socialMedia';
 
 const Footer = () => {
   const navigate = useNavigate();
