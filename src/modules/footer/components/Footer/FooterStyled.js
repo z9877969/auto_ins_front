@@ -135,19 +135,3 @@ export const ChapterSpan = styled(Typography)(({ theme }) => ({
     },
   },
 }));
-
-// export const LinkS = styled(Link)(({ theme }) => ({
-//   width: '40px',
-//   height: '40px',
-//   backgroundColor: theme.palette.primary.white,
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-//   borderRadius: '50%',
-//   stroke: theme.palette.primary.main,
-//   fill: 'none',
-//   transition: 'stroke 250ms linear',
-//   '&:hover': {
-//     stroke: theme.palette.primary.blue,
-//   },
-// }));

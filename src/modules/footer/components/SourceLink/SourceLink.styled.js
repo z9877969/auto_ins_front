@@ -30,17 +30,3 @@ export const LinkText = styled(Typography)(({ theme }) => ({
     },
   },
 }));
-
-// export const LinkText = styled(Typography)(({ theme }) => ({
-//   fontFamily: 'Open Sans, sans-serif',
-//   fontSize: '12px',
-//   fontWeight: '500',
-//   lineHeight: '1.39',
-//   display: 'block',
-//   textAlign: 'center',
-
-//   [theme.breakpoints.up('sm')]: {
-//     // fontSize: '36px',
-//     lineHeight: '1.36',
-//   },
-// }));
