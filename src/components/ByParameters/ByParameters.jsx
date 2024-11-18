@@ -16,6 +16,7 @@ import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
 import {
   vehicleGroupsOptions,
   selectAutoCategory,
+  isDev,
 } from '../../helpers/ByParameters/selectOptions';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
 import HelperList from '../HelpCircle/HelperList/HelperList';
@@ -179,7 +180,7 @@ const ByParameters = () => {
               className={'baseLine'}
             />
 
-            {VEHICLES_TYPES[engineCapacity.value].otk && (
+            {isDev && VEHICLES_TYPES[engineCapacity.value].otk && (
               <GeneralCheckbox
                 lableText="ОТК"
                 labelColor={'#ffffff!important'}

@@ -98,7 +98,7 @@ const withDisabledVehicleTypesOptions = vehicleTypesOptions.map((option) =>
     : option
 );
 
-const isDev = false; // true when developes categories logic | false when must deploy to production
+export const isDev = false; // true when developes categories logic | false when must deploy to production
 const withDevExport = () => {
   return isDev
     ? {
