@@ -1,12 +1,12 @@
 import { socialMediaDict } from 'assets/utils/socialMedia';
 
-export const leftListOptions = [
+export const linksListOptions = [
   {
     key: 'інфо про СК',
     href: 'https://auto-ins.com.ua/pages/chomu-varto-obrati-avtoins/',
     target: '_blank',
     rel: 'nofollow',
-    linkTitle: 'Інфо про СК',
+    linkTitle: 'Про нас',
   },
   {
     key: 'інфо про посередника',
@@ -22,9 +22,16 @@ export const leftListOptions = [
     rel: 'nofollow',
     linkTitle: 'Політика конфіденційності',
   },
+  {
+    key: 'інформація про СК та страхові продукти',
+    href: 'https://docs.ewa.ua/insurance-products',
+    target: '_blank',
+    rel: 'nofollow',
+    linkTitle: 'Інформація про СК та страхові продукти',
+  },
 ];
 
-export const centerListOptions = [
+export const scrollLinksOptions = [
   {
     key: 'переваги',
     title: 'Переваги',

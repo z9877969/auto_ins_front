@@ -1,24 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import ScrollLink from '../ScrollLink/ScrollLink';
 import SocialLink from '../SocialLink/SocialLink';
-import {
-  FooterS,
-  FooterBoxS,
-  ChapterSpan,
-  BoxIconS,
-  LogoBox,
-  LogoText,
-  NavListsWrapper,
-  WithBanksIconsWrapper,
-} from './FooterStyled';
 import FooterNavList from '../FooterNavList/FooterNavList';
-import { SpriteSVG } from '../../../../images/SpriteSVG';
+import FooterLogo from '../FooterLogo/FooterLogo';
+import SourceLink from '../SourceLink/SourceLink';
+import * as S from './Footer.styled';
 import {
-  leftListOptions,
-  centerListOptions,
+  linksListOptions,
+  scrollLinksOptions,
   socialLinksOptions,
 } from 'modules/footer/data/footerNavLIstOptions';
-import SourceLink from '../SourceLink/SourceLink';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -29,48 +20,42 @@ const Footer = () => {
 
   return (
     <footer style={{ oveflow: 'hidden' }}>
-      <FooterS disableGutters={true} maxWidth={false}>
-        <FooterBoxS disableGutters={true}>
-          <LogoBox>
-            <BoxIconS className="logoIcon">
-              <SpriteSVG name={'icon-logo'} />
-            </BoxIconS>
-            <LogoText className="logoText">AUTO-INS</LogoText>
-          </LogoBox>
-          <NavListsWrapper>
-            <WithBanksIconsWrapper>
+      <S.Footer disableGutters={true} maxWidth={false}>
+        <S.FooterContainer disableGutters={true}>
+          <FooterLogo />
+          <S.NavListsWrapper>
+            <S.OrderingWrapper className="links">
+              <S.WithBanksIconsWrapper className="linksOrder">
+                <FooterNavList
+                  options={linksListOptions}
+                  linkComponent={SourceLink}
+                  itemsJustifyContent="center"
+                />
+              </S.WithBanksIconsWrapper>
+            </S.OrderingWrapper>
+            <S.OrderingWrapper className="scroll">
               <FooterNavList
-                options={leftListOptions}
-                linkComponent={SourceLink}
+                onItemClick={handleScrollToSection}
+                options={scrollLinksOptions}
+                linkComponent={ScrollLink}
                 itemsJustifyContent="center"
+                className="scrollOrder"
               />
-            </WithBanksIconsWrapper>
-            <FooterNavList
-              onItemClick={handleScrollToSection}
-              options={centerListOptions}
-              linkComponent={ScrollLink}
-              itemsJustifyContent="center"
-            />
-            <FooterNavList
-              options={socialLinksOptions}
-              linkComponent={SocialLink}
-              sx={{ rowGap: '4px' }}
-            />
-          </NavListsWrapper>
-          <ChapterSpan className="bottomSpan">
-            <a
-              className="link"
-              href="https://docs.ewa.ua/insurance-products"
-              rel="nofollow"
-            >
-              Інформація про СК та страхові продукти
-            </a>
-          </ChapterSpan>
-          <ChapterSpan className="bottomSpan">
+            </S.OrderingWrapper>
+            <S.OrderingWrapper className="social">
+              <FooterNavList
+                options={socialLinksOptions}
+                linkComponent={SocialLink}
+                sx={{ rowGap: '4px' }}
+                className="socialOrder"
+              />
+            </S.OrderingWrapper>
+          </S.NavListsWrapper>
+          <S.ChapterSpan className="bottomSpan">
             &copy; auto-ins.com.ua, 2024. Всі права захищені.
-          </ChapterSpan>
-        </FooterBoxS>
-      </FooterS>
+          </S.ChapterSpan>
+        </S.FooterContainer>
+      </S.Footer>
     </footer>
   );
 };

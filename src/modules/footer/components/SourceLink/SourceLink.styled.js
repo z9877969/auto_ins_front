@@ -21,7 +21,7 @@ export const LinkText = styled(Typography)(({ theme }) => ({
     lineHeight: '1.5',
     color: theme.palette.primary.white,
     transition: 'color 250ms linear',
-    textIlign: 'center',
+    textAlign: 'center',
     '&:hover': {
       color: theme.palette.primary.blue,
     },
