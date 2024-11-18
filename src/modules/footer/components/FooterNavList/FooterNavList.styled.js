@@ -26,13 +26,12 @@ export const List = styled(MuiList)(({ theme }) => ({
   },
 }));
 
-export const ListItem = styled(MuiListItem)(({ justifyContent }) => ({
+export const ListItem = styled(MuiListItem)(({ justify }) => ({
   cursor: 'pointer',
   width: 'auto',
   padding: '8px 0',
   display: 'flex',
-  justifyContent,
-  // alignSelf: 'center'
+  justifyContent: justify,
 }));
 
 export const ChapterSpan = styled(Typography)(({ theme }) => ({

@@ -16,7 +16,6 @@ import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
 import {
   vehicleGroupsOptions,
   selectAutoCategory,
-  // withDisabledSelectCategoryOptions as vehicleGroupsOptions,
 } from '../../helpers/ByParameters/selectOptions';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
 import HelperList from '../HelpCircle/HelperList/HelperList';

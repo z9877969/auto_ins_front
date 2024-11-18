@@ -1,6 +1,7 @@
 import { VEHICLES_GROUPS } from '../../constants/index';
 
-export const vehicleGroupsOptions = [
+const vehicleGroupsOptions_changed = [
+  /* return variable name to vehicleGroupsOptions */
   {
     label: 'Легковий автомобіль',
     value: VEHICLES_GROUPS.B.main,
@@ -26,7 +27,7 @@ export const vehicleGroupsOptions = [
     value: '',
   },
 ];
-export const vehicleTypesOptions = [
+const vehicleTypesOptions = [
   {
     label: 'Мотоцикл/моторолер - до 300 см3',
     value: 'A1',
@@ -83,23 +84,40 @@ export const vehicleTypesOptions = [
 ];
 
 // disabled category that no supported -Start
-// const disabledCategories = ['C', 'D', 'E', 'F'];
-// export const withDisabledSelectCategoryOptions = vehicleGroupsOptions.map(
-//   (option) =>
-//     disabledCategories.some((c) => option.value.includes(c))
-//       ? { ...option, isDisabled: true }
-//       : option
-// );
+const disabledCategories = ['C', 'D', 'E', 'F'];
+const withDisabledVehicleGroupsOptions = vehicleGroupsOptions_changed.map(
+  (option) =>
+    disabledCategories.some((c) => option.value.includes(c))
+      ? { ...option, isDisabled: true }
+      : option
+);
 
-// const withDisabledSelectAllCategoryOptions = vehicleTypesOptions.map(
-//   (option) =>
-//     disabledCategories.some((c) => option.value.includes(c))
-//       ? { ...option, isDisabled: true }
-//       : option
-// );
+const withDisabledVehicleTypesOptions = vehicleTypesOptions.map((option) =>
+  disabledCategories.some((c) => option.value.includes(c))
+    ? { ...option, isDisabled: true }
+    : option
+);
+
+const isDev = false; // true when developes categories logic | false when must deploy to production
+const withDevExport = () => {
+  return isDev
+    ? {
+        vehicleGroupsOptions: vehicleGroupsOptions_changed,
+        vehicleTypesOptions,
+      }
+    : {
+        vehicleGroupsOptions: withDisabledVehicleGroupsOptions,
+        vehicleTypesOptions: withDisabledVehicleTypesOptions,
+      };
+};
+
+export const vehicleGroupsOptions = withDevExport().vehicleGroupsOptions;
+
 // disabled category that no supported -End
 
 export function selectAutoCategory(category) {
+  const vehicleTypesOptions = withDevExport().vehicleTypesOptions;
+
   switch (category) {
     case 'EF':
       return vehicleTypesOptions.filter(
@@ -111,6 +129,7 @@ export function selectAutoCategory(category) {
         : vehicleTypesOptions;
   }
 }
+
 export function selectAddressOptions(arr) {
   return arr.map((address) => ({
     label: address.nameFull,
