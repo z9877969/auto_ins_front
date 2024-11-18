@@ -43,6 +43,7 @@ export const VEHICLES_GROUPS = {
     B2: 'B2',
     B3: 'B3',
     B4: 'B4',
+    B5: 'B5',
   },
   C: {
     main: 'C',

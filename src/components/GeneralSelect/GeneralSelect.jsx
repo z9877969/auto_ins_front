@@ -29,6 +29,7 @@ const GeneralSelect = ({
   errorMessage,
   placeholder,
   className,
+  ...selectOptions
 }) => {
   const selectRef = useRef(null);
 
@@ -59,6 +60,7 @@ const GeneralSelect = ({
       <Typography
         sx={{
           color: isDisabled ? 'darkgray!important' : null,
+          width: selectOptions.menuIsOpen ? 250 : 'none',
         }}
         variant="body1"
         component="label"
@@ -95,6 +97,8 @@ const GeneralSelect = ({
         onChange={changeCB}
         getOptionLabel={getOptionLabel}
         getOptionValue={getOptionValue}
+        isMenuOpen={selectOptions.menuIsOpen}
+        {...selectOptions}
       />
       {errorMessage && <span className="errorMessage">{errorMessage}</span>}
     </InputContStyled>

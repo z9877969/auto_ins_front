@@ -1,5 +1,9 @@
 export const priceSortOptionsGeneral = [
   {
+    value: '',
+    label: 'За популярністю',
+  },
+  {
     value: 'fromLowToHigh',
     label: 'Від низької ціни',
   },
@@ -7,10 +11,7 @@ export const priceSortOptionsGeneral = [
     value: 'fromHighToLow',
     label: 'Від високої ціни',
   },
-  {
-    value: '',
-    label: 'За популярнісю',
-  },
+  
 ];
 
 export const createSelectOptionsByCompaniName = (arr) => {

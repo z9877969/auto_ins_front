@@ -28,7 +28,7 @@ const CompanyList = () => {
     return (
       <Company
         key={companyObject?.insurerId}
-        proposal={companyObject}
+        companyObject={companyObject}
         lastItem={idx === arr.length - 1}
       />
     );

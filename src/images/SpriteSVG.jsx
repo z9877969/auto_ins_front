@@ -31,6 +31,7 @@ import { Money } from './Icons/Money';
 import { Passport } from './Icons/Passport';
 import { IconX } from './Icons/IconX';
 import { ZoomOut } from './Icons/ZoomOut';
+import { Phone } from './Icons/Phone';
 
 export const SpriteSVG = ({ name }) => {
   switch (name) {
@@ -129,6 +130,8 @@ export const SpriteSVG = ({ name }) => {
 
     case 'icon-zoom-out':
       return <ZoomOut />;
+    case 'icon-phone':
+      return <Phone />;
 
     default:
       return 'SVG not found';

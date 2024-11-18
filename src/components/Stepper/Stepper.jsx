@@ -21,10 +21,6 @@ import {
 } from '../../forms/InsuredDataForm/InsuredDataForm.styled';
 import { Typography } from '@mui/material';
 import BtnBack from '../../forms/Buttons/BtnBack';
-import {
-  NATURALSelectOptions,
-  PRIVILEGEDSelectOptions,
-} from '../../assets/utils/isPrivilegedOptions';
 import { useSelector } from 'react-redux';
 import { getAutoByNumber } from '../../redux/References/selectors';
 import {
@@ -35,7 +31,6 @@ import {
 } from '../../helpers/formValidationSchema';
 import {
   getEngineType,
-  getIsPrivilage,
   getRegistrationPlaceData,
   getSubmitObject,
 } from '../../redux/byParameters/selectors';
@@ -55,6 +50,7 @@ import SelectOrInputProvider from '../../context/SelectOrInputProvider';
 import { format } from 'date-fns';
 import * as storage from '../../helpers/storage';
 import { FORMIK_DATA_KEYS as formikDataKeys } from '../../constants';
+import { useDocTypesOptions } from '../../hooks/useDocTypesOptions';
 
 const steps = [
   { Контакти: 'icon-email' },
@@ -81,20 +77,16 @@ const Stepper = ({ backLinkRef }) => {
   const userParams = useSelector(getSubmitObject);
   const registrationPlaceData = useSelector(getRegistrationPlaceData);
   const [insurObject] = useSelector(getAutoByNumber);
-  const customerCategory = useSelector(getIsPrivilage);
   const engineType = useSelector(getEngineType);
   const hasVclOrder = useSelector(getHasVclOrder);
+  const docTypesOptions = useDocTypesOptions();
 
   const [activeStep, setActiveStep] = useState(0);
   const [identityCard, setIdentityCard] = useState(null);
 
-  let InsuredDataSelectOptions = !customerCategory
-    ? NATURALSelectOptions
-    : PRIVILEGEDSelectOptions;
-
   useEffect(() => {
-    setIdentityCard(InsuredDataSelectOptions[0]);
-  }, [InsuredDataSelectOptions]);
+    setIdentityCard(docTypesOptions[0]);
+  }, [docTypesOptions]);
 
   // =======================Formik======================================
   const contactsFormik = useFormik({
@@ -257,7 +249,7 @@ const Stepper = ({ backLinkRef }) => {
             <InsuredDataForm
               formik={insuredDataFormik}
               selectData={{
-                InsuredDataSelectOptions,
+                insurerDocsOptions: docTypesOptions,
                 identityCard,
                 setIdentityCard,
               }}
