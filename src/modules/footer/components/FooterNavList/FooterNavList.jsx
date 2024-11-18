@@ -11,10 +11,10 @@ const FooterNavList = ({
     <S.List sx={sx}>
       {options.map((o) => (
         <S.ListItem
-          key={o.to}
+          key={o.key}
           disablePadding={o.disablePadding}
           onClick={() => onItemClick(o.to)}
-          justifyContent={itemsJustifyContent}
+          justify={itemsJustifyContent}
         >
           <Component {...o} />
         </S.ListItem>

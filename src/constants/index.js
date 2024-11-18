@@ -77,38 +77,59 @@ export const VEHICLES_TYPES = {
   [VEHICLES_GROUPS.A.A1]: {
     min: 0,
     max: 300,
+    otk: false,
   },
   [VEHICLES_GROUPS.A.A2]: {
     min: 301,
+    otk: false,
   },
   [VEHICLES_GROUPS.B.B1]: {
     min: 0,
     max: 1600,
+    otk: false,
   },
   [VEHICLES_GROUPS.B.B2]: {
     min: 1601,
     max: 2000,
+    otk: false,
   },
   [VEHICLES_GROUPS.B.B3]: {
     min: 2001,
     max: 3000,
+    otk: false,
   },
   [VEHICLES_GROUPS.B.B4]: {
     min: 3001,
+    otk: false,
   },
   [VEHICLES_GROUPS.C.C1]: {
     min: 0,
     max: 2000,
+    otk: true,
+    otkRequired: false,
   },
   [VEHICLES_GROUPS.C.C2]: {
     min: 2001,
+    otk: true,
+    otkRequired: false,
   },
   [VEHICLES_GROUPS.D.D1]: {
     min: 0,
     max: 20,
+    otk: true,
+    otkRequired: true,
   },
   [VEHICLES_GROUPS.D.D2]: {
     min: 21,
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.EF.E]: {
+    otk: true,
+    otkRequired: false,
+  },
+  [VEHICLES_GROUPS.EF.F]: {
+    otk: false,
   },
 };
 

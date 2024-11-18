@@ -167,4 +167,9 @@ export const InputContStyled = styled(Box)(({ theme, errorposition }) => ({
       },
     },
   },
+  '&.baseLine': {
+    [theme.breakpoints.up('lg')]: {
+      alignSelf: 'baseline',
+    },
+  },
 }));

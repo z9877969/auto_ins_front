@@ -1,5 +1,9 @@
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { format, addDays } from 'date-fns';
 
 import {
   AllCheckboxContStyled,
@@ -7,24 +11,21 @@ import {
   FormStyled,
   SubmitButton,
 } from './ByParameters.styled';
-import addDays from 'date-fns/addDays';
 import GeneralSelect from '../GeneralSelect/GeneralSelect';
 import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
-import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  // vehicleGroupsOptions,
+  vehicleGroupsOptions,
   selectAutoCategory,
-  withDisabledSelectCategoryOptions as selectCategoryOptions,
+  isDev,
 } from '../../helpers/ByParameters/selectOptions';
-import { useSelector } from 'react-redux';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
 import HelperList from '../HelpCircle/HelperList/HelperList';
 import { useActions } from '../../hooks/useActions';
-import format from 'date-fns/format';
 import {
   DATE_MESSAGE_ERRORS,
   ORDER_TYPE,
   PRIVILEGED_TYPE,
+  VEHICLES_TYPES,
 } from '../../constants';
 
 import CustomLabel from '../CustomLabel/CustomLabel';
@@ -95,6 +96,7 @@ const ByParameters = () => {
       benefits,
       foreignNumber,
       dateFrom: format(addDays(new Date(), 1), 'dd/MM/yyyy'),
+      otk: false,
     },
     validationSchema: Yup.object().shape({
       dateFrom: validateContractStartDate(),
@@ -133,6 +135,17 @@ const ByParameters = () => {
     ? (formik.values.benefits = false)
     : formik.values.benefits;
 
+  const { setValues } = formik;
+
+  useEffect(() => {
+    if (VEHICLES_TYPES[engineCapacity.value].otk) {
+      setValues((p) => ({
+        ...p,
+        otk: VEHICLES_TYPES[engineCapacity.value].otkRequired,
+      }));
+    }
+  }, [engineCapacity, setValues]);
+
   return (
     <div>
       <FormStyled
@@ -152,17 +165,38 @@ const ByParameters = () => {
           <GeneralSelect
             id="vehicle"
             lableText="Транспортний засіб"
-            optionsArr={selectCategoryOptions}
+            optionsArr={vehicleGroupsOptions}
             changeCB={handleChangeVehicle}
             currentValue={vehicle}
+            className={'baseLine'}
           />
-          <GeneralSelect
-            id="engineCapacity"
-            lableText="Об’єм двигуна"
-            optionsArr={selectAutoCategory(vehicle.value)}
-            changeCB={handleChangeVehicleSubtype}
-            currentValue={engineCapacity}
-          />
+          <div>
+            <GeneralSelect
+              id="engineCapacity"
+              lableText="Об’єм двигуна"
+              optionsArr={selectAutoCategory(vehicle.value)}
+              changeCB={handleChangeVehicleSubtype}
+              currentValue={engineCapacity}
+              className={'baseLine'}
+            />
+
+            {isDev && VEHICLES_TYPES[engineCapacity.value].otk && (
+              <GeneralCheckbox
+                lableText="ОТК"
+                labelColor={'#ffffff!important'}
+                name="otk"
+                changeCB={formik.handleChange}
+                isChecked={formik.values.otk}
+                // color={
+                //   engineCapacity.value === 'B5' || formik.values.foreignNumber
+                //     ? 'rgba(243, 243, 243, 0.40)'
+                //     : null
+                // }
+                isDisabled={VEHICLES_TYPES[engineCapacity.value].otkRequired}
+              />
+            )}
+          </div>
+
           <GeneralSelect
             id="address"
             lableText="Адреса за техпаспортом"
@@ -175,6 +209,7 @@ const ByParameters = () => {
             isDisabled={formik.values.foreignNumber}
             readOnly={false}
             noOptionsMessage="Вкажіть місце реєстрації"
+            className={'baseLine'}
           />
           <CustomLabel
             lableText="Дата початку дії поліса:"
@@ -183,6 +218,7 @@ const ByParameters = () => {
               top: '100%',
               right: '16px',
             }}
+            className={'baseLine'}
           >
             <CustomDateInput
               value={formik.values.dateFrom}
@@ -197,26 +233,6 @@ const ByParameters = () => {
               </div>
             )}
           </CustomLabel>
-          {/* <CommonDatePicker
-            label="Дата початку дії поліса:"
-            id="dateFrom"
-            // selected={dateFrom}
-            // onSelect={setDateFrom}
-            closeOnScroll={(e) => e.target === document}
-            name="date"
-            dateFormat="dd/MM/yyyy"
-            showIcon={true}
-            minDate={addDays(new Date(), 1)}
-            maxDate={addMonths(new Date(), 3)}
-            // startDate={dateFrom}
-            locale="uk"
-            withPortal
-            icon={
-              <Box className="iconCalender">
-                <SpriteSVG name="icon-calendar" />
-              </Box>
-            }
-          /> */}
         </AllInputContStyled>
 
         <AllCheckboxContStyled>
@@ -269,3 +285,28 @@ const ByParameters = () => {
 };
 
 export default ByParameters;
+
+{
+  /* 
+  <CommonDatePicker
+    label="Дата початку дії поліса:"
+    id="dateFrom"
+    // selected={dateFrom}
+    // onSelect={setDateFrom}
+    closeOnScroll={(e) => e.target === document}
+    name="date"
+    dateFormat="dd/MM/yyyy"
+    showIcon={true}
+    minDate={addDays(new Date(), 1)}
+    maxDate={addMonths(new Date(), 3)}
+    // startDate={dateFrom}
+    locale="uk"
+    withPortal
+    icon={
+      <Box className="iconCalender">
+        <SpriteSVG name="icon-calendar" />
+      </Box>
+    }
+  /> 
+*/
+}
