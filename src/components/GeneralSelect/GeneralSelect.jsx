@@ -71,7 +71,7 @@ const GeneralSelect = ({
       </Typography>
       <SelectStyled
         ref={selectRef}
-        $isValid={isValid}
+        $isValid={!errorMessage}
         $find={inputChangeCB}
         $optionsOnTop={optionsOnTop}
         components={

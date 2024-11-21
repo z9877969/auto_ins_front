@@ -10,7 +10,7 @@
       "helpers/*": ["helpers/*"],
       "context/*": ["context/*"],
       "services/*": ["services/*"],
-      "constants/*": ["constants/*"],
+      "@constants/*": ["constants/*"],
       "images/*": ["images/*"],
       "assets/*": ["assets/*"]
     }

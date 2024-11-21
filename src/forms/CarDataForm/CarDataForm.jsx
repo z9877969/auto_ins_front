@@ -125,7 +125,10 @@ const CarDataForm = ({ formik, userParams }) => {
     formik.setValues((v) => ({
       ...v,
       // stateNumber: insuranceObject?.stateNumber ?? '',
-      year: insuranceObject?.year || storedValues?.year || '',
+      year:
+        insuranceObject?.year ||
+        // storedValues?.year ||
+        '',
       brand: insuranceObject?.brand || storedValues?.brand || '',
       maker: {
         id:
@@ -217,9 +220,6 @@ const CarDataForm = ({ formik, userParams }) => {
           formikData={formik}
           placeholder={'AA1234AA'}
         />
-        {formik.errors.stateNumber && (
-          <div className="errorMessage">{formik.errors.stateNumber}</div>
-        )}
         <GeneralInput
           id="year"
           lableText="Рік випуску*:"
@@ -228,10 +228,11 @@ const CarDataForm = ({ formik, userParams }) => {
           placeholder={'2005'}
         />
         <GeneralSelect
-          id="brand"
+          // id="brand"
+          id="maker"
           lableText="Марка*:"
           // currentValue={values.maker.id ? values.maker : { name: 'Skoda' }}
-          currentValue={values.maker.id ? values.maker : undefined}
+          currentValue={values.maker?.id ? values.maker : undefined}
           placeholder={'Skoda'}
           optionsArr={autoMakers}
           getOptionLabel={(option) => option.name}
@@ -240,7 +241,9 @@ const CarDataForm = ({ formik, userParams }) => {
           isDisabled={disabled}
           readOnly={Boolean(insuranceObject?.model)}
           noOptionsMessage="Така марка відсутня"
-          errorMessage={formik.errors['maker']?.id}
+          errorMessage={
+            formik.touched['maker']?.id && formik.errors['maker']?.id
+          }
         />
 
         {!selectOrInput.isModelInput ? (
@@ -249,7 +252,7 @@ const CarDataForm = ({ formik, userParams }) => {
             id="model"
             lableText="Модель*:"
             // currentValue={values.model.id ? values.model : { name: 'Fabia' }}
-            currentValue={values.model.id ? values.model : undefined}
+            currentValue={values.model?.id ? values.model : undefined}
             placeholder={'Fabia'}
             optionsArr={modelOptions}
             getOptionLabel={(option) => option.name}
@@ -263,7 +266,9 @@ const CarDataForm = ({ formik, userParams }) => {
             readOnly={Boolean(insuranceObject?.model)}
             noOptionsMessage="Така модель відсутня. Вкажіть її самостійно"
             components={customComponents}
-            errorMessage={formik.errors['model']?.id}
+            errorMessage={
+              formik.touched['model']?.id && formik.errors['model']?.id
+            }
           />
         ) : (
           <InputInsteadSelect

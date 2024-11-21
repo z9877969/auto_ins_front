@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { getPortmoneValue } from '../../helpers/getPortmoneValue';
 import { YellowButton } from '../../style/Global.styled';
 
@@ -31,6 +32,9 @@ const PortmoneForm = ({
       orderId,
     })
   );
+  useEffect(() => {
+    localStorage.removeItem('carDataFormik');
+  }, []);
   return (
     <form
       action="https://www.portmone.com.ua/gateway/"

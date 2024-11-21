@@ -26,7 +26,7 @@ export default defineConfig(() => {
         helpers: '/src/helpers',
         context: '/src/context',
         services: '/src/services',
-        constants: '/src/constants',
+        '@constants': '/src/constants',
         images: '/src/images',
         assets: '/src/assets',
       },

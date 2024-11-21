@@ -19,6 +19,7 @@ const GeneralInput = ({
   formikData: { values, handleChange, errors, touched },
   className,
   valueKey,
+  mustDefaultErrorMessage = false,
 }) => {
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
@@ -36,7 +37,9 @@ const GeneralInput = ({
         <span>{lableText}</span>
         {touched[id] && errors[id] && (
           <span className="errorMessages">
-            {smScreen ? errors[id] : 'Помилка введення'}
+            {smScreen || !mustDefaultErrorMessage
+              ? errors[id]
+              : 'Помилка введення'}
           </span>
         )}
       </LableStyled>

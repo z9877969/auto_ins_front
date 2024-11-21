@@ -12,6 +12,7 @@ const CustomLabel = ({
   children,
   ref,
   errorposition,
+  mustDefautErrorMessage = false,
 }) => {
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
@@ -35,8 +36,10 @@ const CustomLabel = ({
       >
         <span>{lableText}</span>
         {touchedMessage && errorMessage && (
-          <span className="errorMessages">
-            {smScreen ? errorMessage : 'Помилка введення'}
+          <span className="errorMessage">
+            {smScreen || !mustDefautErrorMessage
+              ? errorMessage
+              : 'Помилка введення'}
           </span>
         )}
       </LableStyled>

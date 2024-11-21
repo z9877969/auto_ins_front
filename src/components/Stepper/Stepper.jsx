@@ -40,7 +40,7 @@ import sub from 'date-fns/sub';
 import { contractSaveOSAGONormalize } from '../../helpers/dataNormalize/contractSaveOSAGONormalize';
 import {
   getGlobalCustomerData,
-  getHomeAddress,
+  selectHomeAddress,
 } from '../../redux/Global/selectors';
 import { getHasVclOrder, getUser } from '../../redux/Calculator/selectors';
 import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
@@ -69,11 +69,24 @@ const HomeAddressForm = lazy(() =>
 );
 const CarDataForm = lazy(() => import('../../forms/CarDataForm/CarDataForm'));
 
+const getInsurerStoredStateWithoutDocsData = (docTypeOption) => {
+  const storedData = storage.getFromLS(formikDataKeys.INSURED);
+  if (!storedData) return null;
+  // eslint-disable-next-line
+  const { type, series, number, ...rest } = storedData;
+  return {
+    ...rest,
+    type: docTypeOption,
+    series: '',
+    number: '',
+  };
+};
+
 const Stepper = ({ backLinkRef }) => {
   const { contractSave } = useActions();
   const user = useSelector(getUser);
   const { tariff, dgoTarrif } = useSelector(getGlobalCustomerData);
-  const homeAddress = useSelector(getHomeAddress);
+  const homeAddress = useSelector(selectHomeAddress);
   const userParams = useSelector(getSubmitObject);
   const registrationPlaceData = useSelector(getRegistrationPlaceData);
   const [insurObject] = useSelector(getAutoByNumber);
@@ -82,11 +95,6 @@ const Stepper = ({ backLinkRef }) => {
   const docTypesOptions = useDocTypesOptions();
 
   const [activeStep, setActiveStep] = useState(0);
-  const [identityCard, setIdentityCard] = useState(null);
-
-  useEffect(() => {
-    setIdentityCard(docTypesOptions[0]);
-  }, [docTypesOptions]);
 
   // =======================Formik======================================
   const contactsFormik = useFormik({
@@ -98,9 +106,10 @@ const Stepper = ({ backLinkRef }) => {
     },
   });
 
-  const insuredDataFormik = useFormik({
-    initialValues: storage.getFromLS(formikDataKeys.INSURED) ?? {
+  const insurerDataFormik = useFormik({
+    initialValues: getInsurerStoredStateWithoutDocsData(docTypesOptions[0]) ?? {
       ...insuredDataInitialValues,
+      type: docTypesOptions[0],
       birthDate: format(
         sub(new Date(), {
           years: 18,
@@ -109,7 +118,22 @@ const Stepper = ({ backLinkRef }) => {
       ),
       date: format(new Date(), 'dd/MM/yyyy'),
     },
-    validationSchema: insuredDataFormValidationSchema(),
+    validate: (values) => {
+      try {
+        const schema = insuredDataFormValidationSchema({
+          docType: values.type.value,
+        });
+        schema.validateSync(values, { abortEarly: false });
+      } catch (errors) {
+        const validationErrors = {};
+        errors.inner.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+        return validationErrors;
+      }
+      return {};
+    },
+    validateOnChange: true,
     onSubmit: () => {
       handleNext();
     },
@@ -118,7 +142,6 @@ const Stepper = ({ backLinkRef }) => {
   const homeAddressFormik = useFormik({
     initialValues: storage.getFromLS(formikDataKeys.HOME_ADDRESS) ?? {
       ...homeAddressInitialValues,
-      regionANDcity: homeAddress,
     },
     validationSchema: homeAddressFormValidationSchema(),
     onSubmit: () => {
@@ -136,20 +159,22 @@ const Stepper = ({ backLinkRef }) => {
             id: insurObject.model.autoMaker.id,
             name: insurObject.model.autoMaker.name,
           }
-        : { name: '', id: '' },
+        : // : { name: '', id: '' },
+          null,
       model: insurObject
         ? {
             id: insurObject.model.id,
             name: insurObject.model.name,
           }
-        : { name: '', id: '' },
+        : // : { name: '', id: '' },
+          null,
       bodyNumber: insurObject?.bodyNumber || '',
       outsideUkraine: userParams?.outsideUkraine || false,
       category: insurObject?.category || userParams?.autoCategory,
       engineVolume: insurObject?.engineVolume || '',
     },
     validationSchema: carDataFormValidationSchema({
-      isPrivilege: identityCard?.privilegeType === 'PRIVILEGED',
+      isPrivilege: insurerDataFormik.values.type.privilegeType === 'PRIVILEGED',
       engineType,
       hasVclOrder,
     }),
@@ -158,12 +183,13 @@ const Stepper = ({ backLinkRef }) => {
     validateOnChange: true,
     onSubmit: ({ model, maker, engineVolume }) => {
       const fullCarModel = `${maker.name} ${model.name}`;
+      const { privilegeType, customerStatus } = insurerDataFormik.values.type;
       const privilegeData =
-        identityCard.privilegeType === 'PRIVILEGED'
+        privilegeType === 'PRIVILEGED'
           ? {
               engineVolume,
-              privilegeType: identityCard.privilegeType,
-              customerStatus: identityCard.customerStatus,
+              privilegeType,
+              customerStatus,
             }
           : null;
       const vclOrderData = hasVclOrder
@@ -173,10 +199,9 @@ const Stepper = ({ backLinkRef }) => {
           }
         : null;
       const customIsur = customerInsuriensObject(
-        insuredDataFormik,
+        insurerDataFormik,
         homeAddressFormik,
         contactsFormik,
-        identityCard,
         carDataFormik,
         insurObject,
         registrationPlaceData.id,
@@ -224,7 +249,7 @@ const Stepper = ({ backLinkRef }) => {
         contactsFormik.handleSubmit(e);
         break;
       case 1:
-        insuredDataFormik.handleSubmit(e);
+        insurerDataFormik.handleSubmit(e);
         break;
       case 2:
         homeAddressFormik.handleSubmit(e);
@@ -247,12 +272,8 @@ const Stepper = ({ backLinkRef }) => {
         return (
           <Suspense>
             <InsuredDataForm
-              formik={insuredDataFormik}
-              selectData={{
-                insurerDocsOptions: docTypesOptions,
-                identityCard,
-                setIdentityCard,
-              }}
+              formik={insurerDataFormik}
+              docTypesOptions={docTypesOptions}
             />
           </Suspense>
         );
@@ -275,12 +296,12 @@ const Stepper = ({ backLinkRef }) => {
     }
   };
 
-  const { setFieldValue } = carDataFormik;
+  const { setFieldValue: carDataSetFildValue } = carDataFormik;
 
   useEffect(() => {
     insurObject?.stateNumber &&
-      setFieldValue('stateNumber', insurObject?.stateNumber);
-  }, [insurObject, setFieldValue]);
+      carDataSetFildValue('stateNumber', insurObject?.stateNumber);
+  }, [insurObject, carDataSetFildValue]);
 
   return (
     <Stack sx={{ width: '100%' }}>

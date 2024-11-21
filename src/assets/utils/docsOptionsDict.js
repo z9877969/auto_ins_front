@@ -1,26 +1,26 @@
-import { PRIVILEGED_TYPE } from '../../constants';
+import { PRIVILEGED_TYPE, DOCS_TYPES_DICT } from '../../constants';
 
 const PRIVILEGED_OPTIONS_DICT = {
-  PENSION_CERTIFICATE: {
-    value: 'PENSION_CERTIFICATE',
+  [DOCS_TYPES_DICT.PENSION_CERTIFICATE]: {
+    value: DOCS_TYPES_DICT.PENSION_CERTIFICATE,
     label: 'Пенсійне посвідчення',
     privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
     customerStatus: 'PENSIONER',
   },
-  VETERAN_CERTIFICATE: {
-    value: 'VETERAN_CERTIFICATE',
+  [DOCS_TYPES_DICT.VETERAN_CERTIFICATE]: {
+    value: DOCS_TYPES_DICT.VETERAN_CERTIFICATE,
     label: 'Посвідчення учасника війни',
     privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
     customerStatus: 'VETERAN',
   },
-  DISABILITY_CERTIFICATE: {
-    value: 'DISABILITY_CERTIFICATE',
+  [DOCS_TYPES_DICT.DISABILITY_CERTIFICATE]: {
+    value: DOCS_TYPES_DICT.DISABILITY_CERTIFICATE,
     label: 'Посвідчення інваліда 2гр.',
     privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
     customerStatus: 'DISABLED',
   },
-  CHERNOBYL_CERTIFICATE: {
-    value: 'CHERNOBYL_CERTIFICATE',
+  [DOCS_TYPES_DICT.CHERNOBYL_CERTIFICATE]: {
+    value: DOCS_TYPES_DICT.CHERNOBYL_CERTIFICATE,
     label: 'Посвідчення постраждалого на ЧАЕС (1,2 кат.)',
     privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
     customerStatus: 'CHERNOBYLETS',
@@ -28,17 +28,23 @@ const PRIVILEGED_OPTIONS_DICT = {
 };
 
 const NATURAL_OPTIONS_DICT = {
-  DRIVING_LICENSE: {
-    value: 'DRIVING_LICENSE',
+  [DOCS_TYPES_DICT.DRIVING_LICENSE]: {
+    value: DOCS_TYPES_DICT.DRIVING_LICENSE,
     label: 'Посвідчення водія',
+    privilegeType: PRIVILEGED_TYPE.NATURAL,
+    customerStatus: null,
   },
-  PASSPORT: {
-    value: 'PASSPORT',
+  [DOCS_TYPES_DICT.PASSPORT]: {
+    value: DOCS_TYPES_DICT.PASSPORT,
     label: 'Паспорт',
+    privilegeType: PRIVILEGED_TYPE.NATURAL,
+    customerStatus: null,
   },
-  ID_PASSPORT: {
-    value: 'ID_PASSPORT',
+  [DOCS_TYPES_DICT.ID_PASSPORT]: {
+    value: DOCS_TYPES_DICT.ID_PASSPORT,
     label: 'ID карта',
+    privilegeType: PRIVILEGED_TYPE.NATURAL,
+    customerStatus: null,
   },
 };
 
@@ -54,12 +60,6 @@ const NATURALSelectOptions = [
   NATURAL_OPTIONS_DICT.ID_PASSPORT,
 ];
 
-/* 
-  словник з індивідуальними умовами для різних СК 
-  з відповідним id,
-  або для привілегійованих
-  або для всіх інших
-*/
 export const docsOptionsDict = {
   NATURAL: NATURALSelectOptions,
   PRIVILEGED: PRIVILEGEDSelectOptions,

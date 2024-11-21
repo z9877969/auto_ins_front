@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getIsPrivilage } from '../redux/byParameters/selectors';
 import { PRIVILEGED_TYPE } from '../constants';
-import { docsOptionsDict } from '../assets/utils/isPrivilegedOptions';
+import { docsOptionsDict } from '../assets/utils/docsOptionsDict';
 
 const getPrivilageType = (isPrivilage) =>
   isPrivilage ? PRIVILEGED_TYPE.PRIVILEGED : PRIVILEGED_TYPE.NATURAL;
@@ -19,7 +19,7 @@ export const useDocTypesOptions = () => {
       allowedDocTypes.includes(el.value)
     );
     return docTypesOptions;
-  }, [isPrivilage]);
+  }, [isPrivilage, allowedDocTypes]);
 
   return insurerDocsOptions;
 };

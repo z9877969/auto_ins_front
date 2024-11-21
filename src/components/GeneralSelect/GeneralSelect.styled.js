@@ -148,6 +148,7 @@ export const InputContStyled = styled(Box)(({ theme, errorposition }) => ({
   },
   '& .errorMessage': {
     position: 'absolute',
+    top: 'calc(100% + 0.2em)',
     fontWeight: 600,
     color: theme.palette.primary.red,
     textAlign: 'end',

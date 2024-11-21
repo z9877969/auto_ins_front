@@ -2,10 +2,9 @@ import { homeAddress } from '../homeAddress';
 import { normalizeDate } from '../normalizeDate';
 
 export const customerNormalize = (
-  insuredDataFormik,
+  insurerDataFormik,
   homeAddressFormik,
-  contactsFormik,
-  identityCard
+  contactsFormik
 ) => {
   const {
     taxNumber,
@@ -17,7 +16,8 @@ export const customerNormalize = (
     number,
     date,
     issuedBy,
-  } = insuredDataFormik?.values || {};
+    type,
+  } = insurerDataFormik?.values || {};
 
   const { phone, email } = contactsFormik?.values || {};
 
@@ -32,12 +32,16 @@ export const customerNormalize = (
     email,
     birthDate: normalizeDate(birthDate),
     document: {
-      type: identityCard.value,
-      series: series,
+      type: type.value,
       number: number,
       date: normalizeDate(date),
       issuedBy: issuedBy,
     },
   };
+  if (type.value === 'ID_PASSPORT') {
+    customer.document.record = series;
+  } else {
+    customer.document.series = series;
+  }
   return customer;
 };
