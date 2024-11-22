@@ -107,19 +107,17 @@ const InsuredDataForm = ({ formik, docTypesOptions }) => {
             formikData={formik}
             placeholder={'МРЕВ'}
           />
-          <CustomLabel lableText="Дата видачі*:">
+          <CustomLabel
+            lableText="Дата видачі*:"
+            errorMessage={formik.errors.date}
+            touchedMessage={formik.touched.date}
+          >
             <CustomDateInput
+              className="input-container"
               value={formik.values.date}
               setValue={(v) => formik.setFieldValue('date', v)}
               placeholder={'25/07/2024'}
             />
-            {formik.errors.date && (
-              <div className={clsx('errorMessage', 'half')}>
-                {!formik.errors.date.includes('date')
-                  ? formik.errors.date
-                  : DATE_MESSAGE_ERRORS.dateFormat}
-              </div>
-            )}
           </CustomLabel>
         </DocInputsStyled>
       </InputContBoxStyled>
