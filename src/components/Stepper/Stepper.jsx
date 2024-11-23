@@ -48,6 +48,7 @@ import { format } from 'date-fns';
 import * as storage from '../../helpers/storage';
 import { FORMIK_DATA_KEYS as formikDataKeys } from '../../constants';
 import { useDocTypesOptions } from '../../hooks/useDocTypesOptions';
+import { calcBirthdateFromIpn } from 'helpers/birthDate/calcBirthdateFromIpn';
 
 const steps = [
   { Контакти: 'icon-email' },
@@ -122,7 +123,7 @@ const Stepper = ({ backLinkRef }) => {
         schema.validateSync(values, { abortEarly: false });
       } catch (errors) {
         const validationErrors = {};
-        errors.inner.forEach((err) => {
+        errors.inner?.forEach((err) => {
           validationErrors[err.path] = err.message;
         });
         return validationErrors;
@@ -130,7 +131,18 @@ const Stepper = ({ backLinkRef }) => {
       return {};
     },
     validateOnChange: true,
-    onSubmit: () => {
+    onSubmit: (values, { setErrors }) => {
+      const { taxNumber, birthDate } = values;
+
+      const calculatedBirthdate = calcBirthdateFromIpn(taxNumber)
+        .toJSON()
+        .split('T')[0];
+      const correctBirthDateFormat = birthDate.split('/').reverse().join('-');
+      if (calculatedBirthdate !== correctBirthDateFormat) {
+        setErrors({ birthDate: 'День народження не відповідає ІПН' });
+        return;
+      }
+
       handleNext();
     },
   });

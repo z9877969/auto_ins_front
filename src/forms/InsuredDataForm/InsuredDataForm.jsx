@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { DocInputsStyled, InputContBoxStyled } from './InsuredDataForm.styled';
 import GeneralSelect from '../../components/GeneralSelect/GeneralSelect';
 import GeneralInput from '../../components/GeneralInput/GeneralInput';
@@ -9,11 +10,21 @@ import { DATE_MESSAGE_ERRORS, FORMIK_DATA_KEYS } from '../../constants';
 import * as storage from '../../helpers/storage';
 import { insurerDocsDict } from 'assets/utils/insurerDocsDict';
 import { insurerIssuedByDict } from 'assets/utils/insurerIssuedByDict';
+import { calcBirthdateFromIpn } from 'helpers/birthDate/calcBirthdateFromIpn';
 
 const InsuredDataForm = ({ formik, docTypesOptions }) => {
   const identityCardType = formik.values.type.value;
 
   const isID_PASSPORT = identityCardType === 'ID_PASSPORT';
+
+  const taxNumberHandleBlur = (e) => {
+    if (e.target.value.length < 10) return;
+    const userBirthDate = calcBirthdateFromIpn(e.target.value);
+    formik.setFieldValue(
+      'birthDate',
+      moment(userBirthDate).format('DD/MM/YYYY')
+    );
+  };
 
   useEffect(() => {
     storage.setToLS(FORMIK_DATA_KEYS.INSURED, formik.values);
@@ -40,12 +51,19 @@ const InsuredDataForm = ({ formik, docTypesOptions }) => {
           formikData={formik}
           placeholder={'Григорович'}
         />
+        <GeneralInput
+          id="taxNumber"
+          lableText="РНОКПП(Ідентифікаційний код)*:"
+          formikData={formik}
+          placeholder={'1234567890'}
+          handleBlur={taxNumberHandleBlur}
+        />
         <CustomLabel lableText="Дата народження*:">
           <CustomDateInput
             value={formik.values.birthDate}
             setValue={(v) => formik.setFieldValue('birthDate', v)}
             placeholder={'09/03/1814'}
-            errorMessage={formik.errors.birthDate}
+            isError={formik.errors.birthDate && formik.touched.birthDate}
           />
           {formik.touched.birthDate && formik.errors.birthDate ? (
             <div className="errorMessage">
@@ -55,12 +73,6 @@ const InsuredDataForm = ({ formik, docTypesOptions }) => {
             </div>
           ) : null}
         </CustomLabel>
-        <GeneralInput
-          id="taxNumber"
-          lableText="РНОКПП(Ідентифікаційний код)*:"
-          formikData={formik}
-          placeholder={'1234567890'}
-        />
         <GeneralSelect
           id="type"
           lableText="Документ на вибір*:"
@@ -114,7 +126,7 @@ const InsuredDataForm = ({ formik, docTypesOptions }) => {
               value={formik.values.date}
               setValue={(v) => formik.setFieldValue('date', v)}
               placeholder={'25/07/2024'}
-              errorMessage={formik.errors.date}
+              isError={formik.errors.date && formik.touched.date}
             />
             {formik.touched.date && formik.errors.date ? (
               <div className="errorMessage">
