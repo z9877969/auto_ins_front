@@ -8,6 +8,7 @@ import CustomDateInput from '../../components/CustomDateInput/CustomDateInput';
 import { DATE_MESSAGE_ERRORS, FORMIK_DATA_KEYS } from '../../constants';
 import * as storage from '../../helpers/storage';
 import { insurerDocsDict } from 'assets/utils/insurerDocsDict';
+import { insurerIssuedByDict } from 'assets/utils/insurerIssuedByDict';
 
 const InsuredDataForm = ({ formik, docTypesOptions }) => {
   const identityCardType = formik.values.type.value;
@@ -105,7 +106,7 @@ const InsuredDataForm = ({ formik, docTypesOptions }) => {
             id="issuedBy"
             lableText="Ким виданий*:"
             formikData={formik}
-            placeholder={'МРЕВ'}
+            placeholder={insurerIssuedByDict[identityCardType].placeholder}
           />
           <CustomLabel lableText="Дата видачі*:">
             <CustomDateInput
