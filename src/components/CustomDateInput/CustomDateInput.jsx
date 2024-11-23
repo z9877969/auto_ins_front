@@ -11,6 +11,7 @@ const CustomDateInput = ({
   value,
   name,
   setValue,
+  errorMessage,
 }) => {
   const handleChange = useCallback(
     (e) => {
@@ -81,8 +82,7 @@ const CustomDateInput = ({
       color={color || 'inputBase'}
       placeholder={placeholder}
       disabled={isDisabled}
-      // className="isError"
-      isError={true}
+      error={Boolean(errorMessage)}
     />
   );
 };

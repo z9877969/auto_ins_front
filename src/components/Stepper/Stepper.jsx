@@ -38,10 +38,7 @@ import { useActions } from '../../hooks';
 
 import sub from 'date-fns/sub';
 import { contractSaveOSAGONormalize } from '../../helpers/dataNormalize/contractSaveOSAGONormalize';
-import {
-  getGlobalCustomerData,
-  selectHomeAddress,
-} from '../../redux/Global/selectors';
+import { getGlobalCustomerData } from '../../redux/Global/selectors';
 import { getHasVclOrder, getUser } from '../../redux/Calculator/selectors';
 import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
 import { contractSaveDGONormalize } from '../../helpers/dataNormalize/contractSaveDGONormalize';
@@ -86,7 +83,6 @@ const Stepper = ({ backLinkRef }) => {
   const { contractSave } = useActions();
   const user = useSelector(getUser);
   const { tariff, dgoTarrif } = useSelector(getGlobalCustomerData);
-  const homeAddress = useSelector(selectHomeAddress);
   const userParams = useSelector(getSubmitObject);
   const registrationPlaceData = useSelector(getRegistrationPlaceData);
   const [insurObject] = useSelector(getAutoByNumber);

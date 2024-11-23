@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { DocInputsStyled, InputContBoxStyled } from './InsuredDataForm.styled';
 import GeneralSelect from '../../components/GeneralSelect/GeneralSelect';
@@ -45,8 +44,9 @@ const InsuredDataForm = ({ formik, docTypesOptions }) => {
             value={formik.values.birthDate}
             setValue={(v) => formik.setFieldValue('birthDate', v)}
             placeholder={'09/03/1814'}
+            errorMessage={formik.errors.birthDate}
           />
-          {formik.errors.birthDate ? (
+          {formik.touched.birthDate && formik.errors.birthDate ? (
             <div className="errorMessage">
               {!formik.errors.birthDate.includes('birthDate')
                 ? formik.errors.birthDate
@@ -107,17 +107,21 @@ const InsuredDataForm = ({ formik, docTypesOptions }) => {
             formikData={formik}
             placeholder={'МРЕВ'}
           />
-          <CustomLabel
-            lableText="Дата видачі*:"
-            errorMessage={formik.errors.date}
-            touchedMessage={formik.touched.date}
-          >
+          <CustomLabel lableText="Дата видачі*:">
             <CustomDateInput
               className="input-container"
               value={formik.values.date}
               setValue={(v) => formik.setFieldValue('date', v)}
               placeholder={'25/07/2024'}
+              errorMessage={formik.errors.date}
             />
+            {formik.touched.date && formik.errors.date ? (
+              <div className="errorMessage">
+                {!formik.errors.date.includes('date')
+                  ? formik.errors.date
+                  : DATE_MESSAGE_ERRORS.dateFormat}
+              </div>
+            ) : null}
           </CustomLabel>
         </DocInputsStyled>
       </InputContBoxStyled>
