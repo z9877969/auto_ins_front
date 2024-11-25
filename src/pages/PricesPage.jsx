@@ -17,8 +17,10 @@ import ModalError from '../components/ModalError/ModalError';
 import { getIsModalErrorOpen } from '../redux/Global/selectors';
 import { useActions } from '../hooks/useActions';
 import { ORDER_TYPE } from '../constants';
+import { useScrollToTop } from 'hooks/useScrollToTop';
 
 const PricesPage = () => {
+  useScrollToTop();
   const navigate = useNavigate();
   const location = useLocation();
   const { osagoByDn, setIsModalErrorOpen, osagoByParams } = useActions();

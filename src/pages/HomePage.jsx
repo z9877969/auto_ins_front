@@ -19,13 +19,16 @@ const Partners = lazy(() => import('../components/Partners/Partners'));
 import ModalError from '../components/ModalError/ModalError';
 import AlertMUI from '../components/Alert/AlertMUI';
 import Hero from '../components/Hero/Hero';
+import { useScrollToTop } from 'hooks/useScrollToTop';
 
 const HomePage = () => {
+  useScrollToTop();
   const location = useLocation();
   const { loginThunk } = useActions();
 
   const user = useSelector(getUser);
   const isError = useSelector(getIsModalErrorOpen);
+
 
   useEffect(() => {
     if (location.state) {
