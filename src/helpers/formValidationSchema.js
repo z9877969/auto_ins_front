@@ -3,14 +3,12 @@ import {
   DNUMBER_REGEX,
   NAME_REGEX,
   REQUIRED_FIELD,
-  // SERIES_PASSPORT_REGEX,
-  SERIES_DRIVING_LICENSE_REGEX,
   VIN_REGEX,
-  SERIES_PASSPORT_AND_DRIVING_LICENSE_REGEX,
   VEHICLES_TYPES,
   DATE_MESSAGE_ERRORS,
 } from '../constants';
 import { isDate, parse } from 'date-fns';
+import { insurerDocsDict } from 'assets/utils/insurerDocsDict';
 
 export const validationName = () =>
   Yup.string()
@@ -133,7 +131,7 @@ export const carDataFormValidationSchema = ({
       .required(REQUIRED_FIELD),
     bodyNumber: Yup.string()
       .required(REQUIRED_FIELD)
-      .matches(VIN_REGEX, 'VIN повинен містити 17 літер'),
+      .matches(VIN_REGEX, 'VIN повинен містити до 17 літер'),
   };
   if (isPrivilege && engineType) {
     schemaOptions.engineVolume = getIsValidEngineType(engineType)
@@ -152,50 +150,38 @@ export const carDataFormValidationSchema = ({
 };
 // ===========================================================================
 export const homeAddressFormValidationSchema = () =>
-  Yup.object().shape({
+  Yup.object({
     regionANDcity: Yup.string().required(REQUIRED_FIELD),
     street: validationName(),
     houseNumber: Yup.string().required(REQUIRED_FIELD),
     apartmentNumber: Yup.string(),
   });
 // ===========================================================================
-const getErrorMessageByDocType = (docType) => {
-  switch (docType) {
-    case 'DRIVING_LICENSE':
-      return [SERIES_DRIVING_LICENSE_REGEX, 'Введіть три літери кирилиці'];
-    default:
-      return [
-        SERIES_PASSPORT_AND_DRIVING_LICENSE_REGEX,
-        'Серія може містити дві або три літери кирилиці',
-      ];
-  }
-};
-export const insuredDataFormValidationSchema = ({ docType } = {}) =>
-  Yup.object().shape({
+export const insuredDataFormValidationSchema = ({ docType } = {}) => {
+  const docData = insurerDocsDict[docType];
+
+  return Yup.object().shape({
     surname: validationName(),
     name: validationName(),
     middleName: validationName(),
-    // birthDate: Yup.date().required(REQUIRED_FIELD),
     birthDate: validateFullAgeDate(),
     taxNumber: Yup.string()
-      //  .required(REQUIRED_FIELD)
-      //  !!!!!============>>>> Чому попередній рядок закоментований<<<<<<================= ???
+      .required(REQUIRED_FIELD)
       .matches(/^[0-9\s]*$/, 'Введіть лише числа')
       .min(10, 'ІПН повинен мати 10 символів')
       .max(10, 'ІПН повинен мати 10 символів'),
     series: Yup.string()
-      .required(REQUIRED_FIELD)
-      // !!!!!!!!!
-      .matches(...getErrorMessageByDocType(docType)),
+      .matches(docData.series.regex, { message: docData.series.message })
+      .required(REQUIRED_FIELD),
     number: Yup.string()
-      .required(REQUIRED_FIELD)
-      .min(6, 'Введіть 6 цифр')
-      .max(6, 'Введіть 6 цифр'),
-    issuedBy: Yup.string().required(REQUIRED_FIELD),
-    // date: Yup.date().required(REQUIRED_FIELD),
+      .matches(docData.number.regex, { message: docData.number.message })
+      .required(REQUIRED_FIELD),
+    issuedBy: Yup.string()
+      .max(150, 'Максимум 150 знаків')
+      .required(REQUIRED_FIELD),
     date: validateRegistrationDate(),
-    record: Yup.string(),
   });
+};
 // ===========================================================================
 export const contactsValidationSchema = () =>
   Yup.object().shape({

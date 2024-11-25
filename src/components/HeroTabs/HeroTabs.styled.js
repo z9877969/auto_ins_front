@@ -32,7 +32,6 @@ export const TabsStyled = styled(Tabs)(({ theme }) => ({
   marginBottom: 16,
   alignItems: 'flex-start',
   alignSelf: 'stretch',
-  height: 64,
   borderBottom: `1px solid ${theme.palette.primary.secondaryWhite}`,
   '& .MuiTabs-flexContainer': {
     [theme.breakpoints.up('sm')]: {

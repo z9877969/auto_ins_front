@@ -53,6 +53,7 @@ export const LableStyled = styled(Typography)(({ theme }) => ({
   justifyContent: 'space-between',
   '& .errorMessages': {
     position: 'absolute',
+    top: 'calc(100% + 0.2em)',
     color: theme.palette.primary.red,
     textAlign: 'end',
     maxWidth: 300,

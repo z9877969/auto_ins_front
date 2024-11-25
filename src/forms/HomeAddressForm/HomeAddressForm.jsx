@@ -7,14 +7,12 @@ import PropTypes from 'prop-types';
 import GeneralSelect from '../../components/GeneralSelect/GeneralSelect';
 import { useEffect, useState } from 'react';
 import { fetchAddress } from '../../redux/byParameters/operations';
-import { useSelector } from 'react-redux';
 import { useActions } from '../../hooks/useActions';
 import * as storage from '../../helpers/storage';
 import { FORMIK_DATA_KEYS } from '../../constants';
 
 const HomeAddressForm = ({ formik }) => {
   const { setHomeAddress } = useActions();
-  const address = useSelector((state) => state.global.homeAddress);
 
   const [allAddress, setAllAddress] = useState([]);
   const [queryText, setQueryText] = useState('');
@@ -40,13 +38,14 @@ const HomeAddressForm = ({ formik }) => {
           lableText="Адреса"
           optionsArr={allAddress}
           changeCB={setAddress} //функція що повертає вибране значення (піднесення)
-          currentValue={address.label && address.value ? address : undefined}
           inputValue={queryText}
           inputChangeCB={getHomeAddress}
-          isValid={Boolean(address.label)}
           readOnly={false}
           noOptionsMessage="Вкажіть місце проживання"
           placeholder={!queryText && 'м. Київ, Україна'}
+          errorMessage={
+            formik.touched['regionANDcity'] && formik.errors['regionANDcity']
+          }
         />
         <GeneralInput
           id="street"

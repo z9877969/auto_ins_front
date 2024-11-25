@@ -75,6 +75,7 @@ const Company = ({ companyObject, lastItem }) => {
 
   useEffect(() => {
     if (!companyObject) return;
+    scrollTo({ top: 0 });
     // eslint-disable-next-line
   }, []);
 
@@ -116,7 +117,7 @@ const Company = ({ companyObject, lastItem }) => {
           id: chooseDgo.id,
           limit: chooseDgo.limit,
         },
-        allowedDocTypes: tariff[0].customerSettings.documentTypes
+        allowedDocTypes: tariff[0].customerSettings.documentTypes,
       });
 
       setParamsFromUrl({

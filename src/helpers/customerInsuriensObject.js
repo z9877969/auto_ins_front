@@ -5,7 +5,6 @@ export const customerInsuriensObject = (
   insuredDataFormik,
   homeAddressFormik,
   contactsFormik,
-  identityCard,
   carDataFormik,
   insurObject,
   registrationPlaceId,
@@ -16,7 +15,6 @@ export const customerInsuriensObject = (
     insuredDataFormik,
     homeAddressFormik,
     contactsFormik,
-    identityCard
   );
   const insuranceObject = insuranceObjectNormalize(
     carDataFormik,

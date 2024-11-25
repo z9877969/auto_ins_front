@@ -60,6 +60,7 @@ export const globalSlice = createSlice({
       })
       .addCase(contractSave.rejected, (state, { payload = {} }) => {
         const { message, errorResponse } = payload;
+        state.isLoading = false;
         const combinedMessage = errorResponse.constraintViolations.filter(
           ({ message }, i, arr) => {
             if (i > 0 && arr[i - 1].message === message) {

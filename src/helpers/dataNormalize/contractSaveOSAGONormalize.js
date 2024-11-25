@@ -1,4 +1,5 @@
-import format from 'date-fns/format';
+// import format from 'date-fns/format';
+import { convertCurTimeToUTC } from 'helpers/convertCurTimeToUTC';
 
 export const contractSaveOSAGONormalize = (
   userParams,
@@ -14,10 +15,11 @@ export const contractSaveOSAGONormalize = (
     customer,
     tariff,
     insuranceObject,
-    dateFrom: format(
-      new Date(userParams?.dateFrom),
-      'yyyy-MM-dd\'T\'HH:mm:ss.SSSxxxx'
-    ),
+    dateFrom: convertCurTimeToUTC(userParams?.dateFrom),
+    // dateFrom: format(
+    //   new Date(userParams?.dateFrom),
+    //   'yyyy-MM-dd\'T\'HH:mm:ss.SSSxxxx'
+    // ),
     state: 'DRAFT',
   };
   if (privilegeData) {

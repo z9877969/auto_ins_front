@@ -9,7 +9,10 @@ export const InputStyled = styled(OutlinedInput)(({ theme }) => ({
   outline: 'none !important',
 
   '&.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.Mui-focused':
-    { outline: 'none', border: 'none' },
+    {
+      outline: 'none',
+      border: 'none',
+    },
   '& .MuiInputBase-input.MuiOutlinedInput-input': {
     color: `${theme.palette.primary.main}`,
     fontWeight: 600,

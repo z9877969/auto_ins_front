@@ -9,18 +9,12 @@ export const insuredDataInitialValues = {
   middleName: '', //
   birthDate: '', //
   taxNumber: '', //
-  record: '', //
+  // record: '', //
   type: '', //document{}
   series: '', //document{}
   number: '', //document{}
   issuedBy: '', //document{}
   date: '', //document{}
-
-  // type: "", //document{}
-  //series: "", //document{}
-  //number: "", //document{}
-  // issuedBy: "", //document{}
-  //date: "", //document{}
 };
 
 export const homeAddressInitialValues = {
