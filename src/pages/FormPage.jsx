@@ -7,9 +7,11 @@ import { Wrapper } from './FormPageStyled';
 import Stepper from '../components/Stepper/Stepper';
 import OutletPageWrapper from '../components/OutletPageWrapper';
 import { getIsContractOSAGO } from '../redux/Global/selectors';
+import { useScrollToTop } from 'hooks/useScrollToTop';
 // import { useActions } from "../hooks/useActions.js";
 
 const FormPage = () => {
+  useScrollToTop();
   const navigate = useNavigate();
   const location = useLocation();
   const backLinkRef = useRef(location.state?.from);

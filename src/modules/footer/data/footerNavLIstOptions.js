@@ -9,11 +9,11 @@ export const linksListOptions = [
     linkTitle: 'Про нас',
   },
   {
-    key: 'інфо про посередника',
+    key: 'інформація про страхового посередника ',
     href: 'https://auto-ins.com.ua/pages/info/',
     target: '_blank',
     rel: 'nofollow',
-    linkTitle: 'Інфо про посередника',
+    linkTitle: 'Інформація про страхового посередника ',
   },
   {
     key: 'політика конфіденційності',
