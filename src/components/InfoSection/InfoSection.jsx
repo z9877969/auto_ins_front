@@ -35,11 +35,14 @@ import {
 } from './InfoSectionStyle';
 
 import Text from './Text';
-import { infoTextStart, infoTextTitle } from '../../assets/texts/index';
-import { infoTextMiddleFirst } from '../../assets/texts/index';
-import { infoTextMiddleSecond } from '../../assets/texts/index';
+import {
+  infoTextStart,
+  infoTextTitle,
+  infoTextMiddleFirst,
+  infoTextMiddleSecond,
+  infoTextEnd,
+} from '../../assets/texts';
 import { links } from '../../assets/texts/index';
-import { infoTextEnd } from '../../assets/texts/index';
 import { Link } from '@mui/material';
 
 const InfoSection = () => {
@@ -208,12 +211,12 @@ const InfoSection = () => {
               src={Car320Webp}
             >
               {/* <img
-               src={Car320Jpg}
-               srcSet={`${Car320Jpg} 343w,${Car320Webp} 343w,${Car320Webp2x} 686w,${Car320Jpg2x} 686w,${Car320Webp3x} 1029w,${Car320Jpg3x} 1029w,${Car768Jpg} 680w,${Car768Web} 680w,${Car768Web2x} 1360w,${Car768Jpg2x} 1360w,${Car768Web3x} 2040w,${Car768Jpg3x} 2040w`}
-               sizes="(max-widht:744px) 680px, 100vw"
-               alt="автомобіль"
-               loading="lazy"
-             /> */}
+             src={Car320Jpg}
+             srcSet={`${Car320Jpg} 343w,${Car320Webp} 343w,${Car320Webp2x} 686w,${Car320Jpg2x} 686w,${Car320Webp3x} 1029w,${Car320Jpg3x} 1029w,${Car768Jpg} 680w,${Car768Web} 680w,${Car768Web2x} 1360w,${Car768Jpg2x} 1360w,${Car768Web3x} 2040w,${Car768Jpg3x} 2040w`}
+             sizes="(max-widht:744px) 680px, 100vw"
+             alt="автомобіль"
+             loading="lazy"
+           /> */}
             </CardMedia>
           ))}
       </InfoSectionContainer>
