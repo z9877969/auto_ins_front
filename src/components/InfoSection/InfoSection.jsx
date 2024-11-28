@@ -41,9 +41,26 @@ import {
   infoTextMiddleFirst,
   infoTextMiddleSecond,
   infoTextEnd,
+  newInfoText,
 } from '../../assets/texts';
 import { links } from '../../assets/texts/index';
 import { Link } from '@mui/material';
+
+const NavBtn = () => {
+  return (
+    <a
+      style={{
+        padding: '0.25em 1em',
+        border: '1px solid #212121',
+        borderRadius: '0.25em',
+        color: '#212121',
+      }}
+      href="https://auto-ins.com.ua/pages/kasko/"
+    >
+      Програми КАСКО на авто
+    </a>
+  );
+};
 
 const InfoSection = () => {
   const [checked, setChecked] = useState(false);
@@ -83,10 +100,10 @@ const InfoSection = () => {
       return '8.64em';
     }
     if (TABLET) {
-      return '200px';
+      return '216px';
     }
     if (DESKTOP) {
-      return '750px';
+      return '784px';
     }
   };
 
@@ -116,79 +133,83 @@ const InfoSection = () => {
             collapsedSize={display()}
             className="container"
           >
-            <Text text={infoTextTitle} />
-            <Text text={infoTextStart} />
-            <Text text={infoTextMiddleFirst} />
-            {MOBILE && (
+            {DESKTOP ? (
+              <div className="cols">
+                <div className="col">
+                  <Text text={infoTextTitle} />
+                  <Text
+                    text={[...newInfoText, ...infoTextStart]}
+                    outsideEls={{ navBtn: <NavBtn /> }}
+                  />
+                </div>
+                <div className="col">
+                  <CardMedia className="cardMedia" src={Car1400Webp}>
+                    <img
+                      src={Car1400Jpg}
+                      srcSet={`${Car1400Webp} 688w,${Car1400Jpg} 688w,${Car1400Webp2x} 1376w,${Car1400Jpg2x} 1376w,${Car1400Webp3x} 2064w,${Car1400Jpg3x} 2064w`}
+                      sizes="688px"
+                      width="688px"
+                      height="632px"
+                      alt="автомобіль"
+                    />
+                  </CardMedia>
+                  <Text
+                    text={[
+                      ...infoTextMiddleFirst.slice(
+                        0,
+                        infoTextMiddleFirst.length - 2
+                      ),
+                      ...infoTextMiddleSecond,
+                      ...infoTextEnd,
+                    ]}
+                    outsideEls={{ links: displayLink }}
+                    style={{ marginTop: '24px' }}
+                  />
+                </div>
+              </div>
+            ) : TABLET ? (
+              <div className="cols">
+                <div className="col">
+                  <Text text={infoTextTitle} />
+                  <Text
+                    text={[
+                      ...newInfoText,
+                      ...infoTextStart.slice(0, infoTextStart.length / 2 + 1),
+                    ]}
+                    outsideEls={{ navBtn: <NavBtn /> }}
+                  />
+                </div>
+                <div className="col">
+                  <Text
+                    text={[
+                      ...infoTextStart.slice(infoTextStart.length / 2 + 1),
+                      ...infoTextMiddleFirst.slice(
+                        infoTextMiddleFirst.length - 2
+                      ),
+                      ...infoTextMiddleSecond,
+                      ...infoTextEnd,
+                    ]}
+                    outsideEls={{ links: displayLink }}
+                  />
+                </div>
+              </div>
+            ) : (
               <>
-                <Text text={infoTextMiddleSecond} />
-                {displayLink}
-                <Text text={infoTextEnd} />
-              </>
-            )}
-            {DESKTOP && (
-              <>
-                <Text text={infoTextMiddleSecond} />
-                {displayLink}
+                <Text text={infoTextTitle} />
+                <Text
+                  text={[
+                    ...newInfoText,
+                    ...infoTextStart,
+                    ...infoTextMiddleFirst,
+                    ...infoTextMiddleSecond,
+                    ...infoTextEnd,
+                  ]}
+                  outsideEls={{ links: displayLink, navBtn: <NavBtn /> }}
+                />
               </>
             )}
           </CollapseContainer>
-          {TABLET && (
-            <CollapseContainer
-              in={checked}
-              orientation="vertical"
-              timeout={300}
-              collapsedSize={display()}
-            >
-              <Text text={infoTextMiddleSecond} />
-              {displayLink}
-              <Text text={infoTextEnd} />
-            </CollapseContainer>
-          )}
-          {DESKTOP && (
-            <div>
-              {inView ? (
-                <CardMedia className="cardMedia" src={Car1400Webp}>
-                  <img
-                    src={Car1400Jpg}
-                    srcSet={`${Car1400Webp} 688w,${Car1400Jpg} 688w,${Car1400Webp2x} 1376w,${Car1400Jpg2x} 1376w,${Car1400Webp3x} 2064w,${Car1400Jpg3x} 2064w`}
-                    sizes="688px"
-                    width="688px"
-                    height="632px"
-                    alt="автомобіль"
-                  />
-                </CardMedia>
-              ) : (
-                <CardMedia
-                  ref={ref}
-                  id={n.id}
-                  key={n.id}
-                  className="cardMedia"
-                  src={Car1400Webp}
-                >
-                  {/* <img
-                    src={Car1400Jpg}
-                    srcSet={`${Car1400Webp} 688w,${Car1400Jpg} 688w,${Car1400Webp2x} 1376w,${Car1400Jpg2x} 1376w,${Car1400Webp3x} 2064w,${Car1400Jpg3x} 2064w`}
-                    sizes="688px"
-                    width="688px"
-                    height="632px"
-                    alt="автомобіль"
-                  /> */}
-                </CardMedia>
-              )}
-              <CollapseContainer
-                in={checked}
-                orientation="vertical"
-                timeout={300}
-                collapsedSize={94}
-                className="containerRight"
-              >
-                <Text text={infoTextEnd} />
-              </CollapseContainer>
-            </div>
-          )}
         </WrapperS>
-
         <YellowButton onClick={handleChange} className="button">
           {!checked ? 'Читати далі' : 'Приховати текст'}
         </YellowButton>
@@ -209,15 +230,7 @@ const InfoSection = () => {
               key={n.id}
               className="cardMediaTablet"
               src={Car320Webp}
-            >
-              {/* <img
-             src={Car320Jpg}
-             srcSet={`${Car320Jpg} 343w,${Car320Webp} 343w,${Car320Webp2x} 686w,${Car320Jpg2x} 686w,${Car320Webp3x} 1029w,${Car320Jpg3x} 1029w,${Car768Jpg} 680w,${Car768Web} 680w,${Car768Web2x} 1360w,${Car768Jpg2x} 1360w,${Car768Web3x} 2040w,${Car768Jpg3x} 2040w`}
-             sizes="(max-widht:744px) 680px, 100vw"
-             alt="автомобіль"
-             loading="lazy"
-           /> */}
-            </CardMedia>
+            />
           ))}
       </InfoSectionContainer>
     </SectionS>

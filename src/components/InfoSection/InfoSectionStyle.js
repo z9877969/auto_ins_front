@@ -50,8 +50,11 @@ export const CollapseContainer = styled(Collapse)(({ theme }) => ({
     },
   },
   '&.container': {
+    [theme.breakpoints.up('sm')]: {
+      width: 'auto',
+    },
     [theme.breakpoints.up('lg')]: {
-      width: '568px',
+      width: 'auto',
     },
   },
   '&.containerRight': {
@@ -84,7 +87,7 @@ export const InfoSectionContainer = styled(ContainerSection)(({ theme }) => ({
   backgroundColor: theme.palette.primary.background,
   textAlign: 'center',
   [theme.breakpoints.up('lg')]: {
-    padding: '120px 0 120px 120px ',
+    padding: '120px 60px ',
   },
 
   '& .button': {
@@ -112,6 +115,18 @@ export const InfoSectionContainer = styled(ContainerSection)(({ theme }) => ({
     },
 
     '& img': { borderRadius: '50px' },
+  },
+  '& .cols': {
+    [theme.breakpoints.up('sm')]: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, calc((100% - 16px) / 2))',
+      gridColumnGap: '16px',
+    },
+    [theme.breakpoints.up('lg')]: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gridColumnGap: '24px',
+    },
   },
 }));
 

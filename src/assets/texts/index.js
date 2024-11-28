@@ -9,3 +9,5 @@ export { default as infoTextMiddleSecond } from './infoTextMiddleSecond';
 export { default as links } from './links';
 
 export { default as infoTextEnd } from './infoTextEnd';
+
+export { default as newInfoText } from './newInfoText';
