@@ -164,15 +164,15 @@ const Stepper = ({ backLinkRef }) => {
       brand: insurObject?.modelText || '',
       maker: insurObject
         ? {
-            id: insurObject.model.autoMaker.id,
-            name: insurObject.model.autoMaker.name,
+            id: insurObject.model?.autoMaker?.id,
+            name: insurObject.model?.autoMaker?.name,
           }
         : // : { name: '', id: '' },
           null,
       model: insurObject
         ? {
-            id: insurObject.model.id,
-            name: insurObject.model.name,
+            id: insurObject.model?.id,
+            name: insurObject.model?.name,
           }
         : // : { name: '', id: '' },
           null,

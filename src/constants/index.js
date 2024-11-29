@@ -112,6 +112,9 @@ export const VEHICLES_TYPES = {
     min: 3001,
     otk: false,
   },
+  [VEHICLES_GROUPS.B.B5]: {
+    otk: false,
+  },
   [VEHICLES_GROUPS.C.C1]: {
     min: 0,
     max: 2000,

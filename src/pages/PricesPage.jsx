@@ -34,7 +34,9 @@ const PricesPage = () => {
     let subscribed = true;
     if (subscribed) {
       if (
-        !Object.hasOwn(userParams, 'customerCategory') &&
+        // !Object.hasOwn(userParams, 'customerCategory') &&
+        // eslint-disable-next-line
+        !userParams.hasOwnProperty('customerCategory') &&
         stateNumber === ''
       ) {
         navigate('/');

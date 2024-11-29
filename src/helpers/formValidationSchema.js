@@ -22,15 +22,15 @@ const getIsValidEngineType = (type) => {
   const message = "Об'єм двигуна не відповідає вибраній категорій";
   switch (type) {
     case 'B1':
-      return Yup.number().max(VEHICLES_TYPES[type].max, message);
+      return Yup.number().max(VEHICLES_TYPES[type]?.max, message);
     case 'B2':
       return Yup.number()
-        .min(VEHICLES_TYPES[type].min, message)
-        .max(VEHICLES_TYPES[type].max, message);
+        .min(VEHICLES_TYPES[type]?.min, message)
+        .max(VEHICLES_TYPES[type]?.max, message);
     case 'B3':
       return Yup.number()
-        .min(VEHICLES_TYPES[type].min, message)
-        .max(VEHICLES_TYPES[type].max, message);
+        .min(VEHICLES_TYPES[type]?.min, message)
+        .max(VEHICLES_TYPES[type]?.max, message);
     case 'B4':
       return Yup.number().min(VEHICLES_TYPES[type].min, message);
   }
