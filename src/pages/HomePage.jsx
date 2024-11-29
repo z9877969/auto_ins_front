@@ -1,9 +1,14 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, memo, Suspense, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getUser } from '../redux/Calculator/selectors';
 import { getIsModalErrorOpen } from '../redux/Global/selectors';
 import { useActions } from '../hooks/useActions';
+import ModalError from '../components/ModalError/ModalError';
+import AlertMUI from '../components/Alert/AlertMUI';
+import Hero from '../components/Hero/Hero';
+import { useScrollToTop } from 'hooks/useScrollToTop';
+
 const AccordionSection = lazy(() =>
   import('../components/AccordionSection/index')
 );
@@ -16,10 +21,11 @@ const AdvatagesSection = lazy(() =>
 );
 const Partners = lazy(() => import('../components/Partners/Partners'));
 
-import ModalError from '../components/ModalError/ModalError';
-import AlertMUI from '../components/Alert/AlertMUI';
-import Hero from '../components/Hero/Hero';
-import { useScrollToTop } from 'hooks/useScrollToTop';
+const MemoizedInfoSection = memo(InfoSection);
+const MemoizedAccordionSection = memo(AccordionSection);
+const MemoizedPartners = memo(Partners);
+const MemoizedCheckInsSection = memo(CheckInsSection);
+const MemoizedAdvatagesSection = memo(AdvatagesSection);
 
 const HomePage = () => {
   useScrollToTop();
@@ -28,7 +34,6 @@ const HomePage = () => {
 
   const user = useSelector(getUser);
   const isError = useSelector(getIsModalErrorOpen);
-
 
   useEffect(() => {
     if (location.state) {
@@ -56,11 +61,11 @@ const HomePage = () => {
         <AlertMUI type="info" message="Будь ласка, заповніть поля" />
         <Hero />
         <Suspense>
-          <AdvatagesSection />
-          <CheckInsSection />
-          <Partners />
-          <AccordionSection />
-          <InfoSection />
+          <MemoizedAdvatagesSection />
+          <MemoizedCheckInsSection />
+          <MemoizedPartners />
+          <MemoizedAccordionSection />
+          <MemoizedInfoSection />
         </Suspense>
       </main>
     </>
