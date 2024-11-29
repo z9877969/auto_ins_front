@@ -1,7 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
-import Loader from './components/Loader/Loader';
 import { useNotExistUser } from './hooks';
 // import Stepper from './components/Stepper/Stepper.jsx';
 // import OrderDataProvider from './context/OrderDataProvider.jsx';
@@ -18,8 +17,8 @@ const loadComponentWithRetry = (importFunc, retries = 3, interval = 1000) => {
             } else {
               setTimeout(() => {
                 loadComponentWithRetry(importFunc, retries - 1, interval)
-                  .then(resolve)
-                  .catch(reject);
+                  // .then(resolve)
+                  // .catch(reject);
               }, interval);
             }
           });
