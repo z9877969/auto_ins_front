@@ -29,6 +29,13 @@ export const linksListOptions = [
     rel: 'nofollow',
     linkTitle: 'Інформація про СК та страхові продукти',
   },
+  {
+    key: 'Публічна оферта',
+    href: 'https://auto-ins.com.ua/pages/oferta/',
+    target: '_blank',
+    rel: 'nofollow',
+    linkTitle: 'Публічна оферта',
+  },
 ];
 
 export const scrollLinksOptions = [
