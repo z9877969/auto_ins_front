@@ -46,19 +46,18 @@ import {
 import { links } from '../../assets/texts/index';
 import { Link } from '@mui/material';
 
-const NavBtn = () => {
+const TextLink = ({ text, href, rel }) => {
   return (
-    <a
-      style={{
-        padding: '0.25em 1em',
-        border: '1px solid #212121',
-        borderRadius: '0.25em',
-        color: '#212121',
-      }}
-      href="https://auto-ins.com.ua/pages/kasko/"
-    >
-      Програми КАСКО на авто
-    </a>
+    <AbsatzS variant="caption" component="p">
+      <Link
+        href={href}
+        target="_blank"
+        rel={rel || 'noreferrer noopener nofollow'}
+        className="link"
+      >
+        {text}
+      </Link>
+    </AbsatzS>
   );
 };
 
@@ -108,18 +107,7 @@ const InfoSection = () => {
   };
 
   const displayLink = links.map(({ href, text }) => {
-    return (
-      <AbsatzS key={text} variant="caption" component="p">
-        <Link
-          href={href}
-          target="_blank"
-          rel="noreferrer noopener nofollow"
-          className="link"
-        >
-          {text}
-        </Link>
-      </AbsatzS>
-    );
+    return <TextLink key={text} text={text} href={href} />;
   });
 
   return (
@@ -139,7 +127,15 @@ const InfoSection = () => {
                   <Text text={infoTextTitle} />
                   <Text
                     text={[...newInfoText, ...infoTextStart]}
-                    outsideEls={{ navBtn: <NavBtn /> }}
+                    outsideEls={{
+                      textLink: (
+                        <TextLink
+                          text={'Програми КАСКО на авто.'}
+                          href={'https://auto-ins.com.ua/pages/kasko/'}
+                          rel="noreferrer noopener follow"
+                        />
+                      ),
+                    }}
                   />
                 </div>
                 <div className="col">
@@ -176,7 +172,15 @@ const InfoSection = () => {
                       ...newInfoText,
                       ...infoTextStart.slice(0, infoTextStart.length / 2 + 1),
                     ]}
-                    outsideEls={{ navBtn: <NavBtn /> }}
+                    outsideEls={{
+                      textLink: (
+                        <TextLink
+                          text={'Програми КАСКО на авто.'}
+                          href={'https://auto-ins.com.ua/pages/kasko/'}
+                          rel="noreferrer noopener follow"
+                        />
+                      ),
+                    }}
                   />
                 </div>
                 <div className="col">
@@ -204,7 +208,16 @@ const InfoSection = () => {
                     ...infoTextMiddleSecond,
                     ...infoTextEnd,
                   ]}
-                  outsideEls={{ links: displayLink, navBtn: <NavBtn /> }}
+                  outsideEls={{
+                    links: displayLink,
+                    textLink: (
+                      <TextLink
+                        text={'Програми КАСКО на авто.'}
+                        href={'https://auto-ins.com.ua/pages/kasko/'}
+                        rel="noreferrer noopener follow"
+                      />
+                    ),
+                  }}
                 />
               </>
             )}
