@@ -24,19 +24,19 @@ const Text = ({ text, style = null, outsideEls = {} }) => {
         >
           {isTextLineBreak
             ? text.split('\n').map((t, idx, arr) => (
-                <>
+                <Fragment key={idx}>
                   {t}
                   {idx < arr.length && <br />}
-                </>
+                </Fragment>
               ))
             : text}
           {strongText &&
             (isStrongTextLineBreak ? (
               strongText.split('\n').map((sT, idx, arr) => (
-                <>
+                <Fragment key={idx}>
                   {sT}
                   {idx < arr.length && <br />}
-                </>
+                </Fragment>
               ))
             ) : (
               <>
