@@ -335,7 +335,7 @@ const Stepper = ({ backLinkRef }) => {
           );
         })}
       </StepperStyled>
-      <FormStyled component="form" autoComplete="off" onSubmit={handleSubmit}>
+      <FormStyled component="form" autoComplete="on" onSubmit={handleSubmit}>
         <Typography variant="formTitle" component="h2">
           {Object.keys(steps[activeStep])}
         </Typography>
