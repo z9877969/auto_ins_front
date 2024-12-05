@@ -11,6 +11,17 @@ export const getParamsFromUrl = (state) => state.global.paramsFromUrl;
 export const getIsContractOSAGO = (state) => state.global.isContractOSAGO;
 export const getIsContractDGO = (state) => state.global.isContractDGO;
 export const selectHomeAddress = (state) => state.global.homeAddress;
+export const selectCompanyAllDocTypes = (state) =>
+  state.global.globalCustomerData.allowedDocTypes;
+
+export const selectAllowedDocTypes = createSelector(
+  selectCompanyAllDocTypes,
+  (docTypes) => {
+    const { epolicy, vcl } = docTypes;
+    if (vcl) return epolicy.filter((type) => vcl.includes(type));
+    return epolicy;
+  }
+);
 
 export const combineError = createSelector(
   (state) => state.global.error,
