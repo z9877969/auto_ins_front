@@ -42,8 +42,14 @@ const Company = ({ companyObject, lastItem }) => {
   const { setGlobalCustomerData, setParamsFromUrl, changeVslOrderStatus } =
     useActions();
 
-  const { insurerId, insurerName, tariff, autoCategory, registrationPlace } =
-    companyObject;
+  const {
+    insurerId,
+    insurerName,
+    tariff,
+    autoCategory,
+    registrationPlace,
+    dgo,
+  } = companyObject;
 
   const sortedTarrif = useMemo(() => {
     return [...tariff].sort((a, b) => b.franchise - a.franchise);
@@ -117,7 +123,12 @@ const Company = ({ companyObject, lastItem }) => {
           id: chooseDgo.id,
           limit: chooseDgo.limit,
         },
-        allowedDocTypes: tariff[0].customerSettings.documentTypes,
+        allowedDocTypes: {
+          epolicy: tariff[0].customerSettings.documentTypes,
+          vcl: dgo
+            ? dgo.tariff[dgo.tariff.length - 1].customerSettings.documentTypes
+            : null,
+        },
       });
 
       setParamsFromUrl({

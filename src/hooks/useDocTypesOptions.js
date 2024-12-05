@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { getIsPrivilage } from '../redux/byParameters/selectors';
+import { getIsPrivilage } from '@redux/byParameters/selectors';
+import { selectAllowedDocTypes } from '@redux/Global/selectors';
 import { PRIVILEGED_TYPE } from '../constants';
 import { docsOptionsDict } from '../assets/utils/docsOptionsDict';
 
@@ -9,9 +10,7 @@ const getPrivilageType = (isPrivilage) =>
 
 export const useDocTypesOptions = () => {
   const isPrivilage = useSelector(getIsPrivilage);
-  const allowedDocTypes = useSelector(
-    (s) => s.global.globalCustomerData.allowedDocTypes
-  );
+  const allowedDocTypes = useSelector(selectAllowedDocTypes);
 
   const insurerDocsOptions = useMemo(() => {
     const privilageType = getPrivilageType(isPrivilage);
