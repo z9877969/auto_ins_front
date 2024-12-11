@@ -3,7 +3,8 @@ export const insuranceObjectNormalize = (
   insurObject,
   registrationPlaceId,
   fullCarModel,
-  privilegeData
+  privilegeData,
+  otkData
 ) => {
   const { brand, category, bodyNumber, stateNumber, year, model, maker } =
     carDataFormik.values;
@@ -16,7 +17,7 @@ export const insuranceObjectNormalize = (
     registrationPlace: {
       id: insurObject?.registrationPlace?.id || registrationPlaceId,
     },
-    registrationType: 'PERMANENT_WITHOUT_OTK',
+    registrationType: otkData.registrationType,
     year: year,
   };
   if (model.id !== 'custom') {
@@ -28,6 +29,9 @@ export const insuranceObjectNormalize = (
   }
   if (privilegeData) {
     insuranceObject.engineVolume = privilegeData.engineVolume;
+  }
+  if (otkData.otkDate) {
+    insuranceObject.otkDate = otkData.otkDate;
   }
   return insuranceObject;
 };

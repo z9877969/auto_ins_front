@@ -31,6 +31,14 @@ export const PRIVILEGED_TYPE = {
   NATURAL: 'NATURAL',
 };
 
+export const REGISTRATION_TYPES = {
+  PERMANENT_WITHOUT_OTK: 'PERMANENT_WITHOUT_OTK', // - постоянная регистрация (без ОТК)
+  PERMANENT_WITH_OTK: 'PERMANENT_WITH_OTK', // - постоянная регистрация (с ОТК)
+  NOT_REGISTERED: 'NOT_REGISTERED', // - без регистрации (не используется)
+  TEMPORARY: 'TEMPORARY', // - временная регистрация
+  TEMPORARY_ENTRANCE: 'TEMPORARY_ENTRANCE', // - временный въезд
+};
+
 export const DOCS_TYPES_DICT = {
   PENSION_CERTIFICATE: 'PENSION_CERTIFICATE',
   VETERAN_CERTIFICATE: 'VETERAN_CERTIFICATE',
@@ -152,6 +160,8 @@ export const DATE_MESSAGE_ERRORS = {
   date: 'Має бути більше дати народження',
   startContract: 'Дата має бути більшою за поточну',
   dateFormat: 'Не коректна дата',
+  otkMinDate: 'Дата має бути на 15 днів більшою за поточну',
+  otkMaxDate: 'Дата має бути не більше року від поточної',
 };
 export const FORMIK_DATA_KEYS = {
   CONTACTS: 'contactsFormik',

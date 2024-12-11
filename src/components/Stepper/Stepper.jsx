@@ -214,7 +214,11 @@ const Stepper = ({ backLinkRef }) => {
         insurObject,
         registrationPlaceData.id,
         fullCarModel,
-        privilegeData
+        privilegeData,
+        {
+          registrationType: userParams.registrationType,
+          otkDate: userParams.otkDate,
+        }
       );
 
       contractSave(

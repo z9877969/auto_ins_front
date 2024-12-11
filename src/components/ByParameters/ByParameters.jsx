@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { format, addDays } from 'date-fns';
+import { format, addDays, addYears } from 'date-fns';
 
 import {
   AllCheckboxContStyled,
@@ -25,12 +25,16 @@ import {
   DATE_MESSAGE_ERRORS,
   ORDER_TYPE,
   PRIVILEGED_TYPE,
+  REGISTRATION_TYPES,
   VEHICLES_TYPES,
 } from '../../constants';
 
 import CustomLabel from '../CustomLabel/CustomLabel';
 import CustomDateInput from '../CustomDateInput/CustomDateInput';
-import { validateContractStartDate } from '../../helpers/formValidationSchema';
+import {
+  validateContractOtkDate,
+  validateContractStartDate,
+} from '../../helpers/formValidationSchema';
 import { normalizeDate } from '../../helpers/normalizeDate';
 import { useErrorHandler } from '../../context/ErrorProvider';
 
@@ -64,6 +68,7 @@ const ByParameters = () => {
     engineCapacity,
     foreignNumber,
     benefits,
+    submitObj: { registrationType },
   } = useSelector((state) => state.byParameters);
 
   const handleChangeVehicle = (option) => {
@@ -96,10 +101,12 @@ const ByParameters = () => {
       benefits,
       foreignNumber,
       dateFrom: format(addDays(new Date(), 1), 'dd/MM/yyyy'),
-      otk: false,
+      otk: registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK,
+      registrationType: REGISTRATION_TYPES.PERMANENT_WITHOUT_OTK,
     },
     validationSchema: Yup.object().shape({
       dateFrom: validateContractStartDate(),
+      otkDate: validateContractOtkDate(),
     }),
     // validateOnChange: false,
     onSubmit: (values) => {
@@ -112,8 +119,15 @@ const ByParameters = () => {
         usageMonths: 0,
         taxi: false,
         dateFrom: normalizeDate(values.dateFrom),
+        registrationType: values.registrationType,
       };
-      address.value ? (sendObj.registrationPlace = address.value) : null;
+      if (address.value) {
+        sendObj.registrationPlace = address.value;
+      }
+      if (values.otkDate) {
+        sendObj.otkDate = normalizeDate(values.otkDate);
+      }
+
       setSubmitObj(sendObj);
       setStateNumber('');
       setAutoMakers([]);
@@ -135,16 +149,33 @@ const ByParameters = () => {
     ? (formik.values.benefits = false)
     : formik.values.benefits;
 
-  const { setValues } = formik;
+  const { setValues, values } = formik;
 
   useEffect(() => {
-    if (VEHICLES_TYPES[engineCapacity.value].otk) {
+    setValues((p) => ({
+      ...p,
+      otk: VEHICLES_TYPES[engineCapacity.value].otkRequired,
+    }));
+  }, [engineCapacity, setValues]);
+
+  useEffect(() => {
+    if (values.otk) {
       setValues((p) => ({
         ...p,
-        otk: VEHICLES_TYPES[engineCapacity.value].otkRequired,
+        registrationType: REGISTRATION_TYPES.PERMANENT_WITH_OTK,
+        otkDate: format(addDays(addYears(new Date(), 1), 1), 'dd/MM/yyyy'),
       }));
+    } else {
+      setValues((p) => {
+        // eslint-disable-next-line
+        const { otkDate, registrationType, ...rest } = p;
+        return {
+          ...rest,
+          registrationType: REGISTRATION_TYPES.PERMANENT_WITHOUT_OTK,
+        };
+      });
     }
-  }, [engineCapacity, setValues]);
+  }, [setValues, values.otk]);
 
   return (
     <div>
@@ -181,19 +212,45 @@ const ByParameters = () => {
             />
 
             {isDev && VEHICLES_TYPES[engineCapacity.value].otk && (
-              <GeneralCheckbox
-                lableText="ОТК"
-                labelColor={'#ffffff!important'}
-                name="otk"
-                changeCB={formik.handleChange}
-                isChecked={formik.values.otk}
-                // color={
-                //   engineCapacity.value === 'B5' || formik.values.foreignNumber
-                //     ? 'rgba(243, 243, 243, 0.40)'
-                //     : null
-                // }
-                isDisabled={VEHICLES_TYPES[engineCapacity.value].otkRequired}
-              />
+              <>
+                <GeneralCheckbox
+                  lableText="ОТК"
+                  labelColor={'#ffffff!important'}
+                  color={
+                    VEHICLES_TYPES[engineCapacity.value].otkRequired
+                      ? 'rgba(243, 243, 243, 0.40)'
+                      : null
+                  }
+                  name="otk"
+                  changeCB={formik.handleChange}
+                  isChecked={formik.values.otk}
+                  isDisabled={VEHICLES_TYPES[engineCapacity.value].otkRequired}
+                />
+                {formik.values.otk && (
+                  <CustomLabel
+                    lableText="Дата наступного ОТК:"
+                    labelColor={'#ffffff!important'}
+                    errorposition={{
+                      top: '100%',
+                      right: '16px',
+                    }}
+                    className={'baseLine'}
+                  >
+                    <CustomDateInput
+                      value={formik.values.otkDate}
+                      setValue={(v) => formik.setFieldValue('otkDate', v)}
+                      placeholder={'дд/мм/рррр'}
+                    />
+                    {formik.errors.otkDate && (
+                      <div className="errorMessage">
+                        {!formik.errors.otkDate.includes('otkDate')
+                          ? formik.errors.otkDate
+                          : DATE_MESSAGE_ERRORS.dateFormat}
+                      </div>
+                    )}
+                  </CustomLabel>
+                )}
+              </>
             )}
           </div>
 
@@ -245,12 +302,16 @@ const ByParameters = () => {
               engineCapacity.value === 'B5' ? false : formik.values.benefits
             }
             color={
-              engineCapacity.value === 'B5' || formik.values.foreignNumber
+              engineCapacity.value === 'B5' ||
+              formik.values.foreignNumber ||
+              values.otk
                 ? 'rgba(243, 243, 243, 0.40)'
                 : null
             }
             isDisabled={
-              engineCapacity.value === 'B5' || formik.values.foreignNumber
+              engineCapacity.value === 'B5' ||
+              values.foreignNumber ||
+              values.otk
                 ? true
                 : false
             }

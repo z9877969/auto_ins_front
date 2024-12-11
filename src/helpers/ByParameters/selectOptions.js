@@ -54,7 +54,7 @@ const vehicleTypesOptions = [
   },
   {
     label:
-      'Легковий электромобіль (виключно з силовим электродвигуном, крім гібридних авто)',
+      'Легковий електромобіль (виключно з силовим електродвигуном, крім гібридних авто)',
     value: 'B5',
   },
   {
@@ -98,7 +98,7 @@ const withDisabledVehicleTypesOptions = vehicleTypesOptions.map((option) =>
     : option
 );
 
-export const isDev = false; // true when developes categories logic | false when must deploy to production
+export const isDev = true; /* false */ // true when developes categories logic | false when must deploy to production
 const withDevExport = () => {
   return isDev
     ? {
@@ -144,7 +144,7 @@ B1 - легковой автомобиль - до 1600 см3
 B2 - легковой автомобиль - 1601 - 2000 см3
 B3 - легковой автомобиль - 2001 - 3000
 B4 - легковой автомобиль - более 3000 см3
-B5 - легковой электромобиль (исключительно с силовым электродвигателем, кроме гибридных авто)
+B5 - легковой електромобиль (исключительно с силовым електродвигателем, кроме гибридных авто)
 C1 - грузовой автомобиль - до 2т
 C2 - грузовой автомобиль - более 2т
 D1 - автобус - до 20 человек

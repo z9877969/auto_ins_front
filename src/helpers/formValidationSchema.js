@@ -59,7 +59,7 @@ export const validateFullAgeDate = () => {
   );
   return Yup.date()
     .transform(parseDateString)
-    .max(date18YearsAgo, DATE_MESSAGE_ERRORS['birthDate'])
+    .max(date18YearsAgo, DATE_MESSAGE_ERRORS.birthDate)
     .min(date100YearsAgo, DATE_MESSAGE_ERRORS['100yearsOldDate'])
     .required(REQUIRED_FIELD);
 };
@@ -76,7 +76,7 @@ export const validateRegistrationDate = () => {
           }
           return date > birthDate;
         },
-        message: DATE_MESSAGE_ERRORS['date'],
+        message: DATE_MESSAGE_ERRORS.date,
       });
     });
 };
@@ -90,7 +90,26 @@ export const validateContractStartDate = () => {
   );
   return Yup.date()
     .transform(parseDateString)
-    .min(dateMoreThenToday, DATE_MESSAGE_ERRORS['startContract'])
+    .min(dateMoreThenToday, DATE_MESSAGE_ERRORS.startContract)
+    .required(REQUIRED_FIELD);
+};
+
+export const validateContractOtkDate = () => {
+  const today = new Date();
+  const otkMinDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 15
+  );
+  const otkMaxDate = new Date(
+    today.getFullYear() + 1,
+    today.getMonth(),
+    today.getDate() + 1
+  );
+  return Yup.date()
+    .transform(parseDateString)
+    .min(otkMinDate, DATE_MESSAGE_ERRORS.otkMinDate)
+    .max(otkMaxDate, DATE_MESSAGE_ERRORS.otkMaxDate)
     .required(REQUIRED_FIELD);
 };
 
