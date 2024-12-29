@@ -72,15 +72,17 @@ export const osagoByDn = createAsyncThunk(
   'calculator/osagoByDn',
   async (body, { rejectWithValue, dispatch, getState }) => {
     try {
-      const { customerCategory, stateNumber, dateFrom } = body;
+      // const { customerCategory, stateNumber, dateFrom, registrationType } =
+      //   body;
       const { data } = await instance.get(
         mainRoutes.CALCULATOR + '/tariff/choose/policy/statenumber',
         {
           params: {
-            customerCategory,
-            stateNumber,
-            dateFrom,
-            registrationType: 'PERMANENT_WITHOUT_OTK',
+            ...body,
+            // customerCategory,
+            // stateNumber,
+            // dateFrom,
+            // registrationType,
             taxi: false,
           },
         }

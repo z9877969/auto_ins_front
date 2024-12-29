@@ -1,4 +1,5 @@
 // import format from 'date-fns/format';
+import { SAVED_ORDER_TYPE } from '@constants/index';
 import { convertCurTimeToUTC } from 'helpers/convertCurTimeToUTC';
 
 export const contractSaveOSAGONormalize = (
@@ -10,7 +11,7 @@ export const contractSaveOSAGONormalize = (
 ) => {
   const { customer, insuranceObject } = customerInsuriensObject;
   const requestBody = {
-    type: 'epolicy',
+    type: SAVED_ORDER_TYPE.EPOLICY,
     ...user,
     customer,
     tariff,

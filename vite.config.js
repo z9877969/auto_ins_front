@@ -8,6 +8,10 @@ dotenv.config();
 // https://vitejs.dev/config/
 export default defineConfig(() => {
   return {
+    server: {
+      host: true,
+      port: 3000,
+    },
     plugins: [
       react({
         jsxImportSource: '@emotion/react',

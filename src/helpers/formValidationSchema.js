@@ -109,8 +109,8 @@ export const validateContractOtkDate = () => {
   return Yup.date()
     .transform(parseDateString)
     .min(otkMinDate, DATE_MESSAGE_ERRORS.otkMinDate)
-    .max(otkMaxDate, DATE_MESSAGE_ERRORS.otkMaxDate)
-    .required(REQUIRED_FIELD);
+    .max(otkMaxDate, DATE_MESSAGE_ERRORS.otkMaxDate);
+  // .required(REQUIRED_FIELD);
 };
 
 // === Date Validation -End

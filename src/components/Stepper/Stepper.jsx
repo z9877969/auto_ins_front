@@ -44,9 +44,13 @@ import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
 import { contractSaveDGONormalize } from '../../helpers/dataNormalize/contractSaveDGONormalize';
 import CustomButtonLoading from './CustomButtonLoading';
 import SelectOrInputProvider from '../../context/SelectOrInputProvider';
-import { format } from 'date-fns';
+import { addDays, addYears, format } from 'date-fns';
 import * as storage from '../../helpers/storage';
-import { FORMIK_DATA_KEYS as formikDataKeys } from '../../constants';
+import {
+  FORMIK_DATA_KEYS as formikDataKeys,
+  REGISTRATION_TYPES,
+  VEHICLES_GROUPS,
+} from '../../constants';
 import { useDocTypesOptions } from '../../hooks/useDocTypesOptions';
 import { calcBirthdateFromIpn } from 'helpers/birthDate/calcBirthdateFromIpn';
 
@@ -206,6 +210,22 @@ const Stepper = ({ backLinkRef }) => {
             autoCategory: engineType,
           }
         : null;
+      const autoCategory = userParams.autoCategory || insurObject.category;
+      const otkData = {
+        registrationType:
+          (VEHICLES_GROUPS['C'][autoCategory] ||
+            VEHICLES_GROUPS['D'][autoCategory]) &&
+          !userParams.registrationType !== REGISTRATION_TYPES.PERMANENT_WITH_OTK
+            ? REGISTRATION_TYPES.PERMANENT_WITH_OTK
+            : userParams.registrationType,
+        otkDate:
+          (VEHICLES_GROUPS['C'][autoCategory] ||
+            VEHICLES_GROUPS['D'][autoCategory]) &&
+          !userParams.otkDate
+            ? format(addDays(addYears(new Date(), 1), 1), 'yyyy-MM-dd')
+            : userParams.otkDate,
+      };
+
       const customIsur = customerInsuriensObject(
         insurerDataFormik,
         homeAddressFormik,
@@ -215,10 +235,7 @@ const Stepper = ({ backLinkRef }) => {
         registrationPlaceData.id,
         fullCarModel,
         privilegeData,
-        {
-          registrationType: userParams.registrationType,
-          otkDate: userParams.otkDate,
-        }
+        otkData
       );
 
       contractSave(

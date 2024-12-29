@@ -84,39 +84,46 @@ const vehicleTypesOptions = [
 ];
 
 // disabled category that no supported -Start
-const disabledCategories = ['C', 'D', 'E', 'F'];
-const withDisabledVehicleGroupsOptions = vehicleGroupsOptions_changed.map(
-  (option) =>
-    disabledCategories.some((c) => option.value.includes(c))
-      ? { ...option, isDisabled: true }
-      : option
-);
+// const disabledCategories = ['C', 'D', 'E', 'F'];
+// const withDisabledVehicleGroupsOptions = vehicleGroupsOptions_changed.map(
+//   (option) =>
+//     disabledCategories.some((c) => option.value.includes(c))
+//       ? { ...option, isDisabled: true }
+//       : option
+// );
 
-const withDisabledVehicleTypesOptions = vehicleTypesOptions.map((option) =>
-  disabledCategories.some((c) => option.value.includes(c))
-    ? { ...option, isDisabled: true }
-    : option
-);
+// const withDisabledVehicleTypesOptions = vehicleTypesOptions.map((option) =>
+//   disabledCategories.some((c) => option.value.includes(c))
+//     ? { ...option, isDisabled: true }
+//     : option
+// );
 
-export const isDev = true; /* false */ // true when developes categories logic | false when must deploy to production
-const withDevExport = () => {
-  return isDev
-    ? {
-        vehicleGroupsOptions: vehicleGroupsOptions_changed,
-        vehicleTypesOptions,
-      }
-    : {
-        vehicleGroupsOptions: withDisabledVehicleGroupsOptions,
-        vehicleTypesOptions: withDisabledVehicleTypesOptions,
-      };
+const vehicleOptions = {
+  vehicleGroupsOptions: vehicleGroupsOptions_changed,
+  vehicleTypesOptions,
 };
 
-export const vehicleGroupsOptions = withDevExport().vehicleGroupsOptions;
+// export const isDev = true; /* false */ // true when develops categories logic | false when must deploy to production
+// const withDevExport = () => {
+//   return isDev
+//     ? {
+//         vehicleGroupsOptions: vehicleGroupsOptions_changed,
+//         vehicleTypesOptions,
+//       }
+//     : {
+//         vehicleGroupsOptions: withDisabledVehicleGroupsOptions,
+//         vehicleTypesOptions: withDisabledVehicleTypesOptions,
+//       };
+// };
+
+// export const vehicleGroupsOptions = withDevExport().vehicleGroupsOptions;
+export const vehicleGroupsOptions = vehicleOptions.vehicleGroupsOptions;
 
 // disabled category that no supported -End
 
 export function selectAutoCategory(category) {
-  const vehicleTypesOptions = withDevExport().vehicleTypesOptions;
+  // const vehicleTypesOptions = withDevExport().vehicleTypesOptions;
+  const vehicleTypesOptions = vehicleOptions.vehicleTypesOptions;
 
   switch (category) {
     case 'EF':

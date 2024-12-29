@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { instance } from '../../services/api';
 import { setIsContractDGO, setIsContractOSAGO } from './globalSlice';
-import { mainRoutes } from '../../constants';
+import { mainRoutes, SAVED_ORDER_TYPE } from '../../constants';
 
 export const contractSave = createAsyncThunk(
   'global/contractSave',
@@ -14,7 +14,7 @@ export const contractSave = createAsyncThunk(
           sourceInfo: 'https://auto-ins.com.ua/',
         }
       );
-      if (data.tariff.type === 'epolicy') {
+      if (data.tariff.type === SAVED_ORDER_TYPE.EPOLICY) {
         dispatch(setIsContractOSAGO(true));
       }
       if (data.tariff.type === 'vcl') {

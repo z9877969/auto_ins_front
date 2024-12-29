@@ -1,5 +1,14 @@
+import { useMemo, useState, useEffect } from 'react';
+import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import useTheme from '@mui/material/styles/useTheme';
+import Box from '@mui/material/Box';
+import GeneralSelect from '../GeneralSelect/GeneralSelect';
+import CompanyCardMedia from '../CompanyCardMedia/index';
 import {
   BoxContent,
   BoxFooter,
@@ -10,18 +19,10 @@ import {
   GridContainerImg,
   WrapperStyled,
 } from './CompanyStyled';
-import Grid from '@mui/material/Grid';
-import { useMemo, useState } from 'react';
-import useTheme from '@mui/material/styles/useTheme';
-import { useLocation, useNavigate } from 'react-router-dom';
-import GeneralSelect from '../GeneralSelect/GeneralSelect';
-import Box from '@mui/material/Box';
-import { useEffect } from 'react';
-import { useFormik } from 'formik';
-import CompanyCardMedia from '../CompanyCardMedia/index';
-import { useSelector } from 'react-redux';
-import { getUser } from '../../redux/Calculator/selectors';
-import { useActions } from '../../hooks/useActions';
+import { getUser } from '@redux/Calculator/selectors';
+import { getSubmitObject } from '@redux/byParameters/selectors';
+import { useActions } from 'hooks/useActions';
+import { REGISTRATION_TYPES } from '@constants/index';
 
 const content = {
   label: {
@@ -38,6 +39,7 @@ const Company = ({ companyObject, lastItem }) => {
   const navigate = useNavigate();
 
   const user = useSelector(getUser);
+  const { registrationType } = useSelector(getSubmitObject);
   const theme = useTheme();
   const { setGlobalCustomerData, setParamsFromUrl, changeVslOrderStatus } =
     useActions();
@@ -196,13 +198,17 @@ const Company = ({ companyObject, lastItem }) => {
                 color={theme.palette.primary.main}
                 optionsArr={companyObject?.dgo?.tariff || []}
                 changeCB={handleChangeDgoSelect}
-                // defaultValue={{ limit: 0, discountedPayment: 0 }}
                 getOptionLabel={(option) =>
                   `+${option.limit} за ${option.discountedPayment} грн`
                 }
                 getOptionValue={(option) => option.discountedPayment}
                 currentValue={chooseDgo}
-                isDisabled={!companyObject?.dgo ? true : false}
+                isDisabled={
+                  !companyObject?.dgo ||
+                  registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK
+                    ? true
+                    : false
+                }
                 optionsOnTop={lastItem}
               />
             </BoxSelect>

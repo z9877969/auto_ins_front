@@ -32,11 +32,6 @@ export const combineError = createSelector(
   }
 );
 
-export const orderType = {
-  VCL: 'vcl',
-  EPOLICY: 'epolicy', // needing for id
-};
-
 export const selectOrderData = createSelector(
   [(state) => state.global.order],
   (order) => {

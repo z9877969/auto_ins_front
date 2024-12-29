@@ -16,7 +16,7 @@ import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
 import {
   vehicleGroupsOptions,
   selectAutoCategory,
-  isDev,
+  // isDev,
 } from '../../helpers/ByParameters/selectOptions';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
 import HelperList from '../HelpCircle/HelperList/HelperList';
@@ -104,10 +104,25 @@ const ByParameters = () => {
       otk: registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK,
       registrationType: REGISTRATION_TYPES.PERMANENT_WITHOUT_OTK,
     },
-    validationSchema: Yup.object().shape({
-      dateFrom: validateContractStartDate(),
-      otkDate: validateContractOtkDate(),
-    }),
+    validate: (values) => {
+      try {
+        const schemaOptions = {
+          dateFrom: validateContractStartDate(),
+        };
+        if (values.otk) {
+          schemaOptions.otkDate = validateContractOtkDate();
+        }
+        const schema = Yup.object(schemaOptions);
+        schema.validateSync(values, { abortEarly: false });
+        return {};
+      } catch (errors) {
+        const validationErrors = {};
+        errors.inner?.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+        return validationErrors;
+      }
+    },
     // validateOnChange: false,
     onSubmit: (values) => {
       let sendObj = {
@@ -177,6 +192,14 @@ const ByParameters = () => {
     }
   }, [setValues, values.otk]);
 
+  const isPrivileged =
+    engineCapacity.value === 'B5' ||
+    engineCapacity.value.startsWith('C') ||
+    engineCapacity.value === 'E' ||
+    engineCapacity.value === 'F' ||
+    values.foreignNumber ||
+    values.otk;
+
   return (
     <div>
       <FormStyled
@@ -211,7 +234,7 @@ const ByParameters = () => {
               className={'baseLine'}
             />
 
-            {isDev && VEHICLES_TYPES[engineCapacity.value].otk && (
+            {VEHICLES_TYPES[engineCapacity.value].otk && (
               <>
                 <GeneralCheckbox
                   lableText="ОТК"
@@ -301,20 +324,8 @@ const ByParameters = () => {
             isChecked={
               engineCapacity.value === 'B5' ? false : formik.values.benefits
             }
-            color={
-              engineCapacity.value === 'B5' ||
-              formik.values.foreignNumber ||
-              values.otk
-                ? 'rgba(243, 243, 243, 0.40)'
-                : null
-            }
-            isDisabled={
-              engineCapacity.value === 'B5' ||
-              values.foreignNumber ||
-              values.otk
-                ? true
-                : false
-            }
+            color={isPrivileged ? 'rgba(243, 243, 243, 0.40)' : null}
+            isDisabled={isPrivileged ? true : false}
             helper={<HelperList />}
           />
           <GeneralCheckbox
