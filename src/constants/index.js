@@ -32,11 +32,12 @@ export const PRIVILEGED_TYPE = {
 };
 
 export const REGISTRATION_TYPES = {
-  PERMANENT_WITHOUT_OTK: 'PERMANENT_WITHOUT_OTK', // - постоянная регистрация (без ОТК)
+  // PERMANENT_WITHOUT_OTK: 'PERMANENT_WITHOUT_OTK', // - постоянная регистрация (без ОТК)
+  PERMANENT_WITHOUT_OTK: 'PERMANENT', // - постоянная регистрация (без ОТК)
   PERMANENT_WITH_OTK: 'PERMANENT_WITH_OTK', // - постоянная регистрация (с ОТК)
   NOT_REGISTERED: 'NOT_REGISTERED', // - без регистрации (не используется)
   TEMPORARY: 'TEMPORARY', // - временная регистрация
-  TEMPORARY_ENTRANCE: 'TEMPORARY_ENTRANCE', // - временный въезд
+  // TEMPORARY_ENTRANCE: 'TEMPORARY_ENTRANCE', // - временный въезд не дійсне з v16
 };
 
 export const DOCS_TYPES_DICT = {
@@ -171,5 +172,5 @@ export const FORMIK_DATA_KEYS = {
 };
 export const SAVED_ORDER_TYPE = {
   VCL: 'vcl',
-  EPOLICY: 'epolicy', // needing for id
+  EPOLICY: 'epolicy2025', // needing for id
 };

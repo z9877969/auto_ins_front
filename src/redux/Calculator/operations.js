@@ -72,8 +72,30 @@ export const osagoByDn = createAsyncThunk(
   'calculator/osagoByDn',
   async (body, { rejectWithValue, dispatch, getState }) => {
     try {
-      // const { customerCategory, stateNumber, dateFrom, registrationType } =
-      //   body;
+      // const {
+      //   customerCategory,
+      //   stateNumber,
+      //   dateFrom,
+      //   registrationType,
+      // } = body;
+      /* 
+        outsideUkraine=false
+        customerCategory=NATURAL
+        stateNumber=%D0%90%D0%865366%D0%A0%D0%92
+        dateFrom=2024-12-30
+        registrationType=PERMANENT
+        taxi=false
+        dateTo=2025-12-29
+
+        customerCategory=NATURAL
+        taxi=false
+        autoCategory=B2
+        registrationType=PERMANENT
+        dateFrom=2024-12-20
+        dateTo=2025-12-19
+        registrationPlace=1
+
+      */
       const { data } = await instance.get(
         mainRoutes.CALCULATOR + '/tariff/choose/policy/statenumber',
         {
@@ -84,6 +106,7 @@ export const osagoByDn = createAsyncThunk(
             // dateFrom,
             // registrationType,
             taxi: false,
+            // dateTo: '2025-12-29'
           },
         }
       );
