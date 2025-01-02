@@ -1,5 +1,6 @@
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Unstable_Grid2';
+// import Grid from '@mui/material/Unstable_Grid2';
+import { Unstable_Grid2 as Grid } from '@mui/material';
 import { SpriteSVG } from '../../images/SpriteSVG';
 import {
   BoxImgS,
