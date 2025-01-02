@@ -1,5 +1,5 @@
+import { Divider, Drawer, List, ListItem, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Box, Divider, Drawer } from '@mui/material';
 
 export const BoxImg = styled(Box)(({ theme }) => ({
   stroke: theme.palette.primary.white,
@@ -63,3 +63,60 @@ export const BodyMenu = styled(Box)(({ theme }) => ({
 export const DividerStyled = styled(Divider)(({ theme }) => ({
   borderColor: theme.palette.primary.main,
 }));
+
+// to remove -Start
+export const UlListS = styled(List)(({ theme }) => ({
+  width: '100%',
+  padding: '0 16px 16px 16px',
+  margin: '0px',
+  display: 'flex',
+  alignItems: 'center',
+
+  '&.centered': {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    [theme.breakpoints.up('xs')]: {
+      gap: '17px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      gap: '16px',
+      padding: '0 24px 20px 24px',
+    },
+  },
+}));
+// to remove -End
+
+// to remove -Start
+export const LiItemS = styled(ListItem)(({ theme }) => ({
+  '&.liSocialIcon': {
+    width: '40px',
+    height: '40px',
+    backgroundColor: theme.palette.primary.main,
+    justifyContent: 'center',
+    borderRadius: '50%',
+    stroke: theme.palette.primary.white,
+    fill: 'none',
+    transition: 'stroke 250ms linear',
+    '&:hover': {
+      stroke: theme.palette.primary.blue,
+    },
+  },
+}));
+// to remove -End
+
+// to remove -Start
+export const BoxIconS = styled(Box)(({ theme }) => ({
+  '&.logoIcon': {
+    width: '110px',
+    height: '52px',
+    [theme.breakpoints.up('sm')]: {
+      width: '117px',
+      height: '55px',
+    },
+  },
+  '&.socialIconBox': {
+    width: '24px',
+    height: '24px',
+  },
+}));
+// to remove -End
