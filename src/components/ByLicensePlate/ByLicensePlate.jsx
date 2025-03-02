@@ -176,6 +176,7 @@ const ByLicensePlate = () => {
                   }}
                   id="license-plate"
                   required
+                  placeholder='AA1234AA'
                 />
               </Box>
               <Box className="otkWrapper">
