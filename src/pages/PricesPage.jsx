@@ -87,3 +87,30 @@ const PricesPage = () => {
   );
 };
 export default PricesPage;
+
+/* 
+// correct
+autoKind: "CAR"
+autoKindLimit: "1600"
+customerCategory: "NATURAL"
+dateFrom: "2025-01-09"
+dateTo: "2026-01-08"
+outsideUkraine: false
+registrationPlace: 1
+registrationType: "PERMANENT"
+salePoint: 40831
+taxi: false
+usageMonths: 0
+=======
+// uncorrect
+autoKind: "CAR"
+autoKindLimit: "1600"
+customerCategory: "NATURAL"
+dateFrom: "2025-01-09"
+dateTo: "2026-01-08"
+outsideUkraine: false
+registrationPlace: 1
+registrationType: "PERMANENT"
+salePoint: 40831
+stateNumber: "АІ5366РВ"
+*/

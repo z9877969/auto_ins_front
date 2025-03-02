@@ -1,8 +1,8 @@
+import { BACK_URL } from '@constants/index';
 import axios from 'axios';
 
 export const instance = axios.create({
-  baseURL: 'http://localhost:4040/api',
-  // baseURL: 'https://api.auto-ins.com.ua/api',
+  baseURL: BACK_URL + '/api',
 });
 
 export const getOrderPasswordApi = async (contractId) => {
@@ -37,17 +37,52 @@ export const requestOrderApi = async ({ epolicy, vcl }) => {
   return data;
 };
 
-export const emmitOrderApi = async ({ epolicy, vcl }) => {
+export const emmitOrderApi = async ({ epolicy, vcl, ...rest }) => {
   await instance.post(
-    `orders/${epolicy}/emmit`,
+    `/orders/${epolicy}/emmit`,
     {},
     {
       params: {
         epolicy,
         vcl,
+        ...rest,
       },
     }
   );
+  return true;
+};
+
+export const createContractPaymentApi = async ({
+  contractId,
+  amount,
+  orderId,
+  linkInvoice,
+}) => {
+  await instance.post('/orders/contractpayment/createContractPayment', null, {
+    params: {
+      contractId,
+      amount,
+      orderId,
+      linkInvoice,
+    },
+  });
+  return true;
+};
+
+export const confirmContractPaymentApi = async ({
+  contractId,
+  amount,
+  orderId,
+  payDate,
+}) => {
+  await instance.post('/orders/contractpayment/confirmContractPayment', null, {
+    params: {
+      contractId,
+      amount,
+      orderId,
+      payDate,
+    },
+  });
   return true;
 };
 

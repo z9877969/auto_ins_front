@@ -57,6 +57,7 @@ const Company = ({ companyObject, lastItem }) => {
     return [...tariff].sort((a, b) => b.franchise - a.franchise);
   }, [tariff]);
 
+  // eslint-disable-next-line no-unused-vars
   const [franchise, setFranchise] = useState(sortedTarrif[0]);
 
   const [chooseDgo, setChooseDgo] = useState({
@@ -87,9 +88,9 @@ const Company = ({ companyObject, lastItem }) => {
     // eslint-disable-next-line
   }, []);
 
-  const handleChangeSelect = (e) => {
-    setFranchise(e);
-  };
+  // const handleChangeSelect = (e) => {
+  //   setFranchise(e);
+  // };
   const handleChangeDgoSelect = (option) => {
     const { limit, discountedPayment } = option;
     if (limit === 0 && discountedPayment === 0) {
@@ -175,7 +176,7 @@ const Company = ({ companyObject, lastItem }) => {
           </Typography>
 
           <Box className="content">
-            <BoxSelect className="franchise">
+            {/* <BoxSelect className="franchise">
               <GeneralSelect
                 id="franchise"
                 lableText={content.label.FRANSHISE_TEXT}
@@ -189,7 +190,7 @@ const Company = ({ companyObject, lastItem }) => {
                 getOptionValue={(option) => option.discountedPayment}
                 $optionsOnTop={lastItem}
               />
-            </BoxSelect>
+            </BoxSelect> */}
             <BoxSelect>
               <GeneralSelect
                 id="2"

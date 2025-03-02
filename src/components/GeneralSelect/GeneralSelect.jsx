@@ -20,6 +20,7 @@ const GeneralSelect = ({
   defaultValue,
   getOptionLabel,
   getOptionValue,
+  // eslint-disable-next-line no-unused-vars
   isValid = true,
   readOnly = true,
   noOptionsMessage = '',

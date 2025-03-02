@@ -6,6 +6,7 @@ import {
   VIN_REGEX,
   VEHICLES_TYPES,
   DATE_MESSAGE_ERRORS,
+  VEHICLES_GROUPS,
 } from '../constants';
 import { isDate, parse } from 'date-fns';
 import { insurerDocsDict } from 'assets/utils/insurerDocsDict';
@@ -151,6 +152,19 @@ export const carDataFormValidationSchema = ({
     bodyNumber: Yup.string()
       .required(REQUIRED_FIELD)
       .matches(VIN_REGEX, 'VIN повинен містити до 17 літер'),
+    grossWeight: Yup.number()
+      .integer('Повинно бути ціле число')
+      .required(REQUIRED_FIELD),
+    curbWeight: Yup.number()
+      .integer('Повинно бути ціле число')
+      .required(REQUIRED_FIELD),
+    seatingCapacity: Yup.number()
+      .integer('Повинно бути ціле число')
+      .required(REQUIRED_FIELD),
+    electricMotorPower:
+      engineType === VEHICLES_GROUPS.B.B5
+        ? Yup.number().required(REQUIRED_FIELD)
+        : Yup.string(),
   };
   if (isPrivilege && engineType) {
     schemaOptions.engineVolume = getIsValidEngineType(engineType)

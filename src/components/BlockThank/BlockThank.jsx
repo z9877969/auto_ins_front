@@ -11,12 +11,13 @@ import {
   getOrderPasswordApi,
   checkOrderPasswordApi,
   requestOrderApi,
-} from '../../services/api';
-import { selectOrderData } from '../../redux/Global/selectors';
+  confirmContractPaymentApi,
+} from 'services/api';
+import { selectOrderData } from '@redux/Global/selectors';
+import { getUser } from '@redux/Calculator/selectors';
 import { useActions } from '../../hooks/useActions';
 import CustomButtonLoading from '../Stepper/CustomButtonLoading';
 import PushNotification from '../PushNotification/PushNotification';
-import { setToLS } from '../../helpers/storage';
 import { FORMIK_DATA_KEYS as formikDataKeys } from '../../constants';
 
 // eslint-disable-next-line
@@ -72,6 +73,7 @@ const BlockThank = () => {
   const navigate = useNavigate();
   const actions = useActions();
   const orderData = useSelector(selectOrderData);
+  const user = useSelector(getUser);
   const { orderStage } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -89,6 +91,7 @@ const BlockThank = () => {
 
   const handleOrderClick = async () => {
     if (orderStage === orderMessagesKeys.ORDER_GET) {
+      if (errorMessage) return null;
       setIsLoading(true);
       try {
         await getOrderPasswordApi(orderData.epolicyOrderId);
@@ -108,9 +111,6 @@ const BlockThank = () => {
           password: formik.values.password,
         });
         if (!orderData.vclOrderId) {
-          // await requestOrderApi({
-          //   epolicy: orderData.epolicyOrderId,
-          // });
           nextStep(orderMessagesKeys.ORDER_PAYMENT);
         } else {
           nextStep(orderMessagesKeys.ORDER_GET_VCL);
@@ -142,10 +142,6 @@ const BlockThank = () => {
           contractId: orderData.vclOrderId,
           password: formik.values.password,
         });
-        // await requestOrderApi({
-        //   epolicy: orderData.epolicyOrderId,
-        //   vcl: orderData.vclOrderId,
-        // });
         nextStep(orderMessagesKeys.ORDER_PAYMENT);
       } catch (error) {
         setErrorMessage(JSON.stringify(error, null, 2));
@@ -166,7 +162,7 @@ const BlockThank = () => {
   useEffect(() => {
     return () => {
       if (orderStage === orderMessagesKeys.ORDER_EMMITED) {
-        Object.values(formikDataKeys).forEach((key) => setToLS(key, null));
+        localStorage.removeItem(formikDataKeys.CAR);
       }
     };
   }, [orderStage]);
@@ -179,22 +175,40 @@ const BlockThank = () => {
           epolicy: orderData.epolicyOrderId,
         });
       } catch (error) {
-        // console.log('error.message :>> ', error.message);
         setErrorMessage(error.message);
       } finally {
         setIsLoading(false);
-        setErrorMessage((err) => (err ? null : err));
       }
     };
-    setOrdersRequestStatus();
+    orderStage !== orderMessagesKeys.ORDER_EMMITED && setOrdersRequestStatus();
   }, [orderData]);
 
+  useEffect(() => {
+    if (!user) return;
+    const { paymentData } = user;
+    /* 
+      userId(pin):"102076"
+      salePointId(pin):"41736"
+      amount(pin):"3406.23"
+      epolicy(pin):"17558295"
+      orderId(pin):"CZGYPSAgA5"
+      payDate(pin):"2025-02-19"
+    */
+    paymentData &&
+      orderStage === orderMessagesKeys.ORDER_EMMITED &&
+      confirmContractPaymentApi({
+        contractId: paymentData.epolicy,
+        amount: paymentData.amount,
+        orderId: paymentData.orderId,
+        payDate: paymentData.payDate,
+      });
+  }, [user, orderStage]);
+
   return (
-    <FormContainerS component="article">
+    <FormContainerS component='article'>
       {errorMessage && (
         <PushNotification.Error
-          // message={errorMessage}
-          message="Щось пішло не так🤷🏽‍♂️. Спробуйте ще."
+          message="Щось пішло не так🤷🏽‍♂️. Спробуйте ще або зв'яжіться з менеджером."
           onClose={() => setErrorMessage(null)}
           isOpen={Boolean(errorMessage)}
         />
@@ -207,13 +221,13 @@ const BlockThank = () => {
         {(orderStage === orderMessagesKeys.ORDER_CHECK ||
           orderStage === orderMessagesKeys.ORDER_CHECK_VCL) && (
           <GeneralInput
-            id="password"
-            lableText="Код:"
-            type="text"
-            color=""
+            id='password'
+            lableText='Код:'
+            type='text'
+            color=''
             handleBlur={null}
             customFunc={null}
-            placeholder="ХХХХХХ"
+            placeholder='ХХХХХХ'
             isDisabled={false}
             isReadOnly={false}
             formikData={{
@@ -226,14 +240,14 @@ const BlockThank = () => {
         )}
       </BoxImgS>
       <Typography
-        component="h2"
-        variant="formTitle"
+        component='h2'
+        variant='formTitle'
         sx={{ marginBottom: { xs: '4px', sm: '8px' } }}
       >
         {orderStage && content[orderStage].title}
       </Typography>
       <Typography
-        variant="body1"
+        variant='body1'
         sx={{ marginBottom: { xs: '16px', sm: '32px', lg: '48px' } }}
       >
         {orderStage && content[orderStage].descr}
@@ -253,7 +267,7 @@ const BlockThank = () => {
       )}
       {orderStage === orderMessagesKeys.ORDER_PAYMENT && (
         <PortmoneForm
-          orderId={{
+          contractId={{
             epolicyId: orderData?.epolicyOrderId,
             vclId: orderData?.vclOrderId,
           }}

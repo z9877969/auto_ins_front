@@ -1,6 +1,6 @@
 export const paramsByNumberNormalize = (params) => {
-  const { bodyNumber, year, modelText } = params[0];
-  return [bodyNumber, year, modelText];
+  const { bodyNumber, year, autoMaker, autoModel } = params[0];
+  return [bodyNumber, year, `${autoMaker} ${autoModel}`];
 };
 
 export const pramsByParamsNormalize = (params) => {

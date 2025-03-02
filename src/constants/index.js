@@ -19,7 +19,11 @@ export const mainRoutes = {
 };
 Object.freeze(mainRoutes);
 export const ENV = {
-  VITE_PAYEE_ID: import.meta.env.VITE_PAYEE_ID,
+  PORTMONE_PAYEE_ID: import.meta.env.VITE_PAYEE_ID,
+  LOCAL_FRONT_URL: import.meta.env.VITE_LOCAL_FRONT_URL,
+  PROD_FRONT_URL: import.meta.env.VITE_PROD_FRONT_URL,
+  LOCAL_BACK_URL: import.meta.env.VITE_LOCAL_BACK_URL,
+  PROD_BACK_URL: import.meta.env.VITE_PROD_BACK_URL,
   DEV: import.meta.env.DEV,
 };
 export const ORDER_TYPE = {
@@ -40,11 +44,34 @@ export const REGISTRATION_TYPES = {
   // TEMPORARY_ENTRANCE: 'TEMPORARY_ENTRANCE', // - временный въезд не дійсне з v16
 };
 
+export const PRIVILEGE_TYPES = {
+  PENSIONER: 'PENSIONER', // - пенсіонер
+  VETERAN: 'VETERAN', // - учасник війни
+  DISABLED: 'DISABLED', // - особа з інвалідністю II групи
+  DISABLED_I: 'DISABLED_I', // - особа з інвалідністю I групи
+  CHERNOBYLETS: 'CHERNOBYLETS', // - постраждалий внаслідок Чорнобильської катастрофи I або II категорії
+  COMBAT: 'COMBAT', // - учасник бойових дій
+  REVOLUTION: 'REVOLUTION', // - постраждалий учасник Революції Гідності
+
+  /* PENSION_CERTIFICATE - пенсійне посвідчення */
+  /* E_PENSION_CERTIFICATE - електронне пенсійне посвідчення */
+  /* DISABILITY_CERTIFICATE - посвідчення про інвалідність */
+  /* VETERAN_CERTIFICATE - посвідчення учасника війни */
+  /* CHERNOBYL_CERTIFICATE - чорнобильське посвідчення */
+  /* COMBAT_CERTIFICATE - посвідчення УБД */
+  /* WAR_DISABILITY_CERTIFICATE - посвідчення про інвалідність внаслідок війни */
+  /* REVOLUTION_CERTIFICATE - посвідчення учасника Революції Гідності */
+};
+
 export const DOCS_TYPES_DICT = {
   PENSION_CERTIFICATE: 'PENSION_CERTIFICATE',
+  E_PENSION_CERTIFICATE: 'E_PENSION_CERTIFICATE',
   VETERAN_CERTIFICATE: 'VETERAN_CERTIFICATE',
   DISABILITY_CERTIFICATE: 'DISABILITY_CERTIFICATE',
   CHERNOBYL_CERTIFICATE: 'CHERNOBYL_CERTIFICATE',
+  COMBAT_CERTIFICATE: 'COMBAT_CERTIFICATE',
+  WAR_DISABILITY_CERTIFICATE: 'WAR_DISABILITY_CERTIFICATE',
+  REVOLUTION_CERTIFICATE: 'REVOLUTION_CERTIFICATE',
   DRIVING_LICENSE: 'DRIVING_LICENSE',
   PASSPORT: 'PASSPORT',
   ID_PASSPORT: 'ID_PASSPORT',
@@ -174,3 +201,12 @@ export const SAVED_ORDER_TYPE = {
   VCL: 'vcl',
   EPOLICY: 'epolicy2025', // needing for id
 };
+
+export const PORTMONE_URL = 'https://www.portmone.com.ua/gateway/';
+
+export const FRONT_URL = ENV.DEV
+  ? ENV.LOCAL_FRONT_URL
+  : ENV.PROD_FRONT_URL;
+export const BACK_URL = ENV.DEV
+  ? ENV.LOCAL_BACK_URL
+  : ENV.PROD_BACK_URL;

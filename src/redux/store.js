@@ -22,9 +22,17 @@ const persistInsurer = {
   whitelist: ['paramsFromUrl'],
 };
 
+// const calculatorPersistConfig = {
+//   key: 'calc',
+//   version: 1,
+//   storage,
+//   whitelist: ['user'],
+// };
+
 export const store = configureStore({
   reducer: {
     global: persistReducer(persistInsurer, globalReducer),
+    // calculator: persistReducer(calculatorPersistConfig, calculatorReducer),
     calculator: calculatorReducer,
     byParameters: byParametersReducer,
     references: referencesReducer,

@@ -46,6 +46,23 @@ export const calculatorSlice = createSlice({
       // payload = true | false
       state.hasVclOrder = payload;
     },
+    setUserDataAction: (state, { payload }) => {
+      const { userId, salePointId, paymentData } = payload;
+
+      if (!state.user) {
+        state.user = {
+          user: {
+            id: userId,
+          },
+          salePoint: {
+            id: salePointId,
+          },
+        };
+        if (paymentData) {
+          state.user.paymentData = paymentData;
+        }
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -105,5 +122,6 @@ export const {
   setTariffVcl,
   setCalcError,
   changeVslOrderStatus,
+  setUserDataAction,
 } = calculatorSlice.actions;
 export const calculatorReducer = calculatorSlice.reducer;

@@ -45,7 +45,21 @@
   <link rel="preload" href="/src/fonts/open-sans-v36-cyrillic_latin-800.woff2" as="font" type="font/woff2"
     crossorigin />
 
-  <title>AUTO-INS | Автоцивілка без зайвих рухів</title>
+  <!-- <title>AUTO-INS | Автоцивілка без зайвих рухів</title> -->
+  <title>Оформити автоцивілку онлайн ᐈ Автострахування від AUTO INS</title>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const text = "Оформити автоцивілку онлайн ᐈ Автострахування від AUTO INS | ";
+      let index = 0;
+
+      function scrollTitle() {
+        document.title = text.slice(index) + text.slice(0, index); // Зсув тексту
+        index = (index + 1) % text.length; // Перехід до наступного символу
+      }
+
+      setInterval(scrollTitle, 300); // Зміна тексту кожні 200 мс
+    });
+  </script>
   <!-- Meta Pixel Code -->
   <script>
     !(function (f, b, e, v, n, t, s) {

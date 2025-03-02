@@ -30,6 +30,7 @@
     "nanoid": "^5.0.1",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",
+    "query-string": "^9.1.1",
     "react": "^18.2.0",
     "react-datepicker": "^4.21.0",
     "react-dom": "^18.2.0",
@@ -41,6 +42,7 @@
     "react-select": "^5.7.5",
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
+    "short-unique-id": "^5.2.0",
     "yup": "^1.2.0"
   },
   "devDependencies": {

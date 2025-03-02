@@ -2,8 +2,6 @@ import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import { useNotExistUser } from './hooks';
-// import Stepper from './components/Stepper/Stepper.jsx';
-// import OrderDataProvider from './context/OrderDataProvider.jsx';
 
 const loadComponentWithRetry = (importFunc, retries = 3, interval = 1000) => {
   return lazy(
@@ -16,9 +14,9 @@ const loadComponentWithRetry = (importFunc, retries = 3, interval = 1000) => {
               reject(error);
             } else {
               setTimeout(() => {
-                loadComponentWithRetry(importFunc, retries - 1, interval)
-                  // .then(resolve)
-                  // .catch(reject);
+                loadComponentWithRetry(importFunc, retries - 1, interval);
+                // .then(resolve)
+                // .catch(reject);
               }, interval);
             }
           });
@@ -43,9 +41,6 @@ function App() {
       <Suspense fallback={null}>
         <BaseSettings />
       </Suspense>
-      {/* <OrderDataProvider>
-        <Stepper />
-      </OrderDataProvider> */}
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />

@@ -1,15 +1,40 @@
-import { ENV } from '../constants';
-
-// const URL = ENV.DEV ? 'http://localhost:4040' : 'https://api.auto-ins.com.ua';
-const URL = 'https://api.auto-ins.com.ua';
+import moment from 'moment';
+import { ENV, PORTMONE_URL, FRONT_URL, BACK_URL } from '../constants';
 
 const portmoneFormProps = {
-  PAYEE_ID: ENV.VITE_PAYEE_ID,
-  GET_SUCCESS_URL: ({ vclId, epolicyId }) =>
-    `${URL}/api/orders/${epolicyId}/emmit?epolicy=${epolicyId}${
-      vclId ? `&vcl=${vclId}` : ''
-    }`,
-  FAILURE_URL: URL + '/order/payment',
+  PAYEE_ID: ENV.PORTMONE_PAYEE_ID,
+  GET_SUCCESS_URL: ({
+    vclId,
+    epolicyId,
+    amount,
+    userId,
+    salePointId,
+    orderId,
+  }) =>
+    `${BACK_URL}/api/orders/contractpayment/redirect` +
+    `?epolicy=${epolicyId}` +
+    `&amount=${amount}` +
+    `&userId=${userId}` +
+    `&salePointId=${salePointId}` +
+    `&orderId=${orderId}` +
+    `&payDate=${moment().format('YYYY-MM-DDThh:mm:ss')}` +
+    `${vclId ? `&vcl=${vclId}` : ''}`,
+  FAILURE_URL: FRONT_URL + '/order/payment',
+};
+
+export const createPaymentUrl = (
+  bodyRequest /* json object transformed to string */
+) => {
+  const url = new URL(PORTMONE_URL);
+
+  const params = new URLSearchParams({
+    typeRequest: 'json',
+    bodyRequest,
+  });
+
+  url.search = params.toString();
+
+  return url.toString();
 };
 
 export const getPortmoneValue = ({
@@ -19,7 +44,10 @@ export const getPortmoneValue = ({
   lang,
   billAmount,
   billCurrency,
-  orderId: { epolicyId, vclId },
+  contractId: { epolicyId, vclId },
+  userId,
+  salePointId,
+  orderId,
 }) => ({
   paymentTypes: {
     card: 'Y',
@@ -51,7 +79,14 @@ export const getPortmoneValue = ({
     shopOrderNumber,
     billAmount,
     billCurrency,
-    successUrl: portmoneFormProps.GET_SUCCESS_URL({ epolicyId, vclId }),
+    successUrl: portmoneFormProps.GET_SUCCESS_URL({
+      epolicyId,
+      vclId,
+      amount: billAmount,
+      userId,
+      salePointId,
+      orderId,
+    }),
     failureUrl: portmoneFormProps.FAILURE_URL,
     preauthFlag: 'N',
     expTime: 1200,

@@ -15,7 +15,7 @@ const HomeAddressForm = ({ formik }) => {
   const { setHomeAddress } = useActions();
 
   const [allAddress, setAllAddress] = useState([]);
-  const [queryText, setQueryText] = useState('');
+  const [queryText, setQueryText] = useState(formik.values.regionANDcity || '');
 
   const getHomeAddress = async (e) => {
     setQueryText(e);

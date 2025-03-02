@@ -1,6 +1,13 @@
-import { useEffect } from 'react';
-import { getPortmoneValue } from '../../helpers/getPortmoneValue';
+import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import ShortId from 'short-unique-id';
+import { getPortmoneValue, createPaymentUrl } from 'helpers/getPortmoneValue';
+import { createContractPaymentApi } from 'services/api';
+import { getUser } from '@redux/Calculator/selectors';
 import { YellowButton } from '../../style/Global.styled';
+import { setIsLoading } from '@redux/Global/globalSlice';
+import { PORTMONE_URL } from '@constants/index';
+import { useActions } from 'hooks/useActions';
 
 /* 
     description = "Test Payment",
@@ -12,15 +19,21 @@ import { YellowButton } from '../../style/Global.styled';
     billCurrency = "UAH",
 */
 
+const shortId = new ShortId({ length: 10 });
+
 const PortmoneForm = ({
   billAmount,
-  orderId,
+  contractId,
   shopOrderNumber = '',
   description = '',
   emailAddress = '',
   lang = 'uk',
   billCurrency = 'UAH',
 }) => {
+  const actions = useActions();
+  const user = useSelector(getUser);
+  const orderIdRef = useRef(shortId.rnd());
+
   const value = JSON.stringify(
     getPortmoneValue({
       description,
@@ -29,22 +42,35 @@ const PortmoneForm = ({
       shopOrderNumber,
       lang,
       billCurrency,
-      orderId,
+      contractId,
+      userId: user.user.id,
+      salePointId: user.salePoint.id,
+      orderId: orderIdRef.current,
     })
   );
+
   useEffect(() => {
     localStorage.removeItem('carDataFormik');
-  }, []);
+    setIsLoading(true);
+    createContractPaymentApi({
+      contractId: contractId.epolicyId,
+      amount: billAmount,
+      orderId: orderIdRef.current,
+      linkInvoice: createPaymentUrl(value),
+    })
+      // eslint-disable-next-line
+      .catch(console.log)
+      .finally(() => {
+        // actions.resetOrderData();
+        setIsLoading(false);
+      });
+  }, [billAmount, contractId.epolicyId, value]);
   return (
-    <form
-      action="https://www.portmone.com.ua/gateway/"
-      method="post"
-      target="myFrame"
-    >
-      <input type="hidden" name="bodyRequest" value={value} />
-      <input type="hidden" name="typeRequest" value="json" />
+    <form action={PORTMONE_URL} method='post' target='myFrame'>
+      <input type='hidden' name='bodyRequest' value={value} />
+      <input type='hidden' name='typeRequest' value='json' />
 
-      <YellowButton type="submit">Portmone.com</YellowButton>
+      <YellowButton type='submit'>Portmone.com</YellowButton>
     </form>
   );
 };

@@ -47,6 +47,7 @@ export const osagoByParams = createAsyncThunk(
             taxi: false,
             salePoint,
             dateTo,
+            contractPeriodquery: 'YEAR',
           },
         }
       );
@@ -130,7 +131,9 @@ export const osagoByDn = createAsyncThunk(
         ...salePoint,
       };
 
-      dispatch(chooseVclTariffDGO(b));
+      setTimeout(() => {
+        dispatch(chooseVclTariffDGO(b));
+      }, 500);
       const responseData = mergeObjectsById(newData, responseOSAGONormalize);
       const response = responseData.map((el) => {
         el.tariff = sortAndFilterTariff(el.tariff);

@@ -184,6 +184,10 @@ const Stepper = ({ backLinkRef }) => {
       outsideUkraine: userParams?.outsideUkraine || false,
       category: insurObject?.category || userParams?.autoCategory,
       engineVolume: insurObject?.engineVolume || '',
+      grossWeight: insurObject?.grossWeight || '',
+      curbWeight: insurObject?.curbWeight || '',
+      seatingCapacity: insurObject?.seatingCapacity || '',
+      electricMotorPower: insurObject?.electricMotorPower || '',
     },
     validationSchema: carDataFormValidationSchema({
       isPrivilege: insurerDataFormik.values.type.privilegeType === 'PRIVILEGED',
@@ -226,7 +230,7 @@ const Stepper = ({ backLinkRef }) => {
             : userParams.otkDate,
       };
 
-      const customIsur = customerInsuriensObject(
+      const insuriensObject = customerInsuriensObject(
         insurerDataFormik,
         homeAddressFormik,
         contactsFormik,
@@ -243,7 +247,7 @@ const Stepper = ({ backLinkRef }) => {
           userParams,
           user,
           tariff,
-          customIsur,
+          insuriensObject,
           privilegeData
         )
       );
@@ -255,7 +259,7 @@ const Stepper = ({ backLinkRef }) => {
             user,
             dgoTarrif,
             insurObject,
-            customIsur,
+            insuriensObject,
             privilegeData,
             vclOrderData
           )
@@ -340,9 +344,6 @@ const Stepper = ({ backLinkRef }) => {
         connector={<Connector />}
       >
         {steps.map((label) => {
-          // const stepProps = {};
-          // const labelProps = {};
-
           return (
             <Step key={Object.keys(label)}>
               <LableIcon>
@@ -365,7 +366,6 @@ const Stepper = ({ backLinkRef }) => {
           <CustomButtonLoading
             btnTitle={'Підтвердити'}
             type={'submit'}
-            // onCLick={handleSubmit}
           />
           {activeStep === 0 ? (
             <BtnBack backLinkRef={backLinkRef} />

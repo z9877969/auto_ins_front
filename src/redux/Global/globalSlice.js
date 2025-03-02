@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { contractSave } from './operations';
+import { createSlice } from "@reduxjs/toolkit";
+import { contractSave } from "./operations";
 
 const initialState = {
   isLoading: false,
@@ -8,13 +8,13 @@ const initialState = {
   isContractDGO: false,
   globalCustomerData: {},
   paramsFromUrl: null,
-  homeAddress: { label: '', value: '' },
-  error: '',
+  homeAddress: { label: "", value: "" },
+  error: "",
   order: null,
 };
 
 export const globalSlice = createSlice({
-  name: 'global',
+  name: "global",
   initialState,
   reducers: {
     setIsLoading: (state, { payload }) => {
@@ -43,6 +43,9 @@ export const globalSlice = createSlice({
     },
     clearGlobal: () => {
       return initialState;
+    },
+    resetOrderData: (state) => {
+      state.order = initialState.order;
     },
   },
   extraReducers: (builder) => {
@@ -74,8 +77,8 @@ export const globalSlice = createSlice({
             ? message
             : combinedMessage
                 .reduce((acc, el) => {
-                  return acc + el.message + ' ';
-                }, '')
+                  return acc + el.message + " ";
+                }, "")
                 .trim();
         state.error = erroMessage;
         state.isLoading = false;
@@ -94,5 +97,6 @@ export const {
   setIsContractOSAGO,
   setIsContractDGO,
   setGlobError,
+  resetOrderData,
 } = globalSlice.actions;
 export const globalReducer = globalSlice.reducer;

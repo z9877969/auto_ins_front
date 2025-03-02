@@ -24,7 +24,7 @@ const ErrorBoundaryModal = () => {
       </Box>
       <Box display={'flex'} columnGap={'16px'}>
         <Box component={'p'} alignSelf={'center'}>
-          Зв'яжіться будь-ласка з нами
+          Зв`&apos;`яжіться будь-ласка з нами
         </Box>
         <LiItemHS disablePadding={true}>
           <LinkS
