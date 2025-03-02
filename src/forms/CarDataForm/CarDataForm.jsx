@@ -323,7 +323,7 @@ const CarDataForm = ({ formik, userParams }) => {
               setFieldValue('electricMotorPower', e.target.value.trim())
             }
             isDisabled={disabled}
-            placeholder={'1'}
+            placeholder={''}
           />
         )}
         {/*
