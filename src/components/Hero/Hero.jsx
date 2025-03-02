@@ -13,8 +13,8 @@ const Hero = () => {
       <HeroContainer>
         <HeroTabs setActiveTab={setActiveTab} />
         {/* Вміст для вкладок */}
-        {activeTab === 0 && <ByParameters />}
-        {activeTab === 1 && <ByLicensePlate />}
+        {activeTab === 0 && <ByLicensePlate />}
+        {activeTab === 1 && <ByParameters />}
       </HeroContainer>
       <HeroPicture />
     </section>

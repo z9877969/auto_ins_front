@@ -29,8 +29,8 @@ const HeroTabs = ({ setActiveTab }) => {
         </TitleStaled>
 
         <TabsStyled value={value} onChange={handleChange}>
-          <TabStyled label="За параметрами" />
           <TabStyled label="За держ. номерним знаком" wrapped />
+          <TabStyled label="За параметрами" />
         </TabsStyled>
       </TabsContainer>
     </section>
