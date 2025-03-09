@@ -190,6 +190,7 @@ export const DATE_MESSAGE_ERRORS = {
   dateFormat: 'Не коректна дата',
   otkMinDate: 'Дата має бути на 15 днів більшою за поточну',
   otkMaxDate: 'Дата має бути не більше року від поточної',
+  maxDocRegistration: 'Дата має бути меншою за поточну',
 };
 export const FORMIK_DATA_KEYS = {
   CONTACTS: 'contactsFormik',

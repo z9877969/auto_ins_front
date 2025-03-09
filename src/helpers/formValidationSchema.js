@@ -79,7 +79,8 @@ export const validateRegistrationDate = () => {
         },
         message: DATE_MESSAGE_ERRORS.date,
       });
-    });
+    })
+    .max(new Date(), DATE_MESSAGE_ERRORS.maxDocRegistration);
 };
 
 export const validateContractStartDate = () => {
