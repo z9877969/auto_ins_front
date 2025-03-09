@@ -179,7 +179,7 @@ const ByLicensePlate = () => {
                   placeholder='AA1234AA'
                 />
               </Box>
-              <Box className="otkWrapper">
+              {/* <Box className="otkWrapper">
                 <GeneralCheckbox
                   lableText="ОТК"
                   labelColor={'#ffffff!important'}
@@ -211,7 +211,7 @@ const ByLicensePlate = () => {
                     )}
                   </CustomLabel>
                 )}
-              </Box>
+              </Box> */}
             </Box>
             <Box className="box">
               <CustomLabel

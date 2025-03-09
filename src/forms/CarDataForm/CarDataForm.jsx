@@ -117,7 +117,8 @@ const CarDataForm = ({ formik, userParams }) => {
 
   useEffect(() => {
     if (insuranceObject) {
-      setDisabled(true);
+      // setDisabled(true);
+      setDisabled(false);
     }
     if (!insuranceObject) {
       setDisabled(false);
