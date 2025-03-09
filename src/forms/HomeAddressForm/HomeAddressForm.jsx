@@ -42,7 +42,7 @@ const HomeAddressForm = ({ formik }) => {
           inputChangeCB={getHomeAddress}
           readOnly={false}
           noOptionsMessage="Вкажіть місце проживання"
-          placeholder={!queryText && 'м. Київ, Україна'}
+          placeholder={!queryText && 'Київ, Україна'}
           errorMessage={
             formik.touched['regionANDcity'] && formik.errors['regionANDcity']
           }
