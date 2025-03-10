@@ -1,29 +1,52 @@
-import { PRIVILEGED_TYPE, DOCS_TYPES_DICT } from '../../constants';
+import {
+  PRIVILEGED_TYPE,
+  DOCS_TYPES_DICT,
+  PRIVILEGE_TYPES,
+} from '../../constants';
 
 const PRIVILEGED_OPTIONS_DICT = {
   [DOCS_TYPES_DICT.PENSION_CERTIFICATE]: {
     value: DOCS_TYPES_DICT.PENSION_CERTIFICATE,
     label: 'Пенсійне посвідчення',
     privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
-    customerStatus: 'PENSIONER',
+    customerStatus: PRIVILEGE_TYPES.PENSIONER,
   },
   [DOCS_TYPES_DICT.VETERAN_CERTIFICATE]: {
     value: DOCS_TYPES_DICT.VETERAN_CERTIFICATE,
     label: 'Посвідчення учасника війни',
     privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
-    customerStatus: 'VETERAN',
+    customerStatus: PRIVILEGE_TYPES.VETERAN,
   },
   [DOCS_TYPES_DICT.DISABILITY_CERTIFICATE]: {
     value: DOCS_TYPES_DICT.DISABILITY_CERTIFICATE,
     label: 'Посвідчення інваліда 2гр.',
     privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
-    customerStatus: 'DISABLED',
+    customerStatus: PRIVILEGE_TYPES.DISABLED,
   },
   [DOCS_TYPES_DICT.CHERNOBYL_CERTIFICATE]: {
     value: DOCS_TYPES_DICT.CHERNOBYL_CERTIFICATE,
     label: 'Посвідчення постраждалого на ЧАЕС (1,2 кат.)',
     privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
-    customerStatus: 'CHERNOBYLETS',
+    customerStatus: PRIVILEGE_TYPES.CHERNOBYLETS,
+  },
+  // =========
+  [DOCS_TYPES_DICT.E_PENSION_CERTIFICATE]: {
+    value: DOCS_TYPES_DICT.E_PENSION_CERTIFICATE,
+    label: 'Електронне пенсійне посвідчення',
+    privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
+    customerStatus: PRIVILEGE_TYPES.PENSIONER,
+  },
+  [DOCS_TYPES_DICT.COMBAT_CERTIFICATE]: {
+    value: DOCS_TYPES_DICT.COMBAT_CERTIFICATE,
+    label: 'Посвідчення УБД',
+    privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
+    customerStatus: PRIVILEGE_TYPES.COMBAT,
+  },
+  [DOCS_TYPES_DICT.WAR_DISABILITY_CERTIFICATE]: {
+    value: DOCS_TYPES_DICT.WAR_DISABILITY_CERTIFICATE,
+    label: 'Посвідчення про інвалідність внаслідок війни',
+    privilegeType: PRIVILEGED_TYPE.PRIVILEGED,
+    customerStatus: PRIVILEGE_TYPES.DISABLED,
   },
 };
 
@@ -53,6 +76,9 @@ const PRIVILEGEDSelectOptions = [
   PRIVILEGED_OPTIONS_DICT.VETERAN_CERTIFICATE,
   PRIVILEGED_OPTIONS_DICT.DISABILITY_CERTIFICATE,
   PRIVILEGED_OPTIONS_DICT.CHERNOBYL_CERTIFICATE,
+  PRIVILEGED_OPTIONS_DICT.E_PENSION_CERTIFICATE,
+  PRIVILEGED_OPTIONS_DICT.COMBAT_CERTIFICATE,
+  PRIVILEGED_OPTIONS_DICT.WAR_DISABILITY_CERTIFICATE,
 ];
 const NATURALSelectOptions = [
   NATURAL_OPTIONS_DICT.DRIVING_LICENSE,

@@ -93,4 +93,41 @@ export const insurerDocsDict = {
       message: 'Максимум 6 цифр',
     },
   },
+  // // відкорегувати валідацію для даних документів
+  [DOCS_TYPES_DICT.E_PENSION_CERTIFICATE]: {
+    series: {
+      regex: /^[а-яіїйєґА-ЯІЇЙЄҐ]{1,3}$/,
+      placeholder: 'ААА',
+      message: 'Максимум 3 літери / Кирилиця',
+    },
+    number: {
+      regex: /^[0-9]{1,6}$/,
+      placeholder: '123456',
+      message: 'Максимум 6 цифр',
+    },
+  },
+  [DOCS_TYPES_DICT.COMBAT_CERTIFICATE]: {
+    series: {
+      regex: /^[а-яіїйєґА-ЯІЇЙЄҐ]{1,3}$/,
+      placeholder: 'ААА',
+      message: 'Максимум 3 літери / Кирилиця',
+    },
+    number: {
+      regex: /^[0-9]{1,6}$/,
+      placeholder: '123456',
+      message: 'Максимум 6 цифр',
+    },
+  },
+  [DOCS_TYPES_DICT.WAR_DISABILITY_CERTIFICATE]: {
+    series: {
+      regex: /^[а-яіїйєґА-ЯІЇЙЄҐ]{1,3}$/,
+      placeholder: 'ААА',
+      message: 'Максимум 3 літери / Кирилиця',
+    },
+    number: {
+      regex: /^[0-9]{1,6}$/,
+      placeholder: '123456',
+      message: 'Максимум 6 цифр',
+    },
+  },
 };
