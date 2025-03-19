@@ -30,7 +30,7 @@ const PortmoneForm = ({
   lang = 'uk',
   billCurrency = 'UAH',
 }) => {
-  const actions = useActions();
+  // const actions = useActions();
   const user = useSelector(getUser);
   const orderIdRef = useRef(shortId.rnd());
 
