@@ -11,7 +11,7 @@ import { DOCS_TYPES_DICT } from '@constants/index';
 export const insurerDocsDict = {
   [DOCS_TYPES_DICT.DRIVING_LICENSE]: {
     series: {
-      regex: /^(?:[а-яіїйєґА-ЯІЇЙЄҐ]{1,3}|[a-zA-Z]{2,3})$/,
+      regex: /^(?:[а-яіїйєґА-ЯІЇЙЄҐ]{1,3}|[a-zA-Z]{1,3})$/,
       placeholder: 'ААА',
       message: 'Макс. 3 літери / всі кирилиця або всі латиниця ',
     },
