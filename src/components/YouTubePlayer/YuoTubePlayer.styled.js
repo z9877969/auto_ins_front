@@ -1,20 +1,14 @@
 import { Box, styled } from '@mui/material';
 
-export const Wrapper = styled(Box)(({ theme }) => ({
+export const Wrapper = styled(Box)(() => ({
   marginLeft: 'auto',
   marginRight: 'auto',
   width: '100%',
   height: 'auto',
-  padding: '0 1rem 3rem',
+  padding: '0 1rem',
   display: 'flex',
   justifyContent: 'center',
 
-  [theme.breakpoints.up('sm')]: {
-    // width: 744,
-  },
-  [theme.breakpoints.up('lg')]: {
-    width: 960,
-  },
   ['& .frame']: {
     position: 'relative',
     width: '100%',

@@ -107,6 +107,7 @@ export const ContainerSection = styled(Container)(({ theme }) => ({
   '& .main-title': {
     marginBottom: '32px',
     textAlign: 'center ',
+    lineHeight: 1.1,
     [theme.breakpoints.up('sm')]: { marginBottom: '56px' },
     [theme.breakpoints.up('lg')]: {
       marginBottom: '72px',
