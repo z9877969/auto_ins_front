@@ -45,11 +45,17 @@ export const List = styled(Box)(() => ({
   gridArea: '2 / 1 / 3 / 2',
 }));
 
-export const Item = styled(Typography)(() => ({
+export const Item = styled(Typography)(({ theme }) => ({
   display: 'flex',
   columnGap: '0.5rem',
   alignItems: 'center',
   width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    columnGap: '0.75rem',
+  },
+  [theme.breakpoints.up('lg')]: {
+    columnGap: '1rem',
+  },
 }));
 
 export const Num = styled('span')(({ theme }) => ({
