@@ -12,7 +12,9 @@
       "services/*": ["services/*"],
       "@constants/*": ["constants/*"],
       "images/*": ["images/*"],
-      "assets/*": ["assets/*"]
+      "assets/*": ["assets/*"],
+      "components/*": ["components/*"],
+      "style/*": ["style/*"],
     }
   },
   "exclude": ["node_modules", "dist", ".vite"]

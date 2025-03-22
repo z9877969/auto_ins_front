@@ -1,7 +1,7 @@
 import { PictureContainer } from './HeroPicture.styled';
 
 const HeroPicture = () => {
-  return <PictureContainer></PictureContainer>;
+  return <PictureContainer />;
 };
 
 export default HeroPicture;

@@ -9,6 +9,9 @@ import AlertMUI from '../components/Alert/AlertMUI';
 import Hero from '../components/Hero/Hero';
 import { useScrollToTop } from 'hooks/useScrollToTop';
 
+const CreatePolicyVideoSection = lazy(
+  () => import('../components/CreatePolicyVideoSection/CreatePolicyVideoSection')
+);
 const AccordionSection = lazy(() =>
   import('../components/AccordionSection/index')
 );
@@ -21,6 +24,7 @@ const AdvatagesSection = lazy(() =>
 );
 const Partners = lazy(() => import('../components/Partners/Partners'));
 
+const MemoizedCreatePolicyVideoSection = memo(CreatePolicyVideoSection);
 const MemoizedInfoSection = memo(InfoSection);
 const MemoizedAccordionSection = memo(AccordionSection);
 const MemoizedPartners = memo(Partners);
@@ -58,9 +62,10 @@ const HomePage = () => {
   return (
     <>
       <main style={{ height: '100%' }}>
-        <AlertMUI type="info" message="Будь ласка, заповніть поля" />
+        <AlertMUI type='info' message='Будь ласка, заповніть поля' />
         <Hero />
         <Suspense>
+          <MemoizedCreatePolicyVideoSection />
           <MemoizedAdvatagesSection />
           <MemoizedCheckInsSection />
           <MemoizedPartners />

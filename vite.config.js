@@ -33,6 +33,8 @@ export default defineConfig(() => {
         '@constants': '/src/constants',
         images: '/src/images',
         assets: '/src/assets',
+        components: '/src/components',        
+        style: '/src/style',        
       },
     },
     base: '/',
