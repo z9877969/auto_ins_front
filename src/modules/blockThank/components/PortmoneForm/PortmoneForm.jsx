@@ -1,13 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import ShortId from 'short-unique-id';
-import { getPortmoneValue, createPaymentUrl } from 'helpers/getPortmoneValue';
+import {
+  getPortmoneValue,
+  createPaymentUrl,
+} from '../../helpers/getPortmoneValue';
+import * as S from 'style/Global.styled';
 import { createContractPaymentApi } from 'services/api';
 import { getUser } from '@redux/Calculator/selectors';
-import { YellowButton } from '../../style/Global.styled';
 import { setIsLoading } from '@redux/Global/globalSlice';
 import { PORTMONE_URL } from '@constants/index';
-import { useActions } from 'hooks/useActions';
 
 /* 
     description = "Test Payment",
@@ -30,7 +32,6 @@ const PortmoneForm = ({
   lang = 'uk',
   billCurrency = 'UAH',
 }) => {
-  // const actions = useActions();
   const user = useSelector(getUser);
   const orderIdRef = useRef(shortId.rnd());
 
@@ -70,7 +71,7 @@ const PortmoneForm = ({
       <input type='hidden' name='bodyRequest' value={value} />
       <input type='hidden' name='typeRequest' value='json' />
 
-      <YellowButton type='submit'>Portmone.com</YellowButton>
+      <S.YellowButton type='submit'>Portmone.com</S.YellowButton>
     </form>
   );
 };

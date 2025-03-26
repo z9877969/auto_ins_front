@@ -8,7 +8,6 @@ import Stepper from '../components/Stepper/Stepper';
 import OutletPageWrapper from '../components/OutletPageWrapper';
 import { getIsContractOSAGO } from '../redux/Global/selectors';
 import { useScrollToTop } from 'hooks/useScrollToTop';
-// import { useActions } from "../hooks/useActions.js";
 
 const FormPage = () => {
   useScrollToTop();
@@ -19,12 +18,12 @@ const FormPage = () => {
 
   useEffect(() => {
     if (isContractOSAGO) {
-      navigate('/order/get', { replace: true });
+      navigate('/order/get');
     }
   }, [isContractOSAGO, navigate]);
 
   return (
-    <OutletPageWrapper className="formPage">
+    <OutletPageWrapper className='formPage'>
       <Wrapper>
         <CompanySmall />
         <Box sx={{ display: 'block' }}>

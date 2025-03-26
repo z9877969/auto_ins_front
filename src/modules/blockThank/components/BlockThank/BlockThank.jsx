@@ -3,10 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import Typography from '@mui/material/Typography';
-import { SpriteSVG } from '../../images/SpriteSVG';
-import { BoxImgS, ButtonS, FormContainerS } from './BlockThankStyled';
-import GeneralInput from '../GeneralInput/GeneralInput';
+import * as S from './BlockThankStyled';
+import GeneralInput from 'components/GeneralInput/GeneralInput';
+import PushNotification from 'components/PushNotification/PushNotification';
+import CustomButtonLoading from 'components/Stepper/CustomButtonLoading';
 import PortmoneForm from '../PortmoneForm/PortmoneForm';
+import { SpriteSVG } from '../../../../images/SpriteSVG';
 import {
   getOrderPasswordApi,
   checkOrderPasswordApi,
@@ -15,59 +17,10 @@ import {
 } from 'services/api';
 import { selectOrderData } from '@redux/Global/selectors';
 import { getUser } from '@redux/Calculator/selectors';
-import { useActions } from '../../hooks/useActions';
-import CustomButtonLoading from '../Stepper/CustomButtonLoading';
-import PushNotification from '../PushNotification/PushNotification';
-import { FORMIK_DATA_KEYS as formikDataKeys } from '../../constants';
-
-// eslint-disable-next-line
-export const orderMessagesKeys = {
-  ORDER_GET: 'get',
-  ORDER_CHECK: 'check',
-  ORDER_GET_VCL: 'get-vcl',
-  ORDER_CHECK_VCL: 'check-vcl',
-  ORDER_PAYMENT: 'payment',
-  ORDER_EMMITED: 'emmited',
-  ORDER_ERROR: 'error',
-};
-
-const content = {
-  [orderMessagesKeys.ORDER_GET]: {
-    title: 'Підтвердіть укладання договору!',
-    descr: 'На ваш телефон буде надіслано повідомлення з кодом.',
-    btn: 'Надіслати СМС',
-  },
-  [orderMessagesKeys.ORDER_CHECK]: {
-    title: 'Введіть код з повідомлення',
-    descr:
-      'Введіть і відправте код з повідомлення отриманого в вайбер або смс(6 цифр, відправник EUA)',
-    btn: 'Відправити код',
-  },
-  [orderMessagesKeys.ORDER_GET_VCL]: {
-    title: 'Підтвердіть придбання додаткового покриття.',
-    descr: 'На ваш телефон буде надіслано повідомлення з кодом.',
-    btn: 'Надіслати СМС',
-  },
-  [orderMessagesKeys.ORDER_CHECK_VCL]: {
-    title: 'Введіть код з повідомлення',
-    descr:
-      'Введіть і відправте код з повідомлення отриманого в вайбер або смс(6 цифр, відправник EUA) для переходу на сторінку оплати!',
-    btn: 'Відправити код',
-  },
-  [orderMessagesKeys.ORDER_PAYMENT]: {
-    icon: 'icon-money',
-    title: 'Перейдіть на сторінку оплати!',
-    descr:
-      'Вам потрібно перейти на сторінку оплати для завершення оформлення договору',
-    btn: 'Portmone.com',
-  },
-  [orderMessagesKeys.ORDER_EMMITED]: {
-    icon: 'icon-check-circle',
-    title: 'Дякуємо за замовлення!',
-    descr: 'На Вашу електронну пошту надіслано договір страхування.',
-    btn: 'На головну',
-  },
-};
+import { useActions } from 'hooks/useActions';
+import { FORMIK_DATA_KEYS as formikDataKeys } from '../../../../constants';
+import { orderTypes } from '../../data/orderTypes';
+import { blockContent } from '../../data/blockContent';
 
 const BlockThank = () => {
   const navigate = useNavigate();
@@ -90,20 +43,20 @@ const BlockThank = () => {
   // const goBack = useCallback(() => navigate(-1, { replace: true }), []);
 
   const handleOrderClick = async () => {
-    if (orderStage === orderMessagesKeys.ORDER_GET) {
+    if (orderStage === orderTypes.ORDER_GET) {
       if (errorMessage) return null;
       setIsLoading(true);
       try {
         await getOrderPasswordApi(orderData.epolicyOrderId);
-        nextStep(orderMessagesKeys.ORDER_CHECK);
+        nextStep(orderTypes.ORDER_CHECK);
       } catch (error) {
         setErrorMessage(JSON.stringify(error, null, 2));
-        nextStep(orderMessagesKeys.ORDER_CHECK);
+        nextStep(orderTypes.ORDER_CHECK);
       } finally {
         setIsLoading(false);
       }
     }
-    if (orderStage === orderMessagesKeys.ORDER_CHECK) {
+    if (orderStage === orderTypes.ORDER_CHECK) {
       try {
         setIsLoading(true);
         await checkOrderPasswordApi({
@@ -111,9 +64,9 @@ const BlockThank = () => {
           password: formik.values.password,
         });
         if (!orderData.vclOrderId) {
-          nextStep(orderMessagesKeys.ORDER_PAYMENT);
+          nextStep(orderTypes.ORDER_PAYMENT);
         } else {
-          nextStep(orderMessagesKeys.ORDER_GET_VCL);
+          nextStep(orderTypes.ORDER_GET_VCL);
         }
       } catch (error) {
         setErrorMessage(JSON.stringify(error, null, 2));
@@ -123,26 +76,26 @@ const BlockThank = () => {
         setIsLoading(false);
       }
     }
-    if (orderStage === orderMessagesKeys.ORDER_GET_VCL) {
+    if (orderStage === orderTypes.ORDER_GET_VCL) {
       setIsLoading(true);
       try {
         await getOrderPasswordApi(orderData.vclOrderId);
-        nextStep(orderMessagesKeys.ORDER_CHECK_VCL);
+        nextStep(orderTypes.ORDER_CHECK_VCL);
       } catch (error) {
         setErrorMessage(JSON.stringify(error, null, 2));
-        nextStep(orderMessagesKeys.ORDER_CHECK_VCL);
+        nextStep(orderTypes.ORDER_CHECK_VCL);
       } finally {
         setIsLoading(false);
       }
     }
-    if (orderStage === orderMessagesKeys.ORDER_CHECK_VCL) {
+    if (orderStage === orderTypes.ORDER_CHECK_VCL) {
       try {
         setIsLoading(true);
         await checkOrderPasswordApi({
           contractId: orderData.vclOrderId,
           password: formik.values.password,
         });
-        nextStep(orderMessagesKeys.ORDER_PAYMENT);
+        nextStep(orderTypes.ORDER_PAYMENT);
       } catch (error) {
         setErrorMessage(JSON.stringify(error, null, 2));
         // return goBack();
@@ -161,7 +114,7 @@ const BlockThank = () => {
 
   useEffect(() => {
     return () => {
-      if (orderStage === orderMessagesKeys.ORDER_EMMITED) {
+      if (orderStage === orderTypes.ORDER_EMMITED) {
         localStorage.removeItem(formikDataKeys.CAR);
       }
     };
@@ -180,7 +133,8 @@ const BlockThank = () => {
         setIsLoading(false);
       }
     };
-    orderStage !== orderMessagesKeys.ORDER_EMMITED && setOrdersRequestStatus();
+    orderStage !== orderTypes.ORDER_EMMITED && setOrdersRequestStatus();
+    // eslint-disable-next-line
   }, [orderData]);
 
   useEffect(() => {
@@ -195,7 +149,7 @@ const BlockThank = () => {
       payDate(pin):"2025-02-19"
     */
     paymentData &&
-      orderStage === orderMessagesKeys.ORDER_EMMITED &&
+      orderStage === orderTypes.ORDER_EMMITED &&
       confirmContractPaymentApi({
         contractId: paymentData.epolicy,
         amount: paymentData.amount,
@@ -205,7 +159,7 @@ const BlockThank = () => {
   }, [user, orderStage]);
 
   return (
-    <FormContainerS component='article'>
+    <S.FormWrapper component='article'>
       {errorMessage && (
         <PushNotification.Error
           message="Щось пішло не так🤷🏽‍♂️. Спробуйте ще або зв'яжіться з менеджером."
@@ -213,13 +167,13 @@ const BlockThank = () => {
           isOpen={Boolean(errorMessage)}
         />
       )}
-      <BoxImgS>
-        {(orderStage === orderMessagesKeys.ORDER_EMMITED ||
-          orderStage === orderMessagesKeys.ORDER_PAYMENT) && (
-          <SpriteSVG name={content[orderStage].icon}></SpriteSVG>
+      <S.BoxImg>
+        {(orderStage === orderTypes.ORDER_EMMITED ||
+          orderStage === orderTypes.ORDER_PAYMENT) && (
+          <SpriteSVG name={blockContent[orderStage].icon}></SpriteSVG>
         )}
-        {(orderStage === orderMessagesKeys.ORDER_CHECK ||
-          orderStage === orderMessagesKeys.ORDER_CHECK_VCL) && (
+        {(orderStage === orderTypes.ORDER_CHECK ||
+          orderStage === orderTypes.ORDER_CHECK_VCL) && (
           <GeneralInput
             id='password'
             lableText='Код:'
@@ -238,34 +192,36 @@ const BlockThank = () => {
             }}
           />
         )}
-      </BoxImgS>
+      </S.BoxImg>
       <Typography
         component='h2'
         variant='formTitle'
         sx={{ marginBottom: { xs: '4px', sm: '8px' } }}
       >
-        {orderStage && content[orderStage].title}
+        {orderStage && blockContent[orderStage].title}
       </Typography>
       <Typography
         variant='body1'
         sx={{ marginBottom: { xs: '16px', sm: '32px', lg: '48px' } }}
       >
-        {orderStage && content[orderStage].descr}
+        {orderStage && blockContent[orderStage].descr}
       </Typography>
-      {orderStage && orderStage === orderMessagesKeys.ORDER_EMMITED && (
-        <ButtonS to={'/'}>{orderStage && content[orderStage].btn}</ButtonS>
+      {orderStage && orderStage === orderTypes.ORDER_EMMITED && (
+        <S.Button to={'/'}>
+          {orderStage && blockContent[orderStage].btn}
+        </S.Button>
       )}
-      {(orderStage === orderMessagesKeys.ORDER_GET ||
-        orderStage === orderMessagesKeys.ORDER_CHECK ||
-        orderStage === orderMessagesKeys.ORDER_GET_VCL ||
-        orderStage === orderMessagesKeys.ORDER_CHECK_VCL) && (
+      {(orderStage === orderTypes.ORDER_GET ||
+        orderStage === orderTypes.ORDER_CHECK ||
+        orderStage === orderTypes.ORDER_GET_VCL ||
+        orderStage === orderTypes.ORDER_CHECK_VCL) && (
         <CustomButtonLoading
           onCLick={handleOrderClick}
-          btnTitle={orderStage && content[orderStage].btn}
+          btnTitle={orderStage && blockContent[orderStage].btn}
           isLoadingProp={isLoading}
         />
       )}
-      {orderStage === orderMessagesKeys.ORDER_PAYMENT && (
+      {orderStage === orderTypes.ORDER_PAYMENT && (
         <PortmoneForm
           contractId={{
             epolicyId: orderData?.epolicyOrderId,
@@ -276,7 +232,7 @@ const BlockThank = () => {
           emailAddress={orderData?.email}
         />
       )}
-    </FormContainerS>
+    </S.FormWrapper>
   );
 };
 

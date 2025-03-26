@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { ENV, PORTMONE_URL, FRONT_URL, BACK_URL } from '../constants';
+import { ENV, PORTMONE_URL, FRONT_URL, BACK_URL } from '../../../constants';
 
 const portmoneFormProps = {
   PAYEE_ID: ENV.PORTMONE_PAYEE_ID,

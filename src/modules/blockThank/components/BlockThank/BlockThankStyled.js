@@ -1,9 +1,9 @@
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { FormContainer } from '../../style/Global.styled';
+import { FormContainer } from '../../../../style/Global.styled';
 import { NavLink } from 'react-router-dom';
 
-export const FormContainerS = styled(FormContainer)(({ theme }) => ({
+export const FormWrapper = styled(FormContainer)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -13,7 +13,7 @@ export const FormContainerS = styled(FormContainer)(({ theme }) => ({
     color: theme.palette.primary.main,
   },
 }));
-export const BoxImgS = styled(Box)(({ theme }) => ({
+export const BoxImg = styled(Box)(({ theme }) => ({
   width: '120px',
   height: '120px',
   marginBottom: '8px',
@@ -30,7 +30,7 @@ export const BoxImgS = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const ButtonS = styled(NavLink)(({ theme }) => ({
+export const Button = styled(NavLink)(({ theme }) => ({
   backgroundColor: theme.palette.primary.yellow,
   textDecoration: 'none',
   textAlign: 'center',
