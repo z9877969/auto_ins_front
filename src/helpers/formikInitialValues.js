@@ -23,11 +23,3 @@ export const homeAddressInitialValues = {
   houseNumber: '',
   apartmentNumber: '',
 };
-
-// export const carDataFormikInitialValues = {
-//   stateNumber: "", //"stateNumber"
-//   year: "", //"year"
-//   brand: "", //"autoMaker"
-//   model: "", //"modelText"
-//   bodyNumber: "", //"bodyNumber"
-// };

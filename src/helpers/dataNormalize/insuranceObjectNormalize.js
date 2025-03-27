@@ -2,12 +2,10 @@ export const insuranceObjectNormalize = (
   carDataFormik,
   insurObject = {},
   registrationPlaceId,
-  fullCarModel,
   privilegeData,
   otkData
 ) => {
   const {
-    brand,
     category,
     bodyNumber,
     stateNumber,
@@ -20,10 +18,12 @@ export const insuranceObjectNormalize = (
     seatingCapacity,
     electricMotorPower,
   } = carDataFormik.values;
+
   const insuranceObject = {
     type: 'auto',
-    modelText: brand || fullCarModel,
     category: category,
+    autoMaker: maker.name,
+    autoModel: model.name,
     bodyNumber: bodyNumber,
     stateNumber: stateNumber,
     registrationPlace: {
@@ -41,6 +41,7 @@ export const insuranceObjectNormalize = (
       insurObject?.electricMotorPower || electricMotorPower || 1,
     // = new car info data -End =
   };
+
   if (model.id !== 'custom') {
     const newModel = {
       autoMaker: { id: maker.id },

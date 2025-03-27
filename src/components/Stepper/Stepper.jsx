@@ -165,7 +165,7 @@ const Stepper = ({ backLinkRef }) => {
     initialValues: storage.getFromLS(formikDataKeys.CAR) ?? {
       stateNumber: insurObject?.stateNumber || '',
       year: insurObject?.year || '',
-      brand: insurObject?.modelText || '',
+      modelText: insurObject?.modelText || '',
       maker: insurObject
         ? {
             id: insurObject.model?.autoMaker?.id,
@@ -197,8 +197,7 @@ const Stepper = ({ backLinkRef }) => {
     // enableReinitialize: true,
     // validateOnBlur: true,
     validateOnChange: true,
-    onSubmit: ({ model, maker, engineVolume }) => {
-      const fullCarModel = `${maker.name} ${model.name}`;
+    onSubmit: ({ engineVolume }) => {
       const { privilegeType, customerStatus } = insurerDataFormik.values.type;
       const privilegeData =
         privilegeType === 'PRIVILEGED'
@@ -237,7 +236,6 @@ const Stepper = ({ backLinkRef }) => {
         carDataFormik,
         insurObject,
         registrationPlaceData.id,
-        fullCarModel,
         privilegeData,
         otkData
       );
@@ -357,22 +355,19 @@ const Stepper = ({ backLinkRef }) => {
           );
         })}
       </StepperStyled>
-      <FormStyled component="form" autoComplete="on" onSubmit={handleSubmit}>
-        <Typography variant="formTitle" component="h2">
+      <FormStyled component='form' autoComplete='on' onSubmit={handleSubmit}>
+        <Typography variant='formTitle' component='h2'>
           {Object.keys(steps[activeStep])}
         </Typography>
         {getStepContent(activeStep)}
-        <ButtonContainerStyled component="div">
-          <CustomButtonLoading
-            btnTitle={'Підтвердити'}
-            type={'submit'}
-          />
+        <ButtonContainerStyled component='div'>
+          <CustomButtonLoading btnTitle={'Підтвердити'} type={'submit'} />
           {activeStep === 0 ? (
             <BtnBack backLinkRef={backLinkRef} />
           ) : (
             <WhiteButtonStyled onClick={handleBack}>
-              <WhiteButtonSVGStyled component="span">
-                <SpriteSVG name="icon-arrow-left" />
+              <WhiteButtonSVGStyled component='span'>
+                <SpriteSVG name='icon-arrow-left' />
               </WhiteButtonSVGStyled>
               Назад
             </WhiteButtonStyled>

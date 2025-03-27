@@ -8,7 +8,6 @@ export const customerInsuriensObject = (
   carDataFormik,
   insurObject,
   registrationPlaceId,
-  fullCarModel,
   privilegeData,
   otkData
 ) => {
@@ -21,7 +20,6 @@ export const customerInsuriensObject = (
     carDataFormik,
     insurObject,
     registrationPlaceId,
-    fullCarModel,
     privilegeData,
     otkData
   );
