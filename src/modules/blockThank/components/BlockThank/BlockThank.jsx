@@ -147,6 +147,7 @@ const BlockThank = () => {
       epolicy(pin):"17558295"
       orderId(pin):"CZGYPSAgA5"
       payDate(pin):"2025-02-19"
+      orderId: "TC6YN2"
     */
     paymentData &&
       orderStage === orderTypes.ORDER_EMMITED &&
@@ -230,6 +231,7 @@ const BlockThank = () => {
           billAmount={orderData?.billAmount}
           shopOrderNumber={orderData?.shopOrderNumber}
           emailAddress={orderData?.email}
+          orderId={orderData?.epolicyOrderCode}
         />
       )}
     </S.FormWrapper>

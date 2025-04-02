@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { ENV, PORTMONE_URL, FRONT_URL, BACK_URL } from '../../../constants';
+import { ENV, FRONT_URL, BACK_URL } from '../../../constants';
 
 const portmoneFormProps = {
   PAYEE_ID: ENV.PORTMONE_PAYEE_ID,
@@ -20,21 +20,6 @@ const portmoneFormProps = {
     `&payDate=${moment().format('YYYY-MM-DDThh:mm:ss')}` +
     `${vclId ? `&vcl=${vclId}` : ''}`,
   FAILURE_URL: FRONT_URL + '/order/payment',
-};
-
-export const createPaymentUrl = (
-  bodyRequest /* json object transformed to string */
-) => {
-  const url = new URL(PORTMONE_URL);
-
-  const params = new URLSearchParams({
-    typeRequest: 'json',
-    bodyRequest,
-  });
-
-  url.search = params.toString();
-
-  return url.toString();
 };
 
 export const getPortmoneValue = ({

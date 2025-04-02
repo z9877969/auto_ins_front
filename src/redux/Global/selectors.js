@@ -44,6 +44,7 @@ export const selectOrderData = createSelector(
             order[SAVED_ORDER_TYPE.EPOLICY].brokerDiscountedPayment
           : order[SAVED_ORDER_TYPE.EPOLICY].brokerDiscountedPayment,
         shopOrderNumber: order[SAVED_ORDER_TYPE.EPOLICY].code,
+        epolicyOrderCode: order[SAVED_ORDER_TYPE.EPOLICY].code,
         email: order[SAVED_ORDER_TYPE.EPOLICY].customer.email,
         orderState: order[SAVED_ORDER_TYPE.EPOLICY].state,
       };

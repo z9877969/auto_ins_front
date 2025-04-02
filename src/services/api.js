@@ -86,6 +86,20 @@ export const confirmContractPaymentApi = async ({
   return true;
 };
 
+export const getLinkInvoiceApi = async ({
+  orderId,
+  price,
+  quantity,
+  shoperEmail,
+  expDate,
+}) => {
+  const { data } = await instance.get('/orders/pm/invoice/link', {
+    params: { orderId, price, quantity, shoperEmail, expDate },
+  });
+
+  return data.linkInvoice;
+};
+
 export const addLogApi = async (errorData) => {
   try {
     await instance.post('/logs/type-error', errorData);

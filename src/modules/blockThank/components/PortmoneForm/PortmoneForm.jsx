@@ -1,15 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import ShortId from 'short-unique-id';
-import {
-  getPortmoneValue,
-  createPaymentUrl,
-} from '../../helpers/getPortmoneValue';
-import * as S from 'style/Global.styled';
-import { createContractPaymentApi } from 'services/api';
+import { getPortmoneValue } from '../../helpers/getPortmoneValue';
 import { getUser } from '@redux/Calculator/selectors';
 import { setIsLoading } from '@redux/Global/globalSlice';
 import { PORTMONE_URL } from '@constants/index';
+import { getLinkInvoiceApi } from 'services/api';
+import { createContractPaymentApi } from 'services/api';
+import { getInvoiceTime } from 'helpers/portmone/getInvoiceTime';
+import * as S from 'style/Global.styled';
 
 /* 
     description = "Test Payment",
@@ -21,8 +19,6 @@ import { PORTMONE_URL } from '@constants/index';
     billCurrency = "UAH",
 */
 
-const shortId = new ShortId({ length: 10 });
-
 const PortmoneForm = ({
   billAmount,
   contractId,
@@ -31,9 +27,9 @@ const PortmoneForm = ({
   emailAddress = '',
   lang = 'uk',
   billCurrency = 'UAH',
+  orderId,
 }) => {
   const user = useSelector(getUser);
-  const orderIdRef = useRef(shortId.rnd());
 
   const value = JSON.stringify(
     getPortmoneValue({
@@ -46,26 +42,37 @@ const PortmoneForm = ({
       contractId,
       userId: user.user.id,
       salePointId: user.salePoint.id,
-      orderId: orderIdRef.current,
+      orderId,
     })
   );
 
   useEffect(() => {
     localStorage.removeItem('carDataFormik');
     setIsLoading(true);
-    createContractPaymentApi({
-      contractId: contractId.epolicyId,
-      amount: billAmount,
-      orderId: orderIdRef.current,
-      linkInvoice: createPaymentUrl(value),
-    })
-      // eslint-disable-next-line
-      .catch(console.log)
-      .finally(() => {
-        // actions.resetOrderData();
+    const startPayment = async () => {
+      try {
+        const linkInvoice = await getLinkInvoiceApi({
+          orderId,
+          price: billAmount,
+          shoperEmail: emailAddress,
+          expDate: getInvoiceTime()
+
+        });
+        await createContractPaymentApi({
+          contractId: contractId.epolicyId,
+          amount: billAmount,
+          orderId,
+          linkInvoice,
+        });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error.message);
+      } finally {
         setIsLoading(false);
-      });
-  }, [billAmount, contractId.epolicyId, value]);
+      }
+    };
+    startPayment();
+  }, [billAmount, contractId.epolicyId, emailAddress, orderId]);
   return (
     <form action={PORTMONE_URL} method='post' target='myFrame'>
       <input type='hidden' name='bodyRequest' value={value} />
