@@ -62,7 +62,7 @@ const HomePage = () => {
   return (
     <>
       <main style={{ height: '100%' }}>
-        <AlertMUI type='info' message='Будь ласка, заповніть поля' />
+        <AlertMUI type="info" message="Будь ласка, заповніть поля" />
         <Hero />
         <Suspense>
           <MemoizedCreatePolicyVideoSection />

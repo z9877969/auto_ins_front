@@ -355,12 +355,12 @@ const Stepper = ({ backLinkRef, isLoading }) => {
           );
         })}
       </StepperStyled>
-      <FormStyled component='form' autoComplete='on' onSubmit={handleSubmit}>
-        <Typography variant='formTitle' component='h2'>
+      <FormStyled component="form" autoComplete="on" onSubmit={handleSubmit}>
+        <Typography variant="formTitle" component="h2">
           {Object.keys(steps[activeStep])}
         </Typography>
         {getStepContent(activeStep)}
-        <ButtonContainerStyled component='div'>
+        <ButtonContainerStyled component="div">
           <CustomButtonLoading
             btnTitle={'Підтвердити'}
             type={'submit'}
@@ -370,8 +370,8 @@ const Stepper = ({ backLinkRef, isLoading }) => {
             <BtnBack backLinkRef={backLinkRef} />
           ) : (
             <WhiteButtonStyled onClick={handleBack}>
-              <WhiteButtonSVGStyled component='span'>
-                <SpriteSVG name='icon-arrow-left' />
+              <WhiteButtonSVGStyled component="span">
+                <SpriteSVG name="icon-arrow-left" />
               </WhiteButtonSVGStyled>
               Назад
             </WhiteButtonStyled>

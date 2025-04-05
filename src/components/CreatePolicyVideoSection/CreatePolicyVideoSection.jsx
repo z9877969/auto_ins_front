@@ -13,10 +13,10 @@ const items = [
 const CreatePolicyVideoSection = () => {
   return (
     <S.Section>
-      <ContainerSection id='як оформити поліс' className='section-container'>
+      <ContainerSection id="як оформити поліс" className="section-container">
         <S.Wrapper>
           <S.TitleWrapper>
-            <Typography variant='h2' className='main-title'>
+            <Typography variant="h2" className="main-title">
               Як оформити страховку на авто онлайн
             </Typography>
           </S.TitleWrapper>
@@ -25,7 +25,7 @@ const CreatePolicyVideoSection = () => {
           </S.VideoWrapper>
           <S.List>
             {items.map((el, idx) => (
-              <S.Item key={idx} variant='h3'>
+              <S.Item key={idx} variant="h3">
                 <S.Num>{idx + 1}</S.Num>
                 {el}
               </S.Item>

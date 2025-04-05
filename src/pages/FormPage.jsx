@@ -42,7 +42,7 @@ const FormPage = () => {
             });
             setIsOrderRequested(true);
           } catch (error) {
-            // eslint-disable-next-line no-console
+             
             setErrorState(error);
             alert(
               'Щось пішло не так. Створіть нову заявку з коректними даними'

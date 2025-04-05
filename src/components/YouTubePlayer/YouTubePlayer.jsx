@@ -14,23 +14,23 @@ const YouTubePlayer = () => {
         <Box sx={{ position: 'relative' }} onClick={handlePlay}>
           <img
             src={'https://img.youtube.com/vi/p_MyQ4RpLRg/maxresdefault.jpg'}
-            alt='Video thumbnail'
-            className='thumbnail'
+            alt="Video thumbnail"
+            className="thumbnail"
           />
-          <div className='play-button'>
-            <FaPlay className='play-icon' />
+          <div className="play-button">
+            <FaPlay className="play-icon" />
           </div>
         </Box>
       ) : (
         <iframe
-          width='560'
-          height='315'
-          className='frame'
-          src='https://www.youtube.com/embed/p_MyQ4RpLRg?si=CIn-fcxifB3bxO2s&autoplay=1&controls=0&showinfo=0&rel=0'
-          title='YouTube video player'
-          frameBorder='0'
+          width="560"
+          height="315"
+          className="frame"
+          src="https://www.youtube.com/embed/p_MyQ4RpLRg?si=CIn-fcxifB3bxO2s&autoplay=1&controls=0&showinfo=0&rel=0"
+          title="YouTube video player"
+          frameBorder="0"
           allow={'autoplay; encrypted-media;'}
-          referrerPolicy='strict-origin-when-cross-origin'
+          referrerPolicy="strict-origin-when-cross-origin"
           allowfullscreen
         ></iframe>
       )}
