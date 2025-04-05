@@ -21,7 +21,7 @@ const OrderPage = () => {
   return (
     isBlockRender && (
       <PageContainerS>
-        <ContainerSectionPage component='div'>
+        <ContainerSectionPage component="div">
           <BlockThank />
         </ContainerSectionPage>
       </PageContainerS>

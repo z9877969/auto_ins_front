@@ -1,7 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
-import { useNotExistUser } from './hooks';
 
 const loadComponentWithRetry = (importFunc, retries = 3, interval = 1000) => {
   return lazy(
@@ -14,9 +13,9 @@ const loadComponentWithRetry = (importFunc, retries = 3, interval = 1000) => {
               reject(error);
             } else {
               setTimeout(() => {
-                loadComponentWithRetry(importFunc, retries - 1, interval);
-                // .then(resolve)
-                // .catch(reject);
+                loadComponentWithRetry(importFunc, retries - 1, interval)
+                  .then(resolve)
+                  .catch(reject);
               }, interval);
             }
           });
@@ -35,7 +34,7 @@ const BaseSettings = loadComponentWithRetry(() =>
 );
 
 function App() {
-  useNotExistUser();
+  // useNotExistUser();
   return (
     <>
       <Suspense fallback={null}>

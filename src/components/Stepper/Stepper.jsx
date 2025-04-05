@@ -84,7 +84,7 @@ const getInsurerStoredStateWithoutDocsData = (docTypeOption) => {
   };
 };
 
-const Stepper = ({ backLinkRef }) => {
+const Stepper = ({ backLinkRef, isLoading }) => {
   const { contractSave } = useActions();
   const user = useSelector(getUser);
   const { tariff, dgoTarrif } = useSelector(getGlobalCustomerData);
@@ -361,7 +361,11 @@ const Stepper = ({ backLinkRef }) => {
         </Typography>
         {getStepContent(activeStep)}
         <ButtonContainerStyled component='div'>
-          <CustomButtonLoading btnTitle={'Підтвердити'} type={'submit'} />
+          <CustomButtonLoading
+            btnTitle={'Підтвердити'}
+            type={'submit'}
+            isLoadingProp={isLoading}
+          />
           {activeStep === 0 ? (
             <BtnBack backLinkRef={backLinkRef} />
           ) : (

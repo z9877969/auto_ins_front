@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-export const useScrollToTop = () => {
+export const useScrollToTop = (scrollResolver) => {
   useEffect(() => {
-    scrollTo({ top: 0 });
+    scrollResolver === undefined && scrollTo({ top: 0 });
   });
 };

@@ -37,67 +37,26 @@ export const requestOrderApi = async ({ epolicy, vcl }) => {
   return data;
 };
 
-export const emmitOrderApi = async ({ epolicy, vcl, ...rest }) => {
-  await instance.post(
-    `/orders/${epolicy}/emmit`,
-    {},
-    {
-      params: {
-        epolicy,
-        vcl,
-        ...rest,
-      },
-    }
-  );
-  return true;
-};
-
 export const createContractPaymentApi = async ({
   contractId,
   amount,
   orderId,
-  linkInvoice,
-}) => {
-  await instance.post('/orders/contractpayment/createContractPayment', null, {
-    params: {
-      contractId,
-      amount,
-      orderId,
-      linkInvoice,
-    },
-  });
-  return true;
-};
-
-export const confirmContractPaymentApi = async ({
-  contractId,
-  amount,
-  orderId,
-  payDate,
-}) => {
-  await instance.post('/orders/contractpayment/confirmContractPayment', null, {
-    params: {
-      contractId,
-      amount,
-      orderId,
-      payDate,
-    },
-  });
-  return true;
-};
-
-export const getLinkInvoiceApi = async ({
-  orderId,
-  price,
-  quantity,
   shoperEmail,
-  expDate,
 }) => {
-  const { data } = await instance.get('/orders/pm/invoice/link', {
-    params: { orderId, price, quantity, shoperEmail, expDate },
-  });
+  const { data } = await instance.post(
+    '/orders/contractpayment/createContractPayment',
+    null,
+    {
+      params: {
+        contractId,
+        amount,
+        orderId,
+        shoperEmail,
+      },
+    }
+  );
 
-  return data.linkInvoice;
+  return data.linkPayment;
 };
 
 export const addLogApi = async (errorData) => {

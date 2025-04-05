@@ -1,85 +1,54 @@
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { getPortmoneValue } from '../../helpers/getPortmoneValue';
-import { getUser } from '@redux/Calculator/selectors';
-import { setIsLoading } from '@redux/Global/globalSlice';
-import { PORTMONE_URL } from '@constants/index';
-import { getLinkInvoiceApi } from 'services/api';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 import { createContractPaymentApi } from 'services/api';
-import { getInvoiceTime } from 'helpers/portmone/getInvoiceTime';
 import * as S from 'style/Global.styled';
-
-/* 
-    description = "Test Payment",
-    emailAddress = "test@ukr.net",
-    shopOrderNumber = "SHP-00445401",
-    lang = "uk",
-    payeeId = "3048",
-    billAmount = "10",
-    billCurrency = "UAH",
-*/
 
 const PortmoneForm = ({
   billAmount,
   contractId,
-  shopOrderNumber = '',
-  description = '',
   emailAddress = '',
-  lang = 'uk',
-  billCurrency = 'UAH',
   orderId,
 }) => {
-  const user = useSelector(getUser);
+  const navigate = useNavigate();
+  const linkInvoiceRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const value = JSON.stringify(
-    getPortmoneValue({
-      description,
-      emailAddress,
-      billAmount,
-      shopOrderNumber,
-      lang,
-      billCurrency,
-      contractId,
-      userId: user.user.id,
-      salePointId: user.salePoint.id,
-      orderId,
-    })
-  );
+  const handleRedirectToPayment = (e) => {
+    if (error) return null;
+    e.preventDefault();
+
+    location.href = linkInvoiceRef.current;
+  };
 
   useEffect(() => {
-    localStorage.removeItem('carDataFormik');
     setIsLoading(true);
     const startPayment = async () => {
       try {
-        const linkInvoice = await getLinkInvoiceApi({
-          orderId,
-          price: billAmount,
-          shoperEmail: emailAddress,
-          expDate: getInvoiceTime()
-
-        });
-        await createContractPaymentApi({
+        linkInvoiceRef.current = await createContractPaymentApi({
           contractId: contractId.epolicyId,
           amount: billAmount,
           orderId,
-          linkInvoice,
+          shoperEmail: emailAddress,
         });
+        localStorage.removeItem('carDataFormik');
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error.message);
+        setError(error);
+        alert('Щось пішло не так. Створіть нову заявку з коректними даними');
+        navigate('/');
       } finally {
         setIsLoading(false);
       }
     };
     startPayment();
-  }, [billAmount, contractId.epolicyId, emailAddress, orderId]);
+  }, [billAmount, contractId.epolicyId, emailAddress, orderId, navigate]);
   return (
-    <form action={PORTMONE_URL} method='post' target='myFrame'>
-      <input type='hidden' name='bodyRequest' value={value} />
-      <input type='hidden' name='typeRequest' value='json' />
-
-      <S.YellowButton type='submit'>Portmone.com</S.YellowButton>
-    </form>
+    <S.YellowButton type="button" onClick={handleRedirectToPayment}>
+      {isLoading ? <CircularProgress /> : 'Portmone.com'}
+    </S.YellowButton>
   );
 };
 

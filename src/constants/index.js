@@ -203,8 +203,6 @@ export const SAVED_ORDER_TYPE = {
   EPOLICY: 'epolicy2025', // needing for id
 };
 
-export const PORTMONE_URL = 'https://www.portmone.com.ua/gateway/';
-
 export const FRONT_URL = ENV.DEV
   ? ENV.LOCAL_FRONT_URL
   : ENV.PROD_FRONT_URL;

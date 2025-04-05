@@ -164,22 +164,22 @@ const CarDataForm = ({ formik, userParams }) => {
     <>
       <InputContBoxStyled>
         <GeneralInput
-          id='stateNumber'
-          lableText='Номерний знак*:'
+          id="stateNumber"
+          lableText="Номерний знак*:"
           handleBlur={handleBlurStateNumber}
           customFunc={handleChangeTextInput}
           formikData={formik}
           placeholder={'AA1234AA'}
         />
         <GeneralInput
-          id='year'
-          lableText='Рік випуску*:'
+          id="year"
+          lableText="Рік випуску*:"
           formikData={formik}
           placeholder={'2005'}
         />
         <GeneralSelect
-          id='maker'
-          lableText='Марка*:'
+          id="maker"
+          lableText="Марка*:"
           // currentValue={values.maker.id ? values.maker : { name: 'Skoda' }}
           currentValue={values.maker?.id ? values.maker : undefined}
           placeholder={'Skoda'}
@@ -188,7 +188,7 @@ const CarDataForm = ({ formik, userParams }) => {
           getOptionValue={(option) => option.id}
           changeCB={handleChangeMaker}
           readOnly={Boolean(insuranceObject?.model)}
-          noOptionsMessage='Така марка відсутня'
+          noOptionsMessage="Така марка відсутня"
           errorMessage={
             formik.touched['maker']?.id && formik.errors['maker']?.id
           }
@@ -197,21 +197,19 @@ const CarDataForm = ({ formik, userParams }) => {
         {!selectOrInput.isModelInput ? (
           <GeneralSelect
             handleSelectRef={handleSelectRef}
-            id='model'
-            lableText='Модель*:'
-            // currentValue={values.model.id ? values.model : { name: 'Fabia' }}
+            id="model"
+            lableText="Модель*:"
             currentValue={values.model?.id ? values.model : undefined}
             placeholder={'Fabia'}
             optionsArr={modelOptions}
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.id}
             isValid={
-              // values.model?.name === 'Оберіть модель авто' ? false : true
               !values.model?.id ? false : true
             }
             changeCB={handleChangeModel}
             readOnly={Boolean(insuranceObject?.model)}
-            noOptionsMessage='Така модель відсутня. Вкажіть її самостійно'
+            noOptionsMessage="Така модель відсутня. Вкажіть її самостійно"
             components={customComponents}
             errorMessage={
               formik.touched['model']?.id && formik.errors['model']?.id
@@ -220,32 +218,33 @@ const CarDataForm = ({ formik, userParams }) => {
         ) : (
           <InputInsteadSelect
             formik={formik}
-            label='Модель*:'
-            name='model'
-            valueKey='name'
+            label="Модель*:"
+            name="model"
+            valueKey="name"
             onChange={handleChangeModelByInput}
             closeInput={() => selectOrInput.setIsModelInput(false)}
           />
         )}
         {!engineVolumeRef.current && (
           <GeneralInput
-            id='engineVolume'
+            id="engineVolume"
             lableText="Об'єм двигуна*:"
             formikData={formik}
+            placeholder="1500"
             customFunc={handleChangeEngineVolume}
           />
         )}
         <GeneralInput
-          id='bodyNumber'
-          lableText='VIN Номер*:'
+          id="bodyNumber"
+          lableText="VIN Номер*:"
           formikData={formik}
           customFunc={handleChangeTextInput}
           placeholder={'WSXEDCRFV12345678'}
         />
         {/* ============ */}
         <GeneralInput
-          id='grossWeight'
-          lableText='Повна маса, кг:'
+          id="grossWeight"
+          lableText="Повна маса, кг:"
           formikData={formik}
           customFunc={(e) =>
             setFieldValue('grossWeight', e.target.value.trim())
@@ -253,15 +252,15 @@ const CarDataForm = ({ formik, userParams }) => {
           placeholder={'1372'}
         />
         <GeneralInput
-          id='curbWeight'
-          lableText='Маса без навантаження, кг:'
+          id="curbWeight"
+          lableText="Маса без навантаження, кг:"
           formikData={formik}
           customFunc={(e) => setFieldValue('curbWeight', e.target.value.trim())}
           placeholder={'1100'}
         />
         <GeneralInput
-          id='seatingCapacity'
-          lableText='Кількість місць (з водієм)'
+          id="seatingCapacity"
+          lableText="Кількість місць (з водієм)"
           formikData={formik}
           customFunc={(e) =>
             setFieldValue('seatingCapacity', e.target.value.trim())
@@ -270,8 +269,8 @@ const CarDataForm = ({ formik, userParams }) => {
         />
         {values.category === VEHICLES_GROUPS.B.B5 && (
           <GeneralInput
-            id='electricMotorPower'
-            lableText='Потужність електродвигуна, кВт'
+            id="electricMotorPower"
+            lableText="Потужність електродвигуна, кВт"
             formikData={formik}
             customFunc={(e) =>
               setFieldValue('electricMotorPower', e.target.value.trim())
