@@ -38,14 +38,17 @@ export const selectOrderData = createSelector(
   (order) => {
     if (order) {
       return {
-        epolicyOrderId: order[SAVED_ORDER_TYPE.EPOLICY].id,
+        epolicyOrderId: order[SAVED_ORDER_TYPE.EPOLICY]?.id,
         vclOrderId: order[SAVED_ORDER_TYPE.VCL]?.id ?? null,
-        billAmount: order[SAVED_ORDER_TYPE.VCL]
-          ? order[SAVED_ORDER_TYPE.VCL].brokerDiscountedPayment +
-            order[SAVED_ORDER_TYPE.EPOLICY].brokerDiscountedPayment
-          : order[SAVED_ORDER_TYPE.EPOLICY].brokerDiscountedPayment,
+        billAmount: {
+          epolicy: order[SAVED_ORDER_TYPE.EPOLICY].brokerDiscountedPayment,
+          ...(order[SAVED_ORDER_TYPE.VCL] && {
+            vcl: order[SAVED_ORDER_TYPE.VCL].brokerDiscountedPayment,
+          }),
+        },
         shopOrderNumber: order[SAVED_ORDER_TYPE.EPOLICY].code,
         epolicyOrderCode: order[SAVED_ORDER_TYPE.EPOLICY].code,
+        vclOrderCode: order[SAVED_ORDER_TYPE.VCL]?.code ?? null,
         email: order[SAVED_ORDER_TYPE.EPOLICY].customer.email,
         orderState: order[SAVED_ORDER_TYPE.EPOLICY].state,
       };
