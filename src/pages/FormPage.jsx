@@ -42,12 +42,12 @@ const FormPage = () => {
             });
             setIsOrderRequested(true);
           } catch (error) {
-             
+            // console.log('error :>> ', error);
             setErrorState(error);
-            alert(
-              'Щось пішло не так. Створіть нову заявку з коректними даними'
-            );
-            navigate('/');
+            // alert(
+            //   'Щось пішло не так. Створіть нову заявку з коректними даними'
+            // );
+            // navigate('/');
           } finally {
             setIsLoading(false);
           }

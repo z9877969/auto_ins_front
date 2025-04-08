@@ -1,4 +1,4 @@
-import { BACK_URL } from '@constants/index';
+import { BACK_URL, mainRoutes } from '@constants/index';
 import axios from 'axios';
 
 export const instance = axios.create({
@@ -38,9 +38,9 @@ export const requestOrderApi = async ({ epolicy, vcl }) => {
 };
 
 export const createContractPaymentApi = async ({
-  contractId,
-  amount,
-  orderId,
+  contractId /* { vcl, epolicy } */,
+  amount /* { vcl, epolicy } */,
+  orderId /* { vcl, epolicy } */,
   shoperEmail,
 }) => {
   const { data } = await instance.post(
@@ -48,9 +48,12 @@ export const createContractPaymentApi = async ({
     null,
     {
       params: {
-        contractId,
-        amount,
-        orderId,
+        epolicyAmount: amount.epolicy,
+        ...(amount.vcl && { vclAmount: amount.vcl }),
+        epolicyOrderId: orderId.epolicy,
+        ...(orderId.vcl && { vclOrderId: orderId.vcl }),
+        epolicyContractId: contractId.epolicy,
+        ...(contractId.epolicy && { vclContractId: contractId.vcl }),
         shoperEmail,
       },
     }
@@ -66,4 +69,13 @@ export const addLogApi = async (errorData) => {
     // eslint-disable-next-line
     console.log(error.message);
   }
+};
+
+export const saveContractApi = async (body) => {
+  const { data } = await instance.post(mainRoutes.GLOBAL + '/contract/save', {
+    ...body,
+    sourceInfo: 'https://auto-ins.com.ua/',
+  });
+
+  return data;
 };

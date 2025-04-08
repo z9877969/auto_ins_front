@@ -27,9 +27,9 @@ const PortmoneForm = ({
     const startPayment = async () => {
       try {
         linkInvoiceRef.current = await createContractPaymentApi({
-          contractId: contractId.epolicyId,
-          amount: billAmount,
-          orderId,
+          contractId: { epolicy: contractId.epolicyId, vcl: contractId.vclId },
+          amount: { epolicy: billAmount.epolicy, vcl: billAmount.vcl },
+          orderId: { epolicy: orderId.epolicy, vcl: orderId.vcl },
           shoperEmail: emailAddress,
         });
         localStorage.removeItem('carDataFormik');
@@ -44,7 +44,14 @@ const PortmoneForm = ({
       }
     };
     startPayment();
-  }, [billAmount, contractId.epolicyId, emailAddress, orderId, navigate]);
+  }, [
+    billAmount,
+    contractId.epolicyId,
+    contractId.vclId,
+    emailAddress,
+    orderId,
+    navigate,
+  ]);
   return (
     <S.YellowButton type="button" onClick={handleRedirectToPayment}>
       {isLoading ? <CircularProgress /> : 'Portmone.com'}

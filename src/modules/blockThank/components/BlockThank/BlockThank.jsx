@@ -185,9 +185,15 @@ const BlockThank = () => {
             epolicyId: orderData?.epolicyOrderId,
             vclId: orderData?.vclOrderId,
           }}
-          billAmount={orderData?.billAmount}
+          billAmount={{
+            epolicy: orderData?.billAmount.epolicy,
+            vcl: orderData?.billAmount.vcl,
+          }}
+          orderId={{
+            epolicy: orderData?.epolicyOrderCode,
+            vcl: orderData?.vclOrderCode,
+          }}
           emailAddress={orderData?.email}
-          orderId={orderData?.epolicyOrderCode}
         />
       )}
     </S.FormWrapper>

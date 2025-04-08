@@ -63,7 +63,7 @@ export const globalSlice = createSlice({
         if (!state.order) {
           state.order = {};
         }
-        state.order[payload.type] = payload;
+        state.order = { ...state.order, ...payload };
       })
       .addCase(contractSave.rejected, (state, { payload = {} }) => {
         const { message, errorResponse } = payload;

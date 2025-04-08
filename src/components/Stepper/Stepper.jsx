@@ -171,15 +171,13 @@ const Stepper = ({ backLinkRef, isLoading }) => {
             id: insurObject.model?.autoMaker?.id,
             name: insurObject.model?.autoMaker?.name,
           }
-        : // : { name: '', id: '' },
-          null,
+        : null,
       model: insurObject
         ? {
             id: insurObject.model?.id,
             name: insurObject.model?.name,
           }
-        : // : { name: '', id: '' },
-          null,
+        : null,
       bodyNumber: insurObject?.bodyNumber || '',
       outsideUkraine: userParams?.outsideUkraine || false,
       category: insurObject?.category || userParams?.autoCategory,
@@ -240,19 +238,9 @@ const Stepper = ({ backLinkRef, isLoading }) => {
         otkData
       );
 
-      contractSave(
-        contractSaveOSAGONormalize(
-          userParams,
-          user,
-          tariff,
-          insuriensObject,
-          privilegeData
-        )
-      );
-
-      if (dgoTarrif?.id) {
-        contractSave(
-          contractSaveDGONormalize(
+      contractSave({
+        ...(dgoTarrif?.id && {
+          vcl: contractSaveDGONormalize(
             userParams,
             user,
             dgoTarrif,
@@ -260,9 +248,16 @@ const Stepper = ({ backLinkRef, isLoading }) => {
             insuriensObject,
             privilegeData,
             vclOrderData
-          )
-        );
-      }
+          ),
+        }),
+        epolicy: contractSaveOSAGONormalize(
+          userParams,
+          user,
+          tariff,
+          insuriensObject,
+          privilegeData
+        ),
+      });
     },
   });
 
