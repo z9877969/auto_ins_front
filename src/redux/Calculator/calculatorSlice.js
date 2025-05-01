@@ -18,6 +18,7 @@ const initialState = {
   hasVclOrder: false,
   user: null,
   isLoading: false,
+  isPrivilagedExist: true,
 };
 
 export const calculatorSlice = createSlice({
@@ -62,6 +63,9 @@ export const calculatorSlice = createSlice({
           state.user.paymentData = paymentData;
         }
       }
+    },
+    setIsPrivilagedExist: (state, { payload }) => {
+      state.isPrivilagedExist = payload;
     },
   },
   extraReducers: (builder) => {
@@ -123,5 +127,6 @@ export const {
   setCalcError,
   changeVslOrderStatus,
   setUserDataAction,
+  setIsPrivilagedExist,
 } = calculatorSlice.actions;
 export const calculatorReducer = calculatorSlice.reducer;

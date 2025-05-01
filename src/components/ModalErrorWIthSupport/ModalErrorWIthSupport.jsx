@@ -1,54 +1,49 @@
 import Box from '@mui/material/Box';
-import DialogActions from '@mui/material/DialogActions';
+// import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useActions } from '../../hooks/useActions';
 import { SpriteSVG } from '../../images/SpriteSVG';
 import {
-  combineError,
+  // combineError,
   getIsModalErrorOpen,
 } from '../../redux/Global/selectors';
-import { BlueButton } from '../../style/Global.styled';
 import {
   BoxImgYellow,
-  ButtonCancel,
   DialogStyled,
   TitleWrapper,
-} from './ModalErrorStyled';
+} from './ModalErrorWIthSupport.styled';
+import { selectIsPrivilagedExist } from '../../redux/Calculator/selectors';
+import SocialLink from 'modules/footer/components/SocialLink/SocialLink';
+import FooterNavList from 'modules/footer/components/FooterNavList/FooterNavList';
+import { socialLinksOptions } from 'modules/footer/data/footerNavLIstOptions';
 
-const ModalError = () => {
-  const location = useLocation();
-  const globalError = useSelector(combineError);
+const ModalErrorWithSupport = () => {
   const isError = useSelector(getIsModalErrorOpen);
+  const isPrivilagedExist = useSelector(selectIsPrivilagedExist);
   const [open, setOpen] = useState(isError);
-
   const {
     setIsModalErrorOpen,
     setStateNumber,
     setCalcError,
     setGlobError,
     setRefError,
+    setIsPrivilagedExist,
   } = useActions();
+  // const globalError = useSelector(combineError);
 
-  const validError =
-    'Номер не відповідає вимогам оформлення Електронного поліса встановленим МТСБУ (Моторно-транспортне страхове бюро України).';
+  // const validError =
+  //   'Номер не відповідає вимогам оформлення Електронного поліса встановленим МТСБУ (Моторно-транспортне страхове бюро України).';
 
   const navigate = useNavigate();
-  const handleBack = () => {
-    setOpen(false);
-    navigate('/');
-    setIsModalErrorOpen(false);
-    setStateNumber('');
-  };
 
   const handleClose = () => {
     setOpen(false);
-    // navigate("/");
-    navigate(location.pathname || '/');
+    navigate('/');
     setIsModalErrorOpen(false);
     setStateNumber('');
   };
@@ -59,6 +54,14 @@ const ModalError = () => {
       setRefError('');
     };
   }, [setCalcError, setGlobError, setRefError]);
+
+  useEffect(() => {
+    () => {
+      if (!isPrivilagedExist) {
+        setIsPrivilagedExist(true);
+      }
+    };
+  }, [isPrivilagedExist, setIsPrivilagedExist]);
 
   return (
     <>
@@ -82,23 +85,29 @@ const ModalError = () => {
 
         <DialogContent>
           <DialogContentText component="div">
-            <Typography component="p" variant="body1">
+            {/* <Typography component="p" variant="body1">
               {globalError || validError}
-            </Typography>
+            </Typography> */}
             <Typography
               component="p"
               variant="subtitle1"
               sx={{ padding: { xs: '8px 0', sm: '16px 0' } }}
             >
-              Будь ласка, перевірте правильність введення.
+              Напишіть і наші спеціалісти підберуть пропозицію для вас
             </Typography>
-            <Typography component="p" variant="body1">
+            {/* <Typography component="p" variant="body1">
               Якщо авто зареєстровано в іншій країні, здійсніть пошук “За
               параметрами” і виберіть “Авто на іноземних номерах”.
-            </Typography>
+            </Typography> */}
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <FooterNavList
+          options={socialLinksOptions}
+          linkComponent={SocialLink}
+          sx={{ rowGap: '4px' }}
+          className="socialOrder"
+        />
+        {/* <DialogActions>
           <BlueButton
             arai-label="Розрахувати за параметрами"
             className="buttonDesktop"
@@ -114,10 +123,10 @@ const ModalError = () => {
           >
             Скасувати
           </ButtonCancel>
-        </DialogActions>
+        </DialogActions> */}
       </DialogStyled>
     </>
   );
 };
 
-export default ModalError;
+export default ModalErrorWithSupport;

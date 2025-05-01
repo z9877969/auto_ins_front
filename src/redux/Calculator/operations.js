@@ -8,7 +8,8 @@ import { userNormalize } from '../../helpers/dataNormalize/userNormalize';
 import { mergeObjectsById } from '../../helpers/mergeObjectsById';
 import { sortAndFilterTariff } from '../../helpers/sortAndFilterTariff';
 import { instance } from '../../services/api';
-import { mainRoutes } from '../../constants';
+import { mainRoutes, PRIVILEGED_TYPE } from '../../constants';
+import { setIsPrivilagedExist } from './calculatorSlice';
 
 // const setSalePoint = (salePoint) => {
 //   instance.defaults.params = { ...instance.defaults.params, salePoint };
@@ -102,15 +103,17 @@ export const osagoByDn = createAsyncThunk(
         {
           params: {
             ...body,
-            // customerCategory,
-            // stateNumber,
-            // dateFrom,
-            // registrationType,
             taxi: false,
-            // dateTo: '2025-12-29'
           },
         }
       );
+
+      if (
+        body.customerCategory === PRIVILEGED_TYPE.PRIVILEGED &&
+        !data.length
+      ) {
+        throw dispatch(setIsPrivilagedExist(false));
+      }
 
       const newData = data
         .filter((el) => el.crossSell === false)

@@ -9,11 +9,13 @@ import { getSubmitObject } from '../redux/byParameters/selectors';
 import {
   getStateCalculator,
   getStateNumber,
+  selectIsPrivilagedExist,
 } from '../redux/Calculator/selectors';
 import { LinearProgress } from '@mui/material';
 import LineSection from '../components/LineSection/LineSection';
 
 import ModalError from '../components/ModalError/ModalError';
+import ModalErrorWithSupport from 'components/ModalErrorWIthSupport/ModalErrorWIthSupport';
 import { getIsModalErrorOpen } from '../redux/Global/selectors';
 import { useActions } from '../hooks/useActions';
 import { ORDER_TYPE } from '../constants';
@@ -48,6 +50,8 @@ const PricesPage = () => {
     };
   }, [navigate, userParams, stateNumber]);
 
+  const isPrivilegedExist = useSelector(selectIsPrivilagedExist);
+
   useEffect(() => {
     if (location.state?.params) {
       const getOsagoData = async () => {
@@ -68,7 +72,18 @@ const PricesPage = () => {
     } else {
       navigate('/');
     }
-  }, [location.state, setIsModalErrorOpen, osagoByDn, osagoByParams, navigate]);
+  }, [
+    location.state,
+    setIsModalErrorOpen,
+    osagoByDn,
+    osagoByParams,
+    isPrivilegedExist,
+    navigate,
+  ]);
+
+  if (isError && !isPrivilegedExist) {
+    return <ModalErrorWithSupport />;
+  }
 
   if (isError) {
     return <ModalError />;
@@ -87,30 +102,3 @@ const PricesPage = () => {
   );
 };
 export default PricesPage;
-
-/* 
-// correct
-autoKind: "CAR"
-autoKindLimit: "1600"
-customerCategory: "NATURAL"
-dateFrom: "2025-01-09"
-dateTo: "2026-01-08"
-outsideUkraine: false
-registrationPlace: 1
-registrationType: "PERMANENT"
-salePoint: 40831
-taxi: false
-usageMonths: 0
-=======
-// uncorrect
-autoKind: "CAR"
-autoKindLimit: "1600"
-customerCategory: "NATURAL"
-dateFrom: "2025-01-09"
-dateTo: "2026-01-08"
-outsideUkraine: false
-registrationPlace: 1
-registrationType: "PERMANENT"
-salePoint: 40831
-stateNumber: "АІ5366РВ"
-*/
