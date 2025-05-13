@@ -53,6 +53,13 @@ export const osagoByParams = createAsyncThunk(
         }
       );
 
+      // if (
+      //   body.customerCategory === PRIVILEGED_TYPE.PRIVILEGED &&
+      //   !data.length
+      // ) {
+      //   throw dispatch(setIsPrivilagedExist(true));
+      // }
+
       dispatch(chooseVclTariffDGO({ ...body, salePoint }));
       const newData = data
         .filter((el) => el.crossSell === false)
@@ -108,12 +115,12 @@ export const osagoByDn = createAsyncThunk(
         }
       );
 
-      if (
-        body.customerCategory === PRIVILEGED_TYPE.PRIVILEGED &&
-        !data.length
-      ) {
-        throw dispatch(setIsPrivilagedExist(false));
-      }
+      // if (
+      //   body.customerCategory === PRIVILEGED_TYPE.PRIVILEGED &&
+      //   !data.length
+      // ) {
+      //   throw dispatch(setIsPrivilagedExist(true));
+      // }
 
       const newData = data
         .filter((el) => el.crossSell === false)

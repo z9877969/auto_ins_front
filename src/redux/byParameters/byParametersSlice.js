@@ -41,6 +41,11 @@ export const byParameters = createSlice({
     setAddressOptions: (state, { payload }) => {
       state.addressOptions = payload;
     },
+    setByByramsInitialState: () => {
+      return {
+        ...initialState,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getAddress.fulfilled, (state, { payload }) => {
@@ -57,4 +62,5 @@ export const {
   setAddress,
   setVehicle,
   setEngineCapacity,
+  setByByramsInitialState,
 } = byParameters.actions;

@@ -6,7 +6,7 @@ const infoTextMiddleSecond = [
     restText: '',
   },
   {
-    text: "Надаємо роз\'яснення та посилання.",
+    text: 'Надаємо роз\'яснення та посилання.',
     strongText: '',
     restText: '',
   },

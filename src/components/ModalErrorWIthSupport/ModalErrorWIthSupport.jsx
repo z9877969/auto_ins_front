@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-// import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import Typography from '@mui/material/Typography';
@@ -8,31 +7,35 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useActions } from '../../hooks/useActions';
 import { SpriteSVG } from '../../images/SpriteSVG';
-import {
-  // combineError,
-  getIsModalErrorOpen,
-} from '../../redux/Global/selectors';
+import // combineError,
+'../../redux/Global/selectors';
 import {
   BoxImgYellow,
   DialogStyled,
   TitleWrapper,
 } from './ModalErrorWIthSupport.styled';
-import { selectIsPrivilagedExist } from '../../redux/Calculator/selectors';
+import {
+  selectIsOpenPrivilageSupportModal,
+  selectIsPrivilagedExist,
+} from '../../redux/Calculator/selectors';
 import SocialLink from 'modules/footer/components/SocialLink/SocialLink';
 import FooterNavList from 'modules/footer/components/FooterNavList/FooterNavList';
 import { socialLinksOptions } from 'modules/footer/data/footerNavLIstOptions';
 
 const ModalErrorWithSupport = () => {
-  const isError = useSelector(getIsModalErrorOpen);
   const isPrivilagedExist = useSelector(selectIsPrivilagedExist);
-  const [open, setOpen] = useState(isError);
+  const isOpenPrivilageSupportModal = useSelector(
+    selectIsOpenPrivilageSupportModal
+  );
+  const [open, setOpen] = useState(true);
   const {
     setIsModalErrorOpen,
     setStateNumber,
     setCalcError,
     setGlobError,
     setRefError,
-    setIsPrivilagedExist,
+    setInitialCalculatorState,
+    setByByramsInitialState,
   } = useActions();
   // const globalError = useSelector(combineError);
 
@@ -56,12 +59,18 @@ const ModalErrorWithSupport = () => {
   }, [setCalcError, setGlobError, setRefError]);
 
   useEffect(() => {
-    () => {
-      if (!isPrivilagedExist) {
-        setIsPrivilagedExist(true);
+    return () => {
+      if (isPrivilagedExist || isOpenPrivilageSupportModal) {
+        setInitialCalculatorState();
+        setByByramsInitialState();
       }
     };
-  }, [isPrivilagedExist, setIsPrivilagedExist]);
+  }, [
+    isPrivilagedExist,
+    isOpenPrivilageSupportModal,
+    setInitialCalculatorState,
+    setByByramsInitialState,
+  ]);
 
   return (
     <>
@@ -95,10 +104,6 @@ const ModalErrorWithSupport = () => {
             >
               Напишіть і наші спеціалісти підберуть пропозицію для вас
             </Typography>
-            {/* <Typography component="p" variant="body1">
-              Якщо авто зареєстровано в іншій країні, здійсніть пошук “За
-              параметрами” і виберіть “Авто на іноземних номерах”.
-            </Typography> */}
           </DialogContentText>
         </DialogContent>
         <FooterNavList
@@ -107,23 +112,6 @@ const ModalErrorWithSupport = () => {
           sx={{ rowGap: '4px' }}
           className="socialOrder"
         />
-        {/* <DialogActions>
-          <BlueButton
-            arai-label="Розрахувати за параметрами"
-            className="buttonDesktop"
-            onClick={handleBack}
-            sx={{ width: { xs: '100%' } }}
-          >
-            Розрахувати за параметрами
-          </BlueButton>
-          <ButtonCancel
-            className="buttonDesktop"
-            onClick={handleClose}
-            aria-label="скасувати"
-          >
-            Скасувати
-          </ButtonCancel>
-        </DialogActions> */}
       </DialogStyled>
     </>
   );

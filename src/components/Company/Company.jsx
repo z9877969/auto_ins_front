@@ -34,15 +34,27 @@ const content = {
   },
 };
 
-const Company = ({ companyObject, lastItem }) => {
+const Company = ({
+  companyObject,
+  lastItem,
+  // handleOpenSuportModal,
+  // isPrivileged,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const user = useSelector(getUser);
   const { registrationType } = useSelector(getSubmitObject);
+
   const theme = useTheme();
+
   const { setGlobalCustomerData, setParamsFromUrl, changeVslOrderStatus } =
     useActions();
+
+  const [chooseDgo, setChooseDgo] = useState({
+    limit: 0,
+    discountedPayment: 0,
+  });
 
   const {
     insurerId,
@@ -60,11 +72,6 @@ const Company = ({ companyObject, lastItem }) => {
   // eslint-disable-next-line no-unused-vars
   const [franchise, setFranchise] = useState(sortedTarrif[0]);
 
-  const [chooseDgo, setChooseDgo] = useState({
-    limit: 0,
-    discountedPayment: 0,
-  });
-
   const price = useMemo(
     () => Math.round(franchise.discountedPayment + chooseDgo.discountedPayment),
     [franchise.discountedPayment, chooseDgo.discountedPayment]
@@ -81,25 +88,6 @@ const Company = ({ companyObject, lastItem }) => {
     chooseDgo.discountedPayment,
     franchise.brokerDiscount,
   ]);
-
-  useEffect(() => {
-    if (!companyObject) return;
-    scrollTo({ top: 0 });
-    // eslint-disable-next-line
-  }, []);
-
-  // const handleChangeSelect = (e) => {
-  //   setFranchise(e);
-  // };
-  const handleChangeDgoSelect = (option) => {
-    const { limit, discountedPayment } = option;
-    if (limit === 0 && discountedPayment === 0) {
-      changeVslOrderStatus(false);
-    } else {
-      changeVslOrderStatus(true);
-    }
-    setChooseDgo(option);
-  };
 
   const formik = useFormik({
     initialValues: {},
@@ -150,6 +138,25 @@ const Company = ({ companyObject, lastItem }) => {
       });
     },
   });
+
+  // const handleChangeSelect = (e) => {
+  //   setFranchise(e);
+  // };
+  const handleChangeDgoSelect = (option) => {
+    const { limit, discountedPayment } = option;
+    if (limit === 0 && discountedPayment === 0) {
+      changeVslOrderStatus(false);
+    } else {
+      changeVslOrderStatus(true);
+    }
+    setChooseDgo(option);
+  };
+
+  useEffect(() => {
+    if (!companyObject) return;
+    scrollTo({ top: 0 });
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <CardStyled component="li" sx={{ overflow: 'visible' }}>
@@ -244,7 +251,13 @@ const Company = ({ companyObject, lastItem }) => {
               </Typography>
             </Box>
           </BoxFooter>
-          <ButtonStyled type="submit">Придбати</ButtonStyled>
+          <ButtonStyled
+            // type={isPrivileged ? 'button' : 'submit'}
+            // onClick={isPrivileged ? handleOpenSuportModal : null}
+            type="submit"
+          >
+            Придбати
+          </ButtonStyled>
         </WrapperStyled>
       </WrapperStyled>
     </CardStyled>

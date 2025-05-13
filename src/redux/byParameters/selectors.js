@@ -22,6 +22,8 @@ export const getSubmitObject = createSelector(
   (submitObj) => submitObj
 );
 
+export const selectIsPrivileged = (state) => state.byParameters.benefits;
+
 export const getRegistrationPlaceData = createSelector(
   (state) => state.byParameters.address,
   ({ value, label }) => {

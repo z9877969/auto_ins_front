@@ -9,13 +9,14 @@ import { getSubmitObject } from '../redux/byParameters/selectors';
 import {
   getStateCalculator,
   getStateNumber,
-  selectIsPrivilagedExist,
+  // selectIsOpenPrivilageSupportModal,
+  // selectIsPrivilagedExist,
 } from '../redux/Calculator/selectors';
 import { LinearProgress } from '@mui/material';
 import LineSection from '../components/LineSection/LineSection';
 
 import ModalError from '../components/ModalError/ModalError';
-import ModalErrorWithSupport from 'components/ModalErrorWIthSupport/ModalErrorWIthSupport';
+// import ModalErrorWithSupport from 'components/ModalErrorWIthSupport/ModalErrorWIthSupport';
 import { getIsModalErrorOpen } from '../redux/Global/selectors';
 import { useActions } from '../hooks/useActions';
 import { ORDER_TYPE } from '../constants';
@@ -31,12 +32,15 @@ const PricesPage = () => {
   const stateNumber = useSelector(getStateNumber);
   const isLoadingCalculator = useSelector(getStateCalculator);
   const isError = useSelector(getIsModalErrorOpen);
+  // const isPrivilegedExist = useSelector(selectIsPrivilagedExist);
+  // const isOpenPrivilageSupportModal = useSelector(
+  //   selectIsOpenPrivilageSupportModal
+  // );
 
   useEffect(() => {
     let subscribed = true;
     if (subscribed) {
       if (
-        // !Object.hasOwn(userParams, 'customerCategory') &&
         // eslint-disable-next-line
         !userParams.hasOwnProperty('customerCategory') &&
         stateNumber === ''
@@ -49,8 +53,6 @@ const PricesPage = () => {
       subscribed = false;
     };
   }, [navigate, userParams, stateNumber]);
-
-  const isPrivilegedExist = useSelector(selectIsPrivilagedExist);
 
   useEffect(() => {
     if (location.state?.params) {
@@ -77,13 +79,13 @@ const PricesPage = () => {
     setIsModalErrorOpen,
     osagoByDn,
     osagoByParams,
-    isPrivilegedExist,
+    // isPrivilegedExist,
     navigate,
   ]);
 
-  if (isError && !isPrivilegedExist) {
-    return <ModalErrorWithSupport />;
-  }
+  // if ((isError && isPrivilegedExist) || isOpenPrivilageSupportModal) {
+  //   return <ModalErrorWithSupport />;
+  // }
 
   if (isError) {
     return <ModalError />;
