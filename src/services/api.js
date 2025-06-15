@@ -79,3 +79,9 @@ export const saveContractApi = async (body) => {
 
   return data;
 };
+
+export const getIpnBlackListApi = async () => {
+  const { data } = await instance.get(mainRoutes.GLOBAL + '/blacklist');
+
+  return data;
+};

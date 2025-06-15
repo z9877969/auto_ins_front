@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { DocInputsStyled, InputContBoxStyled } from './InsuredDataForm.styled';
@@ -11,14 +12,23 @@ import * as storage from '../../helpers/storage';
 import { insurerDocsDict } from 'assets/utils/insurerDocsDict';
 import { insurerIssuedByDict } from 'assets/utils/insurerIssuedByDict';
 import { calcBirthdateFromIpn } from 'helpers/birthDate/calcBirthdateFromIpn';
+import { selectBlackList } from '@redux/Global/selectors';
+import { useErrorHandler } from 'context/ErrorProvider';
 
 const InsuredDataForm = ({ formik, docTypesOptions }) => {
+  const blackList = useSelector(selectBlackList);
+  const errorHandler = useErrorHandler();
   const identityCardType = formik.values.type.value;
 
   const isID_PASSPORT = identityCardType === 'ID_PASSPORT';
 
   const taxNumberHandleBlur = (e) => {
-    if (e.target.value.length < 10) return;
+    const { value: taxNumber } = e.target;
+    if (blackList.includes(taxNumber)) {
+      errorHandler('Номер з чорного списку: ' + taxNumber);
+      return;
+    }
+    if (taxNumber.length < 10) return;
     const userBirthDate = calcBirthdateFromIpn(e.target.value);
     formik.setFieldValue(
       'birthDate',

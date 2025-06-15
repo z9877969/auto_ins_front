@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { saveContractApi } from '../../services/api';
+import { getIpnBlackListApi, saveContractApi } from '../../services/api';
 import { setIsContractDGO, setIsContractOSAGO } from './globalSlice';
 import { SAVED_ORDER_TYPE } from '../../constants';
 
@@ -24,5 +24,21 @@ export const contractSave = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
+  }
+);
+
+export const getIpnBlackList = createAsyncThunk(
+  'global/blackList',
+  async (_, { rejectWithValue }) => {
+    try {
+      return await getIpnBlackListApi();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+  {
+    condition(_, { getState }) {
+      return !getState().global.blackList;
+    },
   }
 );

@@ -18,14 +18,14 @@ import { useActions } from 'hooks/useActions';
 const FormPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setIsOrderRequested } = useActions();
+  const { setIsOrderRequested, getIpnBlackList } = useActions();
   const backLinkRef = useRef(location.state?.from);
   const isContractOSAGO = useSelector(getIsContractOSAGO);
   const isOrderRequested = useSelector(getIsOrderRequested);
   const orderData = useSelector(selectOrderData);
   const [isLoading, setIsLoading] = useState(false);
   // eslint-disable-next-line
-  const [errorState, setErrorState] = useState(null);
+  const [_, setErrorState] = useState(null);
 
   useScrollToTop(isContractOSAGO || undefined);
 
@@ -42,12 +42,7 @@ const FormPage = () => {
             });
             setIsOrderRequested(true);
           } catch (error) {
-            // console.log('error :>> ', error);
             setErrorState(error);
-            // alert(
-            //   'Щось пішло не так. Створіть нову заявку з коректними даними'
-            // );
-            // navigate('/');
           } finally {
             setIsLoading(false);
           }
@@ -62,6 +57,10 @@ const FormPage = () => {
     setIsOrderRequested,
     orderData?.epolicyOrderId,
   ]);
+
+  useEffect(() => {
+    getIpnBlackList();
+  }, [getIpnBlackList]);
 
   return (
     <OutletPageWrapper className="formPage">

@@ -12,6 +12,8 @@ export const getIsContractOSAGO = (state) => state.global.isContractOSAGO;
 export const getIsContractDGO = (state) => state.global.isContractDGO;
 export const getIsOrderRequested = (state) => state.global.isOrderRequested;
 export const selectHomeAddress = (state) => state.global.homeAddress;
+export const selectBlackList = (state) => state.global.blackList;
+
 export const selectCompanyAllDocTypes = (state) =>
   state.global.globalCustomerData.allowedDocTypes;
 
@@ -55,8 +57,8 @@ export const selectOrderData = createSelector(
           email: order[SAVED_ORDER_TYPE.EPOLICY].customer.email,
           phone: order[SAVED_ORDER_TYPE.EPOLICY].customer.phone,
           address: order[SAVED_ORDER_TYPE.EPOLICY].customer.address,
-          name: order[SAVED_ORDER_TYPE.EPOLICY].customer.name
-        }
+          name: order[SAVED_ORDER_TYPE.EPOLICY].customer.name,
+        },
       };
     }
     return null;

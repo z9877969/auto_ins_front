@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { contractSave } from './operations';
+import { contractSave, getIpnBlackList } from './operations';
 
 const initialState = {
   isLoading: false,
@@ -12,6 +12,7 @@ const initialState = {
   homeAddress: { label: '', value: '' },
   error: '',
   order: null,
+  blackList: null,
 };
 
 export const globalSlice = createSlice({
@@ -86,6 +87,18 @@ export const globalSlice = createSlice({
                 .trim();
         state.error = erroMessage;
         state.isLoading = false;
+      })
+      .addCase(getIpnBlackList.pending, (s) => {
+        s.isLoading = true;
+      })
+      .addCase(getIpnBlackList.fulfilled, (s, { payload }) => {
+        s.isLoading = false;
+        s.blackList = payload;
+        s.error = null;
+      })
+      .addCase(getIpnBlackList.rejected, (s, { payload }) => {
+        s.isLoading = false;
+        s.error = payload;
       });
   },
 });
