@@ -8,6 +8,25 @@ import {
 // import { useActions } from 'hooks/useActions';
 // import { selectIsPrivileged } from '@redux/byParameters/selectors';
 
+const recommendedCompanyList = [
+  'Vuso',
+  'вусо',
+  'USG',
+  'усг',
+  'ARX',
+  'аркс',
+  'INGO',
+  'інго',
+  'Uniqa',
+  'уніка',
+  'Оранта',
+  'PZU',
+  'пзу',
+  'Universalna',
+  'універсальна',
+  'Княжа',
+].map((el) => el.toLowerCase());
+
 const CompanyList = () => {
   let dgo = null;
 
@@ -32,12 +51,16 @@ const CompanyList = () => {
     // const handleOpenSuportModal = () => {
     //   setIsOpenPrivilageSupportModal(true);
     // };
+    const isRecommended = recommendedCompanyList.some((el) =>
+      companyObject.insurerName.toLowerCase().trim().includes(el)
+    );
 
     return (
       <Company
         key={companyObject?.insurerId}
         companyObject={companyObject}
         lastItem={idx === arr.length - 1}
+        isRecommended={isRecommended}
         // isPrivileged={isPrivileged}
         // handleOpenSuportModal={handleOpenSuportModal}
       />

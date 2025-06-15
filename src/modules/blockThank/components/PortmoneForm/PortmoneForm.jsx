@@ -9,6 +9,7 @@ const PortmoneForm = ({
   contractId,
   emailAddress = '',
   orderId,
+  userData,
 }) => {
   const navigate = useNavigate();
   const linkInvoiceRef = useRef(null);
@@ -16,8 +17,8 @@ const PortmoneForm = ({
   const [error, setError] = useState(null);
 
   const handleRedirectToPayment = (e) => {
-    if (error) return null;
     e.preventDefault();
+    if (error || isLoading) return null;
 
     location.href = linkInvoiceRef.current;
   };
@@ -53,9 +54,15 @@ const PortmoneForm = ({
     navigate,
   ]);
   return (
-    <S.YellowButton type="button" onClick={handleRedirectToPayment}>
-      {isLoading ? <CircularProgress /> : 'Portmone.com'}
-    </S.YellowButton>
+    <form onSubmit={handleRedirectToPayment}>
+      <input type="hidden" name="email" value={userData.email} />
+      <input type="hidden" name="userName" value={userData.name} />
+      <input type="hidden" name="userPhone" value={userData.phone} />
+      <input type="hidden" name="userAddress" value={userData.address} />
+      <S.YellowButton type="submit">
+        {isLoading ? <CircularProgress /> : 'Portmone.com'}
+      </S.YellowButton>
+    </form>
   );
 };
 

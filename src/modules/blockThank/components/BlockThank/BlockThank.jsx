@@ -194,6 +194,7 @@ const BlockThank = () => {
             vcl: orderData?.vclOrderCode,
           }}
           emailAddress={orderData?.email}
+          userData={orderData.userData}
         />
       )}
     </S.FormWrapper>

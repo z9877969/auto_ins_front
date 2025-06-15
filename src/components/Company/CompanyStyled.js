@@ -66,6 +66,15 @@ export const GridContainer = styled(Grid)(({ theme }) => ({
       backgroundColor: theme.palette.primary.white,
       color: theme.palette.primary.main,
     },
+    '& .recommended': {
+      textAlign: 'center',
+      backgroundColor: '#171790e8',
+      color: 'white',
+      paddingTop: 8,
+      paddingBottom: 8,
+      borderRadius: 8,
+      marginBottom: 12,
+    },
   },
   marginBottom: '8px',
   width: '100%',
@@ -113,6 +122,23 @@ export const BoxContent = styled(Box)(({ theme }) => ({
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginBottom: '0px',
+  },
+  '& .recommended': {
+    [theme.breakpoints.up('sm')]: {
+      textAlign: 'center',
+      backgroundColor: '#171790e8!important',
+      color: 'white!important',
+      paddingTop: 8,
+      paddingBottom: 8,
+      borderRadius: 8,
+      marginBottom: 8,
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: 'fit-content',
+      paddingLeft: 32,
+      paddingRight: 32,
+      marginLeft: 'auto'
+    },
   },
   '& .title': {
     display: 'none',

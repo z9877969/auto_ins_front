@@ -204,12 +204,10 @@ const CarDataForm = ({ formik, userParams }) => {
             optionsArr={modelOptions}
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.id}
-            isValid={
-              !values.model?.id ? false : true
-            }
+            isValid={!values.model?.id ? false : true}
             changeCB={handleChangeModel}
             readOnly={Boolean(insuranceObject?.model)}
-            noOptionsMessage="Така модель відсутня. Вкажіть її самостійно"
+            noOptionsMessage="Модель відсутня.👉 Натисніть щоб вказати самостійно 👈"
             components={customComponents}
             errorMessage={
               formik.touched['model']?.id && formik.errors['model']?.id

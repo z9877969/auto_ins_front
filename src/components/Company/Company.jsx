@@ -37,6 +37,7 @@ const content = {
 const Company = ({
   companyObject,
   lastItem,
+  isRecommended,
   // handleOpenSuportModal,
   // isPrivileged,
 }) => {
@@ -167,17 +168,38 @@ const Company = ({
       >
         <WrapperStyled>
           <Grid container className="gridContainer">
+            {isRecommended && (
+              <GridContainer item xs={12} sm={0}>
+                <Typography
+                  variant="subtitle1"
+                  component="h4"
+                  className="recommended"
+                >
+                  AUTO-INS рекомендує
+                </Typography>
+              </GridContainer>
+            )}
             <GridContainer item xs={6} sm={0}>
               <Typography variant="subtitle1" component="h3">
                 ОСЦПВ від {insurerName.replace(/,[^,]+$/, '')}
               </Typography>
             </GridContainer>
+
             <GridContainerImg item xs={6} sm={12}>
               <CompanyCardMedia id={insurerId} alt={insurerName} />
             </GridContainerImg>
           </Grid>
         </WrapperStyled>
         <BoxContent>
+          {isRecommended && (
+            <Typography
+              variant="subtitle1"
+              component="h4"
+              className="recommended"
+            >
+              AUTO-INS рекомендує
+            </Typography>
+          )}
           <Typography variant="subtitle1" component="h3" className="title">
             ОСЦПВ від {insurerName.replace(/,[^,]+$/, '')}
           </Typography>

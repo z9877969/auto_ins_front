@@ -51,6 +51,12 @@ export const selectOrderData = createSelector(
         vclOrderCode: order[SAVED_ORDER_TYPE.VCL]?.code ?? null,
         email: order[SAVED_ORDER_TYPE.EPOLICY].customer.email,
         orderState: order[SAVED_ORDER_TYPE.EPOLICY].state,
+        userData: {
+          email: order[SAVED_ORDER_TYPE.EPOLICY].customer.email,
+          phone: order[SAVED_ORDER_TYPE.EPOLICY].customer.phone,
+          address: order[SAVED_ORDER_TYPE.EPOLICY].customer.address,
+          name: order[SAVED_ORDER_TYPE.EPOLICY].customer.name
+        }
       };
     }
     return null;
