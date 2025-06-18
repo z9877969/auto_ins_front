@@ -124,7 +124,9 @@ export const BoxContent = styled(Box)(({ theme }) => ({
     marginBottom: '0px',
   },
   '& .recommended': {
+    display: 'none',
     [theme.breakpoints.up('sm')]: {
+      display: 'block',
       textAlign: 'center',
       backgroundColor: '#171790e8!important',
       color: 'white!important',
@@ -137,7 +139,7 @@ export const BoxContent = styled(Box)(({ theme }) => ({
       width: 'fit-content',
       paddingLeft: 32,
       paddingRight: 32,
-      marginLeft: 'auto'
+      marginLeft: 'auto',
     },
   },
   '& .title': {

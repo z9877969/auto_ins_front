@@ -175,7 +175,7 @@ const Company = ({
                   component="h4"
                   className="recommended"
                 >
-                  AUTO-INS рекомендує
+                  AUTO-INS рекомендує ГРІД
                 </Typography>
               </GridContainer>
             )}
