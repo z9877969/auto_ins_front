@@ -169,13 +169,13 @@ const Company = ({
         <WrapperStyled>
           <Grid container className="gridContainer">
             {isRecommended && (
-              <GridContainer item xs={12} sm={0}>
+              <GridContainer item xs={10} m={'0 auto'} sm={0}>
                 <Typography
                   variant="subtitle1"
                   component="h4"
                   className="recommended"
                 >
-                  AUTO-INS рекомендує ГРІД
+                  AUTO-INS рекомендує
                 </Typography>
               </GridContainer>
             )}
