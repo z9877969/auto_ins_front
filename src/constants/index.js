@@ -264,3 +264,5 @@ export const SAVED_ORDER_TYPE = {
 
 export const FRONT_URL = ENV.DEV ? ENV.LOCAL_FRONT_URL : ENV.PROD_FRONT_URL;
 export const BACK_URL = ENV.DEV ? ENV.LOCAL_BACK_URL : ENV.PROD_BACK_URL;
+
+export { CARDATA_FORM_FIELDS_DICT } from './formsFieldsNames';

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { InputContBoxStyled } from '../InsuredDataForm/InsuredDataForm.styled';
@@ -10,7 +10,10 @@ import {
   getAutoMakers,
   getAutoModelByMaker,
 } from '../../redux/References/selectors';
-import { getSubmitObject } from '../../redux/byParameters/selectors';
+import {
+  getSubmitObject,
+  selectDisabledCarDataField,
+} from '../../redux/byParameters/selectors';
 import { useActions } from '../../hooks/useActions';
 import { getIsModalErrorOpen } from '../../redux/Global/selectors';
 import ModalError from '../../components/ModalError/ModalError';
@@ -19,12 +22,20 @@ import SelectNoOptionsMessage from '../../components/SelectNoOptionsMessage/Sele
 import InputInsteadSelect from '../../components/InputInsteadSelect/InputInsteadSelect';
 // import { selectAutoCategory } from '../../helpers/ByParameters/selectOptions';
 // import { getHasVclOrder } from '../../redux/Calculator/selectors';
-import { FORMIK_DATA_KEYS, VEHICLES_GROUPS } from '../../constants';
+import {
+  CARDATA_FORM_FIELDS_DICT,
+  FORMIK_DATA_KEYS,
+  VEHICLES_GROUPS,
+} from '../../constants';
 import * as storage from '../../helpers/storage';
 
 const customComponents = {
   NoOptionsMessage: SelectNoOptionsMessage,
 };
+
+const motorPowerKey = CARDATA_FORM_FIELDS_DICT.ELECTRIC_MOTOR_POWER;
+const engineVolumeKey = CARDATA_FORM_FIELDS_DICT.ENGINE_VOLUME;
+const seatingCapacityKey = CARDATA_FORM_FIELDS_DICT.SEATING_CAPACITY;
 
 const CarDataForm = ({ formik, userParams }) => {
   const {
@@ -41,8 +52,16 @@ const CarDataForm = ({ formik, userParams }) => {
   const { outsideUkraine } = useSelector(getSubmitObject);
   const [insuranceObject] = useSelector(getAutoByNumber);
   const isError = useSelector(getIsModalErrorOpen);
+  const disabledFormFields = useSelector(selectDisabledCarDataField);
   // const hasVclOrder = useSelector(getHasVclOrder);
   // const { engineCapacity } = useSelector((state) => state.byParameters);
+  const [includedAutoTypes, setIncludedAutoTypes] = useState(
+    disabledFormFields || {
+      [disabledFormFields[engineVolumeKey]]: false,
+      [disabledFormFields[motorPowerKey]]: false,
+      [disabledFormFields[seatingCapacityKey]]: false,
+    }
+  );
 
   const selectOrInput = useSelectOrInput();
 
@@ -121,7 +140,7 @@ const CarDataForm = ({ formik, userParams }) => {
       grossWeight: insuranceObject?.grossWeight || '',
       curbWeight: insuranceObject?.curbWeight || '',
       seatingCapacity: insuranceObject?.seatingCapacity || '',
-      electricMotorPower: insuranceObject?.electricMotorPower || '',
+      electricMotorPower: insuranceObject?.electricMotorPower || 0,
     }));
     // eslint-disable-next-line
   }, [insuranceObject]);
@@ -155,6 +174,23 @@ const CarDataForm = ({ formik, userParams }) => {
   useEffect(() => {
     storage.setToLS(FORMIK_DATA_KEYS.CAR, values);
   }, [values]);
+  const motorPower = values[motorPowerKey];
+  const engineVolume = values[engineVolumeKey];
+
+  useEffect(() => {
+    const { [motorPowerKey]: isMotorPower, [engineVolumeKey]: isEngineVolume } =
+      includedAutoTypes;
+    if (!isMotorPower && !isEngineVolume && !motorPower && !engineVolume) {
+      return;
+    }
+    if (!isMotorPower && !isEngineVolume && motorPower && engineVolume) {
+      setIncludedAutoTypes((p) => ({
+        ...p,
+        ...(motorPower && { [engineVolumeKey]: true }),
+        ...(engineVolume && { [motorPower]: true }),
+      }));
+    }
+  }, [motorPower, engineVolume, includedAutoTypes]);
 
   if (isError) {
     return <ModalError />;
@@ -180,12 +216,12 @@ const CarDataForm = ({ formik, userParams }) => {
         <GeneralSelect
           id="maker"
           lableText="Марка*:"
-          // currentValue={values.maker.id ? values.maker : { name: 'Skoda' }}
           currentValue={values.maker?.id ? values.maker : undefined}
           placeholder={'Skoda'}
           optionsArr={autoMakers}
           getOptionLabel={(option) => option.name}
           getOptionValue={(option) => option.id}
+          isEmpty={!values.maker.id}
           changeCB={handleChangeMaker}
           readOnly={Boolean(insuranceObject?.model)}
           noOptionsMessage="Така марка відсутня"
@@ -205,6 +241,7 @@ const CarDataForm = ({ formik, userParams }) => {
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.id}
             isValid={!values.model?.id ? false : true}
+            isEmpty={!values.model.id}
             changeCB={handleChangeModel}
             readOnly={Boolean(insuranceObject?.model)}
             noOptionsMessage="Модель відсутня.👉 Натисніть щоб вказати самостійно 👈"
@@ -225,11 +262,14 @@ const CarDataForm = ({ formik, userParams }) => {
         )}
         {!engineVolumeRef.current && (
           <GeneralInput
-            id="engineVolume"
+            /* + */ id="engineVolume"
             lableText="Об'єм двигуна*:"
             formikData={formik}
             placeholder="1500"
             customFunc={handleChangeEngineVolume}
+            isDisabled={
+              includedAutoTypes[CARDATA_FORM_FIELDS_DICT.ENGINE_VOLUME]
+            }
           />
         )}
         <GeneralInput
@@ -241,7 +281,7 @@ const CarDataForm = ({ formik, userParams }) => {
         />
         {/* ============ */}
         <GeneralInput
-          id="grossWeight"
+          /* + */ id="grossWeight"
           lableText="Повна маса, кг:"
           formikData={formik}
           customFunc={(e) =>
@@ -250,39 +290,38 @@ const CarDataForm = ({ formik, userParams }) => {
           placeholder={'1372'}
         />
         <GeneralInput
-          id="curbWeight"
+          /* + */ id="curbWeight"
           lableText="Маса без навантаження, кг:"
           formikData={formik}
           customFunc={(e) => setFieldValue('curbWeight', e.target.value.trim())}
           placeholder={'1100'}
         />
         <GeneralInput
-          id="seatingCapacity"
+          /* + */ id="seatingCapacity"
           lableText="Кількість місць (з водієм)"
           formikData={formik}
           customFunc={(e) =>
             setFieldValue('seatingCapacity', e.target.value.trim())
           }
           placeholder={'5'}
+          isDisabled={
+            includedAutoTypes[CARDATA_FORM_FIELDS_DICT.SEATING_CAPACITY]
+          }
         />
         {values.category === VEHICLES_GROUPS.B.B5 && (
           <GeneralInput
-            id="electricMotorPower"
+            /* + */ id="electricMotorPower"
             lableText="Потужність електродвигуна, кВт"
             formikData={formik}
             customFunc={(e) =>
               setFieldValue('electricMotorPower', e.target.value.trim())
             }
             placeholder={''}
+            isDisabled={
+              includedAutoTypes[CARDATA_FORM_FIELDS_DICT.ELECTRIC_MOTOR_POWER]
+            }
           />
         )}
-        {/*
-         **grossWeight:  - Повна маса, кг
-         **curbWeight:  - Маса без навантаження, кг
-         **seatingCapacity: - Кількість місць (з водієм)
-         **electricMotorPower: - Потужність електродвигуна, кВт
-         */}
-        {/* ============== */}
       </InputContBoxStyled>
     </>
   );

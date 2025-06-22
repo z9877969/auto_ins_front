@@ -17,6 +17,7 @@ const GeneralSelect = ({
   inputChangeCB,
   inputValue,
   isDisabled = false,
+  isEmpty = false,
   defaultValue,
   getOptionLabel,
   getOptionValue,
@@ -60,7 +61,8 @@ const GeneralSelect = ({
     >
       <Typography
         sx={{
-          color: isDisabled ? 'darkgray!important' : null,
+          color: isDisabled || isEmpty ? 'darkgray!important' : null,
+          borderColor: isEmpty ? 'darkgray!important' : null,
           width: selectOptions.menuIsOpen ? 250 : 'none',
         }}
         variant="body1"
