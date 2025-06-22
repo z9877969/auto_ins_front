@@ -93,18 +93,33 @@ export const VEHICLES_GROUPS = {
   },
   C: {
     main: 'C',
-    C1: 'C1',
+    C0: 'C0' /* вантажні ТЗ повною масою до 2400 кг вкл. і підйомністю до 2000 кг вкл., в т.ч. з електродвигуномвантажні ТЗ повною масою до 2400 кг вкл. і підйомністю до 2000 кг вкл., в т.ч. з електродвигуном */,
+    C1: 'C1' /* вантажні ТЗ повною масою від 2401 кг і підйомністю до 2000 кг вкл., в т.ч. з електродвигуном */,
     C2: 'C2',
   },
   D: {
     main: 'D',
     D1: 'D1',
     D2: 'D2',
+    D3: 'D3' /* D3 - трамваї */,
+    D4: 'D4' /* D4 - тролейбуси */,
   },
   EF: {
     main: 'EF',
     E: 'E',
     F: 'F',
+  },
+  G: {
+    main: 'G',
+    G1: 'G1' /* трактори */,
+    G2: 'G2' /* с/г техніка */,
+    G3: 'G3' /* причепи до с/г техніки */,
+  },
+  H: {
+    main: 'H',
+    H1: 'H1' /* авто-кран, пожежна, авто-вишка, техніка для транспортування сміття, прибиральна техніка, тощо */,
+    H2: 'H2' /* дорожно-будівельна техніка */,
+    H3: 'H3' /* спеціалізована військова техніка */,
   },
 };
 
@@ -121,12 +136,15 @@ export const CATEGORY = Object.values(VEHICLES_GROUPS).reduce((acc, el) => {
 
 export const VEHICLES_TYPES = {
   [VEHICLES_GROUPS.A.A1]: {
-    min: 0,
-    max: 300,
+    min: 0 /* см3 */,
+    max: 300 /* см3 */,
+    minPower: 0 /* кВт */,
+    maxPower: 5 /* кВт */,
     otk: false,
   },
   [VEHICLES_GROUPS.A.A2]: {
-    min: 301,
+    minPower: 5.001 /* кВт */,
+    min: 301 /* см3 */,
     otk: false,
   },
   [VEHICLES_GROUPS.B.B1]: {
@@ -151,9 +169,18 @@ export const VEHICLES_TYPES = {
   [VEHICLES_GROUPS.B.B5]: {
     otk: false,
   },
+  [VEHICLES_GROUPS.C.C0]: {
+    min: 0 /* підйомність, кг */,
+    max: 2000 /* підйомність, кг */,
+    minGrossWeight: 0 /* повна маса, кг */,
+    maxGrossWeight: 2400 /* повна маса, кг */,
+    otk: true,
+    otkRequired: false,
+  },
   [VEHICLES_GROUPS.C.C1]: {
-    min: 0,
-    max: 2000,
+    min: 0 /* підйомність, кг */,
+    max: 2000 /* підйомність, кг */,
+    minGrossWeight: 2401 /* повна маса, кг */,
     otk: true,
     otkRequired: false,
   },
@@ -173,12 +200,44 @@ export const VEHICLES_TYPES = {
     otk: true,
     otkRequired: true,
   },
+  [VEHICLES_GROUPS.D.D3]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.D.D4]: {
+    otk: true,
+    otkRequired: true,
+  },
   [VEHICLES_GROUPS.EF.E]: {
     otk: true,
     otkRequired: false,
   },
   [VEHICLES_GROUPS.EF.F]: {
     otk: false,
+  },
+  [VEHICLES_GROUPS.G.G1]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.G.G2]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.G.G3]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.H.H1]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.H.H2]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.H.H3]: {
+    otk: true,
+    otkRequired: true,
   },
 };
 
@@ -203,9 +262,5 @@ export const SAVED_ORDER_TYPE = {
   EPOLICY: 'epolicy2025', // needing for id
 };
 
-export const FRONT_URL = ENV.DEV
-  ? ENV.LOCAL_FRONT_URL
-  : ENV.PROD_FRONT_URL;
-export const BACK_URL = ENV.DEV
-  ? ENV.LOCAL_BACK_URL
-  : ENV.PROD_BACK_URL;
+export const FRONT_URL = ENV.DEV ? ENV.LOCAL_FRONT_URL : ENV.PROD_FRONT_URL;
+export const BACK_URL = ENV.DEV ? ENV.LOCAL_BACK_URL : ENV.PROD_BACK_URL;
