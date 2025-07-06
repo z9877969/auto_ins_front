@@ -260,18 +260,16 @@ const CarDataForm = ({ formik, userParams }) => {
             closeInput={() => selectOrInput.setIsModelInput(false)}
           />
         )}
-        {!engineVolumeRef.current && (
-          <GeneralInput
-            /* + */ id="engineVolume"
-            lableText="Об'єм двигуна*:"
-            formikData={formik}
-            placeholder="1500"
-            customFunc={handleChangeEngineVolume}
-            isDisabled={
-              includedAutoTypes[CARDATA_FORM_FIELDS_DICT.ENGINE_VOLUME]
-            }
-          />
-        )}
+        {!engineVolumeRef.current &&
+          !includedAutoTypes[CARDATA_FORM_FIELDS_DICT.ENGINE_VOLUME] && (
+            <GeneralInput
+              id="engineVolume"
+              lableText="Об'єм двигуна*:"
+              formikData={formik}
+              placeholder="1500"
+              customFunc={handleChangeEngineVolume}
+            />
+          )}
         <GeneralInput
           id="bodyNumber"
           lableText="VIN Номер*:"
@@ -290,38 +288,38 @@ const CarDataForm = ({ formik, userParams }) => {
           placeholder={'1372'}
         />
         <GeneralInput
-          /* + */ id="curbWeight"
+          id="curbWeight"
           lableText="Маса без навантаження, кг:"
           formikData={formik}
           customFunc={(e) => setFieldValue('curbWeight', e.target.value.trim())}
           placeholder={'1100'}
         />
-        <GeneralInput
-          /* + */ id="seatingCapacity"
-          lableText="Кількість місць (з водієм)"
-          formikData={formik}
-          customFunc={(e) =>
-            setFieldValue('seatingCapacity', e.target.value.trim())
-          }
-          placeholder={'5'}
-          isDisabled={
-            includedAutoTypes[CARDATA_FORM_FIELDS_DICT.SEATING_CAPACITY]
-          }
-        />
-        {values.category === VEHICLES_GROUPS.B.B5 && (
+        {!includedAutoTypes[CARDATA_FORM_FIELDS_DICT.SEATING_CAPACITY] && (
           <GeneralInput
-            /* + */ id="electricMotorPower"
-            lableText="Потужність електродвигуна, кВт"
+            id="seatingCapacity"
+            lableText="Кількість місць (з водієм)"
             formikData={formik}
             customFunc={(e) =>
-              setFieldValue('electricMotorPower', e.target.value.trim())
+              setFieldValue('seatingCapacity', e.target.value.trim())
             }
-            placeholder={''}
-            isDisabled={
-              includedAutoTypes[CARDATA_FORM_FIELDS_DICT.ELECTRIC_MOTOR_POWER]
-            }
+            placeholder={'5'}
           />
         )}
+        {values.category === VEHICLES_GROUPS.B.B5 &&
+          !includedAutoTypes[CARDATA_FORM_FIELDS_DICT.ELECTRIC_MOTOR_POWER] && (
+            <GeneralInput
+              id="electricMotorPower"
+              lableText="Потужність електродвигуна, кВт"
+              formikData={formik}
+              customFunc={(e) =>
+                setFieldValue('electricMotorPower', e.target.value.trim())
+              }
+              placeholder={''}
+              isDisabled={
+                includedAutoTypes[CARDATA_FORM_FIELDS_DICT.ELECTRIC_MOTOR_POWER]
+              }
+            />
+          )}
       </InputContBoxStyled>
     </>
   );
