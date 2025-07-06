@@ -3,7 +3,7 @@ export const DNUMBER_REGEX =
   /^([A-ZА-ЯЇІЄ]{1,2}\d{4}[A-ZА-ЯЇІЄ]{2}|[A-ZА-ЯЇІЄ]{3,4}\d{4}|\d{2}[A-ZА-ЯЇІЄ]{2}\d{4}|\d{4}[A-ZА-ЯЇІЄ]\d{1}|\d{4,6}[A-ZА-ЯЇІЄ]{2}|\d{4}[A-ZА-ЯЇІЄ]{3}|[A-ZА-ЯЇІЄ]{2}\d{4,5}|\d{3})$/;
 
 export const VIN_REGEX = /^[(A-H|J-N|P|R-ZА-ДЄЖЗИЛПФЦЧШЩЮЯ){1,2}\d+]{5,17}$/;
-export const NAME_REGEX = /^[a-zA-Zа-яіїйєґА-ЯІЇЙЄҐ\u2019\u2013'-\s]+$/;
+export const NAME_REGEX = /^[a-zA-Zа-яіїйєґА-ЯІЇЙЄҐ\u2019\u2013'-\s0-9]+$/;
 export const SERIES_PASSPORT_REGEX = /^[а-яіїйєґА-ЯІЇЙЄҐ]{2}$/;
 export const SERIES_DRIVING_LICENSE_REGEX = /^[а-яіїйєґА-ЯІЇЙЄҐ]{3}$/;
 export const SERIES_PASSPORT_AND_DRIVING_LICENSE_REGEX =
