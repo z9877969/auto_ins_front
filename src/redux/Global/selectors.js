@@ -12,7 +12,7 @@ export const getIsContractOSAGO = (state) => state.global.isContractOSAGO;
 export const getIsContractDGO = (state) => state.global.isContractDGO;
 export const getIsOrderRequested = (state) => state.global.isOrderRequested;
 export const selectHomeAddress = (state) => state.global.homeAddress;
-export const selectBlackList = (state) => state.global.blackList;
+export const selectBlackList = (state) => state.global.blackList || [];
 
 export const selectCompanyAllDocTypes = (state) =>
   state.global.globalCustomerData.allowedDocTypes;
