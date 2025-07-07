@@ -9,6 +9,7 @@ import useTheme from '@mui/material/styles/useTheme';
 import Box from '@mui/material/Box';
 import GeneralSelect from '../GeneralSelect/GeneralSelect';
 import CompanyCardMedia from '../CompanyCardMedia/index';
+import CompanyInfo from 'components/CompanyInfo/CompanyInfo';
 import {
   BoxContent,
   BoxFooter,
@@ -281,6 +282,13 @@ const Company = ({
             Придбати
           </ButtonStyled>
         </WrapperStyled>
+      </WrapperStyled>
+      <WrapperStyled>
+        <Box>
+          <CompanyInfo
+            {...((companyObject.tariff && companyObject.tariff[0]) || {})}
+          />
+        </Box>
       </WrapperStyled>
     </CardStyled>
   );
