@@ -283,13 +283,9 @@ const Company = ({
           </ButtonStyled>
         </WrapperStyled>
       </WrapperStyled>
-      <WrapperStyled>
-        <Box>
-          <CompanyInfo
-            {...((companyObject.tariff && companyObject.tariff[0]) || {})}
-          />
-        </Box>
-      </WrapperStyled>
+      <CompanyInfo
+        {...((companyObject.tariff && companyObject.tariff[0]) || {})}
+      />
     </CardStyled>
   );
 };
