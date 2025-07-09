@@ -58,7 +58,7 @@ const CompanyInfo = ({
               <a
                 href={urlsDict[urlKey]}
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noreferrer noopener nofollow"
               >
                 <Typography component="span">{textContent}</Typography>
               </a>
