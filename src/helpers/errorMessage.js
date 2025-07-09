@@ -1,6 +1,4 @@
 export const errorMessage = (payload = {}) => {
-  const {
-    payload: { message },
-  } = payload;
+  const { payload: { message } = {} } = payload;
   return message;
 };

@@ -1,7 +1,64 @@
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
+import { Box, Button as MuiButton } from '@mui/material';
 
-export const BoxFooter = styled(Box)(({ theme }) => ({
+export const Button = styled(MuiButton)(({ theme }) => ({
+  minWidth: 126,
+  marginTop: 16,
+  paddingLeft: 0,
+  backgroundColor: 'transparent',
+  color: theme.palette.primary.main,
+  borderRadius: 16,
+  textTransform: 'initial',
+
+  '&:hover': {
+    backgroundColor: 'transparent',
+    color: theme.palette.primary.main,
+  },
+
+  '& .iconWrapper': {
+    width: 24,
+    height: 24,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 'auto',
+    borderRadius: '50%',
+    backgroundColor: theme.palette.primary.yellow,
+  },
+
+  '& .chevronIcon': {
+    width: 16,
+    height: 16,
+    transform: 'rotate(0)',
+    transition: 'transform 0.1s linear',
+    '&.rotate': {
+      transform: 'rotate(-180deg)',
+    },
+  },
+}));
+
+export const Wrapper = styled(Box)(({ theme }) => ({
+  '&.MuiBox-root': {
+    '& .MuiTypography-root': {
+      backgroundColor: theme.palette.primary.white,
+      color: theme.palette.primary.main,
+    },
+    overflow: 'hidden',
+    maxHeight: '500px',
+    opacity: 1,
+    transition: 'opacity 0.4s ease',
+    '&.show': {
+      maxHeight: 0,
+      opacity: 0,
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      maxHeight: 'unset',
+    },
+  },
+}));
+
+export const UrlsList = styled(Box)(({ theme }) => ({
   padding: '16px 0',
   width: '100%',
   display: 'flex',
@@ -14,13 +71,26 @@ export const BoxFooter = styled(Box)(({ theme }) => ({
     rowGap: '4px',
   },
 
-  '& .rowWrapper': {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  [theme.breakpoints.up('lg')]: {
+    width: 'auto',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    gap: '4px',
+  },
+}));
 
-    '& span': {
-      alignSelf: 'center',
-    },
+export const UrlItem = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  listStyle: 'inside',
+
+  [theme.breakpoints.up('lg')]: {
+    width: '40%',
+  },
+
+  '& span': {
+    alignSelf: 'center',
   },
 }));
