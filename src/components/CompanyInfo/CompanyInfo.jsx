@@ -7,17 +7,23 @@ import * as S from './CompanyInfoStyled';
 const companyInfoOptions = [
   {
     urlKey: 'insurerUrl',
-    textContent: 'Посилання на інфо про СК',
+    textContent: 'Інформація про страховика',
+  },
+  {
+    urlKey: 'insuranceBrokerUrl',
+    textContent: 'Інформація про страхового посередника',
   },
   {
     urlKey: 'conditionsProductUrl',
-    textContent: 'Посилання на ЗУСП',
+    textContent: 'Загальні умови страхового продукту ОСЦПВ',
   },
   {
     urlKey: 'insuranceProductUrl',
-    textContent: 'Посилання на ІнфоПродукт',
+    textContent: 'Інформація про страховий продукт ОСЦПВ',
   },
 ];
+
+
 
 const CompanyInfo = ({
   insurer: { informationAboutInsurerUrl: insurerUrl },
@@ -30,24 +36,25 @@ const CompanyInfo = ({
     insurerUrl,
     conditionsProductUrl,
     insuranceProductUrl,
+    insuranceBrokerUrl: 'https://auto-ins.com.ua/pages/info/',
   };
 
   return (
     <>
       <S.Button
         type="button"
-        variant="contained"
-        endIcon={
-          <ChevronDown className={clsx('chevronIcon', isShow && 'rotate')} />
-        }
+        variant="text"
         onClick={() => setIsShow((p) => !p)}
       >
-        {isShow ? 'Згорнути' : 'Детальніше'}
+        {isShow ? 'Згорнути' : 'Докладніше'}
+        <Box className="iconWrapper">
+          <ChevronDown className={clsx('chevronIcon', isShow && 'rotate')} />
+        </Box>
       </S.Button>
-      <S.Wrapper isShow={isShow}>
-        <S.BoxFooter>
+      <S.Wrapper className={clsx(!isShow && 'show')}>
+        <S.UrlsList as={'ul'}>
           {companyInfoOptions.map(({ textContent, urlKey }, idx) => (
-            <Box key={idx} className="rowWrapper">
+            <S.UrlItem as={'li'} key={idx}>
               <a
                 href={urlsDict[urlKey]}
                 target="_blank"
@@ -55,9 +62,9 @@ const CompanyInfo = ({
               >
                 <Typography component="span">{textContent}</Typography>
               </a>
-            </Box>
+            </S.UrlItem>
           ))}
-        </S.BoxFooter>
+        </S.UrlsList>
       </S.Wrapper>
     </>
   );
