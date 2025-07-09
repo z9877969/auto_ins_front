@@ -23,11 +23,12 @@ export const linksListOptions = [
     linkTitle: 'Політика конфіденційності',
   },
   {
-    key: 'інформація про СК та страхові продукти',
-    href: 'https://docs.ewa.ua/insurance-products',
+    key: 'Анкор - "Розкриття інформації про стандартний страховий продукт"',
+    href: 'https://auto-ins.com.ua/pages/rozkrittya-informaciyi-pro-standartnii-strakhovii-produkt/',
     target: '_blank',
     rel: 'nofollow',
-    linkTitle: 'Інформація про СК та страхові продукти',
+    linkTitle:
+      'Анкор - "Розкриття інформації про стандартний страховий продукт"',
   },
   {
     key: 'Публічна оферта',
