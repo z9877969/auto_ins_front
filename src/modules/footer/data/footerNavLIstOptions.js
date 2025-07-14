@@ -23,12 +23,11 @@ export const linksListOptions = [
     linkTitle: 'Політика конфіденційності',
   },
   {
-    key: 'Анкор - "Розкриття інформації про стандартний страховий продукт"',
+    key: 'Розкриття інформації про стандартний страховий продукт',
     href: 'https://auto-ins.com.ua/pages/rozkrittya-informaciyi-pro-standartnii-strakhovii-produkt/',
     target: '_blank',
     rel: 'nofollow',
-    linkTitle:
-      'Анкор - "Розкриття інформації про стандартний страховий продукт"',
+    linkTitle: 'Розкриття інформації про стандартний страховий продукт',
   },
   {
     key: 'Публічна оферта',
