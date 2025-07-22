@@ -37,6 +37,7 @@ const FormContacts = ({ formik }) => {
             formik.setFieldValue('email', e.target.value.trim())
           }
           placeholder={'example@mail.com'}
+          errorYPosition="top"
         />
         <SpanS variant="inputSpan">
           *ПЕРЕКОНАЙТЕСЬ ЩО ПОШТУ ВКАЗАНО КОРЕКТНО. НА ВКАЗАНУ ВАМИ ЕЛЕКТРОННУ
@@ -50,6 +51,7 @@ const FormContacts = ({ formik }) => {
             formik.setFieldValue('phone', formatPhone(e.target.value));
           }}
           placeholder={'+380991234567'}
+          errorYPosition="top"
         />
         <SpanS variant="inputSpan">
           *ПЕРЕКОНАЙТЕСЬ ЩО НОМЕР ВКАЗАНО КОРЕКТНО. НА ЦЕЙ НОМЕР БУДЕ НАДІСЛАНО

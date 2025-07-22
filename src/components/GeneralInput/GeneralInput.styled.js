@@ -65,5 +65,15 @@ export const LableStyled = styled(Typography)(({ theme }) => ({
     [theme.breakpoints.up('sm')]: {
       fontSize: '16px',
     },
+
+    '&.errorMessageTop': {
+      top: 'unset',
+      bottom: 'calc(100% - 1.8em)',
+
+      [theme.breakpoints.up('xs')]: {
+        display: 'block',
+        width: '50%',
+      },
+    },
   },
 }));

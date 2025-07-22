@@ -222,10 +222,11 @@ export const contactsValidationSchema = () =>
     email: Yup.string()
       .required('Введіть електронну пошту')
       .min(5, 'Електронна пошта вказана невірно')
-      .matches(
+      .email('Електронна пошта вказана невірно')
+      /* .matches(
         /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,9}$/,
         'Електронна пошта вказана невірно'
-      ),
+      ) */,
     phone: Yup.string()
       .required('Введіть номер телефону')
       .matches(

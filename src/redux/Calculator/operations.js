@@ -8,8 +8,8 @@ import { userNormalize } from '../../helpers/dataNormalize/userNormalize';
 import { mergeObjectsById } from '../../helpers/mergeObjectsById';
 import { sortAndFilterTariff } from '../../helpers/sortAndFilterTariff';
 import { instance } from '../../services/api';
-import { mainRoutes, PRIVILEGED_TYPE } from '../../constants';
-import { setIsPrivilagedExist } from './calculatorSlice';
+import { mainRoutes, /* PRIVILEGED_TYPE */ } from '../../constants';
+// import { setIsPrivilagedExist } from './calculatorSlice';
 
 // const setSalePoint = (salePoint) => {
 //   instance.defaults.params = { ...instance.defaults.params, salePoint };
