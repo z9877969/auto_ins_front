@@ -98,7 +98,7 @@ const CompanyInfo = ({
       <S.Wrapper className={clsx(!isShow && 'show')}>
         <S.InfoWrapper>
           <S.InfoTitle as={'h2'}>{mainInfo.title}</S.InfoTitle>
-          <S.InfoList>
+          <S.InfoList as="ul">
             {mainInfo.list.map(({ textContent, urlKey }) => (
               <S.InfoItem as={'li'} key={urlKey}>
                 <Typography component="span">{textContent}</Typography>
@@ -108,7 +108,7 @@ const CompanyInfo = ({
         </S.InfoWrapper>
         <S.InfoWrapper>
           <S.InfoTitle as={'h2'}>{limitInfo.title}</S.InfoTitle>
-          <S.InfoList>
+          <S.InfoList as="ul">
             {limitInfo.list.map(({ textContent, urlKey }) => (
               <S.InfoItem as={'li'} key={urlKey}>
                 <Typography component="span">{textContent}</Typography>

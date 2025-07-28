@@ -62,7 +62,7 @@ export const Wrapper = styled(Box)(({ theme }) => ({
 }));
 
 export const InfoWrapper = styled(Box)(({ theme }) => ({
-  '&:first-child': {
+  '&:first-of-type': {
     marginBottom: '1em',
     [theme.breakpoints.up('lg')]: {
       marginBottom: 0,
