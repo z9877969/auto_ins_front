@@ -191,7 +191,8 @@ const Stepper = ({ backLinkRef, isLoading }) => {
       electricMotorPower: insurObject?.electricMotorPower || '',
     },
     validationSchema: carDataFormValidationSchema({
-      isPrivilege: insurerDataFormik.values.type.privilegeType === 'PRIVILEGED',
+      isPrivilege:
+        insurerDataFormik.values.type?.privilegeType === 'PRIVILEGED',
       engineType,
       hasVclOrder,
     }),
@@ -199,7 +200,8 @@ const Stepper = ({ backLinkRef, isLoading }) => {
     // validateOnBlur: true,
     validateOnChange: true,
     onSubmit: ({ engineVolume }) => {
-      const { privilegeType, customerStatus } = insurerDataFormik.values.type;
+      const { privilegeType, customerStatus } =
+        insurerDataFormik.values.type || {};
       const privilegeData =
         privilegeType === 'PRIVILEGED'
           ? {
