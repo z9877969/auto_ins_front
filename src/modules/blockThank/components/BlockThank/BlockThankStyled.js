@@ -46,3 +46,7 @@ export const Button = styled(NavLink)(({ theme }) => ({
     color: theme.palette.primary.main,
   },
 }));
+
+export const ConfirmationWrapper = styled(Box)(() => ({
+  order: 10,
+}));

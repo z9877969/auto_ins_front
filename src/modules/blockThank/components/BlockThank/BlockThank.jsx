@@ -118,6 +118,7 @@ const BlockThank = () => {
 
   return (
     <S.FormWrapper component="article">
+      {/* error block -Start */}
       {errorMessage && (
         <PushNotification.Error
           message="Щось пішло не так🤷🏽‍♂️. Спробуйте ще або зв'яжіться з менеджером."
@@ -125,6 +126,8 @@ const BlockThank = () => {
           isOpen={Boolean(errorMessage)}
         />
       )}
+      {/* error block -End */}
+      {/* icon -Start */}
       <S.BoxImg>
         {(orderStage === orderTypes.ORDER_EMMITED ||
           orderStage === orderTypes.ORDER_PAYMENT) && (
@@ -151,6 +154,7 @@ const BlockThank = () => {
           />
         )}
       </S.BoxImg>
+      {/* icon -End */}
       <Typography
         component="h2"
         variant="formTitle"
@@ -197,6 +201,33 @@ const BlockThank = () => {
           userData={orderData.userData}
         />
       )}
+      {/* code confirmation -Start */}
+      {orderStage === orderTypes.ORDER_CHECK && (
+        <S.ConfirmationWrapper>
+          <Typography
+            component="h4"
+            variant="h4"
+            sx={{
+              marginBottom: { xs: '16px', lg: '32px' },
+              marginTop: { xs: '16px', lg: '32px' },
+              fontSize: {xs: '0.9em', sm: '1.1em', lg: '1.3em'},
+              fontWeight: 'bold',
+              textAlign: 'center',
+            }}
+          >
+            Успішно зареєстровано в МТСБУ
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ marginBottom: { xs: '16px', sm: '32px', lg: '48px' } }}
+          >
+            Я підтверджую, що ознайомлений з інформацією про страховий продукт,
+            страховика, страхового посередника та пропозицією на укладення
+            договору страхування
+          </Typography>
+        </S.ConfirmationWrapper>
+      )}
+      {/* code confirmation -End */}
     </S.FormWrapper>
   );
 };
