@@ -54,8 +54,39 @@ export const Wrapper = styled(Box)(({ theme }) => ({
 
     [theme.breakpoints.up('lg')]: {
       maxHeight: 'unset',
+      display: 'flex',
+      flexWrap: 'wrap',
+      columnGap: '2em'
     },
   },
+}));
+
+export const InfoWrapper = styled(Box)(({ theme }) => ({
+  '&:first-child': {
+    marginBottom: '1em',
+    [theme.breakpoints.up('lg')]: {
+      marginBottom: 0,
+    },
+  },
+  [theme.breakpoints.up('lg')]: {
+    width: '40%',
+  },
+}));
+
+export const InfoTitle = styled(Box)(({ theme }) => ({
+  fontSize: '1.1em',
+  marginBottom: '0.2em',
+  [theme.breakpoints.up('md')]: {
+    fontSize: '1.2em',
+  },
+}));
+
+export const InfoList = styled(Box)(() => ({
+  display: 'block',
+}));
+
+export const InfoItem = styled(Box)(() => ({
+  display: 'block',
 }));
 
 export const UrlsList = styled(Box)(({ theme }) => ({
@@ -76,7 +107,8 @@ export const UrlsList = styled(Box)(({ theme }) => ({
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    gap: '4px',
+    rowGap: '4px',
+    columnGap: '2em'
   },
 }));
 

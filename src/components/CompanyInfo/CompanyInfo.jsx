@@ -23,7 +23,51 @@ const companyInfoOptions = [
   },
 ];
 
+const mainInfo = {
+  title: 'Основна інформація',
+  list: [
+    {
+      urlKey: '1',
+      textContent: '✅ Підтримка 24/7 при ДТП',
+    },
+    {
+      urlKey: '2',
+      textContent: '✅ Пряме врегулювання',
+    },
+    {
+      urlKey: '3',
+      textContent: '✅ Ремонт без врахування зносу',
+    },
+    {
+      urlKey: '4',
+      textContent: '✅ Ремонт за рахунок вашої СК на авторизованому СТО',
+    },
+  ],
+};
 
+const limitInfo = {
+  title: 'Ліміт відповідальності',
+  list: [
+    {
+      urlKey: '1',
+      textContent: '✅ 1 250 000 грн. по майну на один випадок',
+    },
+    {
+      urlKey: '2',
+      textContent: '✅ 250 000 грн. по майну на одну особу',
+    },
+    {
+      urlKey: '3',
+      // eslint-disable-next-line
+      textContent: `✅ 5 000 000 грн. по життю та здоров'ю на один випадок`,
+    },
+    {
+      urlKey: '4',
+      // eslint-disable-next-line
+      textContent: `✅ 500 000 грн. по життю та здоров'ю на одну особу`,
+    },
+  ],
+};
 
 const CompanyInfo = ({
   insurer: { informationAboutInsurerUrl: insurerUrl },
@@ -52,6 +96,26 @@ const CompanyInfo = ({
         </Box>
       </S.Button>
       <S.Wrapper className={clsx(!isShow && 'show')}>
+        <S.InfoWrapper>
+          <S.InfoTitle as={'h2'}>{mainInfo.title}</S.InfoTitle>
+          <S.InfoList>
+            {mainInfo.list.map(({ textContent, urlKey }) => (
+              <S.InfoItem as={'li'} key={urlKey}>
+                <Typography component="span">{textContent}</Typography>
+              </S.InfoItem>
+            ))}
+          </S.InfoList>
+        </S.InfoWrapper>
+        <S.InfoWrapper>
+          <S.InfoTitle as={'h2'}>{limitInfo.title}</S.InfoTitle>
+          <S.InfoList>
+            {limitInfo.list.map(({ textContent, urlKey }) => (
+              <S.InfoItem as={'li'} key={urlKey}>
+                <Typography component="span">{textContent}</Typography>
+              </S.InfoItem>
+            ))}
+          </S.InfoList>
+        </S.InfoWrapper>
         <S.UrlsList as={'ul'}>
           {companyInfoOptions.map(({ textContent, urlKey }, idx) => (
             <S.UrlItem as={'li'} key={idx}>
