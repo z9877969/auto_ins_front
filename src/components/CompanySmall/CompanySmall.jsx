@@ -68,9 +68,9 @@ const CompanySmall = memo(() => {
           variant="subtitle1"
           sx={{ display: 'flex', flexDirection: 'column' }}
         >
-          <span>Повна вартість:</span>
-          <span>{'(зазначається'}</span>
-          <span>{'в полісі)'}</span>
+          <span className="mainDescr">Повна вартість:</span>
+          <span className="additionalDescr">{'(зазначається'}</span>
+          <span className="additionalDescr">{'в полісі)'}</span>
         </Typography>
         <Typography
           component="span"

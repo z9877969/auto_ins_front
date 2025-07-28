@@ -56,4 +56,12 @@ export const ContentBox = styled(Box)(({ theme }) => ({
     fontFamily: 'Open Sans',
     [theme.breakpoints.up('sm')]: { fontSize: '22px', lineHeight: '1.5em' },
   },
+
+  '& .mainDescr': {
+    lineHeight: 1,
+  },
+  '& .additionalDescr': {
+    fontSize: '0.8em',
+    lineHeight: 1,
+  },
 }));
