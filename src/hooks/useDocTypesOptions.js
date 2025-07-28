@@ -15,7 +15,7 @@ export const useDocTypesOptions = () => {
   const insurerDocsOptions = useMemo(() => {
     const privilageType = getPrivilageType(isPrivilage);
     const docTypesOptions = docsOptionsDict[privilageType].filter((el) =>
-      allowedDocTypes.includes(el.value)
+      allowedDocTypes?.includes(el.value)
     );
     return docTypesOptions;
   }, [isPrivilage, allowedDocTypes]);

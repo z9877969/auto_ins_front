@@ -8,7 +8,7 @@ const OrderPage = () => {
   const { orderStage } = useParams();
 
   const isBlockRender =
-    orderStage && Object.values(orderTypes).includes(orderStage);
+    orderStage && Object.values(orderTypes)?.includes(orderStage);
 
   useEffect(() => {
     if (!isBlockRender) {

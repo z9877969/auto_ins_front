@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { useTheme } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
@@ -17,8 +17,11 @@ import {
 // import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import { useNavigate } from 'react-router-dom';
 import { socialMediaDict } from '../../assets/utils/socialMedia';
+import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
 
-const BurgerMenu = lazy(() => import('../BurgerMenu/BurgerMenu'));
+const BurgerMenu = loadComponentWithRetry(() =>
+  import('../BurgerMenu/BurgerMenu')
+);
 
 const Header = () => {
   const theme = useTheme();

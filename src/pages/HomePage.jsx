@@ -1,4 +1,4 @@
-import { lazy, memo, Suspense, useEffect } from 'react';
+import { memo, Suspense, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getUser } from '../redux/Calculator/selectors';
@@ -8,21 +8,26 @@ import ModalError from '../components/ModalError/ModalError';
 import AlertMUI from '../components/Alert/AlertMUI';
 import Hero from '../components/Hero/Hero';
 import { useScrollToTop } from 'hooks/useScrollToTop';
+import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
 
-const CreatePolicyVideoSection = lazy(
-  () => import('../components/CreatePolicyVideoSection/CreatePolicyVideoSection')
+const CreatePolicyVideoSection = loadComponentWithRetry(() =>
+  import('../components/CreatePolicyVideoSection/CreatePolicyVideoSection')
 );
-const AccordionSection = lazy(() =>
+const AccordionSection = loadComponentWithRetry(() =>
   import('../components/AccordionSection/index')
 );
-const CheckInsSection = lazy(() =>
+const CheckInsSection = loadComponentWithRetry(() =>
   import('../components/CheckInsSection/index')
 );
-const InfoSection = lazy(() => import('../components/InfoSection/index'));
-const AdvatagesSection = lazy(() =>
+const InfoSection = loadComponentWithRetry(() =>
+  import('../components/InfoSection/index')
+);
+const AdvatagesSection = loadComponentWithRetry(() =>
   import('../components/AdvantagesSection/index')
 );
-const Partners = lazy(() => import('../components/Partners/Partners'));
+const Partners = loadComponentWithRetry(() =>
+  import('../components/Partners/Partners')
+);
 
 const MemoizedCreatePolicyVideoSection = memo(CreatePolicyVideoSection);
 const MemoizedInfoSection = memo(InfoSection);

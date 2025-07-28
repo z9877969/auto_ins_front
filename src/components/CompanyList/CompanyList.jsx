@@ -52,7 +52,7 @@ const CompanyList = () => {
     //   setIsOpenPrivilageSupportModal(true);
     // };
     const isRecommended = recommendedCompanyList.some((el) =>
-      companyObject.insurerName.toLowerCase().trim().includes(el)
+      companyObject.insurerName.toLowerCase().trim()?.includes(el)
     );
 
     return (

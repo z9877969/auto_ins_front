@@ -266,7 +266,7 @@ const ByParameters = () => {
                     />
                     {formik.errors.otkDate && (
                       <div className="errorMessage">
-                        {!formik.errors.otkDate.includes('otkDate')
+                        {!formik.errors.otkDate?.includes('otkDate')
                           ? formik.errors.otkDate
                           : DATE_MESSAGE_ERRORS.dateFormat}
                       </div>
@@ -307,7 +307,7 @@ const ByParameters = () => {
             />
             {formik.errors.dateFrom && (
               <div className="errorMessage">
-                {!formik.errors.dateFrom.includes('dateFrom')
+                {!formik.errors.dateFrom?.includes('dateFrom')
                   ? formik.errors.dateFrom
                   : DATE_MESSAGE_ERRORS.dateFormat}
               </div>

@@ -24,7 +24,7 @@ const InsuredDataForm = ({ formik, docTypesOptions }) => {
 
   const taxNumberHandleBlur = (e) => {
     const { value: taxNumber } = e.target;
-    if (blackList.includes(taxNumber)) {
+    if (blackList?.includes(taxNumber)) {
       errorHandler('Номер з чорного списку: ' + taxNumber);
       return;
     }
@@ -77,7 +77,7 @@ const InsuredDataForm = ({ formik, docTypesOptions }) => {
           />
           {formik.touched.birthDate && formik.errors.birthDate ? (
             <div className="errorMessage">
-              {!formik.errors.birthDate.includes('birthDate')
+              {!formik.errors.birthDate?.includes('birthDate')
                 ? formik.errors.birthDate
                 : DATE_MESSAGE_ERRORS.dateFormat}
             </div>
@@ -140,7 +140,7 @@ const InsuredDataForm = ({ formik, docTypesOptions }) => {
             />
             {formik.touched.date && formik.errors.date ? (
               <div className="errorMessage">
-                {!formik.errors.date.includes('date')
+                {!formik.errors.date?.includes('date')
                   ? formik.errors.date
                   : DATE_MESSAGE_ERRORS.dateFormat}
               </div>

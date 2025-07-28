@@ -1,27 +1,7 @@
-import { Suspense, lazy } from 'react';
+import { Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
-
-const loadComponentWithRetry = (importFunc, retries = 3, interval = 1000) => {
-  return lazy(
-    () =>
-      new Promise((resolve, reject) => {
-        importFunc()
-          .then(resolve)
-          .catch((error) => {
-            if (retries === 1) {
-              reject(error);
-            } else {
-              setTimeout(() => {
-                loadComponentWithRetry(importFunc, retries - 1, interval)
-                  .then(resolve)
-                  .catch(reject);
-              }, interval);
-            }
-          });
-      })
-  );
-};
+import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
 
 const HomePage = loadComponentWithRetry(() => import('./pages/HomePage.jsx'));
 const PricesPage = loadComponentWithRetry(() =>

@@ -21,7 +21,7 @@ export const selectAllowedDocTypes = createSelector(
   selectCompanyAllDocTypes,
   (docTypes) => {
     const { epolicy, vcl } = docTypes || {};
-    if (vcl) return epolicy.filter((type) => vcl.includes(type));
+    if (vcl) return epolicy.filter((type) => vcl?.includes(type));
     return epolicy;
   }
 );

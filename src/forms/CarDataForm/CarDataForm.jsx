@@ -221,7 +221,7 @@ const CarDataForm = ({ formik, userParams }) => {
           optionsArr={autoMakers}
           getOptionLabel={(option) => option.name}
           getOptionValue={(option) => option.id}
-          isEmpty={!values.maker.id}
+          isEmpty={!values.maker?.id}
           changeCB={handleChangeMaker}
           readOnly={Boolean(insuranceObject?.model)}
           noOptionsMessage="Така марка відсутня"
@@ -241,7 +241,7 @@ const CarDataForm = ({ formik, userParams }) => {
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.id}
             isValid={!values.model?.id ? false : true}
-            isEmpty={!values.model.id}
+            isEmpty={!values.model?.id}
             changeCB={handleChangeModel}
             readOnly={Boolean(insuranceObject?.model)}
             noOptionsMessage="Модель відсутня.👉 Натисніть щоб вказати самостійно 👈"

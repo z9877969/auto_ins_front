@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Stack from '@mui/material/Stack';
 import Step from '@mui/material/Step';
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { useEffect, useState } from 'react';
 import { SpriteSVG } from '../../images/SpriteSVG';
 import { Connector, Lable, LableIcon, StepperStyled } from './StepperStyled';
@@ -53,6 +53,7 @@ import {
 } from '../../constants';
 import { useDocTypesOptions } from '../../hooks/useDocTypesOptions';
 import { calcBirthdateFromIpn } from 'helpers/birthDate/calcBirthdateFromIpn';
+import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
 
 const steps = [
   { Контакти: 'icon-email' },
@@ -60,16 +61,18 @@ const steps = [
   { 'Домашня адреса': 'icon-home' },
   { 'Дані авто': 'icon-car-little' },
 ];
-const FormContacts = lazy(() =>
+const FormContacts = loadComponentWithRetry(() =>
   import('../../forms/FormContacts/FormContacts')
 );
-const InsuredDataForm = lazy(() =>
+const InsuredDataForm = loadComponentWithRetry(() =>
   import('../../forms/InsuredDataForm/InsuredDataForm')
 );
-const HomeAddressForm = lazy(() =>
+const HomeAddressForm = loadComponentWithRetry(() =>
   import('../../forms/HomeAddressForm/HomeAddressForm')
 );
-const CarDataForm = lazy(() => import('../../forms/CarDataForm/CarDataForm'));
+const CarDataForm = loadComponentWithRetry(() =>
+  import('../../forms/CarDataForm/CarDataForm')
+);
 
 const getInsurerStoredStateWithoutDocsData = (docTypeOption) => {
   const storedData = storage.getFromLS(formikDataKeys.INSURED);

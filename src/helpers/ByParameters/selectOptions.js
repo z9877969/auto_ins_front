@@ -127,13 +127,13 @@ const vehicleTypesOptions = [
 // const disabledCategories = ['C', 'D', 'E', 'F'];
 // const withDisabledVehicleGroupsOptions = vehicleGroupsOptions_changed.map(
 //   (option) =>
-//     disabledCategories.some((c) => option.value.includes(c))
+//     disabledCategories.some((c) => option.value?.includes(c))
 //       ? { ...option, isDisabled: true }
 //       : option
 // );
 
 // const withDisabledVehicleTypesOptions = vehicleTypesOptions.map((option) =>
-//   disabledCategories.some((c) => option.value.includes(c))
+//   disabledCategories.some((c) => option.value?.includes(c))
 //     ? { ...option, isDisabled: true }
 //     : option
 // );
@@ -168,11 +168,11 @@ export function selectAutoCategory(category) {
   switch (category) {
     case 'EF':
       return vehicleTypesOptions.filter(
-        (categ) => categ.value.includes('E') || categ.value.includes('F')
+        (categ) => categ.value?.includes('E') || categ.value?.includes('F')
       );
     default:
       return category
-        ? vehicleTypesOptions.filter((categ) => categ.value.includes(category))
+        ? vehicleTypesOptions.filter((categ) => categ.value?.includes(category))
         : vehicleTypesOptions;
   }
 }

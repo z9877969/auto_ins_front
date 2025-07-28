@@ -12,7 +12,7 @@ const initialState = {
   homeAddress: { label: '', value: '' },
   error: '',
   order: null,
-  blackList: null,
+  blackList: [],
 };
 
 export const globalSlice = createSlice({

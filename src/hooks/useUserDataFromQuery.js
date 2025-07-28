@@ -11,7 +11,7 @@ export const useUserDataFromQuery = () => {
   const paymentData = useMemo(() => {
     if (!location.search || location.pathname !== '/order/emmited') return null;
     let search = location.search;
-    if (search.includes('~and~')) {
+    if (search?.includes('~and~')) {
       search = search.split('~and~').join('&');
     }
     const { userId, salePointId, ...rest } = queryString.parse(location.search);
