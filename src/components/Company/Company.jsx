@@ -126,6 +126,7 @@ const Company = ({
 
       setParamsFromUrl({
         price,
+        fullPrice,
         insurer: { id: franchise.insurer.id, name: franchise.insurer.name },
         registrationPlace: registrationPlace || '',
         // autoCategory,

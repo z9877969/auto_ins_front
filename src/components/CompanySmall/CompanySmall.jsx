@@ -1,4 +1,3 @@
- 
 import { memo } from 'react';
 import Typography from '@mui/material/Typography';
 import { useSelector } from 'react-redux';
@@ -63,7 +62,36 @@ const CompanySmall = memo(() => {
           {paramsFromUrl?.price} грн
         </Typography>
       </ContentBox>
+      <ContentBox>
+        <Typography
+          component="span"
+          variant="subtitle1"
+          sx={{ display: 'flex', flexDirection: 'column' }}
+        >
+          <span>Повна вартість:</span>
+          <span>{'(зазначається'}</span>
+          <span>{'в полісі)'}</span>
+        </Typography>
+        <Typography
+          component="span"
+          variant="subtitle1"
+          className="boldText"
+          sx={{ alignSelf: 'baseline', marginTop: '-4px' }}
+        >
+          {paramsFromUrl?.fullPrice} грн
+        </Typography>
+      </ContentBox>
+      <ContentBox>
+        <Typography component="span" variant="subtitle1">
+          {'Вигода'}:
+        </Typography>
+        <Typography component="span" variant="subtitle1" className="boldText">
+          {paramsFromUrl?.fullPrice - paramsFromUrl?.price} грн
+        </Typography>
+      </ContentBox>
     </FormContainerS>
   );
 });
 export default CompanySmall;
+
+CompanySmall.displayName = 'CompanySmall';
