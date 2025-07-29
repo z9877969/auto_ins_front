@@ -62,33 +62,41 @@ const CompanySmall = memo(() => {
           {paramsFromUrl?.price} грн
         </Typography>
       </ContentBox>
-      <ContentBox>
-        <Typography
-          component="span"
-          variant="subtitle1"
-          sx={{ display: 'flex', flexDirection: 'column' }}
-        >
-          <span className="mainDescr">Повна вартість:</span>
-          <span className="additionalDescr">{'(зазначається'}</span>
-          <span className="additionalDescr">{'в полісі)'}</span>
-        </Typography>
-        <Typography
-          component="span"
-          variant="subtitle1"
-          className="boldText"
-          sx={{ alignSelf: 'baseline', marginTop: '-4px' }}
-        >
-          {paramsFromUrl?.fullPrice} грн
-        </Typography>
-      </ContentBox>
-      <ContentBox>
-        <Typography component="span" variant="subtitle1">
-          {'Вигода'}:
-        </Typography>
-        <Typography component="span" variant="subtitle1" className="boldText">
-          {paramsFromUrl?.fullPrice - paramsFromUrl?.price} грн
-        </Typography>
-      </ContentBox>
+      {paramsFromUrl?.fullPrice > 0 && (
+        <>
+          <ContentBox>
+            <Typography
+              component="span"
+              variant="subtitle1"
+              sx={{ display: 'flex', flexDirection: 'column' }}
+            >
+              <span className="mainDescr">Повна вартість:</span>
+              <span className="additionalDescr">{'(зазначається'}</span>
+              <span className="additionalDescr">{'в полісі)'}</span>
+            </Typography>
+            <Typography
+              component="span"
+              variant="subtitle1"
+              className="boldText"
+              sx={{ alignSelf: 'baseline', marginTop: '-4px' }}
+            >
+              {paramsFromUrl?.fullPrice} грн
+            </Typography>
+          </ContentBox>
+          <ContentBox>
+            <Typography component="span" variant="subtitle1">
+              {'Вигода'}:
+            </Typography>
+            <Typography
+              component="span"
+              variant="subtitle1"
+              className="boldText"
+            >
+              {paramsFromUrl?.fullPrice - paramsFromUrl?.price} грн
+            </Typography>
+          </ContentBox>
+        </>
+      )}
     </FormContainerS>
   );
 });
