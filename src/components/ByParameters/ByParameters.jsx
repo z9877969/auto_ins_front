@@ -328,7 +328,7 @@ const ByParameters = () => {
             isDisabled={isPrivileged ? true : false}
             helper={<HelperList />}
           />
-          <GeneralCheckbox
+          {/* <GeneralCheckbox
             lableText="Авто на іноземних номерах"
             name="foreignNumber"
             val={formik.values.foreignNumber}
@@ -340,7 +340,7 @@ const ByParameters = () => {
             }}
             isDisabled={formik.values.benefits ? true : false}
             color={formik.values.benefits ? 'rgba(243, 243, 243, 0.40)' : null}
-          />
+          /> */}
         </AllCheckboxContStyled>
 
         <SubmitButton
