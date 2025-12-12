@@ -7,12 +7,15 @@ const Text = ({ text, style = null, outsideEls = {} }) => {
   const [content] = useState(text);
 
   return content.map(
-    ({ text, strongText, restText, outsideEl: { name } = {} }, index) => {
+    (
+      { text = '', strongText = '', restText, outsideEl: { name } = {} },
+      index
+    ) => {
       if (outsideEls[name])
         return <Fragment key={index}>{outsideEls[name]}</Fragment>;
 
-      const isTextLineBreak = text.includes('\n');
-      const isStrongTextLineBreak = strongText.includes('\n');
+      const isTextLineBreak = text?.includes('\n');
+      const isStrongTextLineBreak = strongText?.includes('\n');
 
       return (
         <AbsatzS

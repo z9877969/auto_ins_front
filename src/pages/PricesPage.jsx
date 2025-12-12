@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CostCalculation } from '../components/CostCalculation/CostCalculation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import OutletPageWrapper from '../components/OutletPageWrapper';
 import ProposalsFilter from '../components/ProposalsFilter/ProposalsFilter';
 import CompanyList from '../components/CompanyList/CompanyList';
@@ -9,15 +9,21 @@ import { getSubmitObject } from '../redux/byParameters/selectors';
 import {
   getStateCalculator,
   getStateNumber,
+  // selectIsOpenPrivilageSupportModal,
+  // selectIsPrivilagedExist,
 } from '../redux/Calculator/selectors';
 import { LinearProgress } from '@mui/material';
 import LineSection from '../components/LineSection/LineSection';
 
 import ModalError from '../components/ModalError/ModalError';
+// import ModalErrorWithSupport from 'components/ModalErrorWIthSupport/ModalErrorWIthSupport';
 import { getIsModalErrorOpen } from '../redux/Global/selectors';
 import { useActions } from '../hooks/useActions';
 import { ORDER_TYPE } from '../constants';
 import { useScrollToTop } from 'hooks/useScrollToTop';
+import RegistrationPlaceErrorModal from 'components/RegistrationPlaceErrorModal/RegistrationPlaceErrorModal';
+
+const REGISTRATION_ERROR_MESSAGE = 'Неможлива тарифікація ТЗ по держ. номеру';
 
 const PricesPage = () => {
   useScrollToTop();
@@ -29,12 +35,16 @@ const PricesPage = () => {
   const stateNumber = useSelector(getStateNumber);
   const isLoadingCalculator = useSelector(getStateCalculator);
   const isError = useSelector(getIsModalErrorOpen);
+  const [isRegistrationError, setIsRegistrationError] = useState(false);
+  // const isPrivilegedExist = useSelector(selectIsPrivilagedExist);
+  // const isOpenPrivilageSupportModal = useSelector(
+  //   selectIsOpenPrivilageSupportModal
+  // );
 
   useEffect(() => {
     let subscribed = true;
     if (subscribed) {
       if (
-        // !Object.hasOwn(userParams, 'customerCategory') &&
         // eslint-disable-next-line
         !userParams.hasOwnProperty('customerCategory') &&
         stateNumber === ''
@@ -61,14 +71,41 @@ const PricesPage = () => {
             return;
           }
         } catch (error) {
-          setIsModalErrorOpen(true);
+          const isRegistrationError = error.message
+            .toLowerCase()
+            .includes(REGISTRATION_ERROR_MESSAGE.toLowerCase());
+          if (isRegistrationError) {
+            setIsRegistrationError(true);
+          } else {
+            setIsModalErrorOpen(true);
+          }
         }
       };
       getOsagoData();
     } else {
       navigate('/');
     }
-  }, [location.state, setIsModalErrorOpen, osagoByDn, osagoByParams, navigate]);
+  }, [
+    location.state,
+    setIsModalErrorOpen,
+    osagoByDn,
+    osagoByParams,
+    // isPrivilegedExist,
+    navigate,
+  ]);
+
+  // if ((isError && isPrivilegedExist) || isOpenPrivilageSupportModal) {
+  //   return <ModalErrorWithSupport />;
+  // }
+
+  if (isRegistrationError) {
+    return (
+      <RegistrationPlaceErrorModal
+        closeModal={() => setIsRegistrationError(false)}
+        params={location.state?.params}
+      />
+    );
+  }
 
   if (isError) {
     return <ModalError />;

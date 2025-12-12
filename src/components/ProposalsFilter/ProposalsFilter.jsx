@@ -61,7 +61,7 @@ const ProposalsFilter = () => {
     let filteredCompanies = [...companies];
     if (selectedCompanieName.length) {
       filteredCompanies = filteredCompanies.filter((el) =>
-        selectedCompanieName.includes(el.insurerName)
+        selectedCompanieName?.includes(el.insurerName)
       );
     }
     if (selectedPriceSort.value) {

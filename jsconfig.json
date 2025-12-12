@@ -13,7 +13,8 @@
       "@constants/*": ["constants/*"],
       "images/*": ["images/*"],
       "assets/*": ["assets/*"],
-      "components/*": ["components/*"]
+      "components/*": ["components/*"],
+      "style/*": ["style/*"],
     }
   },
   "exclude": ["node_modules", "dist", ".vite"]

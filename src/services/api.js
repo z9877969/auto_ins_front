@@ -1,8 +1,8 @@
+import { BACK_URL, mainRoutes } from '@constants/index';
 import axios from 'axios';
 
 export const instance = axios.create({
-  // baseURL: 'http://localhost:4040/api',
-  baseURL: 'https://api.auto-ins.com.ua/api',
+  baseURL: BACK_URL + '/api',
 });
 
 export const getOrderPasswordApi = async (contractId) => {
@@ -37,18 +37,29 @@ export const requestOrderApi = async ({ epolicy, vcl }) => {
   return data;
 };
 
-export const emmitOrderApi = async ({ epolicy, vcl }) => {
-  await instance.post(
-    `orders/${epolicy}/emmit`,
-    {},
+export const createContractPaymentApi = async ({
+  contractId /* { vcl, epolicy } */,
+  amount /* { vcl, epolicy } */,
+  orderId /* { vcl, epolicy } */,
+  shoperEmail,
+}) => {
+  const { data } = await instance.post(
+    '/orders/contractpayment/createContractPayment',
+    null,
     {
       params: {
-        epolicy,
-        vcl,
+        epolicyAmount: amount.epolicy,
+        ...(amount.vcl && { vclAmount: amount.vcl }),
+        epolicyOrderId: orderId.epolicy,
+        ...(orderId.vcl && { vclOrderId: orderId.vcl }),
+        epolicyContractId: contractId.epolicy,
+        ...(contractId.epolicy && { vclContractId: contractId.vcl }),
+        shoperEmail,
       },
     }
   );
-  return true;
+
+  return data.linkPayment;
 };
 
 export const addLogApi = async (errorData) => {
@@ -58,4 +69,19 @@ export const addLogApi = async (errorData) => {
     // eslint-disable-next-line
     console.log(error.message);
   }
+};
+
+export const saveContractApi = async (body) => {
+  const { data } = await instance.post(mainRoutes.GLOBAL + '/contract/save', {
+    ...body,
+    sourceInfo: 'https://auto-ins.com.ua/',
+  });
+
+  return data;
+};
+
+export const getIpnBlackListApi = async () => {
+  const { data } = await instance.get(mainRoutes.GLOBAL + '/blacklist');
+
+  return data;
 };

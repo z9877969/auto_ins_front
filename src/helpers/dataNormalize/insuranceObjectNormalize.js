@@ -1,24 +1,47 @@
 export const insuranceObjectNormalize = (
   carDataFormik,
-  insurObject,
+  insurObject = {},
   registrationPlaceId,
-  fullCarModel,
-  privilegeData
+  privilegeData,
+  otkData
 ) => {
-  const { brand, category, bodyNumber, stateNumber, year, model, maker } =
-    carDataFormik.values;
+  const {
+    category,
+    bodyNumber,
+    stateNumber,
+    year,
+    model,
+    maker,
+    engineVolume,
+    grossWeight,
+    curbWeight,
+    seatingCapacity,
+    electricMotorPower,
+  } = carDataFormik.values;
+
   const insuranceObject = {
     type: 'auto',
-    modelText: brand || fullCarModel,
     category: category,
+    autoMaker: maker.name,
+    autoModel: model.name,
     bodyNumber: bodyNumber,
     stateNumber: stateNumber,
     registrationPlace: {
-      id: insurObject?.registrationPlace?.id || registrationPlaceId,
+      id: insurObject.registrationPlace?.id || registrationPlaceId,
     },
-    registrationType: 'PERMANENT_WITHOUT_OTK',
+    registrationType: otkData.registrationType,
     year: year,
+    // = new car info data -Start =
+    engineVolume: insurObject?.engineVolume || Number(engineVolume),
+    grossWeight: insurObject?.grossWeight || Number(grossWeight) || 0, // - Повна маса, кг
+    curbWeight: insurObject?.curbWeight || Number(curbWeight) || 0, // - Маса без навантаження, кг
+    seatingCapacity:
+      insurObject?.seatingCapacity || Number(seatingCapacity) || 0, // Кількість місць (з водієм)
+    electricMotorPower:
+      insurObject?.electricMotorPower || electricMotorPower || 1,
+    // = new car info data -End =
   };
+
   if (model.id !== 'custom') {
     const newModel = {
       autoMaker: { id: maker.id },
@@ -27,7 +50,11 @@ export const insuranceObjectNormalize = (
     insuranceObject.model = newModel;
   }
   if (privilegeData) {
-    insuranceObject.engineVolume = privilegeData.engineVolume;
+    insuranceObject.engineVolume =
+      insuranceObject.engineVolume || privilegeData.engineVolume;
+  }
+  if (otkData.otkDate) {
+    insuranceObject.otkDate = otkData.otkDate;
   }
   return insuranceObject;
 };

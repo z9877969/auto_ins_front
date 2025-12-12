@@ -22,3 +22,7 @@ export const getTariffsStatus = createSelector(
   }
 );
 export const getStateCalculator = (state) => state.calculator.isLoading;
+export const selectIsPrivilagedExist = (state) =>
+  state.calculator.isPrivilagedExist;
+export const selectIsOpenPrivilageSupportModal = (state) =>
+  state.calculator.isOpenPrivilageSupportModal;

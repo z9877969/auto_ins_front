@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react';
 
-// eslint-disable-next-line
+ 
 const ErrorContext = createContext(null);
 
 // eslint-disable-next-line

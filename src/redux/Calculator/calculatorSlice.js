@@ -18,6 +18,8 @@ const initialState = {
   hasVclOrder: false,
   user: null,
   isLoading: false,
+  isPrivilagedExist: false,
+  isOpenPrivilageSupportModal: false,
 };
 
 export const calculatorSlice = createSlice({
@@ -45,6 +47,32 @@ export const calculatorSlice = createSlice({
     changeVslOrderStatus: (state, { payload }) => {
       // payload = true | false
       state.hasVclOrder = payload;
+    },
+    setUserDataAction: (state, { payload }) => {
+      const { userId, salePointId, paymentData } = payload;
+
+      if (!state.user) {
+        state.user = {
+          user: {
+            id: userId,
+          },
+          salePoint: {
+            id: salePointId,
+          },
+        };
+        if (paymentData) {
+          state.user.paymentData = paymentData;
+        }
+      }
+    },
+    setIsPrivilagedExist: (state, { payload = false }) => {
+      state.isPrivilagedExist = payload;
+    },
+    setIsOpenPrivilageSupportModal: (state, { payload = false }) => {
+      state.isOpenPrivilageSupportModal = payload;
+    },
+    setInitialCalculatorState: () => {
+      return { ...initialState };
     },
   },
   extraReducers: (builder) => {
@@ -105,5 +133,9 @@ export const {
   setTariffVcl,
   setCalcError,
   changeVslOrderStatus,
+  setUserDataAction,
+  setIsPrivilagedExist,
+  setIsOpenPrivilageSupportModal,
+  setInitialCalculatorState
 } = calculatorSlice.actions;
 export const calculatorReducer = calculatorSlice.reducer;

@@ -17,6 +17,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     quotes: ['error', 'single'],
+    'jsx-quotes': ['error', 'prefer-double'],
     'react/prop-types': 'off',
     'no-console': 'warn',
     'react/display-name': ['off', { ignoreTranspilerName: false }],

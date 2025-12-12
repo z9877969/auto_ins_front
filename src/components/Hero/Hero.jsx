@@ -8,7 +8,7 @@ import NoWorkModal from 'components/NoWorkModal/NoWorkModal';
 
 const Hero = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const [isAppWork] = useState(false);
+  const [isAppWork] = useState(true);
 
   return (
     <section>

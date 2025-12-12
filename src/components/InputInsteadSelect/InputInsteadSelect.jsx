@@ -26,7 +26,7 @@ const InputInsteadSelect = ({
       {closeInput && (
         <IconButton
           size="large"
-          sx={{ color: 'red', transform: 'translateY(40%)' }}
+          sx={{ color: '#FCD922', transform: 'translateY(40%)' }}
           onClick={closeInput}
         >
           <CancelIcon />

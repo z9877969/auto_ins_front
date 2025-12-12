@@ -1,5 +1,6 @@
 import { useMediaQuery, useTheme } from '@mui/material';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import {
   InputContStyled,
   InputStyled,
@@ -20,6 +21,7 @@ const GeneralInput = ({
   className,
   valueKey,
   mustDefaultErrorMessage = false,
+  errorYPosition = 'bottom',
 }) => {
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
@@ -36,7 +38,12 @@ const GeneralInput = ({
       >
         <span>{lableText}</span>
         {touched[id] && errors[id] && (
-          <span className="errorMessages">
+          <span
+            className={clsx(
+              'errorMessages',
+              errorYPosition === 'top' && 'errorMessageTop'
+            )}
+          >
             {smScreen || !mustDefaultErrorMessage
               ? errors[id]
               : 'Помилка введення'}

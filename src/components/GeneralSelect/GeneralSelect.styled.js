@@ -2,7 +2,7 @@ import { Box, styled } from '@mui/material';
 import Select from 'react-select';
 
 export const SelectStyled = styled(Select)(
-  ({ theme, $find, $isValid, $optionsOnTop, isMenuOpen }) => ({
+  ({ theme, $find, $isValid, $optionsOnTop, isMenuOpen, fullWidth }) => ({
     '& .customSelect__': {
       '&control': {
         color: theme.palette.primary.main,
@@ -47,7 +47,7 @@ export const SelectStyled = styled(Select)(
           fontSize: 18,
         },
         [theme.breakpoints.up('lg')]: {
-          width: 272,
+          width: fullWidth ? '100%' : 272,
         },
       },
       '&value-container': { height: 24, padding: 0 },

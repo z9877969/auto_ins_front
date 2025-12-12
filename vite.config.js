@@ -9,8 +9,8 @@ dotenv.config();
 export default defineConfig(() => {
   return {
     server: {
-      port: 3000,
       host: true,
+      port: 3000,
     },
     plugins: [
       react({
@@ -33,7 +33,8 @@ export default defineConfig(() => {
         '@constants': '/src/constants',
         images: '/src/images',
         assets: '/src/assets',
-        components: '/src/components',
+        components: '/src/components',        
+        style: '/src/style',        
       },
     },
     base: '/',

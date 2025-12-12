@@ -1,5 +1,15 @@
+import { useMemo, useState, useEffect } from 'react';
+import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import useTheme from '@mui/material/styles/useTheme';
+import Box from '@mui/material/Box';
+import GeneralSelect from '../GeneralSelect/GeneralSelect';
+import CompanyCardMedia from '../CompanyCardMedia/index';
+import CompanyInfo from 'components/CompanyInfo/CompanyInfo';
 import {
   BoxContent,
   BoxFooter,
@@ -10,18 +20,10 @@ import {
   GridContainerImg,
   WrapperStyled,
 } from './CompanyStyled';
-import Grid from '@mui/material/Grid';
-import { useMemo, useState } from 'react';
-import useTheme from '@mui/material/styles/useTheme';
-import { useLocation, useNavigate } from 'react-router-dom';
-import GeneralSelect from '../GeneralSelect/GeneralSelect';
-import Box from '@mui/material/Box';
-import { useEffect } from 'react';
-import { useFormik } from 'formik';
-import CompanyCardMedia from '../CompanyCardMedia/index';
-import { useSelector } from 'react-redux';
-import { getUser } from '../../redux/Calculator/selectors';
-import { useActions } from '../../hooks/useActions';
+import { getUser } from '@redux/Calculator/selectors';
+import { getSubmitObject } from '@redux/byParameters/selectors';
+import { useActions } from 'hooks/useActions';
+import { REGISTRATION_TYPES } from '@constants/index';
 
 const content = {
   label: {
@@ -33,14 +35,28 @@ const content = {
   },
 };
 
-const Company = ({ companyObject, lastItem }) => {
+const Company = ({
+  companyObject,
+  lastItem,
+  isRecommended,
+  // handleOpenSuportModal,
+  // isPrivileged,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const user = useSelector(getUser);
+  const { registrationType } = useSelector(getSubmitObject);
+
   const theme = useTheme();
+
   const { setGlobalCustomerData, setParamsFromUrl, changeVslOrderStatus } =
     useActions();
+
+  const [chooseDgo, setChooseDgo] = useState({
+    limit: 0,
+    discountedPayment: 0,
+  });
 
   const {
     insurerId,
@@ -55,12 +71,8 @@ const Company = ({ companyObject, lastItem }) => {
     return [...tariff].sort((a, b) => b.franchise - a.franchise);
   }, [tariff]);
 
+  // eslint-disable-next-line no-unused-vars
   const [franchise, setFranchise] = useState(sortedTarrif[0]);
-
-  const [chooseDgo, setChooseDgo] = useState({
-    limit: 0,
-    discountedPayment: 0,
-  });
 
   const price = useMemo(
     () => Math.round(franchise.discountedPayment + chooseDgo.discountedPayment),
@@ -78,25 +90,6 @@ const Company = ({ companyObject, lastItem }) => {
     chooseDgo.discountedPayment,
     franchise.brokerDiscount,
   ]);
-
-  useEffect(() => {
-    if (!companyObject) return;
-    scrollTo({ top: 0 });
-    // eslint-disable-next-line
-  }, []);
-
-  const handleChangeSelect = (e) => {
-    setFranchise(e);
-  };
-  const handleChangeDgoSelect = (option) => {
-    const { limit, discountedPayment } = option;
-    if (limit === 0 && discountedPayment === 0) {
-      changeVslOrderStatus(false);
-    } else {
-      changeVslOrderStatus(true);
-    }
-    setChooseDgo(option);
-  };
 
   const formik = useFormik({
     initialValues: {},
@@ -133,6 +126,7 @@ const Company = ({ companyObject, lastItem }) => {
 
       setParamsFromUrl({
         price,
+        fullPrice,
         insurer: { id: franchise.insurer.id, name: franchise.insurer.name },
         registrationPlace: registrationPlace || '',
         // autoCategory,
@@ -148,6 +142,25 @@ const Company = ({ companyObject, lastItem }) => {
     },
   });
 
+  // const handleChangeSelect = (e) => {
+  //   setFranchise(e);
+  // };
+  const handleChangeDgoSelect = (option) => {
+    const { limit, discountedPayment } = option;
+    if (limit === 0 && discountedPayment === 0) {
+      changeVslOrderStatus(false);
+    } else {
+      changeVslOrderStatus(true);
+    }
+    setChooseDgo(option);
+  };
+
+  useEffect(() => {
+    if (!companyObject) return;
+    scrollTo({ top: 0 });
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <CardStyled component="li" sx={{ overflow: 'visible' }}>
       <WrapperStyled
@@ -157,23 +170,44 @@ const Company = ({ companyObject, lastItem }) => {
       >
         <WrapperStyled>
           <Grid container className="gridContainer">
+            {isRecommended && (
+              <GridContainer item xs={10} m={'0 auto'} sm={0}>
+                <Typography
+                  variant="subtitle1"
+                  component="h4"
+                  className="recommended"
+                >
+                  AUTO-INS рекомендує
+                </Typography>
+              </GridContainer>
+            )}
             <GridContainer item xs={6} sm={0}>
               <Typography variant="subtitle1" component="h3">
                 ОСЦПВ від {insurerName.replace(/,[^,]+$/, '')}
               </Typography>
             </GridContainer>
+
             <GridContainerImg item xs={6} sm={12}>
               <CompanyCardMedia id={insurerId} alt={insurerName} />
             </GridContainerImg>
           </Grid>
         </WrapperStyled>
         <BoxContent>
+          {isRecommended && (
+            <Typography
+              variant="subtitle1"
+              component="h4"
+              className="recommended"
+            >
+              AUTO-INS рекомендує
+            </Typography>
+          )}
           <Typography variant="subtitle1" component="h3" className="title">
             ОСЦПВ від {insurerName.replace(/,[^,]+$/, '')}
           </Typography>
 
           <Box className="content">
-            <BoxSelect className="franchise">
+            {/* <BoxSelect className="franchise">
               <GeneralSelect
                 id="franchise"
                 lableText={content.label.FRANSHISE_TEXT}
@@ -187,7 +221,7 @@ const Company = ({ companyObject, lastItem }) => {
                 getOptionValue={(option) => option.discountedPayment}
                 $optionsOnTop={lastItem}
               />
-            </BoxSelect>
+            </BoxSelect> */}
             <BoxSelect>
               <GeneralSelect
                 id="2"
@@ -196,13 +230,17 @@ const Company = ({ companyObject, lastItem }) => {
                 color={theme.palette.primary.main}
                 optionsArr={companyObject?.dgo?.tariff || []}
                 changeCB={handleChangeDgoSelect}
-                // defaultValue={{ limit: 0, discountedPayment: 0 }}
                 getOptionLabel={(option) =>
                   `+${option.limit} за ${option.discountedPayment} грн`
                 }
                 getOptionValue={(option) => option.discountedPayment}
                 currentValue={chooseDgo}
-                isDisabled={!companyObject?.dgo ? true : false}
+                isDisabled={
+                  !companyObject?.dgo ||
+                  registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK
+                    ? true
+                    : false
+                }
                 optionsOnTop={lastItem}
               />
             </BoxSelect>
@@ -237,9 +275,18 @@ const Company = ({ companyObject, lastItem }) => {
               </Typography>
             </Box>
           </BoxFooter>
-          <ButtonStyled type="submit">Придбати</ButtonStyled>
+          <ButtonStyled
+            // type={isPrivileged ? 'button' : 'submit'}
+            // onClick={isPrivileged ? handleOpenSuportModal : null}
+            type="submit"
+          >
+            Придбати
+          </ButtonStyled>
         </WrapperStyled>
       </WrapperStyled>
+      <CompanyInfo
+        {...((companyObject.tariff && companyObject.tariff[0]) || {})}
+      />
     </CardStyled>
   );
 };

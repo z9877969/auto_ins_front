@@ -3,7 +3,7 @@ export const DNUMBER_REGEX =
   /^([A-ZА-ЯЇІЄ]{1,2}\d{4}[A-ZА-ЯЇІЄ]{2}|[A-ZА-ЯЇІЄ]{3,4}\d{4}|\d{2}[A-ZА-ЯЇІЄ]{2}\d{4}|\d{4}[A-ZА-ЯЇІЄ]\d{1}|\d{4,6}[A-ZА-ЯЇІЄ]{2}|\d{4}[A-ZА-ЯЇІЄ]{3}|[A-ZА-ЯЇІЄ]{2}\d{4,5}|\d{3})$/;
 
 export const VIN_REGEX = /^[(A-H|J-N|P|R-ZА-ДЄЖЗИЛПФЦЧШЩЮЯ){1,2}\d+]{5,17}$/;
-export const NAME_REGEX = /^[a-zA-Zа-яіїйєґА-ЯІЇЙЄҐ\u2019\u2013'-\s]+$/;
+export const NAME_REGEX = /^[a-zA-Zа-яіїйєґА-ЯІЇЙЄҐ\u2019\u2013'-\s0-9]+$/;
 export const SERIES_PASSPORT_REGEX = /^[а-яіїйєґА-ЯІЇЙЄҐ]{2}$/;
 export const SERIES_DRIVING_LICENSE_REGEX = /^[а-яіїйєґА-ЯІЇЙЄҐ]{3}$/;
 export const SERIES_PASSPORT_AND_DRIVING_LICENSE_REGEX =
@@ -19,7 +19,11 @@ export const mainRoutes = {
 };
 Object.freeze(mainRoutes);
 export const ENV = {
-  VITE_PAYEE_ID: import.meta.env.VITE_PAYEE_ID,
+  PORTMONE_PAYEE_ID: import.meta.env.VITE_PAYEE_ID,
+  LOCAL_FRONT_URL: import.meta.env.VITE_LOCAL_FRONT_URL,
+  PROD_FRONT_URL: import.meta.env.VITE_PROD_FRONT_URL,
+  LOCAL_BACK_URL: import.meta.env.VITE_LOCAL_BACK_URL,
+  PROD_BACK_URL: import.meta.env.VITE_PROD_BACK_URL,
   DEV: import.meta.env.DEV,
 };
 export const ORDER_TYPE = {
@@ -31,11 +35,44 @@ export const PRIVILEGED_TYPE = {
   NATURAL: 'NATURAL',
 };
 
+export const REGISTRATION_TYPES = {
+  // PERMANENT_WITHOUT_OTK: 'PERMANENT_WITHOUT_OTK', // - постоянная регистрация (без ОТК)
+  PERMANENT_WITHOUT_OTK: 'PERMANENT', // - постоянная регистрация (без ОТК)
+  // PERMANENT_WITH_OTK: 'PERMANENT_WITH_OTK', // - постоянная регистрация (с ОТК)
+  PERMANENT_WITH_OTK: 'PERMANENT', // - постоянная регистрация (с ОТК)
+  NOT_REGISTERED: 'NOT_REGISTERED', // - без регистрации (не используется)
+  TEMPORARY: 'TEMPORARY', // - временная регистрация
+  // TEMPORARY_ENTRANCE: 'TEMPORARY_ENTRANCE', // - временный въезд не дійсне з v16
+};
+
+export const PRIVILEGE_TYPES = {
+  PENSIONER: 'PENSIONER', // - пенсіонер
+  VETERAN: 'VETERAN', // - учасник війни
+  DISABLED: 'DISABLED', // - особа з інвалідністю II групи
+  DISABLED_I: 'DISABLED_I', // - особа з інвалідністю I групи
+  CHERNOBYLETS: 'CHERNOBYLETS', // - постраждалий внаслідок Чорнобильської катастрофи I або II категорії
+  COMBAT: 'COMBAT', // - учасник бойових дій
+  REVOLUTION: 'REVOLUTION', // - постраждалий учасник Революції Гідності
+
+  /* PENSION_CERTIFICATE - пенсійне посвідчення */
+  /* E_PENSION_CERTIFICATE - електронне пенсійне посвідчення */
+  /* DISABILITY_CERTIFICATE - посвідчення про інвалідність */
+  /* VETERAN_CERTIFICATE - посвідчення учасника війни */
+  /* CHERNOBYL_CERTIFICATE - чорнобильське посвідчення */
+  /* COMBAT_CERTIFICATE - посвідчення УБД */
+  /* WAR_DISABILITY_CERTIFICATE - посвідчення про інвалідність внаслідок війни */
+  /* REVOLUTION_CERTIFICATE - посвідчення учасника Революції Гідності */
+};
+
 export const DOCS_TYPES_DICT = {
   PENSION_CERTIFICATE: 'PENSION_CERTIFICATE',
+  E_PENSION_CERTIFICATE: 'E_PENSION_CERTIFICATE',
   VETERAN_CERTIFICATE: 'VETERAN_CERTIFICATE',
   DISABILITY_CERTIFICATE: 'DISABILITY_CERTIFICATE',
   CHERNOBYL_CERTIFICATE: 'CHERNOBYL_CERTIFICATE',
+  COMBAT_CERTIFICATE: 'COMBAT_CERTIFICATE',
+  WAR_DISABILITY_CERTIFICATE: 'WAR_DISABILITY_CERTIFICATE',
+  REVOLUTION_CERTIFICATE: 'REVOLUTION_CERTIFICATE',
   DRIVING_LICENSE: 'DRIVING_LICENSE',
   PASSPORT: 'PASSPORT',
   ID_PASSPORT: 'ID_PASSPORT',
@@ -57,18 +94,33 @@ export const VEHICLES_GROUPS = {
   },
   C: {
     main: 'C',
-    C1: 'C1',
+    C0: 'C0' /* вантажні ТЗ повною масою до 2400 кг вкл. і підйомністю до 2000 кг вкл., в т.ч. з електродвигуномвантажні ТЗ повною масою до 2400 кг вкл. і підйомністю до 2000 кг вкл., в т.ч. з електродвигуном */,
+    C1: 'C1' /* вантажні ТЗ повною масою від 2401 кг і підйомністю до 2000 кг вкл., в т.ч. з електродвигуном */,
     C2: 'C2',
   },
   D: {
     main: 'D',
     D1: 'D1',
     D2: 'D2',
+    D3: 'D3' /* D3 - трамваї */,
+    D4: 'D4' /* D4 - тролейбуси */,
   },
   EF: {
     main: 'EF',
     E: 'E',
     F: 'F',
+  },
+  G: {
+    main: 'G',
+    G1: 'G1' /* трактори */,
+    G2: 'G2' /* с/г техніка */,
+    G3: 'G3' /* причепи до с/г техніки */,
+  },
+  H: {
+    main: 'H',
+    H1: 'H1' /* авто-кран, пожежна, авто-вишка, техніка для транспортування сміття, прибиральна техніка, тощо */,
+    H2: 'H2' /* дорожно-будівельна техніка */,
+    H3: 'H3' /* спеціалізована військова техніка */,
   },
 };
 
@@ -85,12 +137,15 @@ export const CATEGORY = Object.values(VEHICLES_GROUPS).reduce((acc, el) => {
 
 export const VEHICLES_TYPES = {
   [VEHICLES_GROUPS.A.A1]: {
-    min: 0,
-    max: 300,
+    min: 0 /* см3 */,
+    max: 300 /* см3 */,
+    minPower: 0 /* кВт */,
+    maxPower: 5 /* кВт */,
     otk: false,
   },
   [VEHICLES_GROUPS.A.A2]: {
-    min: 301,
+    minPower: 5.001 /* кВт */,
+    min: 301 /* см3 */,
     otk: false,
   },
   [VEHICLES_GROUPS.B.B1]: {
@@ -115,9 +170,18 @@ export const VEHICLES_TYPES = {
   [VEHICLES_GROUPS.B.B5]: {
     otk: false,
   },
+  [VEHICLES_GROUPS.C.C0]: {
+    min: 0 /* підйомність, кг */,
+    max: 2000 /* підйомність, кг */,
+    minGrossWeight: 0 /* повна маса, кг */,
+    maxGrossWeight: 2400 /* повна маса, кг */,
+    otk: true,
+    otkRequired: false,
+  },
   [VEHICLES_GROUPS.C.C1]: {
-    min: 0,
-    max: 2000,
+    min: 0 /* підйомність, кг */,
+    max: 2000 /* підйомність, кг */,
+    minGrossWeight: 2401 /* повна маса, кг */,
     otk: true,
     otkRequired: false,
   },
@@ -137,12 +201,44 @@ export const VEHICLES_TYPES = {
     otk: true,
     otkRequired: true,
   },
+  [VEHICLES_GROUPS.D.D3]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.D.D4]: {
+    otk: true,
+    otkRequired: true,
+  },
   [VEHICLES_GROUPS.EF.E]: {
     otk: true,
     otkRequired: false,
   },
   [VEHICLES_GROUPS.EF.F]: {
     otk: false,
+  },
+  [VEHICLES_GROUPS.G.G1]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.G.G2]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.G.G3]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.H.H1]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.H.H2]: {
+    otk: true,
+    otkRequired: true,
+  },
+  [VEHICLES_GROUPS.H.H3]: {
+    otk: true,
+    otkRequired: true,
   },
 };
 
@@ -152,6 +248,9 @@ export const DATE_MESSAGE_ERRORS = {
   date: 'Має бути більше дати народження',
   startContract: 'Дата має бути більшою за поточну',
   dateFormat: 'Не коректна дата',
+  otkMinDate: 'Дата має бути на 15 днів більшою за поточну',
+  otkMaxDate: 'Дата має бути не більше року від початку дії поліса',
+  maxDocRegistration: 'Дата має бути меншою за поточну',
 };
 export const FORMIK_DATA_KEYS = {
   CONTACTS: 'contactsFormik',
@@ -161,5 +260,10 @@ export const FORMIK_DATA_KEYS = {
 };
 export const SAVED_ORDER_TYPE = {
   VCL: 'vcl',
-  EPOLICY: 'epolicy', // needing for id
+  EPOLICY: 'epolicy2025', // needing for id
 };
+
+export const FRONT_URL = ENV.DEV ? ENV.LOCAL_FRONT_URL : ENV.PROD_FRONT_URL;
+export const BACK_URL = ENV.DEV ? ENV.LOCAL_BACK_URL : ENV.PROD_BACK_URL;
+
+export { CARDATA_FORM_FIELDS_DICT } from './formsFieldsNames';

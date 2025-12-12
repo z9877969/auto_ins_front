@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { format, addDays } from 'date-fns';
 
 import {
-  AllCheckboxContStyled,
+  // AllCheckboxContStyled,
   AllInputContStyled,
   FormStyled,
   SubmitButton,
@@ -16,23 +16,28 @@ import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
 import {
   vehicleGroupsOptions,
   selectAutoCategory,
-  isDev,
+  // isDev,
 } from '../../helpers/ByParameters/selectOptions';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
-import HelperList from '../HelpCircle/HelperList/HelperList';
+// import HelperList from '../HelpCircle/HelperList/HelperList';
 import { useActions } from '../../hooks/useActions';
 import {
   DATE_MESSAGE_ERRORS,
   ORDER_TYPE,
   PRIVILEGED_TYPE,
+  REGISTRATION_TYPES,
   VEHICLES_TYPES,
 } from '../../constants';
 
 import CustomLabel from '../CustomLabel/CustomLabel';
 import CustomDateInput from '../CustomDateInput/CustomDateInput';
-import { validateContractStartDate } from '../../helpers/formValidationSchema';
+import {
+  validateContractOtkDate,
+  validateContractStartDate,
+} from '../../helpers/formValidationSchema';
 import { normalizeDate } from '../../helpers/normalizeDate';
 import { useErrorHandler } from '../../context/ErrorProvider';
+import { getDefaultOtkDate } from 'helpers/getDefaultOtkDate';
 
 const ByParameters = () => {
   const navigate = useNavigate();
@@ -64,6 +69,7 @@ const ByParameters = () => {
     engineCapacity,
     foreignNumber,
     benefits,
+    submitObj: { registrationType },
   } = useSelector((state) => state.byParameters);
 
   const handleChangeVehicle = (option) => {
@@ -96,11 +102,29 @@ const ByParameters = () => {
       benefits,
       foreignNumber,
       dateFrom: format(addDays(new Date(), 1), 'dd/MM/yyyy'),
-      otk: false,
+      otk: registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK,
+      otkDate: null,
+      registrationType: REGISTRATION_TYPES.PERMANENT_WITHOUT_OTK,
     },
-    validationSchema: Yup.object().shape({
-      dateFrom: validateContractStartDate(),
-    }),
+    validate: (values) => {
+      try {
+        const schemaOptions = {
+          dateFrom: validateContractStartDate(),
+        };
+        if (values.otk) {
+          schemaOptions.otkDate = validateContractOtkDate();
+        }
+        const schema = Yup.object(schemaOptions);
+        schema.validateSync(values, { abortEarly: false });
+        return {};
+      } catch (errors) {
+        const validationErrors = {};
+        errors.inner?.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+        return validationErrors;
+      }
+    },
     // validateOnChange: false,
     onSubmit: (values) => {
       let sendObj = {
@@ -112,8 +136,18 @@ const ByParameters = () => {
         usageMonths: 0,
         taxi: false,
         dateFrom: normalizeDate(values.dateFrom),
+        registrationType: values.registrationType,
       };
-      address.value ? (sendObj.registrationPlace = address.value) : null;
+      if (address.value) {
+        sendObj.registrationPlace = address.value;
+      }
+      // if (values.otkDate) {
+      //   sendObj.otkDate = normalizeDate(values.otkDate);
+      // }
+      if (values.otk) {
+        sendObj.otkDate = normalizeDate(values.otkDate);
+      }
+
       setSubmitObj(sendObj);
       setStateNumber('');
       setAutoMakers([]);
@@ -135,16 +169,42 @@ const ByParameters = () => {
     ? (formik.values.benefits = false)
     : formik.values.benefits;
 
-  const { setValues } = formik;
+  const { setValues, values } = formik;
 
   useEffect(() => {
-    if (VEHICLES_TYPES[engineCapacity.value].otk) {
+    setValues((p) => ({
+      ...p,
+      otk: VEHICLES_TYPES[engineCapacity.value].otkRequired,
+    }));
+  }, [engineCapacity, setValues]);
+
+  useEffect(() => {
+    if (values.otk) {
+      const otkDate = getDefaultOtkDate();
       setValues((p) => ({
         ...p,
-        otk: VEHICLES_TYPES[engineCapacity.value].otkRequired,
+        registrationType: REGISTRATION_TYPES.PERMANENT_WITH_OTK,
+        otkDate: otkDate,
       }));
+    } else {
+      setValues((p) => {
+        // eslint-disable-next-line
+        const { otkDate, registrationType, ...rest } = p;
+        return {
+          ...rest,
+          registrationType: REGISTRATION_TYPES.PERMANENT_WITHOUT_OTK,
+        };
+      });
     }
-  }, [engineCapacity, setValues]);
+  }, [setValues, values.otk]);
+
+  // const isPrivileged =
+  //   engineCapacity.value === 'B5' ||
+  //   engineCapacity.value.startsWith('C') ||
+  //   engineCapacity.value === 'E' ||
+  //   engineCapacity.value === 'F' ||
+  //   values.foreignNumber ||
+  //   values.otk;
 
   return (
     <div>
@@ -180,20 +240,46 @@ const ByParameters = () => {
               className={'baseLine'}
             />
 
-            {isDev && VEHICLES_TYPES[engineCapacity.value].otk && (
-              <GeneralCheckbox
-                lableText="ОТК"
-                labelColor={'#ffffff!important'}
-                name="otk"
-                changeCB={formik.handleChange}
-                isChecked={formik.values.otk}
-                // color={
-                //   engineCapacity.value === 'B5' || formik.values.foreignNumber
-                //     ? 'rgba(243, 243, 243, 0.40)'
-                //     : null
-                // }
-                isDisabled={VEHICLES_TYPES[engineCapacity.value].otkRequired}
-              />
+            {VEHICLES_TYPES[engineCapacity.value].otk && (
+              <>
+                <GeneralCheckbox
+                  lableText="ОТК"
+                  labelColor={'#ffffff!important'}
+                  color={
+                    VEHICLES_TYPES[engineCapacity.value].otkRequired
+                      ? 'rgba(243, 243, 243, 0.40)'
+                      : null
+                  }
+                  name="otk"
+                  changeCB={formik.handleChange}
+                  isChecked={formik.values.otk}
+                  isDisabled={VEHICLES_TYPES[engineCapacity.value].otkRequired}
+                />
+                {formik.values.otk && (
+                  <CustomLabel
+                    lableText="Дата наступного ОТК:"
+                    labelColor={'#ffffff!important'}
+                    errorposition={{
+                      top: '100%',
+                      right: '16px',
+                    }}
+                    className={'baseLine'}
+                  >
+                    <CustomDateInput
+                      value={formik.values.otkDate}
+                      setValue={(v) => formik.setFieldValue('otkDate', v)}
+                      placeholder={'дд/мм/рррр'}
+                    />
+                    {formik.errors.otkDate && (
+                      <div className="errorMessage">
+                        {!formik.errors.otkDate?.includes('otkDate')
+                          ? formik.errors.otkDate
+                          : DATE_MESSAGE_ERRORS.dateFormat}
+                      </div>
+                    )}
+                  </CustomLabel>
+                )}
+              </>
             )}
           </div>
 
@@ -227,7 +313,7 @@ const ByParameters = () => {
             />
             {formik.errors.dateFrom && (
               <div className="errorMessage">
-                {!formik.errors.dateFrom.includes('dateFrom')
+                {!formik.errors.dateFrom?.includes('dateFrom')
                   ? formik.errors.dateFrom
                   : DATE_MESSAGE_ERRORS.dateFormat}
               </div>
@@ -235,7 +321,7 @@ const ByParameters = () => {
           </CustomLabel>
         </AllInputContStyled>
 
-        <AllCheckboxContStyled>
+        {/* <AllCheckboxContStyled>
           <GeneralCheckbox
             lableText="Є пільги"
             name="benefits"
@@ -244,16 +330,8 @@ const ByParameters = () => {
             isChecked={
               engineCapacity.value === 'B5' ? false : formik.values.benefits
             }
-            color={
-              engineCapacity.value === 'B5' || formik.values.foreignNumber
-                ? 'rgba(243, 243, 243, 0.40)'
-                : null
-            }
-            isDisabled={
-              engineCapacity.value === 'B5' || formik.values.foreignNumber
-                ? true
-                : false
-            }
+            color={isPrivileged ? 'rgba(243, 243, 243, 0.40)' : null}
+            isDisabled={isPrivileged ? true : false}
             helper={<HelperList />}
           />
           <GeneralCheckbox
@@ -269,7 +347,7 @@ const ByParameters = () => {
             isDisabled={formik.values.benefits ? true : false}
             color={formik.values.benefits ? 'rgba(243, 243, 243, 0.40)' : null}
           />
-        </AllCheckboxContStyled>
+        </AllCheckboxContStyled> */}
 
         <SubmitButton
           type="submit"

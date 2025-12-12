@@ -1,19 +1,42 @@
 import { useSelector } from 'react-redux';
+import Company from '../Company/Company';
 import {
   getFilteredCompanies,
   getTariffsStatus,
   getTariffVcl,
 } from '../../redux/Calculator/selectors';
+// import { useActions } from 'hooks/useActions';
+// import { selectIsPrivileged } from '@redux/byParameters/selectors';
 
-import Company from '../Company/Company';
+const recommendedCompanyList = [
+  'Vuso',
+  'вусо',
+  'USG',
+  'усг',
+  'ARX',
+  'аркс',
+  'INGO',
+  'інго',
+  'Uniqa',
+  'уніка',
+  'Оранта',
+  'PZU',
+  'пзу',
+  'Universalna',
+  'універсальна',
+  'Княжа',
+].map((el) => el.toLowerCase());
 
 const CompanyList = () => {
   let dgo = null;
 
   const proposals = useSelector(getFilteredCompanies);
-
   let dgos = useSelector(getTariffVcl);
   const status = useSelector(getTariffsStatus);
+  // const isPrivileged = useSelector(selectIsPrivileged);
+
+  // const { setIsOpenPrivilageSupportModal } = useActions();
+
   const insurerProposal = proposals?.map((companyObject, idx, arr) => {
     dgo = dgos?.find((el) => el?.insurerId === companyObject?.insurerId);
     if (!dgo) {
@@ -25,11 +48,21 @@ const CompanyList = () => {
     }
     companyObject = { ...companyObject, dgo };
 
+    // const handleOpenSuportModal = () => {
+    //   setIsOpenPrivilageSupportModal(true);
+    // };
+    const isRecommended = recommendedCompanyList.some((el) =>
+      companyObject.insurerName.toLowerCase().trim()?.includes(el)
+    );
+
     return (
       <Company
         key={companyObject?.insurerId}
         companyObject={companyObject}
         lastItem={idx === arr.length - 1}
+        isRecommended={isRecommended}
+        // isPrivileged={isPrivileged}
+        // handleOpenSuportModal={handleOpenSuportModal}
       />
     );
   });

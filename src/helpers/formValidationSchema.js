@@ -6,6 +6,7 @@ import {
   VIN_REGEX,
   VEHICLES_TYPES,
   DATE_MESSAGE_ERRORS,
+  VEHICLES_GROUPS,
 } from '../constants';
 import { isDate, parse } from 'date-fns';
 import { insurerDocsDict } from 'assets/utils/insurerDocsDict';
@@ -59,7 +60,7 @@ export const validateFullAgeDate = () => {
   );
   return Yup.date()
     .transform(parseDateString)
-    .max(date18YearsAgo, DATE_MESSAGE_ERRORS['birthDate'])
+    .max(date18YearsAgo, DATE_MESSAGE_ERRORS.birthDate)
     .min(date100YearsAgo, DATE_MESSAGE_ERRORS['100yearsOldDate'])
     .required(REQUIRED_FIELD);
 };
@@ -76,9 +77,10 @@ export const validateRegistrationDate = () => {
           }
           return date > birthDate;
         },
-        message: DATE_MESSAGE_ERRORS['date'],
+        message: DATE_MESSAGE_ERRORS.date,
       });
-    });
+    })
+    .max(new Date(), DATE_MESSAGE_ERRORS.maxDocRegistration);
 };
 
 export const validateContractStartDate = () => {
@@ -90,8 +92,28 @@ export const validateContractStartDate = () => {
   );
   return Yup.date()
     .transform(parseDateString)
-    .min(dateMoreThenToday, DATE_MESSAGE_ERRORS['startContract'])
+    .min(dateMoreThenToday, DATE_MESSAGE_ERRORS.startContract)
     .required(REQUIRED_FIELD);
+};
+
+export const validateContractOtkDate = () => {
+  const today = new Date();
+  const otkMinDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 15
+  );
+  const otkMaxDate = new Date(
+    today.getFullYear() + 1,
+    today.getMonth(),
+    // today.getDate() + 1
+    today.getDate() + 2 // + 1 рік і 1 день після плчатку дії поліса
+  );
+  return Yup.date()
+    .transform(parseDateString)
+    .min(otkMinDate, DATE_MESSAGE_ERRORS.otkMinDate)
+    .max(otkMaxDate, DATE_MESSAGE_ERRORS.otkMaxDate);
+  // .required(REQUIRED_FIELD);
 };
 
 // === Date Validation -End
@@ -132,6 +154,19 @@ export const carDataFormValidationSchema = ({
     bodyNumber: Yup.string()
       .required(REQUIRED_FIELD)
       .matches(VIN_REGEX, 'VIN повинен містити до 17 літер'),
+    grossWeight: Yup.number()
+      .integer('Повинно бути ціле число')
+      .required(REQUIRED_FIELD),
+    curbWeight: Yup.number()
+      .integer('Повинно бути ціле число')
+      .required(REQUIRED_FIELD),
+    seatingCapacity: Yup.number()
+      .integer('Повинно бути ціле число')
+      .required(REQUIRED_FIELD),
+    electricMotorPower:
+      engineType === VEHICLES_GROUPS.B.B5
+        ? Yup.number().required(REQUIRED_FIELD)
+        : Yup.string(),
   };
   if (isPrivilege && engineType) {
     schemaOptions.engineVolume = getIsValidEngineType(engineType)
@@ -188,10 +223,11 @@ export const contactsValidationSchema = () =>
     email: Yup.string()
       .required('Введіть електронну пошту')
       .min(5, 'Електронна пошта вказана невірно')
-      .matches(
+      .email('Електронна пошта вказана невірно')
+      /* .matches(
         /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,9}$/,
         'Електронна пошта вказана невірно'
-      ),
+      ) */,
     phone: Yup.string()
       .required('Введіть номер телефону')
       .matches(

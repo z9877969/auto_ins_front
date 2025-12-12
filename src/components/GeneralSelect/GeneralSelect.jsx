@@ -17,9 +17,11 @@ const GeneralSelect = ({
   inputChangeCB,
   inputValue,
   isDisabled = false,
+  isEmpty = false,
   defaultValue,
   getOptionLabel,
   getOptionValue,
+  // eslint-disable-next-line no-unused-vars
   isValid = true,
   readOnly = true,
   noOptionsMessage = '',
@@ -29,6 +31,7 @@ const GeneralSelect = ({
   errorMessage,
   placeholder,
   className,
+  fullWidth = false,
   ...selectOptions
 }) => {
   const selectRef = useRef(null);
@@ -59,7 +62,8 @@ const GeneralSelect = ({
     >
       <Typography
         sx={{
-          color: isDisabled ? 'darkgray!important' : null,
+          color: isDisabled || isEmpty ? 'darkgray!important' : null,
+          borderColor: isEmpty ? 'darkgray!important' : null,
           width: selectOptions.menuIsOpen ? 250 : 'none',
         }}
         variant="body1"
@@ -70,6 +74,7 @@ const GeneralSelect = ({
         {helper && <HelpCircle lableText={helper} color={color ? color : ''} />}
       </Typography>
       <SelectStyled
+        fullWidth={fullWidth}
         ref={selectRef}
         $isValid={!errorMessage}
         $find={inputChangeCB}

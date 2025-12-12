@@ -8,7 +8,8 @@ import { userNormalize } from '../../helpers/dataNormalize/userNormalize';
 import { mergeObjectsById } from '../../helpers/mergeObjectsById';
 import { sortAndFilterTariff } from '../../helpers/sortAndFilterTariff';
 import { instance } from '../../services/api';
-import { mainRoutes } from '../../constants';
+import { mainRoutes /* PRIVILEGED_TYPE */ } from '../../constants';
+// import { setIsPrivilagedExist } from './calculatorSlice';
 
 // const setSalePoint = (salePoint) => {
 //   instance.defaults.params = { ...instance.defaults.params, salePoint };
@@ -47,9 +48,17 @@ export const osagoByParams = createAsyncThunk(
             taxi: false,
             salePoint,
             dateTo,
+            contractPeriod: 'YEAR',
           },
         }
       );
+
+      // if (
+      //   body.customerCategory === PRIVILEGED_TYPE.PRIVILEGED &&
+      //   !data.length
+      // ) {
+      //   throw dispatch(setIsPrivilagedExist(true));
+      // }
 
       dispatch(chooseVclTariffDGO({ ...body, salePoint }));
       const newData = data
@@ -72,19 +81,22 @@ export const osagoByDn = createAsyncThunk(
   'calculator/osagoByDn',
   async (body, { rejectWithValue, dispatch, getState }) => {
     try {
-      const { customerCategory, stateNumber, dateFrom } = body;
       const { data } = await instance.get(
         mainRoutes.CALCULATOR + '/tariff/choose/policy/statenumber',
         {
           params: {
-            customerCategory,
-            stateNumber,
-            dateFrom,
-            registrationType: 'PERMANENT_WITHOUT_OTK',
+            ...body,
             taxi: false,
           },
         }
       );
+
+      // if (
+      //   body.customerCategory === PRIVILEGED_TYPE.PRIVILEGED &&
+      //   !data.length
+      // ) {
+      //   throw dispatch(setIsPrivilagedExist(true));
+      // }
 
       const newData = data
         .filter((el) => el.crossSell === false)
@@ -105,7 +117,9 @@ export const osagoByDn = createAsyncThunk(
         ...salePoint,
       };
 
-      dispatch(chooseVclTariffDGO(b));
+      setTimeout(() => {
+        dispatch(chooseVclTariffDGO(b));
+      }, 500);
       const responseData = mergeObjectsById(newData, responseOSAGONormalize);
       const response = responseData.map((el) => {
         el.tariff = sortAndFilterTariff(el.tariff);

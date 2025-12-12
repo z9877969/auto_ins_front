@@ -11,8 +11,8 @@ import {
   getAutoModelByMaker,
 } from '../../redux/References/selectors';
 import {
-  getIsPrivilage,
   getSubmitObject,
+  selectDisabledCarDataField,
 } from '../../redux/byParameters/selectors';
 import { useActions } from '../../hooks/useActions';
 import { getIsModalErrorOpen } from '../../redux/Global/selectors';
@@ -21,13 +21,21 @@ import { useSelectOrInput } from '../../context/SelectOrInputProvider';
 import SelectNoOptionsMessage from '../../components/SelectNoOptionsMessage/SelectNoOptionsMessage';
 import InputInsteadSelect from '../../components/InputInsteadSelect/InputInsteadSelect';
 // import { selectAutoCategory } from '../../helpers/ByParameters/selectOptions';
-import { getHasVclOrder } from '../../redux/Calculator/selectors';
-import { FORMIK_DATA_KEYS } from '../../constants';
+// import { getHasVclOrder } from '../../redux/Calculator/selectors';
+import {
+  CARDATA_FORM_FIELDS_DICT,
+  FORMIK_DATA_KEYS,
+  VEHICLES_GROUPS,
+} from '../../constants';
 import * as storage from '../../helpers/storage';
 
 const customComponents = {
   NoOptionsMessage: SelectNoOptionsMessage,
 };
+
+const motorPowerKey = CARDATA_FORM_FIELDS_DICT.ELECTRIC_MOTOR_POWER;
+const engineVolumeKey = CARDATA_FORM_FIELDS_DICT.ENGINE_VOLUME;
+const seatingCapacityKey = CARDATA_FORM_FIELDS_DICT.SEATING_CAPACITY;
 
 const CarDataForm = ({ formik, userParams }) => {
   const {
@@ -37,7 +45,6 @@ const CarDataForm = ({ formik, userParams }) => {
     allAutoModelByMaker,
     autoByMakerAndModel,
     setRefError,
-    // setEngineCapacity,
   } = useActions();
   const autoMakers = useSelector(getAutoMakers);
   const allAutoModel = useSelector(getAutoModelByMaker);
@@ -45,19 +52,24 @@ const CarDataForm = ({ formik, userParams }) => {
   const { outsideUkraine } = useSelector(getSubmitObject);
   const [insuranceObject] = useSelector(getAutoByNumber);
   const isError = useSelector(getIsModalErrorOpen);
-  const isPrivilage = useSelector(getIsPrivilage);
-  const hasVclOrder = useSelector(getHasVclOrder);
+  const disabledFormFields = useSelector(selectDisabledCarDataField);
+  // const hasVclOrder = useSelector(getHasVclOrder);
   // const { engineCapacity } = useSelector((state) => state.byParameters);
-  const [disabled, setDisabled] = useState(
-    insuranceObject?.stateNumber ? false : true
+  const [includedAutoTypes, setIncludedAutoTypes] = useState(
+    disabledFormFields || {
+      [disabledFormFields[engineVolumeKey]]: false,
+      [disabledFormFields[motorPowerKey]]: false,
+      [disabledFormFields[seatingCapacityKey]]: false,
+    }
   );
 
   const selectOrInput = useSelectOrInput();
 
   const modelInputRef = useRef(null);
-  const modelInputId = useRef('custom').current;
+  const engineVolumeRef = useRef(insuranceObject?.engineVolume || 0);
+  const modelInputId = useRef('custom').current; // must be 'custom' because so used in insuranceObjectNormalize.js
 
-  const { values, setFieldValue } = formik;
+  const { values, setFieldValue, setValues } = formik;
 
   const handleSelectRef = useCallback((elementRef) => {
     modelInputRef.current = elementRef;
@@ -71,21 +83,19 @@ const CarDataForm = ({ formik, userParams }) => {
     setRefError('');
     setAutoByMakerAndModel([]);
     if (e.target.value && outsideUkraine) {
-      setDisabled(false);
       allAutoMakers();
     }
     if (e.target.value && !outsideUkraine) {
-      autoByNumber(e.target.value).then(
-        ({ payload }) => !payload.length && setDisabled(false)
-      );
+      autoByNumber(e.target.value);
     }
     formik.handleChange(e);
   };
-  const handleChangeStateNumber = (e) => {
+  const handleChangeTextInput = (e) => {
     const { value, name } = e.target;
-    formik.setFieldValue(name, value.trim().toUpperCase());
+    setFieldValue(name, value.trim().toUpperCase());
   };
-  const handleChangeBrand = (maker) => {
+
+  const handleChangeMaker = (maker) => {
     const { id, name } = maker;
     setFieldValue('maker', { id, name });
     allAutoModelByMaker(id);
@@ -96,16 +106,6 @@ const CarDataForm = ({ formik, userParams }) => {
     setFieldValue('model', { id, name });
   };
 
-  const handleChangeVinNumber = (e) => {
-    const value = e.target.value.trim().toUpperCase();
-    setFieldValue('bodyNumber', value);
-  };
-
-  const handleChangeEngineVolume = (e) => {
-    const { value } = e.target;
-    setFieldValue('engineVolume', Number(value));
-  };
-
   const handleChangeModelByInput = (e) => {
     const { value } = e.target;
     setFieldValue('model', {
@@ -114,64 +114,36 @@ const CarDataForm = ({ formik, userParams }) => {
     });
   };
 
+  const handleChangeEngineVolume = (e) => {
+    const { value } = e.target;
+    setFieldValue('engineVolume', Number(value));
+  };
+
   useEffect(() => {
-    if (insuranceObject) {
-      setDisabled(false);
-    }
-    if (!insuranceObject) {
-      setDisabled(true);
-    }
     const storedValues = storage.getFromLS(FORMIK_DATA_KEYS.CAR);
-    formik.setValues((v) => ({
+    setValues((v) => ({
       ...v,
-      // stateNumber: insuranceObject?.stateNumber ?? '',
-      year:
-        insuranceObject?.year ||
-        // storedValues?.year ||
-        '',
-      brand: insuranceObject?.brand || storedValues?.brand || '',
+      year: insuranceObject?.year || '',
+      modelText: insuranceObject?.modelText || storedValues?.modelText || '',
       maker: {
-        id:
-          insuranceObject?.model?.autoMaker?.id ||
-          // storedValues?.maker?.id ||
-          '',
-        name:
-          insuranceObject?.model?.autoMaker?.name ||
-          // storedValues?.maker?.name ||
-          '',
+        id: insuranceObject?.model?.autoMaker?.id || '',
+        name: insuranceObject?.model?.autoMaker?.name || '',
       },
       model: {
-        id:
-          insuranceObject?.model?.id ||
-          //  storedValues?.model?.id ||
-          '',
-        name:
-          insuranceObject?.model?.name ||
-          // storedValues?.model?.name ||
-          '',
+        id: insuranceObject?.model?.id || '',
+        name: insuranceObject?.model?.name || '',
       },
-      bodyNumber: insuranceObject?.bodyNumber || storedValues?.bodyNumber || '',
+      bodyNumber: insuranceObject?.bodyNumber || '',
       category:
         insuranceObject?.category || userParams?.autoCategory || v.category,
-      engineVolume:
-        insuranceObject?.engineVolume || storedValues?.engineVolume || '',
+      engineVolume: insuranceObject?.engineVolume || '',
+      grossWeight: insuranceObject?.grossWeight || '',
+      curbWeight: insuranceObject?.curbWeight || '',
+      seatingCapacity: insuranceObject?.seatingCapacity || '',
+      electricMotorPower: insuranceObject?.electricMotorPower || 0,
     }));
     // eslint-disable-next-line
   }, [insuranceObject]);
-
-  /* 
-  {
-  nocorrect insuranceObject:
-    category:"B3",
-    modelText:"MERCEDES-BENZ S 400",
-    bodyNumber:"WDD2221351A405324",
-    dontHaveBodyNumber:false,
-    stateNumber:"AA1111AA",
-    year:2018,
-    engineVolume:2925,
-    autoColor:"ЧОРНИЙ",
-  }
-  */
 
   useEffect(() => {
     const maker = autoByBrand[0]?.autoMaker;
@@ -182,13 +154,13 @@ const CarDataForm = ({ formik, userParams }) => {
   }, [autoByBrand, allAutoMakers, setFieldValue]);
 
   useEffect(() => {
-    const maker = values?.brand?.replace(/ .*/, '');
-    const model = values?.brand?.replace(/^[^\s]+\s/, '').slice(0, 1);
+    const maker = values?.modelText?.replace(/ .*/, '');
+    const model = values?.modelText?.replace(/^[^\s]+\s/, '').slice(0, 1);
 
     if (!outsideUkraine && maker?.length > 0) {
       autoByMakerAndModel(maker + ' ' + model);
     }
-  }, [values?.brand, autoByMakerAndModel, outsideUkraine]);
+  }, [values?.modelText, autoByMakerAndModel, outsideUkraine]);
 
   useEffect(() => {
     if (selectOrInput.isModelInput) {
@@ -202,12 +174,27 @@ const CarDataForm = ({ formik, userParams }) => {
   useEffect(() => {
     storage.setToLS(FORMIK_DATA_KEYS.CAR, values);
   }, [values]);
+  const motorPower = values[motorPowerKey];
+  const engineVolume = values[engineVolumeKey];
+
+  useEffect(() => {
+    const { [motorPowerKey]: isMotorPower, [engineVolumeKey]: isEngineVolume } =
+      includedAutoTypes;
+    if (!isMotorPower && !isEngineVolume && !motorPower && !engineVolume) {
+      return;
+    }
+    if (!isMotorPower && !isEngineVolume && motorPower && engineVolume) {
+      setIncludedAutoTypes((p) => ({
+        ...p,
+        ...(motorPower && { [engineVolumeKey]: true }),
+        ...(engineVolume && { [motorPower]: true }),
+      }));
+    }
+  }, [motorPower, engineVolume, includedAutoTypes]);
 
   if (isError) {
     return <ModalError />;
   }
-
-  // values={model: {name: "model" || "some model"}, maker: 1741 || {id: 1741, lastModified: "2019-08-...."}}
 
   return (
     <>
@@ -216,7 +203,7 @@ const CarDataForm = ({ formik, userParams }) => {
           id="stateNumber"
           lableText="Номерний знак*:"
           handleBlur={handleBlurStateNumber}
-          customFunc={handleChangeStateNumber}
+          customFunc={handleChangeTextInput}
           formikData={formik}
           placeholder={'AA1234AA'}
         />
@@ -224,21 +211,18 @@ const CarDataForm = ({ formik, userParams }) => {
           id="year"
           lableText="Рік випуску*:"
           formikData={formik}
-          isDisabled={disabled}
           placeholder={'2005'}
         />
         <GeneralSelect
-          // id="brand"
           id="maker"
           lableText="Марка*:"
-          // currentValue={values.maker.id ? values.maker : { name: 'Skoda' }}
           currentValue={values.maker?.id ? values.maker : undefined}
           placeholder={'Skoda'}
           optionsArr={autoMakers}
           getOptionLabel={(option) => option.name}
           getOptionValue={(option) => option.id}
-          changeCB={handleChangeBrand}
-          isDisabled={disabled}
+          isEmpty={!values.maker?.id}
+          changeCB={handleChangeMaker}
           readOnly={Boolean(insuranceObject?.model)}
           noOptionsMessage="Така марка відсутня"
           errorMessage={
@@ -251,20 +235,16 @@ const CarDataForm = ({ formik, userParams }) => {
             handleSelectRef={handleSelectRef}
             id="model"
             lableText="Модель*:"
-            // currentValue={values.model.id ? values.model : { name: 'Fabia' }}
             currentValue={values.model?.id ? values.model : undefined}
             placeholder={'Fabia'}
             optionsArr={modelOptions}
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.id}
-            isDisabled={disabled}
-            isValid={
-              // values.model?.name === 'Оберіть модель авто' ? false : true
-              !values.model?.id ? false : true
-            }
+            isValid={!values.model?.id ? false : true}
+            isEmpty={!values.model?.id}
             changeCB={handleChangeModel}
             readOnly={Boolean(insuranceObject?.model)}
-            noOptionsMessage="Така модель відсутня. Вкажіть її самостійно"
+            noOptionsMessage="Модель відсутня.👉 Натисніть щоб вказати самостійно 👈"
             components={customComponents}
             errorMessage={
               formik.touched['model']?.id && formik.errors['model']?.id
@@ -280,23 +260,66 @@ const CarDataForm = ({ formik, userParams }) => {
             closeInput={() => selectOrInput.setIsModelInput(false)}
           />
         )}
-        {(isPrivilage || hasVclOrder) && (
-          <GeneralInput
-            id="engineVolume"
-            lableText="Об'єм двигуна*:"
-            formikData={formik}
-            customFunc={handleChangeEngineVolume}
-            isDisabled={disabled}
-          />
-        )}
+        {!engineVolumeRef.current &&
+          !includedAutoTypes[CARDATA_FORM_FIELDS_DICT.ENGINE_VOLUME] && (
+            <GeneralInput
+              id="engineVolume"
+              lableText="Об'єм двигуна*:"
+              formikData={formik}
+              placeholder="1500"
+              customFunc={handleChangeEngineVolume}
+            />
+          )}
         <GeneralInput
           id="bodyNumber"
           lableText="VIN Номер*:"
           formikData={formik}
-          customFunc={handleChangeVinNumber}
-          isDisabled={disabled}
+          customFunc={handleChangeTextInput}
           placeholder={'WSXEDCRFV12345678'}
         />
+        {/* ============ */}
+        <GeneralInput
+          /* + */ id="grossWeight"
+          lableText="Повна маса, кг:"
+          formikData={formik}
+          customFunc={(e) =>
+            setFieldValue('grossWeight', e.target.value.trim())
+          }
+          placeholder={'1372'}
+        />
+        <GeneralInput
+          id="curbWeight"
+          lableText="Маса без навантаження, кг:"
+          formikData={formik}
+          customFunc={(e) => setFieldValue('curbWeight', e.target.value.trim())}
+          placeholder={'1100'}
+        />
+        {!includedAutoTypes[CARDATA_FORM_FIELDS_DICT.SEATING_CAPACITY] && (
+          <GeneralInput
+            id="seatingCapacity"
+            lableText="Кількість місць (з водієм)"
+            formikData={formik}
+            customFunc={(e) =>
+              setFieldValue('seatingCapacity', e.target.value.trim())
+            }
+            placeholder={'5'}
+          />
+        )}
+        {values.category === VEHICLES_GROUPS.B.B5 &&
+          !includedAutoTypes[CARDATA_FORM_FIELDS_DICT.ELECTRIC_MOTOR_POWER] && (
+            <GeneralInput
+              id="electricMotorPower"
+              lableText="Потужність електродвигуна, кВт"
+              formikData={formik}
+              customFunc={(e) =>
+                setFieldValue('electricMotorPower', e.target.value.trim())
+              }
+              placeholder={''}
+              isDisabled={
+                includedAutoTypes[CARDATA_FORM_FIELDS_DICT.ELECTRIC_MOTOR_POWER]
+              }
+            />
+          )}
       </InputContBoxStyled>
     </>
   );

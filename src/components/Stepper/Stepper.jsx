@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Stack from '@mui/material/Stack';
 import Step from '@mui/material/Step';
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { useEffect, useState } from 'react';
 import { SpriteSVG } from '../../images/SpriteSVG';
 import { Connector, Lable, LableIcon, StepperStyled } from './StepperStyled';
@@ -44,11 +44,16 @@ import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
 import { contractSaveDGONormalize } from '../../helpers/dataNormalize/contractSaveDGONormalize';
 import CustomButtonLoading from './CustomButtonLoading';
 import SelectOrInputProvider from '../../context/SelectOrInputProvider';
-import { format } from 'date-fns';
+import { addDays, addYears, format } from 'date-fns';
 import * as storage from '../../helpers/storage';
-import { FORMIK_DATA_KEYS as formikDataKeys } from '../../constants';
+import {
+  FORMIK_DATA_KEYS as formikDataKeys,
+  REGISTRATION_TYPES,
+  VEHICLES_GROUPS,
+} from '../../constants';
 import { useDocTypesOptions } from '../../hooks/useDocTypesOptions';
 import { calcBirthdateFromIpn } from 'helpers/birthDate/calcBirthdateFromIpn';
+import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
 
 const steps = [
   { Контакти: 'icon-email' },
@@ -56,16 +61,18 @@ const steps = [
   { 'Домашня адреса': 'icon-home' },
   { 'Дані авто': 'icon-car-little' },
 ];
-const FormContacts = lazy(() =>
+const FormContacts = loadComponentWithRetry(() =>
   import('../../forms/FormContacts/FormContacts')
 );
-const InsuredDataForm = lazy(() =>
+const InsuredDataForm = loadComponentWithRetry(() =>
   import('../../forms/InsuredDataForm/InsuredDataForm')
 );
-const HomeAddressForm = lazy(() =>
+const HomeAddressForm = loadComponentWithRetry(() =>
   import('../../forms/HomeAddressForm/HomeAddressForm')
 );
-const CarDataForm = lazy(() => import('../../forms/CarDataForm/CarDataForm'));
+const CarDataForm = loadComponentWithRetry(() =>
+  import('../../forms/CarDataForm/CarDataForm')
+);
 
 const getInsurerStoredStateWithoutDocsData = (docTypeOption) => {
   const storedData = storage.getFromLS(formikDataKeys.INSURED);
@@ -80,7 +87,7 @@ const getInsurerStoredStateWithoutDocsData = (docTypeOption) => {
   };
 };
 
-const Stepper = ({ backLinkRef }) => {
+const Stepper = ({ backLinkRef, isLoading }) => {
   const { contractSave } = useActions();
   const user = useSelector(getUser);
   const { tariff, dgoTarrif } = useSelector(getGlobalCustomerData);
@@ -161,37 +168,40 @@ const Stepper = ({ backLinkRef }) => {
     initialValues: storage.getFromLS(formikDataKeys.CAR) ?? {
       stateNumber: insurObject?.stateNumber || '',
       year: insurObject?.year || '',
-      brand: insurObject?.modelText || '',
+      modelText: insurObject?.modelText || '',
       maker: insurObject
         ? {
             id: insurObject.model?.autoMaker?.id,
             name: insurObject.model?.autoMaker?.name,
           }
-        : // : { name: '', id: '' },
-          null,
+        : null,
       model: insurObject
         ? {
             id: insurObject.model?.id,
             name: insurObject.model?.name,
           }
-        : // : { name: '', id: '' },
-          null,
+        : null,
       bodyNumber: insurObject?.bodyNumber || '',
       outsideUkraine: userParams?.outsideUkraine || false,
       category: insurObject?.category || userParams?.autoCategory,
       engineVolume: insurObject?.engineVolume || '',
+      grossWeight: insurObject?.grossWeight || '',
+      curbWeight: insurObject?.curbWeight || '',
+      seatingCapacity: insurObject?.seatingCapacity || '',
+      electricMotorPower: insurObject?.electricMotorPower || '',
     },
     validationSchema: carDataFormValidationSchema({
-      isPrivilege: insurerDataFormik.values.type.privilegeType === 'PRIVILEGED',
+      isPrivilege:
+        insurerDataFormik.values.type?.privilegeType === 'PRIVILEGED',
       engineType,
       hasVclOrder,
     }),
     // enableReinitialize: true,
     // validateOnBlur: true,
     validateOnChange: true,
-    onSubmit: ({ model, maker, engineVolume }) => {
-      const fullCarModel = `${maker.name} ${model.name}`;
-      const { privilegeType, customerStatus } = insurerDataFormik.values.type;
+    onSubmit: ({ engineVolume }) => {
+      const { privilegeType, customerStatus } =
+        insurerDataFormik.values.type || {};
       const privilegeData =
         privilegeType === 'PRIVILEGED'
           ? {
@@ -206,40 +216,53 @@ const Stepper = ({ backLinkRef }) => {
             autoCategory: engineType,
           }
         : null;
-      const customIsur = customerInsuriensObject(
+      const autoCategory = userParams.autoCategory || insurObject.category;
+      const otkData = {
+        registrationType:
+          (VEHICLES_GROUPS['C'][autoCategory] ||
+            VEHICLES_GROUPS['D'][autoCategory]) &&
+          !userParams.registrationType !== REGISTRATION_TYPES.PERMANENT_WITH_OTK
+            ? REGISTRATION_TYPES.PERMANENT_WITH_OTK
+            : userParams.registrationType,
+        otkDate:
+          (VEHICLES_GROUPS['C'][autoCategory] ||
+            VEHICLES_GROUPS['D'][autoCategory]) &&
+          !userParams.otkDate
+            ? format(addDays(addYears(new Date(), 1), 1), 'yyyy-MM-dd')
+            : userParams.otkDate,
+      };
+
+      const insuriensObject = customerInsuriensObject(
         insurerDataFormik,
         homeAddressFormik,
         contactsFormik,
         carDataFormik,
         insurObject,
         registrationPlaceData.id,
-        fullCarModel,
-        privilegeData
+        privilegeData,
+        otkData
       );
 
-      contractSave(
-        contractSaveOSAGONormalize(
-          userParams,
-          user,
-          tariff,
-          customIsur,
-          privilegeData
-        )
-      );
-
-      if (dgoTarrif?.id) {
-        contractSave(
-          contractSaveDGONormalize(
+      contractSave({
+        ...(dgoTarrif?.id && {
+          vcl: contractSaveDGONormalize(
             userParams,
             user,
             dgoTarrif,
             insurObject,
-            customIsur,
+            insuriensObject,
             privilegeData,
             vclOrderData
-          )
-        );
-      }
+          ),
+        }),
+        epolicy: contractSaveOSAGONormalize(
+          userParams,
+          user,
+          tariff,
+          insuriensObject,
+          privilegeData
+        ),
+      });
     },
   });
 
@@ -319,9 +342,6 @@ const Stepper = ({ backLinkRef }) => {
         connector={<Connector />}
       >
         {steps.map((label) => {
-          // const stepProps = {};
-          // const labelProps = {};
-
           return (
             <Step key={Object.keys(label)}>
               <LableIcon>
@@ -344,7 +364,7 @@ const Stepper = ({ backLinkRef }) => {
           <CustomButtonLoading
             btnTitle={'Підтвердити'}
             type={'submit'}
-            // onCLick={handleSubmit}
+            isLoadingProp={isLoading}
           />
           {activeStep === 0 ? (
             <BtnBack backLinkRef={backLinkRef} />

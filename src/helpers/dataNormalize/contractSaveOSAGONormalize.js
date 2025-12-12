@@ -1,4 +1,4 @@
-// import format from 'date-fns/format';
+import { SAVED_ORDER_TYPE } from '@constants/index';
 import { convertCurTimeToUTC } from 'helpers/convertCurTimeToUTC';
 
 export const contractSaveOSAGONormalize = (
@@ -10,17 +10,19 @@ export const contractSaveOSAGONormalize = (
 ) => {
   const { customer, insuranceObject } = customerInsuriensObject;
   const requestBody = {
-    type: 'epolicy',
+    type: SAVED_ORDER_TYPE.EPOLICY,
     ...user,
     customer,
     tariff,
     insuranceObject,
     dateFrom: convertCurTimeToUTC(userParams?.dateFrom),
-    // dateFrom: format(
-    //   new Date(userParams?.dateFrom),
-    //   'yyyy-MM-dd\'T\'HH:mm:ss.SSSxxxx'
-    // ),
     state: 'DRAFT',
+    // = new period info data -Start =
+    period: {
+      value: 12,
+      datePeriodType: 'MONTHS',
+    },
+    // = new period info data -End =
   };
   if (privilegeData) {
     requestBody.privilegeType = privilegeData.customerStatus;

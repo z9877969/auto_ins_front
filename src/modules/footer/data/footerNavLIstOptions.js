@@ -2,35 +2,35 @@ import { socialMediaDict } from 'assets/utils/socialMedia';
 
 export const linksListOptions = [
   {
-    key: 'інфо про СК',
+    uniqueName: 'інфо про СК',
     href: 'https://auto-ins.com.ua/pages/chomu-varto-obrati-avtoins/',
     target: '_blank',
     rel: 'nofollow',
     linkTitle: 'Про нас',
   },
   {
-    key: 'інформація про страхового посередника ',
+    uniqueName: 'інформація про страхового посередника ',
     href: 'https://auto-ins.com.ua/pages/info/',
     target: '_blank',
     rel: 'nofollow',
     linkTitle: 'Інформація про страхового посередника ',
   },
   {
-    key: 'політика конфіденційності',
+    uniqueName: 'політика конфіденційності',
     href: 'https://auto-ins.com.ua/pages/policy/',
     target: '_blank',
     rel: 'nofollow',
     linkTitle: 'Політика конфіденційності',
   },
   {
-    key: 'інформація про СК та страхові продукти',
-    href: 'https://docs.ewa.ua/insurance-products',
+    uniqueName: 'Розкриття інформації про стандартний страховий продукт',
+    href: 'https://auto-ins.com.ua/pages/rozkrittya-informaciyi-pro-standartnii-strakhovii-produkt/',
     target: '_blank',
     rel: 'nofollow',
-    linkTitle: 'Інформація про СК та страхові продукти',
+    linkTitle: 'Розкриття інформації про стандартний страховий продукт',
   },
   {
-    key: 'Публічна оферта',
+    uniqueName: 'Публічна оферта',
     href: 'https://auto-ins.com.ua/pages/oferta/',
     target: '_blank',
     rel: 'nofollow',
@@ -40,7 +40,7 @@ export const linksListOptions = [
 
 export const scrollLinksOptions = [
   {
-    key: 'переваги',
+    uniqueName: 'переваги',
     title: 'Переваги',
     itemClickTo: 'переваги',
     to: 'переваги',
@@ -48,7 +48,7 @@ export const scrollLinksOptions = [
     disablePadding: true,
   },
   {
-    key: 'партнери',
+    uniqueName: 'партнери',
     title: 'Партнери',
     itemClickTo: 'партнери',
     to: 'партнери',
@@ -56,7 +56,7 @@ export const scrollLinksOptions = [
     disablePadding: true,
   },
   {
-    key: 'питання-відповіді',
+    uniqueName: 'питання-відповіді',
     title: 'Питання-відповіді',
     itemClickTo: 'питання-відповіді',
     to: 'питання-відповіді',
@@ -67,7 +67,7 @@ export const scrollLinksOptions = [
 
 export const socialLinksOptions = [
   {
-    key: socialMediaDict.instagram.icon,
+    uniqueName: socialMediaDict.instagram.icon,
     href: socialMediaDict.instagram.path,
     target: '_blank',
     rel: 'noreferrer noopener nofollow',
@@ -76,7 +76,7 @@ export const socialLinksOptions = [
     linkTitle: 'instagram',
   },
   {
-    key: socialMediaDict.facebook.icon,
+    uniqueName: socialMediaDict.facebook.icon,
     href: socialMediaDict.facebook.path,
     target: '_blank',
     rel: 'noreferrer noopener nofollow',
@@ -85,7 +85,7 @@ export const socialLinksOptions = [
     linkTitle: 'facebook',
   },
   {
-    key: 'icon-telegram-send',
+    uniqueName: 'icon-telegram-send',
     href: socialMediaDict.telegram.path,
     target: '_blank',
     rel: 'noreferrer noopener nofollow',
@@ -94,7 +94,7 @@ export const socialLinksOptions = [
     linkTitle: 'telegram',
   },
   {
-    key: socialMediaDict.phone.icon,
+    uniqueName: socialMediaDict.phone.icon,
     href: socialMediaDict.phone.path,
     target: '_blank',
     rel: 'noreferrer noopener nofollow',
@@ -104,7 +104,7 @@ export const socialLinksOptions = [
     fill: '#212121',
   },
   {
-    key: socialMediaDict.mail.icon,
+    uniqueName: socialMediaDict.mail.icon,
     href: socialMediaDict.mail.path,
     target: '_blank',
     rel: 'noreferrer noopener nofollow',

@@ -22,8 +22,10 @@ import {
 
 const ModalError = () => {
   const location = useLocation();
+  const globalError = useSelector(combineError);
   const isError = useSelector(getIsModalErrorOpen);
   const [open, setOpen] = useState(isError);
+
   const {
     setIsModalErrorOpen,
     setStateNumber,
@@ -31,7 +33,6 @@ const ModalError = () => {
     setGlobError,
     setRefError,
   } = useActions();
-  const globalError = useSelector(combineError);
 
   const validError =
     'Номер не відповідає вимогам оформлення Електронного поліса встановленим МТСБУ (Моторно-транспортне страхове бюро України).';

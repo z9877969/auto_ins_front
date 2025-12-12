@@ -7,10 +7,35 @@ export const InputWrapperStyled = styled(InputContStyled)(({ theme }) => ({
     flexDirection: 'row',
   },
 
+  ['& .fieldsWrapper']: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 8,
+    [theme.breakpoints.up('sm')]: {
+      gap: 16,
+    },
+    [theme.breakpoints.up('lg')]: {
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+
+    '& .numberField': {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px',
+
+      [theme.breakpoints.up('sm')]: {
+        gap: '16px',
+      },
+    },
+  },
+
   '&  .box': {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
+    alignSelf: 'strech',
     gap: 8,
     [theme.breakpoints.up('sm')]: {
       gap: 16,

@@ -22,4 +22,13 @@ export const insurerIssuedByDict = {
   [DOCS_TYPES_DICT.CHERNOBYL_CERTIFICATE]: {
     placeholder: 'ПФУ',
   },
+  [DOCS_TYPES_DICT.E_PENSION_CERTIFICATE]: {
+    placeholder: 'ПФУ',
+  },
+  [DOCS_TYPES_DICT.COMBAT_CERTIFICATE]: {
+    placeholder: 'ПФУ',
+  },
+  [DOCS_TYPES_DICT.WAR_DISABILITY_CERTIFICATE]: {
+    placeholder: 'ПФУ',
+  },
 };
