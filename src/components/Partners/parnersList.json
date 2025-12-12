@@ -72,22 +72,10 @@
         "rating": 5        
     },
     {        
-        "id": 13,
-        "imgSrc": "/companies/13-тас.png",        
-        "imgAlt": "тас logo",
-        "rating": 5        
-    },
-    {        
         "id": 14,
         "imgSrc": "/companies/14-еталон.png",        
         "imgAlt": "еталон logo",
         "rating": 4      
-    },
-    {        
-        "id": 15,
-        "imgSrc": "/companies/ббс.png",        
-        "imgAlt": "ббс logo",
-        "rating": 4.4        
     },
     {        
         "id": 16,

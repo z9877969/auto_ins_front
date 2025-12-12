@@ -38,7 +38,8 @@ export const PRIVILEGED_TYPE = {
 export const REGISTRATION_TYPES = {
   // PERMANENT_WITHOUT_OTK: 'PERMANENT_WITHOUT_OTK', // - постоянная регистрация (без ОТК)
   PERMANENT_WITHOUT_OTK: 'PERMANENT', // - постоянная регистрация (без ОТК)
-  PERMANENT_WITH_OTK: 'PERMANENT_WITH_OTK', // - постоянная регистрация (с ОТК)
+  // PERMANENT_WITH_OTK: 'PERMANENT_WITH_OTK', // - постоянная регистрация (с ОТК)
+  PERMANENT_WITH_OTK: 'PERMANENT', // - постоянная регистрация (с ОТК)
   NOT_REGISTERED: 'NOT_REGISTERED', // - без регистрации (не используется)
   TEMPORARY: 'TEMPORARY', // - временная регистрация
   // TEMPORARY_ENTRANCE: 'TEMPORARY_ENTRANCE', // - временный въезд не дійсне з v16
@@ -248,7 +249,7 @@ export const DATE_MESSAGE_ERRORS = {
   startContract: 'Дата має бути більшою за поточну',
   dateFormat: 'Не коректна дата',
   otkMinDate: 'Дата має бути на 15 днів більшою за поточну',
-  otkMaxDate: 'Дата має бути не більше року від поточної',
+  otkMaxDate: 'Дата має бути не більше року від початку дії поліса',
   maxDocRegistration: 'Дата має бути меншою за поточну',
 };
 export const FORMIK_DATA_KEYS = {

@@ -1,4 +1,7 @@
-import addDays from 'date-fns/addDays';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { addYears, format, addDays } from 'date-fns';
 // import addMonths from 'date-fns/addMonths';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -10,8 +13,7 @@ import {
 } from './ByLicensePlate.styled';
 import { SubmitButton } from '../ByParameters/ByParameters.styled';
 import HelpCircle from '../HelpCircle/HelpCircle';
-import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
-import { useLocation, useNavigate } from 'react-router-dom';
+// import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
 import {
   DATE_MESSAGE_ERRORS,
   DNUMBER_REGEX,
@@ -19,19 +21,16 @@ import {
   PRIVILEGED_TYPE,
   REGISTRATION_TYPES,
 } from '../../constants';
-import HelperList from '../HelpCircle/HelperList/HelperList';
-import { useActions } from '../../hooks/useActions';
-import format from 'date-fns/format';
+// import HelperList from '../HelpCircle/HelperList/HelperList';
+import { useActions } from 'hooks/useActions';
 import CustomLabel from '../CustomLabel/CustomLabel';
 import CustomDateInput from '../CustomDateInput/CustomDateInput';
 import {
   validateContractOtkDate,
   validateContractStartDate,
-} from '../../helpers/formValidationSchema';
-import { normalizeDate } from '../../helpers/normalizeDate';
-import { addYears } from 'date-fns';
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+} from 'helpers/formValidationSchema';
+import { normalizeDate } from 'helpers/normalizeDate';
+import { getDefaultOtkDate } from 'helpers/getDefaultOtkDate';
 
 const ByLicensePlate = () => {
   const navigate = useNavigate();
@@ -58,7 +57,7 @@ const ByLicensePlate = () => {
       benefits: false,
       dateFrom: format(addDays(new Date(), 1), 'dd/MM/yyyy'),
       otk: registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK,
-      otkDate: format(addDays(addYears(new Date(), 1), 1), 'dd/MM/yyyy'),
+      otkDate: getDefaultOtkDate(),
       registrationType: REGISTRATION_TYPES.PERMANENT_WITHOUT_OTK,
     },
     validate: (values) => {
@@ -238,7 +237,7 @@ const ByLicensePlate = () => {
             </Box>
           </Box>
         </InputWrapperStyled>
-        <GeneralCheckbox
+        {/* <GeneralCheckbox
           lableText="Є пільги"
           name="benefits"
           val={formik.values.benefits}
@@ -248,7 +247,7 @@ const ByLicensePlate = () => {
           className="checkbox"
           isDisabled={values.otk}
           color={values.otk ? 'rgba(243, 243, 243, 0.40)' : null}
-        />
+        /> */}
         <SubmitButton type="submit" disabled={!formik.values.licensePlate}>
           Розрахувати вартість
         </SubmitButton>

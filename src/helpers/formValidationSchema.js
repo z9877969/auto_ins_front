@@ -106,7 +106,8 @@ export const validateContractOtkDate = () => {
   const otkMaxDate = new Date(
     today.getFullYear() + 1,
     today.getMonth(),
-    today.getDate() + 1
+    // today.getDate() + 1
+    today.getDate() + 2 // + 1 рік і 1 день після плчатку дії поліса
   );
   return Yup.date()
     .transform(parseDateString)

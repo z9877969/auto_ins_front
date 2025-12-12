@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { format, addDays, addYears } from 'date-fns';
+import { format, addDays } from 'date-fns';
 
 import {
-  AllCheckboxContStyled,
+  // AllCheckboxContStyled,
   AllInputContStyled,
   FormStyled,
   SubmitButton,
@@ -19,7 +19,7 @@ import {
   // isDev,
 } from '../../helpers/ByParameters/selectOptions';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
-import HelperList from '../HelpCircle/HelperList/HelperList';
+// import HelperList from '../HelpCircle/HelperList/HelperList';
 import { useActions } from '../../hooks/useActions';
 import {
   DATE_MESSAGE_ERRORS,
@@ -37,6 +37,7 @@ import {
 } from '../../helpers/formValidationSchema';
 import { normalizeDate } from '../../helpers/normalizeDate';
 import { useErrorHandler } from '../../context/ErrorProvider';
+import { getDefaultOtkDate } from 'helpers/getDefaultOtkDate';
 
 const ByParameters = () => {
   const navigate = useNavigate();
@@ -102,6 +103,7 @@ const ByParameters = () => {
       foreignNumber,
       dateFrom: format(addDays(new Date(), 1), 'dd/MM/yyyy'),
       otk: registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK,
+      otkDate: null,
       registrationType: REGISTRATION_TYPES.PERMANENT_WITHOUT_OTK,
     },
     validate: (values) => {
@@ -139,7 +141,10 @@ const ByParameters = () => {
       if (address.value) {
         sendObj.registrationPlace = address.value;
       }
-      if (values.otkDate) {
+      // if (values.otkDate) {
+      //   sendObj.otkDate = normalizeDate(values.otkDate);
+      // }
+      if (values.otk) {
         sendObj.otkDate = normalizeDate(values.otkDate);
       }
 
@@ -175,10 +180,11 @@ const ByParameters = () => {
 
   useEffect(() => {
     if (values.otk) {
+      const otkDate = getDefaultOtkDate();
       setValues((p) => ({
         ...p,
         registrationType: REGISTRATION_TYPES.PERMANENT_WITH_OTK,
-        otkDate: format(addDays(addYears(new Date(), 1), 1), 'dd/MM/yyyy'),
+        otkDate: otkDate,
       }));
     } else {
       setValues((p) => {
@@ -192,13 +198,13 @@ const ByParameters = () => {
     }
   }, [setValues, values.otk]);
 
-  const isPrivileged =
-    engineCapacity.value === 'B5' ||
-    engineCapacity.value.startsWith('C') ||
-    engineCapacity.value === 'E' ||
-    engineCapacity.value === 'F' ||
-    values.foreignNumber ||
-    values.otk;
+  // const isPrivileged =
+  //   engineCapacity.value === 'B5' ||
+  //   engineCapacity.value.startsWith('C') ||
+  //   engineCapacity.value === 'E' ||
+  //   engineCapacity.value === 'F' ||
+  //   values.foreignNumber ||
+  //   values.otk;
 
   return (
     <div>
@@ -315,7 +321,7 @@ const ByParameters = () => {
           </CustomLabel>
         </AllInputContStyled>
 
-        <AllCheckboxContStyled>
+        {/* <AllCheckboxContStyled>
           <GeneralCheckbox
             lableText="Є пільги"
             name="benefits"
@@ -328,7 +334,7 @@ const ByParameters = () => {
             isDisabled={isPrivileged ? true : false}
             helper={<HelperList />}
           />
-          {/* <GeneralCheckbox
+          <GeneralCheckbox
             lableText="Авто на іноземних номерах"
             name="foreignNumber"
             val={formik.values.foreignNumber}
@@ -340,8 +346,8 @@ const ByParameters = () => {
             }}
             isDisabled={formik.values.benefits ? true : false}
             color={formik.values.benefits ? 'rgba(243, 243, 243, 0.40)' : null}
-          /> */}
-        </AllCheckboxContStyled>
+          />
+        </AllCheckboxContStyled> */}
 
         <SubmitButton
           type="submit"

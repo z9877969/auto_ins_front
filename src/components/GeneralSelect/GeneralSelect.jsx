@@ -31,6 +31,7 @@ const GeneralSelect = ({
   errorMessage,
   placeholder,
   className,
+  fullWidth = false,
   ...selectOptions
 }) => {
   const selectRef = useRef(null);
@@ -73,6 +74,7 @@ const GeneralSelect = ({
         {helper && <HelpCircle lableText={helper} color={color ? color : ''} />}
       </Typography>
       <SelectStyled
+        fullWidth={fullWidth}
         ref={selectRef}
         $isValid={!errorMessage}
         $find={inputChangeCB}

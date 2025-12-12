@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CostCalculation } from '../components/CostCalculation/CostCalculation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import OutletPageWrapper from '../components/OutletPageWrapper';
 import ProposalsFilter from '../components/ProposalsFilter/ProposalsFilter';
 import CompanyList from '../components/CompanyList/CompanyList';
@@ -21,6 +21,9 @@ import { getIsModalErrorOpen } from '../redux/Global/selectors';
 import { useActions } from '../hooks/useActions';
 import { ORDER_TYPE } from '../constants';
 import { useScrollToTop } from 'hooks/useScrollToTop';
+import RegistrationPlaceErrorModal from 'components/RegistrationPlaceErrorModal/RegistrationPlaceErrorModal';
+
+const REGISTRATION_ERROR_MESSAGE = 'Неможлива тарифікація ТЗ по держ. номеру';
 
 const PricesPage = () => {
   useScrollToTop();
@@ -32,6 +35,7 @@ const PricesPage = () => {
   const stateNumber = useSelector(getStateNumber);
   const isLoadingCalculator = useSelector(getStateCalculator);
   const isError = useSelector(getIsModalErrorOpen);
+  const [isRegistrationError, setIsRegistrationError] = useState(false);
   // const isPrivilegedExist = useSelector(selectIsPrivilagedExist);
   // const isOpenPrivilageSupportModal = useSelector(
   //   selectIsOpenPrivilageSupportModal
@@ -67,7 +71,14 @@ const PricesPage = () => {
             return;
           }
         } catch (error) {
-          setIsModalErrorOpen(true);
+          const isRegistrationError = error.message
+            .toLowerCase()
+            .includes(REGISTRATION_ERROR_MESSAGE.toLowerCase());
+          if (isRegistrationError) {
+            setIsRegistrationError(true);
+          } else {
+            setIsModalErrorOpen(true);
+          }
         }
       };
       getOsagoData();
@@ -86,6 +97,15 @@ const PricesPage = () => {
   // if ((isError && isPrivilegedExist) || isOpenPrivilageSupportModal) {
   //   return <ModalErrorWithSupport />;
   // }
+
+  if (isRegistrationError) {
+    return (
+      <RegistrationPlaceErrorModal
+        closeModal={() => setIsRegistrationError(false)}
+        params={location.state?.params}
+      />
+    );
+  }
 
   if (isError) {
     return <ModalError />;
