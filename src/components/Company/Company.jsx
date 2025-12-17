@@ -21,9 +21,9 @@ import {
   WrapperStyled,
 } from './CompanyStyled';
 import { getUser } from '@redux/Calculator/selectors';
-import { getSubmitObject } from '@redux/byParameters/selectors';
+// import { getSubmitObject } from '@redux/byParameters/selectors';
 import { useActions } from 'hooks/useActions';
-import { REGISTRATION_TYPES } from '@constants/index';
+// import { REGISTRATION_TYPES } from '@constants/index';
 
 const content = {
   label: {
@@ -33,6 +33,11 @@ const content = {
     ADDITIONAL_COVER_HELPER:
       'Рекомендуємо збільшувати суму покриття, оскільки при значних дтп,  або дтп з дорогим автомобілем стандартної суми може не вистачити',
   },
+};
+
+const additionalDescription = {
+  'ІНГО, АТ': '* Вартість може змінитись в залежності від історії ДТП',
+  'ПЗУ Україна, ПрАТ': '* Щоб отримати кращу вартість - напишіть нам',
 };
 
 const Company = ({
@@ -46,7 +51,7 @@ const Company = ({
   const navigate = useNavigate();
 
   const user = useSelector(getUser);
-  const { registrationType } = useSelector(getSubmitObject);
+  // const { registrationType } = useSelector(getSubmitObject);
 
   const theme = useTheme();
 
@@ -282,6 +287,15 @@ const Company = ({
           >
             Придбати
           </ButtonStyled>
+          {additionalDescription[companyObject.insurerName] && (
+            <Typography
+              variant="subtitle2"
+              component="span"
+              className="additionalDescr"
+            >
+              {additionalDescription[companyObject.insurerName]}
+            </Typography>
+          )}
         </WrapperStyled>
       </WrapperStyled>
       <CompanyInfo
