@@ -236,8 +236,8 @@ const Company = ({
                 getOptionValue={(option) => option.discountedPayment}
                 currentValue={chooseDgo}
                 isDisabled={
-                  !companyObject?.dgo ||
-                  registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK
+                  !companyObject?.dgo /* ||
+                  registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK */
                     ? true
                     : false
                 }
