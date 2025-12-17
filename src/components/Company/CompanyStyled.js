@@ -58,6 +58,11 @@ export const WrapperStyled = styled(Box)(({ theme }) => ({
       width: '256px',
     },
   },
+  '& .additionalDescr': {
+    lineHeight: 1,
+    fontSize: '0.9em',
+    color: `${theme.palette.primary.red}!important`,
+  },
 }));
 
 export const GridContainer = styled(Grid)(({ theme }) => ({
