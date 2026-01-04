@@ -18,6 +18,8 @@ const Footer = () => {
     navigate('/', { state: { id: chapter } });
   };
 
+  const copyRightYear = new Date().getFullYear();
+
   return (
     <footer style={{ oveflow: 'hidden' }}>
       <S.Footer disableGutters={true} maxWidth={false}>
@@ -52,7 +54,7 @@ const Footer = () => {
             </S.OrderingWrapper>
           </S.NavListsWrapper>
           <S.ChapterSpan className="bottomSpan">
-            &copy; auto-ins.com.ua, 2024. Всі права захищені.
+            &copy; auto-ins.com.ua, {copyRightYear}. Всі права захищені.
           </S.ChapterSpan>
         </S.FooterContainer>
       </S.Footer>
