@@ -6,6 +6,12 @@
         "rating": 5        
     },
     {        
+        "id": 17,
+        "imgSrc": "/companies/17-arsenal.jpg",        
+        "imgAlt": "арсенал logo",
+        "rating": 5        
+    },
+    {        
         "id": 2,
         "imgSrc": "/companies/2-інго.png",        
         "imgAlt": "інго logo",
@@ -82,6 +88,12 @@
         "imgSrc": "/companies/інтер-поліс.png",        
         "imgAlt": "інтер-поліс logo",
         "rating": 4        
+    },
+    {        
+        "id": 18,
+        "imgSrc": "/companies/18-evroins.webp",        
+        "imgAlt": "евроінс logo",
+        "rating": 4
     }    
 ]
 
