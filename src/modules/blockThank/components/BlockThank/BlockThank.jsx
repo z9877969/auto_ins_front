@@ -10,7 +10,7 @@ import CustomButtonLoading from 'components/Stepper/CustomButtonLoading';
 import PortmoneForm from '../PortmoneForm/PortmoneForm';
 import { SpriteSVG } from '../../../../images/SpriteSVG';
 import { getOrderPasswordApi, checkOrderPasswordApi } from 'services/api';
-import { selectOrderData } from '@redux/Global/selectors';
+import { selectOrderData, selectPrevOrdersData } from '@redux/Global/selectors';
 import { useActions } from 'hooks/useActions';
 import { FORMIK_DATA_KEYS as formikDataKeys } from '../../../../constants';
 import { orderTypes } from '../../data/orderTypes';
@@ -21,9 +21,12 @@ const BlockThank = () => {
   const navigate = useNavigate();
   const actions = useActions();
   const orderData = useSelector(selectOrderData);
+  const previousOrdersData = useSelector(selectPrevOrdersData);
   const { orderStage } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const { warning } = previousOrdersData;
 
   const formik = useFormik({
     initialValues: { password: '' },
@@ -156,6 +159,14 @@ const BlockThank = () => {
       </S.BoxImg>
       {/* icon -End */}
       <Typography
+        variant="h5"
+        sx={{ marginBottom: { xs: '16px', sm: '32px', lg: '48px' }, textAlign: 'center' }}
+      >
+        {orderStage === orderTypes.ORDER_GET &&
+          warning.length > 0 &&
+          warning[0]}
+      </Typography>
+      <Typography
         component="h2"
         variant="formTitle"
         sx={{ marginBottom: { xs: '4px', sm: '8px' } }}
@@ -210,7 +221,7 @@ const BlockThank = () => {
             sx={{
               marginBottom: { xs: '16px', lg: '32px' },
               marginTop: { xs: '16px', lg: '32px' },
-              fontSize: {xs: '0.9em', sm: '1.1em', lg: '1.3em'},
+              fontSize: { xs: '0.9em', sm: '1.1em', lg: '1.3em' },
               fontWeight: 'bold',
               textAlign: 'center',
             }}

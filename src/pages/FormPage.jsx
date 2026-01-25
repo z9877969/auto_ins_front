@@ -18,7 +18,8 @@ import { useActions } from 'hooks/useActions';
 const FormPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setIsOrderRequested, getIpnBlackList } = useActions();
+  const { setIsOrderRequested, getIpnBlackList, setPrevOrdersData } =
+    useActions();
   const backLinkRef = useRef(location.state?.from);
   const isContractOSAGO = useSelector(getIsContractOSAGO);
   const isOrderRequested = useSelector(getIsOrderRequested);
@@ -37,9 +38,10 @@ const FormPage = () => {
         const setOrdersRequestStatus = async () => {
           try {
             setIsLoading(true);
-            await requestOrderApi({
+            const prevOrdersData = await requestOrderApi({
               epolicy: orderData.epolicyOrderId,
             });
+            setPrevOrdersData(prevOrdersData);
             setIsOrderRequested(true);
           } catch (error) {
             setErrorState(error);
@@ -56,6 +58,7 @@ const FormPage = () => {
     navigate,
     setIsOrderRequested,
     orderData?.epolicyOrderId,
+    setPrevOrdersData,
   ]);
 
   useEffect(() => {

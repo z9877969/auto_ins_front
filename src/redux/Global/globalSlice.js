@@ -12,6 +12,10 @@ const initialState = {
   homeAddress: { label: '', value: '' },
   error: '',
   order: null,
+  prevOrdersData: {
+    warning: [], // ['Укладання цього полісу призведе до припинення дії договорів: EP226531544']
+    warningCancel: [], // [ 'EP226531544' ]
+  },
   blackList: [],
 };
 
@@ -51,6 +55,16 @@ export const globalSlice = createSlice({
     },
     resetOrderData: (state) => {
       state.order = initialState.order;
+    },
+    setPrevOrdersData: (state, { payload = null }) => {
+      if (!payload) {
+        state.prevOrdersData = initialState.prevOrdersData;
+        return;
+      }
+      state.prevOrdersData = {
+        warning: payload.warning || [],
+        warningCancel: payload.warningCancel || [],
+      };
     },
   },
   extraReducers: (builder) => {
@@ -116,5 +130,6 @@ export const {
   setIsOrderRequested,
   setGlobError,
   resetOrderData,
+  setPrevOrdersData,
 } = globalSlice.actions;
 export const globalReducer = globalSlice.reducer;
