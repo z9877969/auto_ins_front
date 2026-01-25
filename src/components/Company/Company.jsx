@@ -44,6 +44,7 @@ const Company = ({
   companyObject,
   lastItem,
   isRecommended,
+  isMedicineIns,
   // handleOpenSuportModal,
   // isPrivileged,
 }) => {
@@ -81,13 +82,13 @@ const Company = ({
 
   const price = useMemo(
     () => Math.round(franchise.discountedPayment + chooseDgo.discountedPayment),
-    [franchise.discountedPayment, chooseDgo.discountedPayment]
+    [franchise.discountedPayment, chooseDgo.discountedPayment],
   );
   const fullPrice = useMemo(() => {
     return franchise.brokerDiscount
       ? Math.round(
           franchise.discountedPayment / (1 - franchise.brokerDiscount) +
-            chooseDgo.discountedPayment
+            chooseDgo.discountedPayment,
         )
       : null;
   }, [
@@ -186,6 +187,17 @@ const Company = ({
                 </Typography>
               </GridContainer>
             )}
+            {isMedicineIns && (
+              <GridContainer item xs={10} m={'0 auto'} sm={0}>
+                <Typography
+                  variant="subtitle1"
+                  component="h4"
+                  className="recommended medicine-ins"
+                >
+                  Медична страховка водія в подарунок
+                </Typography>
+              </GridContainer>
+            )}
             <GridContainer item xs={6} sm={0}>
               <Typography variant="subtitle1" component="h3">
                 ОСЦПВ від {insurerName.replace(/,[^,]+$/, '')}
@@ -199,12 +211,23 @@ const Company = ({
         </WrapperStyled>
         <BoxContent>
           {isRecommended && (
+            <>
+              <Typography
+                variant="subtitle1"
+                component="h4"
+                className="recommended"
+              >
+                AUTO-INS рекомендує
+              </Typography>
+            </>
+          )}
+          {isMedicineIns && (
             <Typography
               variant="subtitle1"
               component="h4"
-              className="recommended"
+              className="recommended medicine-ins"
             >
-              AUTO-INS рекомендує
+              Медична страховка водія в подарунок
             </Typography>
           )}
           <Typography variant="subtitle1" component="h3" className="title">
