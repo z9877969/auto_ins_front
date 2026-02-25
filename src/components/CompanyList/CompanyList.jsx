@@ -25,7 +25,11 @@ const recommendedCompanyList = [
   'Universalna',
   'універсальна',
   'Княжа',
+  'arsenal',
+  'арсенал',
 ].map((el) => el.toLowerCase());
+
+const withMedicineInsCompanyList = ['PZU', 'пзу'].map((el) => el.toLowerCase());
 
 const CompanyList = () => {
   let dgo = null;
@@ -52,7 +56,11 @@ const CompanyList = () => {
     //   setIsOpenPrivilageSupportModal(true);
     // };
     const isRecommended = recommendedCompanyList.some((el) =>
-      companyObject.insurerName.toLowerCase().trim()?.includes(el)
+      companyObject.insurerName.toLowerCase().trim()?.includes(el),
+    );
+
+    const isMedicineIns = withMedicineInsCompanyList.some((el) =>
+      companyObject.insurerName.toLowerCase().trim()?.includes(el),
     );
 
     return (
@@ -61,6 +69,7 @@ const CompanyList = () => {
         companyObject={companyObject}
         lastItem={idx === arr.length - 1}
         isRecommended={isRecommended}
+        isMedicineIns={isMedicineIns}
         // isPrivileged={isPrivileged}
         // handleOpenSuportModal={handleOpenSuportModal}
       />

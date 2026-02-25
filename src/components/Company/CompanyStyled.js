@@ -77,8 +77,13 @@ export const GridContainer = styled(Grid)(({ theme }) => ({
       color: 'white',
       paddingTop: 8,
       paddingBottom: 8,
+      paddingLeft: 8,
+      paddingRight: 8,
       borderRadius: 8,
-      marginBottom: 12,
+      // marginBottom: 12,
+      '&.medicine-ins': {
+        backgroundColor: '#008d0f!important',
+      },
     },
   },
   marginBottom: '8px',
@@ -145,6 +150,9 @@ export const BoxContent = styled(Box)(({ theme }) => ({
       paddingLeft: 32,
       paddingRight: 32,
       marginLeft: 'auto',
+    },
+    '&.medicine-ins': {
+      backgroundColor: '#008d0f!important',
     },
   },
   '& .title': {

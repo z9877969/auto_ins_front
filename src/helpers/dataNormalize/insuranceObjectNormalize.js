@@ -3,7 +3,7 @@ export const insuranceObjectNormalize = (
   insurObject = {},
   registrationPlaceId,
   privilegeData,
-  otkData
+  otkData,
 ) => {
   const {
     category,
@@ -17,6 +17,7 @@ export const insuranceObjectNormalize = (
     curbWeight,
     seatingCapacity,
     electricMotorPower,
+    mileage,
   } = carDataFormik.values;
 
   const insuranceObject = {
@@ -39,6 +40,7 @@ export const insuranceObjectNormalize = (
       insurObject?.seatingCapacity || Number(seatingCapacity) || 0, // Кількість місць (з водієм)
     electricMotorPower:
       insurObject?.electricMotorPower || electricMotorPower || 1,
+    mileage: mileage, // - Пробіг, км
     // = new car info data -End =
   };
 
