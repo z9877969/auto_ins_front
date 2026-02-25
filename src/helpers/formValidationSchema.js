@@ -170,7 +170,7 @@ export const carDataFormValidationSchema = ({
         mileage: Yup.number()
            .integer('Повинно бути цілим числом')
            .min(1, 'Повинно бути 1 або більше')
-           .max(999999, 'Значення занадто велике')
+           .max(99999999, 'Значення занадто велике')
            .required(REQUIRED_FIELD)
   };
   if (isPrivilege && engineType) {
