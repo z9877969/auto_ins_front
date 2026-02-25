@@ -167,6 +167,11 @@ export const carDataFormValidationSchema = ({
       engineType === VEHICLES_GROUPS.B.B5
         ? Yup.number().required(REQUIRED_FIELD)
         : Yup.string(),
+        mileage: Yup.number()
+           .integer('Повинно бути цілим числом')
+           .min(1, 'Повинно бути 1 або більше')
+           .max(999999, 'Значення занадто велике')
+           .required(REQUIRED_FIELD)
   };
   if (isPrivilege && engineType) {
     schemaOptions.engineVolume = getIsValidEngineType(engineType)

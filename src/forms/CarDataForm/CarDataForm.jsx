@@ -60,7 +60,7 @@ const CarDataForm = ({ formik, userParams }) => {
       [disabledFormFields[engineVolumeKey]]: false,
       [disabledFormFields[motorPowerKey]]: false,
       [disabledFormFields[seatingCapacityKey]]: false,
-    }
+    },
   );
 
   const selectOrInput = useSelectOrInput();
@@ -141,6 +141,7 @@ const CarDataForm = ({ formik, userParams }) => {
       curbWeight: insuranceObject?.curbWeight || '',
       seatingCapacity: insuranceObject?.seatingCapacity || '',
       electricMotorPower: insuranceObject?.electricMotorPower || 0,
+      mileage: insuranceObject?.mileage || '',
     }));
     // eslint-disable-next-line
   }, [insuranceObject]);
@@ -293,6 +294,13 @@ const CarDataForm = ({ formik, userParams }) => {
           formikData={formik}
           customFunc={(e) => setFieldValue('curbWeight', e.target.value.trim())}
           placeholder={'1100'}
+        />
+        <GeneralInput
+          id="mileage"
+          lableText="Пробіг, км:"
+          formikData={formik}
+          customFunc={(e) => setFieldValue('mileage', e.target.value.trim())}
+          placeholder={'15000'}
         />
         {!includedAutoTypes[CARDATA_FORM_FIELDS_DICT.SEATING_CAPACITY] && (
           <GeneralInput

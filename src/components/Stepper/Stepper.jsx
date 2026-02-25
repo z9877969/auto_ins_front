@@ -61,17 +61,17 @@ const steps = [
   { 'Домашня адреса': 'icon-home' },
   { 'Дані авто': 'icon-car-little' },
 ];
-const FormContacts = loadComponentWithRetry(() =>
-  import('../../forms/FormContacts/FormContacts')
+const FormContacts = loadComponentWithRetry(
+  () => import('../../forms/FormContacts/FormContacts'),
 );
-const InsuredDataForm = loadComponentWithRetry(() =>
-  import('../../forms/InsuredDataForm/InsuredDataForm')
+const InsuredDataForm = loadComponentWithRetry(
+  () => import('../../forms/InsuredDataForm/InsuredDataForm'),
 );
-const HomeAddressForm = loadComponentWithRetry(() =>
-  import('../../forms/HomeAddressForm/HomeAddressForm')
+const HomeAddressForm = loadComponentWithRetry(
+  () => import('../../forms/HomeAddressForm/HomeAddressForm'),
 );
-const CarDataForm = loadComponentWithRetry(() =>
-  import('../../forms/CarDataForm/CarDataForm')
+const CarDataForm = loadComponentWithRetry(
+  () => import('../../forms/CarDataForm/CarDataForm'),
 );
 
 const getInsurerStoredStateWithoutDocsData = (docTypeOption) => {
@@ -118,7 +118,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
         sub(new Date(), {
           years: 18,
         }),
-        'dd/MM/yyyy'
+        'dd/MM/yyyy',
       ),
       date: format(new Date(), 'dd/MM/yyyy'),
     },
@@ -189,6 +189,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
       curbWeight: insurObject?.curbWeight || '',
       seatingCapacity: insurObject?.seatingCapacity || '',
       electricMotorPower: insurObject?.electricMotorPower || '',
+      mileage: insurObject?.mileage || '',
     },
     validationSchema: carDataFormValidationSchema({
       isPrivilege:
@@ -240,7 +241,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
         insurObject,
         registrationPlaceData.id,
         privilegeData,
-        otkData
+        otkData,
       );
 
       contractSave({
@@ -252,7 +253,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
             insurObject,
             insuriensObject,
             privilegeData,
-            vclOrderData
+            vclOrderData,
           ),
         }),
         epolicy: contractSaveOSAGONormalize(
@@ -260,7 +261,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
           user,
           tariff,
           insuriensObject,
-          privilegeData
+          privilegeData,
         ),
       });
     },
