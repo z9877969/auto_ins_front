@@ -113,7 +113,7 @@ const GeneralSelect = ({
 export default GeneralSelect;
 
 GeneralSelect.propTypes = {
-  lableText: PropTypes.string.isRequired,
+  lableText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   currentValue: PropTypes.object,
   id: PropTypes.string.isRequired,
   helper: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),

@@ -20,7 +20,10 @@ import {
   GridContainerImg,
   WrapperStyled,
 } from './CompanyStyled';
-import { getUser } from '@redux/Calculator/selectors';
+import {
+  getTariffesByDriverAgeDict,
+  getUser,
+} from '@redux/Calculator/selectors';
 // import { getSubmitObject } from '@redux/byParameters/selectors';
 import { useActions } from 'hooks/useActions';
 // import { REGISTRATION_TYPES } from '@constants/index';
@@ -32,6 +35,9 @@ const content = {
     ADDITIONAL_COVER_TEXT: 'Додаткове покриття',
     ADDITIONAL_COVER_HELPER:
       'Рекомендуємо збільшувати суму покриття, оскільки при значних дтп,  або дтп з дорогим автомобілем стандартної суми може не вистачити',
+    DRIVER_AGE_TEXT_NORMAL: 'Вік водія',
+    DRIVER_AGE_TEXT_ATTENTION: 'Зверніть увагу!',
+    DRIVER_AGE_HELPER: 'Вік водія(-їв), хто коревуватиме авто',
   },
 };
 
@@ -53,11 +59,16 @@ const Company = ({
 
   const user = useSelector(getUser);
   // const { registrationType } = useSelector(getSubmitObject);
+  const tariffesByDriverAgeDict = useSelector(getTariffesByDriverAgeDict);
 
   const theme = useTheme();
 
-  const { setGlobalCustomerData, setParamsFromUrl, changeVslOrderStatus } =
-    useActions();
+  const {
+    setGlobalCustomerData,
+    setParamsFromUrl,
+    changeVslOrderStatus,
+    setDriverAge: setDriverAgeAction,
+  } = useActions();
 
   const [chooseDgo, setChooseDgo] = useState({
     limit: 0,
@@ -77,13 +88,37 @@ const Company = ({
     return [...tariff].sort((a, b) => b.franchise - a.franchise);
   }, [tariff]);
 
+  const driverAgesList = useMemo(() => {
+    const agesList = tariff[0].k4Values.map(
+      ({ coeff, driverMinAge, driverMaxAge }) => ({
+        coeff,
+        driverMinAge,
+        driverMaxAge,
+      }),
+    );
+    return agesList.reverse();
+  }, [tariff]);
+
   // eslint-disable-next-line no-unused-vars
   const [franchise, setFranchise] = useState(sortedTarrif[0]);
+  const [driverAge, setDriverAge] = useState(driverAgesList[0]);
 
-  const price = useMemo(
-    () => Math.round(franchise.discountedPayment + chooseDgo.discountedPayment),
-    [franchise.discountedPayment, chooseDgo.discountedPayment],
-  );
+  const price = useMemo(() => {
+    const tariffesByAge = tariffesByDriverAgeDict[insurerId];
+    const discountedPayment = tariffesByAge
+      ? tariffesByAge.find((t) => t.driverMinAge === driverAge.driverMinAge)
+          ?.discountedPayment ||
+        tariffesByAge.find((t) => t.driverMinAge === undefined)
+          ?.discountedPayment
+      : franchise.discountedPayment;
+    return Math.round(discountedPayment + chooseDgo.discountedPayment);
+  }, [
+    franchise.discountedPayment,
+    chooseDgo.discountedPayment,
+    driverAge,
+    tariffesByDriverAgeDict,
+    insurerId,
+  ]);
   const fullPrice = useMemo(() => {
     return franchise.brokerDiscount
       ? Math.round(
@@ -269,6 +304,43 @@ const Company = ({
                     ? true
                     : false
                 }
+                optionsOnTop={lastItem}
+              />
+            </BoxSelect>
+
+            <BoxSelect>
+              <GeneralSelect
+                id="3"
+                lableText={
+                  <>
+                    {driverAgesList.length > 1 && (
+                      <>
+                        <span style={{ color: 'red', fontWeight: 600 }}>
+                          {content.label.DRIVER_AGE_TEXT_ATTENTION}
+                        </span>{' '}
+                      </>
+                    )}
+                    {content.label.DRIVER_AGE_TEXT_NORMAL}
+                  </>
+                }
+                helper={content.label.DRIVER_AGE_HELPER}
+                color={theme.palette.primary.main}
+                optionsArr={driverAgesList}
+                changeCB={(option) => {
+                  setDriverAge(option);
+                  setDriverAgeAction({
+                    min: option.driverMinAge,
+                    max: option.driverMaxAge,
+                  });
+                }}
+                getOptionLabel={(option) =>
+                  !option.driverMinAge || option.driverMinAge === 18
+                    ? 'Без обмежень'
+                    : `Від ${option.driverMinAge} років`
+                }
+                getOptionValue={(option) => option.coeff}
+                currentValue={driverAge}
+                isDisabled={driverAgesList.length <= 1}
                 optionsOnTop={lastItem}
               />
             </BoxSelect>

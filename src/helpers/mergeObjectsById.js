@@ -1,17 +1,17 @@
 export const mergeObjectsById = (inputArray, normalizeFnc) => {
   if (!inputArray) return;
   const dataNormalize = inputArray?.map((proposition) =>
-    normalizeFnc(proposition)
+    normalizeFnc(proposition),
   );
 
   const groupedById = {};
-  dataNormalize.forEach((obj) => {
-    const insurerId = obj.insurerId;
+  dataNormalize.forEach((proposition) => {
+    const insurerId = proposition.insurerId;
     if (!groupedById[insurerId]) {
-      groupedById[insurerId] = { ...obj };
-      groupedById[insurerId].tariff = [obj.tariff];
+      groupedById[insurerId] = { ...proposition };
+      groupedById[insurerId].tariff = [proposition.tariff];
     } else {
-      groupedById[insurerId].tariff.push(obj.tariff);
+      groupedById[insurerId].tariff.push(proposition.tariff);
     }
   });
   const mergedArray = Object.values(groupedById);

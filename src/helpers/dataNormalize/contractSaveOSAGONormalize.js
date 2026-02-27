@@ -6,7 +6,8 @@ export const contractSaveOSAGONormalize = (
   user,
   tariff,
   customerInsuriensObject,
-  privilegeData
+  privilegeData,
+  driverAge,
 ) => {
   const { customer, insuranceObject } = customerInsuriensObject;
   const requestBody = {
@@ -26,6 +27,12 @@ export const contractSaveOSAGONormalize = (
   };
   if (privilegeData) {
     requestBody.privilegeType = privilegeData.customerStatus;
+  }
+  if (driverAge.min) {
+    requestBody.driverMinAge = driverAge.min;
+  }
+  if (driverAge.max) {
+    requestBody.driverMaxAge = driverAge.max;
   }
 
   return requestBody;
