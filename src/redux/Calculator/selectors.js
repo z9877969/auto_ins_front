@@ -13,13 +13,16 @@ export const getError = (state) => state.calculator.error;
 export const getPolicyStatus = (state) => state.calculator.policyStatus;
 export const getVclStatus = (state) => state.calculator.vclStatus;
 export const getHasVclOrder = (state) => state.calculator.hasVclOrder;
+export const getTariffesByDriverAgeDict = (state) =>
+  state.calculator.tariffesByDriverAgeDict;
+export const selectDriverAge = (state) => state.calculator.driverAge;
 
 export const getTariffsStatus = createSelector(
   getPolicyStatus,
   getVclStatus,
   (policyStatus, vclStatus) => {
     return policyStatus === 1 && vclStatus === 1;
-  }
+  },
 );
 export const getStateCalculator = (state) => state.calculator.isLoading;
 export const selectIsPrivilagedExist = (state) =>

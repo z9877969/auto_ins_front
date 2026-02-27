@@ -39,7 +39,11 @@ import { useActions } from '../../hooks';
 import sub from 'date-fns/sub';
 import { contractSaveOSAGONormalize } from '../../helpers/dataNormalize/contractSaveOSAGONormalize';
 import { getGlobalCustomerData } from '../../redux/Global/selectors';
-import { getHasVclOrder, getUser } from '../../redux/Calculator/selectors';
+import {
+  getHasVclOrder,
+  getUser,
+  selectDriverAge,
+} from '../../redux/Calculator/selectors';
 import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
 import { contractSaveDGONormalize } from '../../helpers/dataNormalize/contractSaveDGONormalize';
 import CustomButtonLoading from './CustomButtonLoading';
@@ -96,6 +100,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
   const [insurObject] = useSelector(getAutoByNumber);
   const engineType = useSelector(getEngineType);
   const hasVclOrder = useSelector(getHasVclOrder);
+  const driverAge = useSelector(selectDriverAge);
   const docTypesOptions = useDocTypesOptions();
 
   const [activeStep, setActiveStep] = useState(0);
@@ -262,6 +267,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
           tariff,
           insuriensObject,
           privilegeData,
+          driverAge,
         ),
       });
     },

@@ -9,6 +9,7 @@ import { mergeObjectsById } from '../../helpers/mergeObjectsById';
 import { sortAndFilterTariff } from '../../helpers/sortAndFilterTariff';
 import { instance } from '../../services/api';
 import { mainRoutes /* PRIVILEGED_TYPE */ } from '../../constants';
+import { getTariffsByDriverAgeDict } from 'helpers/getTariffsByDriverAgeDict';
 // import { setIsPrivilagedExist } from './calculatorSlice';
 
 // const setSalePoint = (salePoint) => {
@@ -20,14 +21,14 @@ export const loginThunk = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await instance.get(
-        mainRoutes.CALCULATOR + '/user/getByEmail'
+        mainRoutes.CALCULATOR + '/user/getByEmail',
       );
 
       return userNormalize(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 export const osagoByParams = createAsyncThunk(
@@ -50,7 +51,7 @@ export const osagoByParams = createAsyncThunk(
             dateTo,
             contractPeriod: 'YEAR',
           },
-        }
+        },
       );
 
       // if (
@@ -69,12 +70,13 @@ export const osagoByParams = createAsyncThunk(
         el.tariff = sortAndFilterTariff(el.tariff);
         return el;
       });
+      const tariffsByDriverAgeDict = getTariffsByDriverAgeDict(data);
 
-      return response;
+      return { companyData: response, tariffsByDriverAgeDict };
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 export const osagoByDn = createAsyncThunk(
@@ -88,7 +90,7 @@ export const osagoByDn = createAsyncThunk(
             ...body,
             taxi: false,
           },
-        }
+        },
       );
 
       // if (
@@ -97,6 +99,8 @@ export const osagoByDn = createAsyncThunk(
       // ) {
       //   throw dispatch(setIsPrivilagedExist(true));
       // }
+
+      const tariffesByDriverAgeDict = getTariffsByDriverAgeDict(data);
 
       const newData = data
         .filter((el) => el.crossSell === false)
@@ -126,11 +130,14 @@ export const osagoByDn = createAsyncThunk(
         return el;
       });
 
-      return response;
+      return {
+        companyData: response,
+        tariffesByDriverAgeDict,
+      };
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 export const chooseVclTariffDGO = createAsyncThunk(
@@ -148,7 +155,7 @@ export const chooseVclTariffDGO = createAsyncThunk(
           ...cat,
           dateFrom,
           dateTo,
-        }
+        },
       );
       const newData = data.filter((el) => el.crossSell === false);
 
@@ -156,5 +163,5 @@ export const chooseVclTariffDGO = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
-  }
+  },
 );

@@ -297,7 +297,7 @@ const CarDataForm = ({ formik, userParams }) => {
         />
         <GeneralInput
           id="mileage"
-          lableText="Пробіг, км:"
+          lableText="Пробіг (приблизний), км:"
           formikData={formik}
           customFunc={(e) => setFieldValue('mileage', e.target.value.trim())}
           placeholder={'15000'}

@@ -11,6 +11,7 @@ const initialState = {
   filteredCompanies: [],
   tariffPolicyChoose: [],
   tariffVcl: [],
+  tariffesByDriverAgeDict: {},
   stateNumber: '',
   error: '',
   policyStatus: 0,
@@ -20,6 +21,7 @@ const initialState = {
   isLoading: false,
   isPrivilagedExist: false,
   isOpenPrivilageSupportModal: false,
+  driverAge: {},
 };
 
 export const calculatorSlice = createSlice({
@@ -74,6 +76,9 @@ export const calculatorSlice = createSlice({
     setInitialCalculatorState: () => {
       return { ...initialState };
     },
+    setDriverAge: (state, { payload }) => {
+      state.driverAge = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -82,7 +87,9 @@ export const calculatorSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(osagoByParams.fulfilled, (state, { payload }) => {
-        state.tariffPolicyChoose = payload;
+        const { companyData, tariffsByDriverAgeDict } = payload;
+        state.tariffPolicyChoose = companyData;
+        state.tariffesByDriverAgeDict = tariffsByDriverAgeDict;
         state.policyStatus = 1;
       })
       .addCase(osagoByParams.rejected, (state, { payload }) => {
@@ -96,7 +103,9 @@ export const calculatorSlice = createSlice({
       })
 
       .addCase(osagoByDn.fulfilled, (state, { payload }) => {
-        state.tariffPolicyChoose = payload;
+        const { companyData, tariffesByDriverAgeDict } = payload;
+        state.tariffPolicyChoose = companyData;
+        state.tariffesByDriverAgeDict = tariffesByDriverAgeDict;
         state.policyStatus = 1;
         state.error = false;
       })
@@ -136,6 +145,7 @@ export const {
   setUserDataAction,
   setIsPrivilagedExist,
   setIsOpenPrivilageSupportModal,
-  setInitialCalculatorState
+  setInitialCalculatorState,
+  setDriverAge,
 } = calculatorSlice.actions;
 export const calculatorReducer = calculatorSlice.reducer;
