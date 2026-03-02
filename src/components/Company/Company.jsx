@@ -113,10 +113,6 @@ const Company = ({
       : franchise.discountedPayment;
   }, [driverAge, franchise, tariffesByDriverAgeDict, insurerId]);
 
-  // console.log('insurerName :>> ', insurerName);
-  // console.log('discountedPayment :>> ', discountedPayment);
-  // console.log('franchise.brokerDiscount :>> ', franchise.brokerDiscount);
-
   const price = useMemo(() => {
     return Math.round(discountedPayment + chooseDgo.discountedPayment);
   }, [chooseDgo.discountedPayment, discountedPayment]);
