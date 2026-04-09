@@ -43,14 +43,13 @@ const content = {
 
 const additionalDescription = {
   'ІНГО, АТ': '* Вартість може змінитись в залежності від історії ДТП',
-  'ПЗУ Україна, ПрАТ': '* Щоб отримати кращу вартість - напишіть нам',
 };
 
 const Company = ({
   companyObject,
   lastItem,
   isRecommended,
-  isMedicineIns,
+  additionalLabel,
   // handleOpenSuportModal,
   // isPrivileged,
 }) => {
@@ -225,14 +224,14 @@ const Company = ({
                 </Typography>
               </GridContainer>
             )}
-            {isMedicineIns && (
+            {additionalLabel && (
               <GridContainer item xs={10} m={'0 auto'} sm={0}>
                 <Typography
                   variant="subtitle1"
                   component="h4"
-                  className="recommended medicine-ins"
+                  className="recommended additional-label"
                 >
-                  Медична страховка водія в подарунок
+                  {additionalLabel}
                 </Typography>
               </GridContainer>
             )}
@@ -259,13 +258,13 @@ const Company = ({
               </Typography>
             </>
           )}
-          {isMedicineIns && (
+          {additionalLabel && (
             <Typography
               variant="subtitle1"
               component="h4"
-              className="recommended medicine-ins"
+              className="recommended additional-label"
             >
-              Медична страховка водія в подарунок
+              {additionalLabel}
             </Typography>
           )}
           <Typography variant="subtitle1" component="h3" className="title">

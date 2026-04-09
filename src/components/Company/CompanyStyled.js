@@ -81,8 +81,14 @@ export const GridContainer = styled(Grid)(({ theme }) => ({
       paddingRight: 8,
       borderRadius: 8,
       // marginBottom: 12,
-      '&.medicine-ins': {
+      '&.additional-label': {
         backgroundColor: '#008d0f!important',
+        fontSize: '0.8rem!important',
+        lineHeight: '1.2!important',
+        [theme.breakpoints.up('xs')]: {
+          paddingLeft: '8px!important',
+          paddingRight: '8px!important',
+        },
       },
     },
   },
@@ -151,8 +157,14 @@ export const BoxContent = styled(Box)(({ theme }) => ({
       paddingRight: 32,
       marginLeft: 'auto',
     },
-    '&.medicine-ins': {
+    '&.additional-label': {
       backgroundColor: '#008d0f!important',
+      fontSize: '0.8rem!important',
+      lineHeight: '1.2!important',
+      [theme.breakpoints.up('sm')]: {
+        paddingLeft: '8px!important',
+        paddingRight: '8px!important',
+      },
     },
   },
   '& .title': {
