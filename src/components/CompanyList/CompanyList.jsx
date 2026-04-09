@@ -29,7 +29,26 @@ const recommendedCompanyList = [
   'арсенал',
 ].map((el) => el.toLowerCase());
 
-const withMedicineInsCompanyList = ['PZU', 'пзу'].map((el) => el.toLowerCase());
+const normalizeCompanyName = (companyList) =>
+  companyList.map((el) => el.toLowerCase());
+const withAddidtionalLabelCompanyDict = {
+  pzu: {
+    names: normalizeCompanyName(['PZU', 'пзу']),
+    text: 'Медична страховка від ДТП в подарунок при оформленні з додатковим покриттям',
+  },
+  arx: {
+    names: normalizeCompanyName(['ARX', 'аркс']),
+    text: 'Асистанс в подарунок',
+  },
+  vuso: {
+    names: normalizeCompanyName(['Vuso', 'вусо']),
+    text: 'Асистанс в подарунок',
+  },
+  arsenal: {
+    names: normalizeCompanyName(['arsenal', 'арсенал']),
+    text: 'Асистанс в подарунок',
+  },
+};
 
 const CompanyList = () => {
   let dgo = null;
@@ -59,8 +78,11 @@ const CompanyList = () => {
       companyObject.insurerName.toLowerCase().trim()?.includes(el),
     );
 
-    const isMedicineIns = withMedicineInsCompanyList.some((el) =>
-      companyObject.insurerName.toLowerCase().trim()?.includes(el),
+    const additionalLabel = Object.values(withAddidtionalLabelCompanyDict).find(
+      ({ names }) =>
+        names.some((el) =>
+          companyObject.insurerName.toLowerCase().trim()?.includes(el),
+        ),
     );
 
     return (
@@ -69,7 +91,7 @@ const CompanyList = () => {
         companyObject={companyObject}
         lastItem={idx === arr.length - 1}
         isRecommended={isRecommended}
-        isMedicineIns={isMedicineIns}
+        additionalLabel={additionalLabel?.text}
         // isPrivileged={isPrivileged}
         // handleOpenSuportModal={handleOpenSuportModal}
       />
