@@ -263,6 +263,11 @@ export const SAVED_ORDER_TYPE = {
   EPOLICY: 'epolicy2025', // needing for id
 };
 
+export const CONTRACT_PERIOD = {
+  YEAR: { value: 'YEAR', label: '1 рік', quantityInMonth: 12 },
+  SIX_MONTHS: { value: 'SIX_MONTHS', label: '6 місяців', quantityInMonth: 6 },
+};
+
 export const FRONT_URL = ENV.DEV ? ENV.LOCAL_FRONT_URL : ENV.PROD_FRONT_URL;
 export const BACK_URL = ENV.DEV ? ENV.LOCAL_BACK_URL : ENV.PROD_BACK_URL;
 

@@ -49,7 +49,6 @@ export const osagoByParams = createAsyncThunk(
             taxi: false,
             salePoint,
             dateTo,
-            contractPeriod: 'YEAR',
           },
         },
       );

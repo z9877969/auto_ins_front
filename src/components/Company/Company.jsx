@@ -103,31 +103,29 @@ const Company = ({
   const [franchise, setFranchise] = useState(sortedTarrif[0]);
   const [driverAge, setDriverAge] = useState(driverAgesList[0]);
 
-  const price = useMemo(() => {
+  const discountedPayment = useMemo(() => {
     const tariffesByAge = tariffesByDriverAgeDict[insurerId];
-    const discountedPayment = tariffesByAge
+    return tariffesByAge
       ? tariffesByAge.find((t) => t.driverMinAge === driverAge.driverMinAge)
           ?.discountedPayment ||
-        tariffesByAge.find((t) => t.driverMinAge === undefined)
-          ?.discountedPayment
+          tariffesByAge.find((t) => t.driverMinAge === undefined)
+            ?.discountedPayment
       : franchise.discountedPayment;
+  }, [driverAge, franchise, tariffesByDriverAgeDict, insurerId]);
+
+  const price = useMemo(() => {
     return Math.round(discountedPayment + chooseDgo.discountedPayment);
-  }, [
-    franchise.discountedPayment,
-    chooseDgo.discountedPayment,
-    driverAge,
-    tariffesByDriverAgeDict,
-    insurerId,
-  ]);
+  }, [chooseDgo.discountedPayment, discountedPayment]);
+
   const fullPrice = useMemo(() => {
     return franchise.brokerDiscount
       ? Math.round(
-          franchise.discountedPayment / (1 - franchise.brokerDiscount) +
+          discountedPayment / (1 - franchise.brokerDiscount) +
             chooseDgo.discountedPayment,
         )
       : null;
   }, [
-    franchise.discountedPayment,
+    discountedPayment,
     chooseDgo.discountedPayment,
     franchise.brokerDiscount,
   ]);
@@ -172,6 +170,11 @@ const Company = ({
         registrationPlace: registrationPlace || '',
         // autoCategory,
         franchise: franchise.franchise,
+      });
+
+      setDriverAgeAction({
+        min: driverAge.driverMinAge,
+        max: driverAge.driverMaxAge,
       });
 
       navigate('/form', {
@@ -328,10 +331,6 @@ const Company = ({
                 optionsArr={driverAgesList}
                 changeCB={(option) => {
                   setDriverAge(option);
-                  setDriverAgeAction({
-                    min: option.driverMinAge,
-                    max: option.driverMaxAge,
-                  });
                 }}
                 getOptionLabel={(option) =>
                   !option.driverMinAge || option.driverMinAge === 18

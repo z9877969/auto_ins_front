@@ -31,6 +31,8 @@ import {
 } from 'helpers/formValidationSchema';
 import { normalizeDate } from 'helpers/normalizeDate';
 import { getDefaultOtkDate } from 'helpers/getDefaultOtkDate';
+import { contractPeriodOptions } from 'helpers/ByParameters/contractPeriodOptions';
+import GeneralSelect from 'components/GeneralSelect/GeneralSelect';
 
 const ByLicensePlate = () => {
   const navigate = useNavigate();
@@ -49,6 +51,7 @@ const ByLicensePlate = () => {
     // osagoByDn,
     autoByNumber,
     setAutoByNumber,
+    setContractPeriod,
   } = useActions();
 
   const formik = useFormik({
@@ -59,6 +62,7 @@ const ByLicensePlate = () => {
       otk: registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK,
       otkDate: getDefaultOtkDate(),
       registrationType: REGISTRATION_TYPES.PERMANENT_WITHOUT_OTK,
+      contractPeriod: contractPeriodOptions[0],
     },
     validate: (values) => {
       try {
@@ -97,6 +101,7 @@ const ByLicensePlate = () => {
         stateNumber: values.licensePlate,
         dateFrom: normalizeDate(values.dateFrom),
         registrationType: values.registrationType,
+        contractPeriod: values.contractPeriod.value,
       };
       if (values.otk) {
         params.otkDate = normalizeDate(values.otkDate);
@@ -144,6 +149,10 @@ const ByLicensePlate = () => {
       });
     }
   }, [setValues, values.otk]);
+
+  useEffect(() => {
+    setContractPeriod(values.contractPeriod.quantityInMonth);
+  }, [values.contractPeriod.quantityInMonth, setContractPeriod]);
 
   return (
     <div>
@@ -235,6 +244,15 @@ const ByLicensePlate = () => {
                 )}
               </CustomLabel>
             </Box>
+            <GeneralSelect
+              id="contractPeriod"
+              lableText="Період дії поліса"
+              optionsArr={contractPeriodOptions}
+              changeCB={(o) => formik.setFieldValue('contractPeriod', o)}
+              currentValue={formik.values.contractPeriod}
+              isDisabled={false}
+              readOnly={true}
+            />
           </Box>
         </InputWrapperStyled>
         {/* <GeneralCheckbox

@@ -42,6 +42,7 @@ import { getGlobalCustomerData } from '../../redux/Global/selectors';
 import {
   getHasVclOrder,
   getUser,
+  selectContractPeriod,
   selectDriverAge,
 } from '../../redux/Calculator/selectors';
 import { customerInsuriensObject } from '../../helpers/customerInsuriensObject';
@@ -101,6 +102,8 @@ const Stepper = ({ backLinkRef, isLoading }) => {
   const engineType = useSelector(getEngineType);
   const hasVclOrder = useSelector(getHasVclOrder);
   const driverAge = useSelector(selectDriverAge);
+  const contractPeriod = useSelector(selectContractPeriod);
+
   const docTypesOptions = useDocTypesOptions();
 
   const [activeStep, setActiveStep] = useState(0);
@@ -268,6 +271,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
           insuriensObject,
           privilegeData,
           driverAge,
+          contractPeriod,
         ),
       });
     },

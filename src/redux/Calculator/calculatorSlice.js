@@ -6,6 +6,7 @@ import {
   osagoByDn,
   osagoByParams,
 } from './operations';
+import { CONTRACT_PERIOD } from '@constants/index';
 
 const initialState = {
   filteredCompanies: [],
@@ -22,6 +23,7 @@ const initialState = {
   isPrivilagedExist: false,
   isOpenPrivilageSupportModal: false,
   driverAge: {},
+  contractPeriod: CONTRACT_PERIOD.YEAR.quantityInMonth,
 };
 
 export const calculatorSlice = createSlice({
@@ -78,6 +80,9 @@ export const calculatorSlice = createSlice({
     },
     setDriverAge: (state, { payload }) => {
       state.driverAge = payload;
+    },
+    setContractPeriod: (state, { payload }) => {
+      state.contractPeriod = payload;
     },
   },
   extraReducers: (builder) => {
@@ -147,5 +152,6 @@ export const {
   setIsOpenPrivilageSupportModal,
   setInitialCalculatorState,
   setDriverAge,
+  setContractPeriod,
 } = calculatorSlice.actions;
 export const calculatorReducer = calculatorSlice.reducer;
