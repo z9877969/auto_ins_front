@@ -8,6 +8,7 @@ export const contractSaveOSAGONormalize = (
   customerInsuriensObject,
   privilegeData,
   driverAge,
+  contractPeriod,
 ) => {
   const { customer, insuranceObject } = customerInsuriensObject;
   const requestBody = {
@@ -20,7 +21,7 @@ export const contractSaveOSAGONormalize = (
     state: 'DRAFT',
     // = new period info data -Start =
     period: {
-      value: 12,
+      value: contractPeriod,
       datePeriodType: 'MONTHS',
     },
     // = new period info data -End =

@@ -16,7 +16,6 @@ import { GeneralCheckbox } from '../GeneralCheckbox/GeneralCheckbox';
 import {
   vehicleGroupsOptions,
   selectAutoCategory,
-  // isDev,
 } from '../../helpers/ByParameters/selectOptions';
 import HelperImg from '../HelpCircle/HelperImg/HelperImg';
 import HelperList from '../HelpCircle/HelperList/HelperList';
@@ -38,6 +37,7 @@ import {
 import { normalizeDate } from '../../helpers/normalizeDate';
 import { useErrorHandler } from '../../context/ErrorProvider';
 import { getDefaultOtkDate } from 'helpers/getDefaultOtkDate';
+import { contractPeriodOptions } from 'helpers/ByParameters/contractPeriodOptions';
 
 const ByParameters = () => {
   const navigate = useNavigate();
@@ -57,6 +57,7 @@ const ByParameters = () => {
     setAutoModelByMaker,
     setTariffPolicyChoose,
     setTariffVcl,
+    setContractPeriod,
     // setRefError,
     // setIsModalErrorOpen,
   } = useActions();
@@ -97,6 +98,10 @@ const ByParameters = () => {
     }
   };
 
+  const changePeriod = (selectOption) => {
+    formik.setFieldValue('contractPeriod', selectOption);
+  };
+
   const formik = useFormik({
     initialValues: {
       benefits,
@@ -105,6 +110,7 @@ const ByParameters = () => {
       otk: registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK,
       otkDate: null,
       registrationType: REGISTRATION_TYPES.PERMANENT_WITHOUT_OTK,
+      contractPeriod: contractPeriodOptions[0],
     },
     validate: (values) => {
       try {
@@ -137,6 +143,7 @@ const ByParameters = () => {
         taxi: false,
         dateFrom: normalizeDate(values.dateFrom),
         registrationType: values.registrationType,
+        contractPeriod: values.contractPeriod.value,
       };
       if (address.value) {
         sendObj.registrationPlace = address.value;
@@ -197,6 +204,10 @@ const ByParameters = () => {
       });
     }
   }, [setValues, values.otk]);
+
+  useEffect(() => {
+    setContractPeriod(values.contractPeriod.quantityInMonth);
+  }, [values.contractPeriod.quantityInMonth, setContractPeriod]);
 
   const isPrivileged =
     engineCapacity.value === 'B5' ||
@@ -320,6 +331,15 @@ const ByParameters = () => {
             )}
           </CustomLabel>
         </AllInputContStyled>
+        <GeneralSelect
+          id="contractPeriod"
+          lableText="Період дії поліса"
+          optionsArr={contractPeriodOptions}
+          changeCB={changePeriod}
+          currentValue={formik.values.contractPeriod}
+          isDisabled={false}
+          readOnly={true}
+        />
 
         <AllCheckboxContStyled>
           <GeneralCheckbox
@@ -363,28 +383,3 @@ const ByParameters = () => {
 };
 
 export default ByParameters;
-
-{
-  /* 
-  <CommonDatePicker
-    label="Дата початку дії поліса:"
-    id="dateFrom"
-    // selected={dateFrom}
-    // onSelect={setDateFrom}
-    closeOnScroll={(e) => e.target === document}
-    name="date"
-    dateFormat="dd/MM/yyyy"
-    showIcon={true}
-    minDate={addDays(new Date(), 1)}
-    maxDate={addMonths(new Date(), 3)}
-    // startDate={dateFrom}
-    locale="uk"
-    withPortal
-    icon={
-      <Box className="iconCalender">
-        <SpriteSVG name="icon-calendar" />
-      </Box>
-    }
-  /> 
-*/
-}

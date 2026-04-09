@@ -16,6 +16,7 @@ export const getHasVclOrder = (state) => state.calculator.hasVclOrder;
 export const getTariffesByDriverAgeDict = (state) =>
   state.calculator.tariffesByDriverAgeDict;
 export const selectDriverAge = (state) => state.calculator.driverAge;
+export const selectContractPeriod = (state) => state.calculator.contractPeriod;
 
 export const getTariffsStatus = createSelector(
   getPolicyStatus,
