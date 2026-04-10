@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { patternFormatter } from 'react-number-format';
 import PropTypes from 'prop-types';
 import { InputBoxS, SpanS } from './FormContactsStyled';
@@ -15,15 +15,27 @@ const formatPhone = (value = '') =>
   });
 
 const FormContacts = ({ formik }) => {
+  const { setFieldValue, values } = formik;
+
+  const changePhoneNumber = useCallback(
+    (e) => {
+      const { value } = e.target;
+      const isOnlyNums = /^\+38\d*$/.test(value);
+      if (!isOnlyNums) return;
+      setFieldValue('phone', formatPhone(e.target.value));
+    },
+    [setFieldValue],
+  );
+
   useEffect(() => {
     const storedContacts = storage.getFromLS(FORMIK_DATA_KEYS.CONTACTS);
-    !storedContacts?.phone && formik.setFieldValue('phone', formatPhone());
+    !storedContacts?.phone && setFieldValue('phone', formatPhone());
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    storage.setToLS(FORMIK_DATA_KEYS.CONTACTS, formik.values);
-  }, [formik.values]);
+    storage.setToLS(FORMIK_DATA_KEYS.CONTACTS, values);
+  }, [values]);
 
   return (
     <>
@@ -46,10 +58,9 @@ const FormContacts = ({ formik }) => {
         <GeneralInput
           id="phone"
           lableText="Телефон* :"
+          withTouched={false}
           formikData={formik}
-          customFunc={(e) => {
-            formik.setFieldValue('phone', formatPhone(e.target.value));
-          }}
+          customFunc={changePhoneNumber}
           placeholder={'+380991234567'}
           errorYPosition="top"
         />
