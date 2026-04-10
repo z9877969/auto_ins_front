@@ -58,7 +58,6 @@ const FormContacts = ({ formik }) => {
         <GeneralInput
           id="phone"
           lableText="Телефон* :"
-          withTouched={false}
           formikData={formik}
           customFunc={changePhoneNumber}
           placeholder={'+380991234567'}
