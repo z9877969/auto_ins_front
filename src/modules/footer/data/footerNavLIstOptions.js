@@ -16,6 +16,13 @@ export const linksListOptions = [
     linkTitle: 'Інформація про страхового посередника ',
   },
   {
+    uniqueName: 'інформація про страхову компанію ',
+    href: 'https://docs.eagent.in.ua/politika',
+    target: '_blank',
+    rel: 'nofollow',
+    linkTitle: 'Інформація про страхову компанію ',
+  },
+  {
     uniqueName: 'політика конфіденційності',
     href: 'https://auto-ins.com.ua/pages/policy/',
     target: '_blank',
