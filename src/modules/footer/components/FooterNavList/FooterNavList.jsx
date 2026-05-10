@@ -13,7 +13,7 @@ const FooterNavList = ({
         <S.ListItem
           key={o.uniqueName}
           disablePadding={o.disablePadding}
-          onClick={() => onItemClick(o.to)}
+          onClick={onItemClick && (() => onItemClick(o.to))}
           justify={itemsJustifyContent}
         >
           <Component {...o} />
