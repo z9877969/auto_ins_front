@@ -394,7 +394,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
             btnTitle={'Підтвердити'}
             type={'submit'}
             isLoadingProp={isLoading}
-            disabled={!isDataConfirm}
+            disabled={!isDataConfirm && activeStep === 3}
           />
           {activeStep === 0 ? (
             <BtnBack backLinkRef={backLinkRef} />
