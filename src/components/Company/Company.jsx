@@ -393,6 +393,7 @@ const Company = ({
       </WrapperStyled>
       <CompanyInfo
         {...((companyObject.tariff && companyObject.tariff[0]) || {})}
+        dgo={companyObject.dgo}
       />
     </CardStyled>
   );
