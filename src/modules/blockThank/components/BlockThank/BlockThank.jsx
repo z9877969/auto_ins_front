@@ -16,6 +16,7 @@ import { FORMIK_DATA_KEYS as formikDataKeys } from '../../../../constants';
 import { orderTypes } from '../../data/orderTypes';
 import { blockContent } from '../../data/blockContent';
 import { useCanBlockThankRender } from 'modules/blockThank/hooks/useCanBlockThankRender';
+import { GeneralCheckbox } from 'components/GeneralCheckbox/GeneralCheckbox';
 
 const BlockThank = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const BlockThank = () => {
   const { orderStage } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isDataConfirm, setIsDataConfirm] = useState(true);
 
   const { warning } = previousOrdersData;
 
@@ -124,7 +126,7 @@ const BlockThank = () => {
       {/* error block -Start */}
       {errorMessage && (
         <PushNotification.Error
-          message="Щось пішло не так🤷🏽‍♂️. Спробуйте ще або зв'яжіться з менеджером."
+          message="Введіть 6 цифр які знаходяться на початку повідомлення🤷🏽‍♂️. Спробуйте ще або зв'яжіться з менеджером."
           onClose={() => setErrorMessage(null)}
           isOpen={Boolean(errorMessage)}
         />
@@ -160,12 +162,29 @@ const BlockThank = () => {
       {/* icon -End */}
       <Typography
         variant="h5"
-        sx={{ marginBottom: { xs: '16px', sm: '32px', lg: '48px' }, textAlign: 'center' }}
+        sx={{
+          marginBottom: { xs: '16px', sm: '32px', lg: '48px' },
+          textAlign: 'center',
+        }}
       >
         {orderStage === orderTypes.ORDER_GET &&
           warning.length > 0 &&
           warning[0]}
       </Typography>
+      {orderStage === orderTypes.ORDER_CHECK && (
+        <Typography
+          variant="body1"
+          sx={{ marginBottom: { xs: '16px', sm: '32px', lg: '48px' } }}
+        >
+          <GeneralCheckbox
+            lableText="Я підтверджую, що ознайомлений з інформацією про страховий продукт, страховика, страхового посередника та пропозицією на укладення договору страхування"
+            color={'#030303'}
+            name="isDataConfirm"
+            changeCB={(e) => setIsDataConfirm(e.target.checked)}
+            isChecked={isDataConfirm}
+          />
+        </Typography>
+      )}
       <Typography
         component="h2"
         variant="formTitle"
@@ -192,6 +211,7 @@ const BlockThank = () => {
           onCLick={handleOrderClick}
           btnTitle={orderStage && blockContent[orderStage].btn}
           isLoadingProp={isLoading}
+          disabled={!isDataConfirm && orderStage === orderTypes.ORDER_CHECK}
         />
       )}
       {orderStage === orderTypes.ORDER_PAYMENT && (
@@ -227,14 +247,6 @@ const BlockThank = () => {
             }}
           >
             Успішно зареєстровано в МТСБУ
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ marginBottom: { xs: '16px', sm: '32px', lg: '48px' } }}
-          >
-            Я підтверджую, що ознайомлений з інформацією про страховий продукт,
-            страховика, страхового посередника та пропозицією на укладення
-            договору страхування
           </Typography>
         </S.ConfirmationWrapper>
       )}

@@ -382,7 +382,6 @@ const Stepper = ({ backLinkRef, isLoading }) => {
         {activeStep === 3 && (
           <GeneralCheckbox
             lableText='Я підтверджую достовірність наданих мною даних та даю згоду на обробку моїх персональних даних згідно Закону України "Про захист персональних даних"'
-            labelColor={'#red!important'}
             color={'#030303'}
             name="isDataConfirm"
             changeCB={(e) => setIsDataConfirm(e.target.checked)}
