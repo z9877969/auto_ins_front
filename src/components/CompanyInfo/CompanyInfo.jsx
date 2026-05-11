@@ -86,9 +86,7 @@ const CompanyInfo = ({
   const [isShow, setIsShow] = useState(false);
 
   const { tariff } = dgo || {};
-  // console.log('dgo :>> ', dgo);
-
-  // console.log('tariff :>> ', tariff);
+  
   const {
     informationAboutGeneralConditionsProductUrl: dgoGeneralConditionUrl,
     informationAboutInsuranceProductUrl: dgoInsuranceProductUrl,
