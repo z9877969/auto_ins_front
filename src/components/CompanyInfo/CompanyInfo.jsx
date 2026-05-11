@@ -21,6 +21,14 @@ const companyInfoOptions = [
     urlKey: 'insuranceProductUrl',
     textContent: 'Інформація про страховий продукт ОСЦПВ',
   },
+  {
+    urlKey: 'dgoInsuranceProductUrl',
+    textContent: 'Інформація про страховий продукт ДЦВ',
+  },
+  {
+    urlKey: 'dgoGeneralConditionUrl',
+    textContent: 'Загальні умови страхового продукту ДЦВ',
+  },
 ];
 
 const mainInfo = {
@@ -73,14 +81,24 @@ const CompanyInfo = ({
   insurer: { informationAboutInsurerUrl: insurerUrl },
   informationAboutGeneralConditionsProductUrl: conditionsProductUrl,
   informationAboutInsuranceProductUrl: insuranceProductUrl,
+  dgo,
 }) => {
   const [isShow, setIsShow] = useState(false);
+
+  const { tariff } = dgo || {};
+  
+  const {
+    informationAboutGeneralConditionsProductUrl: dgoGeneralConditionUrl,
+    informationAboutInsuranceProductUrl: dgoInsuranceProductUrl,
+  } = tariff && tariff[1] ? tariff[1] : {};
 
   const urlsDict = {
     insurerUrl,
     conditionsProductUrl,
     insuranceProductUrl,
     insuranceBrokerUrl: 'https://auto-ins.com.ua/pages/info/',
+    dgoGeneralConditionUrl,
+    dgoInsuranceProductUrl,
   };
 
   return (
@@ -117,17 +135,19 @@ const CompanyInfo = ({
           </S.InfoList>
         </S.InfoWrapper>
         <S.UrlsList as={'ul'}>
-          {companyInfoOptions.map(({ textContent, urlKey }, idx) => (
-            <S.UrlItem as={'li'} key={idx}>
-              <a
-                href={urlsDict[urlKey]}
-                target="_blank"
-                rel="noreferrer noopener nofollow"
-              >
-                <Typography component="span">{textContent}</Typography>
-              </a>
-            </S.UrlItem>
-          ))}
+          {companyInfoOptions.map(({ textContent, urlKey }, idx) =>
+            urlsDict[urlKey] ? (
+              <S.UrlItem as={'li'} key={idx}>
+                <a
+                  href={urlsDict[urlKey]}
+                  target="_blank"
+                  rel="noreferrer noopener nofollow"
+                >
+                  <Typography component="span">{textContent}</Typography>
+                </a>
+              </S.UrlItem>
+            ) : null,
+          )}
         </S.UrlsList>
       </S.Wrapper>
     </>

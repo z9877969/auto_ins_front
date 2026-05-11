@@ -11,7 +11,7 @@ const PushNotification = ({ onClose, isOpen, type, message }) => {
     >
       <AlertS
         onClose={onClose}
-        variant="outlined"
+        variant="standard"
         severity={type}
         className={type}
       >

@@ -16,6 +16,13 @@ export const linksListOptions = [
     linkTitle: 'Інформація про страхового посередника ',
   },
   {
+    uniqueName: 'положення про обробку персональних даних ',
+    href: 'https://docs.eagent.in.ua/politika',
+    target: '_blank',
+    rel: 'nofollow',
+    linkTitle: 'Положення про обробку персональних даних ',
+  },
+  {
     uniqueName: 'політика конфіденційності',
     href: 'https://auto-ins.com.ua/pages/policy/',
     target: '_blank',
@@ -28,6 +35,13 @@ export const linksListOptions = [
     target: '_blank',
     rel: 'nofollow',
     linkTitle: 'Розкриття інформації про стандартний страховий продукт',
+  },
+  {
+    uniqueName: 'інформація про ск ',
+    href: 'https://www.eagent.in.ua/insurers',
+    target: '_blank',
+    rel: 'nofollow',
+    linkTitle: 'Інформація про СК ',
   },
   {
     uniqueName: 'Публічна оферта',

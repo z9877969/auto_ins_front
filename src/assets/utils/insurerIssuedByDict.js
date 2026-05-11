@@ -2,7 +2,7 @@ import { DOCS_TYPES_DICT } from '@constants/index';
 
 export const insurerIssuedByDict = {
   [DOCS_TYPES_DICT.DRIVING_LICENSE]: {
-    placeholder: 'МРЕВ',
+    placeholder: 'ТСЦ',
   },
   [DOCS_TYPES_DICT.PASSPORT]: {
     placeholder: 'МВС',

@@ -59,6 +59,7 @@ import {
 import { useDocTypesOptions } from '../../hooks/useDocTypesOptions';
 import { calcBirthdateFromIpn } from 'helpers/birthDate/calcBirthdateFromIpn';
 import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
+import { GeneralCheckbox } from 'components/GeneralCheckbox/GeneralCheckbox';
 
 const steps = [
   { Контакти: 'icon-email' },
@@ -107,6 +108,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
   const docTypesOptions = useDocTypesOptions();
 
   const [activeStep, setActiveStep] = useState(0);
+  const [isDataConfirm, setIsDataConfirm] = useState(false);
 
   // =======================Formik======================================
   const contactsFormik = useFormik({
@@ -345,6 +347,12 @@ const Stepper = ({ backLinkRef, isLoading }) => {
       carDataSetFildValue('stateNumber', insurObject?.stateNumber);
   }, [insurObject, carDataSetFildValue]);
 
+  useEffect(() => {
+    return () => {
+      setIsDataConfirm(false);
+    };
+  }, []);
+
   return (
     <Stack sx={{ width: '100%' }}>
       <StepperStyled
@@ -371,11 +379,21 @@ const Stepper = ({ backLinkRef, isLoading }) => {
           {Object.keys(steps[activeStep])}
         </Typography>
         {getStepContent(activeStep)}
+        {activeStep === 3 && (
+          <GeneralCheckbox
+            lableText='Я підтверджую достовірність наданих мною даних та даю згоду на обробку моїх персональних даних згідно Закону України "Про захист персональних даних"'
+            color={'#030303'}
+            name="isDataConfirm"
+            changeCB={(e) => setIsDataConfirm(e.target.checked)}
+            isChecked={isDataConfirm}
+          />
+        )}
         <ButtonContainerStyled component="div">
           <CustomButtonLoading
             btnTitle={'Підтвердити'}
             type={'submit'}
             isLoadingProp={isLoading}
+            disabled={!isDataConfirm && activeStep === 3}
           />
           {activeStep === 0 ? (
             <BtnBack backLinkRef={backLinkRef} />
