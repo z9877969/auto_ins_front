@@ -26,6 +26,8 @@ dist-ssr
 .env.local
 
 # adv
+CLAUDE.md
+.claude/
 tasks
 .backup
 _autoins_tasks
