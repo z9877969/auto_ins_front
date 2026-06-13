@@ -42,24 +42,36 @@ export const RatingBadge = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: '56px',
-  height: '56px',
+  width: '54px',
+  height: '54px',
   borderRadius: '50%',
-  border: `3px solid ${theme.palette.primary.yellow}`,
+  background: 'conic-gradient(from 270deg, rgba(252,217,34,0) 0deg, rgba(252,217,34,1) 360deg)',
   flexShrink: 0,
   [theme.breakpoints.up('sm')]: {
-    width: '64px',
-    height: '64px',
+    width: '88px',
+    height: '88px',
   },
 }));
 
+export const RatingBadgeInner = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 'calc(100% - 6px)',
+  height: 'calc(100% - 6px)',
+  borderRadius: '50%',
+  backgroundColor: theme.palette.primary.main,
+}));
+
 export const RatingValue = styled(Typography)(({ theme }) => ({
-  fontSize: '1.25rem',
-  fontWeight: 800,
-  color: theme.palette.primary.white,
-  lineHeight: 1,
-  [theme.breakpoints.up('sm')]: {
-    fontSize: '1.375rem',
+  '&&': {
+    fontSize: '0.875rem',
+    fontWeight: 800,
+    color: theme.palette.primary.white,
+    lineHeight: 1,
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '1.375rem',
+    },
   },
 }));
 
@@ -70,47 +82,57 @@ export const RatingInfo = styled(Box)(() => ({
 }));
 
 export const ReviewCount = styled(Typography)(({ theme }) => ({
+  '&&': {
+    fontSize: '1rem',
+    fontWeight: 600,
+    color: theme.palette.primary.white,
+    lineHeight: '1.5rem',
+  },
+}));
+
+export const ReviewFraction = styled(Typography)(({ theme }) => ({
   fontSize: '0.875rem',
-  fontWeight: 600,
+  fontWeight: 400,
   color: theme.palette.primary.white,
+  lineHeight: '1.3125rem',
   [theme.breakpoints.up('sm')]: {
     fontSize: '1rem',
+    lineHeight: '1.5rem',
   },
 }));
 
 export const SectionTitle = styled(Typography)(({ theme }) => ({
-  fontSize: '1.375rem',
-  fontWeight: 800,
-  color: theme.palette.primary.white,
-  textAlign: 'center',
   flex: 1,
-  [theme.breakpoints.up('sm')]: {
-    fontSize: '1.75rem',
+  '&&': {
+    fontSize: '1.375rem',
+    fontWeight: 800,
+    color: theme.palette.primary.white,
     textAlign: 'center',
-  },
-  [theme.breakpoints.up('lg')]: {
-    fontSize: '2rem',
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '2.375rem',
+    },
   },
 }));
 
 export const LeaveReviewButton = styled('button')(({ theme }) => ({
   flexShrink: 0,
-  padding: '12px 24px',
+  padding: '16px 38px',
   borderRadius: '50px',
   border: 'none',
-  background: theme.palette.primary.blue,
-  color: theme.palette.primary.white,
+  background: theme.palette.primary.yellow,
+  color: theme.palette.primary.main,
   fontFamily: 'Open Sans',
-  fontSize: '1rem',
+  fontSize: '1.125rem',
   fontWeight: 600,
   cursor: 'pointer',
-  transition: 'background 200ms',
+  transition: 'opacity 200ms',
   whiteSpace: 'nowrap',
-  '&:hover': { background: theme.palette.primary.secondaryBlue },
-  '&:active': { background: theme.palette.primary.tertiaryBlue },
+  '&:hover': { opacity: 0.85 },
+  '&:active': { opacity: 0.7 },
   [theme.breakpoints.down('sm')]: {
     width: '100%',
     padding: '14px 24px',
+    fontSize: '1rem',
   },
 }));
 
@@ -131,18 +153,22 @@ export const CardsGrid = styled(Box)(({ theme }) => ({
 export const PaginationRow = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'center',
-  gap: '16px',
+  gap: '8px',
 }));
 
 export const NavButton = styled(IconButton)(({ theme }) => ({
-  width: '48px',
-  height: '48px',
-  backgroundColor: theme.palette.primary.blue,
-  color: theme.palette.primary.white,
-  '&:hover': { backgroundColor: theme.palette.primary.secondaryBlue },
-  '&:active': { backgroundColor: theme.palette.primary.tertiaryBlue },
+  width: '56px',
+  height: '56px',
+  backgroundColor: theme.palette.primary.yellow,
+  color: theme.palette.primary.main,
+  '&:hover': { backgroundColor: theme.palette.primary.yellow, opacity: 0.85 },
+  '&:active': { backgroundColor: theme.palette.primary.yellow, opacity: 0.7 },
   '&.Mui-disabled': {
-    backgroundColor: 'rgba(254,254,255,0.1)',
-    color: 'rgba(254,254,255,0.3)',
+    backgroundColor: 'rgba(252,217,34,0.25)',
+    color: 'rgba(3,3,3,0.3)',
+  },
+  [theme.breakpoints.up('sm')]: {
+    width: '59px',
+    height: '59px',
   },
 }));

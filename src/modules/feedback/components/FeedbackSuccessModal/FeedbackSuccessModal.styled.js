@@ -7,8 +7,8 @@ export const DialogStyled = styled(Dialog)(({ theme }) => ({
   },
   '& .MuiDialog-paper': {
     backgroundColor: theme.palette.primary.main,
-    padding: '56px 40px 0',
-    borderRadius: '32px',
+    padding: '56px 24px 0',
+    borderRadius: '50px',
     width: '100%',
     maxWidth: '504px',
     margin: '16px',
@@ -20,7 +20,7 @@ export const DialogStyled = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export const CloseButton = styled('button')(({ theme }) => ({
+export const CloseButton = styled('button')(() => ({
   position: 'absolute',
   top: '20px',
   right: '20px',
@@ -31,31 +31,37 @@ export const CloseButton = styled('button')(({ theme }) => ({
   background: 'none',
   border: 'none',
   cursor: 'pointer',
-  color: theme.palette.primary.white,
-  opacity: 0.6,
-  transition: 'opacity 200ms',
-  '&:hover': { opacity: 1 },
+  color: 'rgba(93,93,93,1)',
+  transition: 'color 200ms',
+  '&:hover': { color: '#fff' },
 }));
 
 export const Title = styled(Typography)(({ theme }) => ({
-  fontSize: '1.75rem',
-  fontWeight: 800,
-  color: theme.palette.primary.white,
   textAlign: 'center',
-  marginBottom: '12px',
-  [theme.breakpoints.up('sm')]: {
-    fontSize: '2rem',
+  '&&': {
+    fontSize: '1.5rem',
+    fontWeight: 800,
+    color: theme.palette.primary.white,
+    marginBottom: '8px',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '2.375rem',
+      marginBottom: '12px',
+    },
   },
 }));
 
 export const Subtitle = styled(Typography)(({ theme }) => ({
-  fontSize: '1rem',
-  fontWeight: 400,
-  color: theme.palette.primary.white,
   textAlign: 'center',
-  marginBottom: '40px',
-  [theme.breakpoints.up('sm')]: {
-    marginBottom: '56px',
+  '&&': {
+    fontSize: '0.875rem',
+    fontWeight: 400,
+    color: theme.palette.primary.white,
+    marginBottom: '40px',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '1rem',
+      fontWeight: 600,
+      marginBottom: '56px',
+    },
   },
 }));
 

@@ -7,14 +7,14 @@ export const DialogStyled = styled(Dialog)(({ theme }) => ({
   },
   '& .MuiDialog-paper': {
     backgroundColor: theme.palette.primary.main,
-    padding: '40px 24px',
-    borderRadius: '32px',
+    padding: '48px 16px',
+    borderRadius: '50px',
     width: '100%',
     maxWidth: '504px',
     margin: '16px',
     position: 'relative',
     [theme.breakpoints.up('sm')]: {
-      padding: '56px 48px',
+      padding: '60px 72px',
     },
   },
 }));
@@ -30,21 +30,22 @@ export const CloseButton = styled('button')(({ theme }) => ({
   background: 'none',
   border: 'none',
   cursor: 'pointer',
-  color: theme.palette.primary.white,
-  opacity: 0.6,
+  color: 'rgba(93,93,93,1)',
   transition: 'opacity 200ms',
-  '&:hover': { opacity: 1 },
+  '&:hover': { color: theme.palette.primary.white },
 }));
 
 export const Title = styled(Typography)(({ theme }) => ({
-  fontSize: '1.75rem',
-  fontWeight: 800,
-  color: theme.palette.primary.white,
   textAlign: 'center',
-  marginBottom: '24px',
-  [theme.breakpoints.up('sm')]: {
-    fontSize: '2rem',
-    marginBottom: '32px',
+  '&&': {
+    fontSize: '1.375rem',
+    fontWeight: 800,
+    color: theme.palette.primary.white,
+    marginBottom: '24px',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '2.375rem',
+      marginBottom: '32px',
+    },
   },
 }));
 
@@ -57,14 +58,19 @@ export const RatingRow = styled(Box)(() => ({
 }));
 
 export const RatingLabel = styled(Typography)(({ theme }) => ({
-  fontSize: '1rem',
-  fontWeight: 600,
-  color: theme.palette.primary.white,
+  '&&': {
+    fontSize: '0.875rem',
+    fontWeight: 600,
+    color: theme.palette.primary.white,
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '1rem',
+    },
+  },
 }));
 
 export const StarsRow = styled(Box)(() => ({
   display: 'flex',
-  gap: '4px',
+  gap: '2px',
 }));
 
 export const StarButton = styled('button')(() => ({
@@ -94,28 +100,45 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
     '&.Mui-focused fieldset': { border: 'none' },
   },
   '& .MuiOutlinedInput-input': {
-    padding: '14px 20px',
-    fontSize: '1rem',
+    padding: '14px 24px',
+    fontSize: '1.125rem',
     fontFamily: 'Open Sans',
+    fontWeight: 600,
     color: theme.palette.primary.main,
-    '&::placeholder': { color: theme.palette.primary.secondaryDark },
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '1rem',
+    },
+    '&::placeholder': {
+      color: '#CBCBCB',
+      opacity: 1,
+    },
   },
 }));
 
 export const StyledTextArea = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-root': {
     backgroundColor: theme.palette.primary.white,
-    borderRadius: '20px',
+    borderRadius: '50px',
     fontFamily: 'Open Sans',
+    alignItems: 'flex-start',
+    padding: '14px 24px',
     '& fieldset': { border: 'none' },
     '&:hover fieldset': { border: 'none' },
     '&.Mui-focused fieldset': { border: 'none' },
   },
   '& .MuiOutlinedInput-input': {
-    fontSize: '1rem',
+    padding: 0,
+    fontSize: '1.125rem',
     fontFamily: 'Open Sans',
+    fontWeight: 600,
     color: theme.palette.primary.main,
-    '&::placeholder': { color: theme.palette.primary.secondaryDark },
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '1rem',
+    },
+    '&::placeholder': {
+      color: '#CBCBCB',
+      opacity: 1,
+    },
   },
 }));
 
@@ -134,7 +157,7 @@ export const SubmitButton = styled('button')(({ theme }) => ({
   background: theme.palette.primary.blue,
   color: theme.palette.primary.white,
   fontFamily: 'Open Sans',
-  fontSize: '1rem',
+  fontSize: '1.125rem',
   fontWeight: 600,
   cursor: 'pointer',
   transition: 'background 200ms',
