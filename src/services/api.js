@@ -85,3 +85,13 @@ export const getIpnBlackListApi = async () => {
 
   return data;
 };
+
+export const getFeedbacksApi = async ({ page = 1, limit = 20 } = {}) => {
+  const { data } = await instance.get('/feedbacks', { params: { page, limit } });
+  return data;
+};
+
+export const postFeedbackApi = async ({ name, text, rating }) => {
+  const { data } = await instance.post('/feedbacks', { name, text, rating });
+  return data;
+};

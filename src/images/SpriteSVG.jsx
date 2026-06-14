@@ -32,6 +32,7 @@ import { Passport } from './Icons/Passport';
 import { IconX } from './Icons/IconX';
 import { ZoomOut } from './Icons/ZoomOut';
 import { Phone } from './Icons/Phone';
+import { QuoteMarks } from './Icons/QuoteMarks';
 
 export const SpriteSVG = ({ name }) => {
   switch (name) {
@@ -132,6 +133,9 @@ export const SpriteSVG = ({ name }) => {
       return <ZoomOut />;
     case 'icon-phone':
       return <Phone />;
+
+    case 'icon-quote-marks':
+      return <QuoteMarks />;
 
     default:
       return 'SVG not found';
