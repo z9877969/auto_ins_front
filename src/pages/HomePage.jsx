@@ -28,11 +28,15 @@ const AdvatagesSection = loadComponentWithRetry(() =>
 const Partners = loadComponentWithRetry(() =>
   import('../components/Partners/Partners')
 );
+const FeedbackSection = loadComponentWithRetry(() =>
+  import('../modules/feedback/components/FeedbackSection/FeedbackSection')
+);
 
 const MemoizedCreatePolicyVideoSection = memo(CreatePolicyVideoSection);
 const MemoizedInfoSection = memo(InfoSection);
 const MemoizedAccordionSection = memo(AccordionSection);
 const MemoizedPartners = memo(Partners);
+const MemoizedFeedbackSection = memo(FeedbackSection);
 const MemoizedCheckInsSection = memo(CheckInsSection);
 const MemoizedAdvatagesSection = memo(AdvatagesSection);
 
@@ -72,6 +76,7 @@ const HomePage = () => {
         <Suspense>
           <MemoizedCreatePolicyVideoSection />
           <MemoizedAdvatagesSection />
+          <MemoizedFeedbackSection />
           <MemoizedCheckInsSection />
           <MemoizedPartners />
           <MemoizedAccordionSection />
