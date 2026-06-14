@@ -76,9 +76,9 @@ const HomePage = () => {
         <Suspense>
           <MemoizedCreatePolicyVideoSection />
           <MemoizedAdvatagesSection />
+          <MemoizedFeedbackSection />
           <MemoizedCheckInsSection />
           <MemoizedPartners />
-          <MemoizedFeedbackSection />
           <MemoizedAccordionSection />
           <MemoizedInfoSection />
         </Suspense>

@@ -6,6 +6,7 @@ import FeedbackCard from '../FeedbackCard/FeedbackCard';
 import FeedbackFormModal from '../FeedbackFormModal/FeedbackFormModal';
 import FeedbackSuccessModal from '../FeedbackSuccessModal/FeedbackSuccessModal';
 import { useFeedbacks } from '../../hooks/useFeedbacks';
+import { ContainerSection } from 'style/Global.styled';
 import * as S from './FeedbackSection.styled';
 
 const FeedbackSection = () => {
@@ -46,15 +47,17 @@ const FeedbackSection = () => {
 
   return (
     <S.Section>
-      <S.Container>
+      <ContainerSection>
         <S.Header>
           <S.HeaderLeft>
             <S.RatingBadge>
-              <S.RatingValue>{averageRating.toFixed(1)}</S.RatingValue>
+              <S.RatingBadgeInner>
+                <S.RatingValue>{averageRating.toFixed(1)}</S.RatingValue>
+              </S.RatingBadgeInner>
             </S.RatingBadge>
             <S.RatingInfo>
               <S.ReviewCount>{total} відгуків</S.ReviewCount>
-              <S.ReviewCount>{averageRating.toFixed(1)}/5</S.ReviewCount>
+              <S.ReviewFraction>{averageRating.toFixed(1)}/5</S.ReviewFraction>
             </S.RatingInfo>
           </S.HeaderLeft>
 
@@ -84,7 +87,7 @@ const FeedbackSection = () => {
             <ArrowForwardIcon />
           </S.NavButton>
         </S.PaginationRow>
-      </S.Container>
+      </ContainerSection>
 
       <FeedbackFormModal
         open={isFormOpen}

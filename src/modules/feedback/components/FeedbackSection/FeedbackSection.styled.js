@@ -6,18 +6,6 @@ export const Section = styled('section')(({ theme }) => ({
   width: '100%',
 }));
 
-export const Container = styled(Box)(({ theme }) => ({
-  maxWidth: '1400px',
-  margin: '0 auto',
-  padding: '56px 16px',
-  [theme.breakpoints.up('sm')]: {
-    padding: '72px 32px',
-  },
-  [theme.breakpoints.up('lg')]: {
-    padding: '120px 120px',
-  },
-}));
-
 export const Header = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
