@@ -107,8 +107,8 @@ export const LeaveReviewButton = styled('button')(({ theme }) => ({
   padding: '16px 38px',
   borderRadius: '50px',
   border: 'none',
-  background: theme.palette.primary.yellow,
-  color: theme.palette.primary.main,
+  background: theme.palette.primary.blue,
+  color: theme.palette.primary.white,
   fontFamily: 'Open Sans',
   fontSize: '1.125rem',
   fontWeight: 600,
@@ -124,17 +124,48 @@ export const LeaveReviewButton = styled('button')(({ theme }) => ({
   },
 }));
 
+const DIVIDER = '1px solid #F7F8FF';
+
 export const CardsGrid = styled(Box)(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: '1fr',
-  gap: '16px',
+  gap: 0,
   marginBottom: '32px',
-  [theme.breakpoints.up('sm')]: {
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gap: '24px',
+  borderTop: DIVIDER,
+  borderLeft: DIVIDER,
+  borderTopLeftRadius: '50px',
+  // mobile (1 col): horizontal line between stacked cards
+  [theme.breakpoints.down('sm')]: {
+    '& > *:not(:last-child)': {
+      borderBottom: DIVIDER,
+    },
   },
+  // tablet (2 cols): vertical divider on even cards, horizontal between rows
+  [theme.breakpoints.between('sm', 'lg')]: {
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    height: '436px',
+    '& > *:nth-of-type(2n)': {
+      borderLeft: DIVIDER,
+    },
+    '& > *:nth-of-type(n+3)': {
+      borderTop: DIVIDER,
+    },
+  },
+  // desktop (3 cols): vertical dividers only
   [theme.breakpoints.up('lg')]: {
     gridTemplateColumns: 'repeat(3, 1fr)',
+    height: '496px',
+    '& > *:nth-of-type(2n)': {
+      borderLeft: DIVIDER,
+      borderTop: 'none',
+    },
+    '& > *:nth-of-type(n+3)': {
+      borderLeft: DIVIDER,
+      borderTop: 'none',
+    },
+    '& > *:first-of-type': {
+      borderLeft: 'none',
+    },
   },
 }));
 
@@ -147,13 +178,13 @@ export const PaginationRow = styled(Box)(() => ({
 export const NavButton = styled(IconButton)(({ theme }) => ({
   width: '56px',
   height: '56px',
-  backgroundColor: theme.palette.primary.yellow,
-  color: theme.palette.primary.main,
-  '&:hover': { backgroundColor: theme.palette.primary.yellow, opacity: 0.85 },
-  '&:active': { backgroundColor: theme.palette.primary.yellow, opacity: 0.7 },
+  backgroundColor: theme.palette.primary.blue,
+  color: theme.palette.primary.white,
+  '&:hover': { backgroundColor: theme.palette.primary.blue, opacity: 0.85 },
+  '&:active': { backgroundColor: theme.palette.primary.blue, opacity: 0.7 },
   '&.Mui-disabled': {
-    backgroundColor: 'rgba(252,217,34,0.25)',
-    color: 'rgba(3,3,3,0.3)',
+    backgroundColor: 'rgba(21,71,248,0.25)',
+    color: 'rgba(254,254,255,0.3)',
   },
   [theme.breakpoints.up('sm')]: {
     width: '59px',

@@ -5,33 +5,19 @@ export const CardWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   padding: '32px 28px',
-  borderRadius: '7px',
-  backgroundColor: 'rgba(35,35,35,1)',
   height: '100%',
+  boxSizing: 'border-box',
   [theme.breakpoints.up('sm')]: {
     padding: '38px',
-    borderRadius: '10px',
+  },
+  [theme.breakpoints.up('lg')]: {
+    padding: '40px 38px',
   },
 }));
 
-export const CardTop = styled(Box)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
+export const QuoteMarkWrapper = styled(Box)(() => ({
   marginBottom: '16px',
-}));
-
-export const RatingNumber = styled(Typography)(({ theme }) => ({
-  '&&': {
-    fontSize: '1.8125rem',
-    fontWeight: 700,
-    color: theme.palette.primary.white,
-    lineHeight: '2.4375rem',
-    [theme.breakpoints.up('sm')]: {
-      fontSize: '2.5rem',
-      lineHeight: '3.375rem',
-    },
-  },
+  lineHeight: 0,
 }));
 
 export const ReviewText = styled(Typography)(({ theme }) => ({
@@ -50,12 +36,18 @@ export const ReviewText = styled(Typography)(({ theme }) => ({
 export const AuthorName = styled(Typography)(({ theme }) => ({
   '&&': {
     fontSize: '0.875rem',
-    fontWeight: 600,
+    fontWeight: 700,
     color: theme.palette.primary.white,
     lineHeight: '1.3125rem',
+    marginBottom: '8px',
     [theme.breakpoints.up('sm')]: {
-      fontSize: '1rem',
+      fontSize: '1.125rem',
       lineHeight: '1.5rem',
     },
   },
+}));
+
+export const StarsRow = styled(Box)(() => ({
+  display: 'flex',
+  gap: '4px',
 }));

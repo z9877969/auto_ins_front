@@ -1,11 +1,14 @@
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { SpriteSVG } from 'images/SpriteSVG';
 import * as S from './FeedbackCard.styled';
 
 const FeedbackCard = ({ name, text, rating }) => {
   return (
     <S.CardWrapper>
-      <S.QuoteMark component="span">&ldquo;</S.QuoteMark>
+      <S.QuoteMarkWrapper>
+        <SpriteSVG name="icon-quote-marks" />
+      </S.QuoteMarkWrapper>
       <S.ReviewText>{text}</S.ReviewText>
       <S.AuthorName>{name}</S.AuthorName>
       <S.StarsRow>
