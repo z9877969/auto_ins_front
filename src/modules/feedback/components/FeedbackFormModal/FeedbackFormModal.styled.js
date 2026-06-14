@@ -1,4 +1,4 @@
-import { Box, Dialog, TextField, Typography } from '@mui/material';
+import { Box, Dialog, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const DialogStyled = styled(Dialog)(({ theme }) => ({
@@ -84,69 +84,17 @@ export const StarButton = styled('button')(() => ({
   justifyContent: 'center',
 }));
 
-export const FieldWrapper = styled(Box)(() => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '4px',
-  marginBottom: '16px',
-}));
-
-export const StyledTextField = styled(TextField)(({ theme }) => ({
-  '& .MuiOutlinedInput-root': {
-    backgroundColor: theme.palette.primary.white,
-    borderRadius: '50px',
-    fontFamily: 'Open Sans',
-    '& fieldset': { border: 'none' },
-    '&:hover fieldset': { border: 'none' },
-    '&.Mui-focused fieldset': { border: 'none' },
-  },
-  '& .MuiOutlinedInput-input': {
-    padding: '14px 24px',
-    fontSize: '1.125rem',
-    fontFamily: 'Open Sans',
-    fontWeight: 600,
-    color: theme.palette.primary.main,
-    [theme.breakpoints.up('sm')]: {
-      fontSize: '1rem',
-    },
-    '&::placeholder': {
-      color: '#CBCBCB',
-      opacity: 1,
-    },
-  },
-}));
-
-export const StyledTextArea = styled(TextField)(({ theme }) => ({
-  '& .MuiOutlinedInput-root': {
-    backgroundColor: theme.palette.primary.white,
-    borderRadius: '50px',
-    fontFamily: 'Open Sans',
-    alignItems: 'flex-start',
-    padding: '14px 24px',
-    '& fieldset': { border: 'none' },
-    '&:hover fieldset': { border: 'none' },
-    '&.Mui-focused fieldset': { border: 'none' },
-  },
-  '& .MuiOutlinedInput-input': {
-    padding: 0,
-    fontSize: '1.125rem',
-    fontFamily: 'Open Sans',
-    fontWeight: 600,
-    color: theme.palette.primary.main,
-    [theme.breakpoints.up('sm')]: {
-      fontSize: '1rem',
-    },
-    '&::placeholder': {
-      color: '#CBCBCB',
-      opacity: 1,
-    },
-  },
-}));
-
 export const ErrorText = styled(Typography)(({ theme }) => ({
-  fontSize: '0.75rem',
-  color: theme.palette.error.main,
-  paddingLeft: '20px',
+  '&&': {
+    color: theme.palette.primary.red,
+    fontSize: '12px',
+    lineHeight: '1.1',
+    textAlign: 'end',
+    paddingRight: '15px',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: '16px',
+    },
+  },
 }));
 
 export const SubmitButton = styled('button')(({ theme }) => ({

@@ -1,9 +1,16 @@
 import CloseIcon from '@mui/icons-material/Close';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { Box } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
+import GeneralInput from 'components/GeneralInput/GeneralInput';
+import {
+  InputContStyled,
+  InputStyled,
+  LableStyled,
+} from 'components/GeneralInput/GeneralInput.styled';
 import { useSubmitFeedback } from '../../hooks/useSubmitFeedback';
 import * as S from './FeedbackFormModal.styled';
 
@@ -40,8 +47,6 @@ const FeedbackFormModal = ({ open, onClose, onSuccess }) => {
   };
 
   const ratingError = formik.touched.rating && formik.errors.rating;
-  const nameError = formik.touched.name && formik.errors.name;
-  const textError = formik.touched.text && formik.errors.text;
 
   return (
     <S.DialogStyled open={open} onClose={handleClose}>
@@ -77,33 +82,44 @@ const FeedbackFormModal = ({ open, onClose, onSuccess }) => {
             })}
           </S.StarsRow>
         </S.RatingRow>
-        {ratingError && <S.ErrorText sx={{ textAlign: 'center', mb: '12px' }}>{ratingError}</S.ErrorText>}
+        {ratingError && (
+          <S.ErrorText sx={{ mb: '12px' }}>
+            {ratingError}
+          </S.ErrorText>
+        )}
 
-        <S.FieldWrapper>
-          <S.StyledTextField
-            fullWidth
+        <Box sx={{ mb: '16px' }}>
+          <GeneralInput
+            id="name"
+            lableText=""
             placeholder="Ваше ім'я"
-            name="name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            formikData={formik}
+            handleBlur={formik.handleBlur}
           />
-          {nameError && <S.ErrorText>{nameError}</S.ErrorText>}
-        </S.FieldWrapper>
+        </Box>
 
-        <S.FieldWrapper>
-          <S.StyledTextArea
-            fullWidth
+        <InputContStyled sx={{ mb: '24px' }}>
+          <LableStyled variant="inputLable" component="label" htmlFor="text">
+            {formik.touched.text && formik.errors.text && (
+              <span className="errorMessages">{formik.errors.text}</span>
+            )}
+          </LableStyled>
+          <InputStyled
+            id="text"
+            name="text"
             multiline
             rows={5}
-            placeholder="Ваш відгук"
-            name="text"
             value={formik.values.text}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            placeholder="Ваш відгук"
+            error={formik.touched.text && Boolean(formik.errors.text)}
+            sx={{
+              '&&': { height: 'auto', alignItems: 'flex-start', paddingLeft: '24px', paddingRight: '24px' },
+              '& .MuiInputBase-inputMultiline': { padding: 0 },
+            }}
           />
-          {textError && <S.ErrorText>{textError}</S.ErrorText>}
-        </S.FieldWrapper>
+        </InputContStyled>
 
         <S.SubmitButton type="submit" disabled={isLoading}>
           Надіслати
