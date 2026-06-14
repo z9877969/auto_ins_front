@@ -13,6 +13,7 @@ export const DialogStyled = styled(Dialog)(({ theme }) => ({
     maxWidth: '504px',
     margin: '16px',
     position: 'relative',
+    boxShadow: '0 0 60px 10px rgba(255, 255, 255, 0.15)',
     [theme.breakpoints.up('sm')]: {
       padding: '60px 72px',
     },
