@@ -41,5 +41,12 @@ export const useFeedbacks = () => {
     [feedbacks.length, total, fetchPage]
   );
 
-  return { feedbacks, total, averageRating, isLoading, onIndexChange };
+  const prependFeedback = (feedback) => {
+    setFeedbacks((prev) => [feedback, ...prev]);
+    const newTotal = total + 1;
+    setTotal(newTotal);
+    setAverageRating(Math.round((averageRating * total + feedback.rating) / newTotal * 10) / 10);
+  };
+
+  return { feedbacks, total, averageRating, isLoading, onIndexChange, prependFeedback };
 };
