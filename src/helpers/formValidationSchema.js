@@ -51,12 +51,12 @@ export const validateFullAgeDate = () => {
   const date18YearsAgo = new Date(
     today.getFullYear() - 18,
     today.getMonth(),
-    today.getDate()
+    today.getDate(),
   );
   const date100YearsAgo = new Date(
     today.getFullYear() - 100,
     today.getMonth(),
-    today.getDate()
+    today.getDate(),
   );
   return Yup.date()
     .transform(parseDateString)
@@ -88,7 +88,7 @@ export const validateContractStartDate = () => {
   const dateMoreThenToday = new Date(
     today.getFullYear(),
     today.getMonth(),
-    today.getDate() + 1
+    today.getDate() + 1,
   );
   return Yup.date()
     .transform(parseDateString)
@@ -101,13 +101,13 @@ export const validateContractOtkDate = () => {
   const otkMinDate = new Date(
     today.getFullYear(),
     today.getMonth(),
-    today.getDate() + 15
+    today.getDate() + 15,
   );
   const otkMaxDate = new Date(
     today.getFullYear() + 1,
     today.getMonth(),
     // today.getDate() + 1
-    today.getDate() + 2 // + 1 рік і 1 день після плчатку дії поліса
+    today.getDate() + 2, // + 1 рік і 1 день після плчатку дії поліса
   );
   return Yup.date()
     .transform(parseDateString)
@@ -167,18 +167,18 @@ export const carDataFormValidationSchema = ({
       engineType === VEHICLES_GROUPS.B.B5
         ? Yup.number().required(REQUIRED_FIELD)
         : Yup.string(),
-        mileage: Yup.number()
-           .integer('Повинно бути цілим числом')
-           .min(1, 'Повинно бути 1 або більше')
-           .max(99999999, 'Значення занадто велике')
-           .required(REQUIRED_FIELD)
+    mileage: Yup.number()
+      .integer('Повинно бути цілим числом')
+      .min(1, 'Повинно бути 1 або більше')
+      .max(99999999, 'Значення занадто велике')
+      .required(REQUIRED_FIELD),
   };
   if (isPrivilege && engineType) {
     schemaOptions.engineVolume = getIsValidEngineType(engineType)
       .max(
         2500,
         // eslint-disable-next-line
-        "Об'єм двигуна для пільговиків не може перевищувати 2500"
+        "Об'єм двигуна для пільговиків не може перевищувати 2500",
       )
       .required(REQUIRED_FIELD);
   } else if (hasVclOrder) {
@@ -228,15 +228,14 @@ export const contactsValidationSchema = () =>
     email: Yup.string()
       .required('Введіть електронну пошту')
       .min(5, 'Електронна пошта вказана невірно')
-      .email('Електронна пошта вказана невірно')
-      /* .matches(
+      .email('Електронна пошта вказана невірно'),
+    /* .matches(
         /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,9}$/,
         'Електронна пошта вказана невірно'
-      ) */,
-    phone: Yup.string()
+      ) */ phone: Yup.string()
       .required('Введіть номер телефону')
       .matches(
         /^\+\d{12}$/,
-        'Номер телефону неправильний (введіть у форматі +380123456789)'
+        'Номер телефону неправильний (введіть у форматі +380123456789)',
       ),
   });
