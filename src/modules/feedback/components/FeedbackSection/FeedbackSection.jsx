@@ -13,7 +13,7 @@ const FeedbackSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
-  const { feedbacks, total, averageRating: averageRatingRaw, onIndexChange } = useFeedbacks();
+  const { feedbacks, total, averageRating: averageRatingRaw, onIndexChange, prependFeedback } = useFeedbacks();
   const averageRating = Number(averageRatingRaw);
 
   const theme = useTheme();
@@ -41,7 +41,10 @@ const FeedbackSection = () => {
     });
   }, [onIndexChange]);
 
-  const handleSuccess = () => setIsSuccessOpen(true);
+  const handleSuccess = (newFeedback) => {
+    prependFeedback(newFeedback);
+    setIsSuccessOpen(true);
+  };
 
   if (!feedbacks.length) return null;
 

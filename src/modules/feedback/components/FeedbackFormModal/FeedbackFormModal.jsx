@@ -34,10 +34,10 @@ const FeedbackFormModal = ({ open, onClose, onSuccess }) => {
     initialValues: { rating: 0, name: '', text: '' },
     validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      await submit(values);
+      const newFeedback = await submit(values);
       resetForm();
       onClose();
-      onSuccess();
+      onSuccess(newFeedback);
     },
   });
 

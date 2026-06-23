@@ -7,7 +7,7 @@ export const useSubmitFeedback = () => {
   const submit = async ({ name, text, rating }) => {
     setIsLoading(true);
     try {
-      await postFeedbackApi({ name, text, rating });
+      return await postFeedbackApi({ name, text, rating });
     } finally {
       setIsLoading(false);
     }
