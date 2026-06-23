@@ -299,7 +299,7 @@ const CarDataForm = ({ formik, userParams }) => {
           id="mileage"
           lableText="Пробіг (приблизний), км:"
           formikData={formik}
-          customFunc={(e) => setFieldValue('mileage', e.target.value.trim())}
+          customFunc={(e) => setFieldValue('mileage', e.target.value.replace(/[^0-9]/g, ''))}
           placeholder={'15000'}
         />
         {!includedAutoTypes[CARDATA_FORM_FIELDS_DICT.SEATING_CAPACITY] && (

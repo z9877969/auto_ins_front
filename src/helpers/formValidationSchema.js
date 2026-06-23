@@ -168,6 +168,11 @@ export const carDataFormValidationSchema = ({
         ? Yup.number().required(REQUIRED_FIELD)
         : Yup.string(),
     mileage: Yup.number()
+      .test(
+        'no-decimal',
+        'Повинно бути цілим числом',
+        (_, ctx) => /^\d+$/.test(String(ctx.originalValue ?? ''))
+      )
       .integer('Повинно бути цілим числом')
       .min(1, 'Повинно бути 1 або більше')
       .max(99999999, 'Значення занадто велике')
