@@ -2,7 +2,7 @@ import { Box, Button, Dialog, styled } from '@mui/material';
 
 export const DialogStyled = styled(Dialog)(({ theme }) => ({
   '& .MuiBackdrop-root': {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: '#000000cd',
   },
   '& .MuiDialog-paper': {
     backgroundColor: theme.palette.primary.white,

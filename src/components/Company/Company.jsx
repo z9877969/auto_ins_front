@@ -52,7 +52,6 @@ const Company = ({
   lastItem,
   isRecommended,
   additionalLabel,
-  modalRoot,
   // handleOpenSuportModal,
   // isPrivileged,
 }) => {
@@ -411,15 +410,13 @@ const Company = ({
           dgo={companyObject.dgo}
         />
       </CardStyled>
-      {isModalOpen &&
-        createPortal(
-          <ModalConfirmAge
-            onClose={handleCloseModal}
-            onConfirm={formik.handleSubmit}
-            isModalOpen={isModalOpen}
-          />,
-          modalRoot,
-        )}
+      {isModalOpen && (
+        <ModalConfirmAge
+          onClose={handleCloseModal}
+          onConfirm={formik.handleSubmit}
+          isModalOpen={isModalOpen}
+        />
+      )}
     </>
   );
 };
