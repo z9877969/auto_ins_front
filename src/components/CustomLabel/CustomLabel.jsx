@@ -55,7 +55,8 @@ const CustomLabel = ({
 export default CustomLabel;
 
 CustomLabel.propTypes = {
-  lableText: PropTypes.string.isRequired,
+  lableText: PropTypes.string,
+  labelJsx: PropTypes.object,
   isDisabled: PropTypes.bool,
   className: PropTypes.string,
   labelColor: PropTypes.string,

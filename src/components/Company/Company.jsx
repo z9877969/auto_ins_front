@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import { useMemo, useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
@@ -10,6 +11,7 @@ import Box from '@mui/material/Box';
 import GeneralSelect from '../GeneralSelect/GeneralSelect';
 import CompanyCardMedia from '../CompanyCardMedia/index';
 import CompanyInfo from 'components/CompanyInfo/CompanyInfo';
+import ModalConfirmAge from 'components/ModalConfirmAge/ModalConfirmAge';
 import {
   BoxContent,
   BoxFooter,
@@ -50,6 +52,7 @@ const Company = ({
   lastItem,
   isRecommended,
   additionalLabel,
+  modalRoot,
   // handleOpenSuportModal,
   // isPrivileged,
 }) => {
@@ -73,6 +76,8 @@ const Company = ({
     limit: 0,
     discountedPayment: 0,
   });
+  const [wasTry, setWasTry] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     insurerId,
@@ -176,12 +181,17 @@ const Company = ({
         max: driverAge.driverMaxAge,
       });
 
-      navigate('/form', {
-        state: {
-          from: location,
-          data: { ...location.state?.data, ...sendObj },
-        },
-      });
+      if (!wasTry) {
+        setIsModalOpen(true);
+        setWasTry(true);
+      } else {
+        navigate('/form', {
+          state: {
+            from: location,
+            data: { ...location.state?.data, ...sendObj },
+          },
+        });
+      }
     },
   });
 
@@ -198,6 +208,10 @@ const Company = ({
     setChooseDgo(option);
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     if (!companyObject) return;
     scrollTo({ top: 0 });
@@ -205,16 +219,51 @@ const Company = ({
   }, []);
 
   return (
-    <CardStyled component="li" sx={{ overflow: 'visible' }}>
-      <WrapperStyled
-        className="wrapper"
-        component="form"
-        onSubmit={formik.handleSubmit}
-      >
-        <WrapperStyled>
-          <Grid container className="gridContainer">
+    <>
+      <CardStyled component="li" sx={{ overflow: 'visible' }}>
+        <WrapperStyled
+          className="wrapper"
+          component="form"
+          onSubmit={formik.handleSubmit}
+        >
+          <WrapperStyled>
+            <Grid container className="gridContainer">
+              {isRecommended && (
+                <GridContainer item xs={10} m={'0 auto'} sm={0}>
+                  <Typography
+                    variant="subtitle1"
+                    component="h4"
+                    className="recommended"
+                  >
+                    AUTO-INS рекомендує
+                  </Typography>
+                </GridContainer>
+              )}
+              {additionalLabel && (
+                <GridContainer item xs={10} m={'0 auto'} sm={0}>
+                  <Typography
+                    variant="subtitle1"
+                    component="h4"
+                    className="recommended additional-label"
+                  >
+                    {additionalLabel}
+                  </Typography>
+                </GridContainer>
+              )}
+              <GridContainer item xs={6} sm={0}>
+                <Typography variant="subtitle1" component="h3">
+                  ОСЦПВ від {insurerName.replace(/,[^,]+$/, '')}
+                </Typography>
+              </GridContainer>
+
+              <GridContainerImg item xs={6} sm={12}>
+                <CompanyCardMedia id={insurerId} alt={insurerName} />
+              </GridContainerImg>
+            </Grid>
+          </WrapperStyled>
+          <BoxContent>
             {isRecommended && (
-              <GridContainer item xs={10} m={'0 auto'} sm={0}>
+              <>
                 <Typography
                   variant="subtitle1"
                   component="h4"
@@ -222,57 +271,23 @@ const Company = ({
                 >
                   AUTO-INS рекомендує
                 </Typography>
-              </GridContainer>
+              </>
             )}
             {additionalLabel && (
-              <GridContainer item xs={10} m={'0 auto'} sm={0}>
-                <Typography
-                  variant="subtitle1"
-                  component="h4"
-                  className="recommended additional-label"
-                >
-                  {additionalLabel}
-                </Typography>
-              </GridContainer>
-            )}
-            <GridContainer item xs={6} sm={0}>
-              <Typography variant="subtitle1" component="h3">
-                ОСЦПВ від {insurerName.replace(/,[^,]+$/, '')}
-              </Typography>
-            </GridContainer>
-
-            <GridContainerImg item xs={6} sm={12}>
-              <CompanyCardMedia id={insurerId} alt={insurerName} />
-            </GridContainerImg>
-          </Grid>
-        </WrapperStyled>
-        <BoxContent>
-          {isRecommended && (
-            <>
               <Typography
                 variant="subtitle1"
                 component="h4"
-                className="recommended"
+                className="recommended additional-label"
               >
-                AUTO-INS рекомендує
+                {additionalLabel}
               </Typography>
-            </>
-          )}
-          {additionalLabel && (
-            <Typography
-              variant="subtitle1"
-              component="h4"
-              className="recommended additional-label"
-            >
-              {additionalLabel}
+            )}
+            <Typography variant="subtitle1" component="h3" className="title">
+              ОСЦПВ від {insurerName.replace(/,[^,]+$/, '')}
             </Typography>
-          )}
-          <Typography variant="subtitle1" component="h3" className="title">
-            ОСЦПВ від {insurerName.replace(/,[^,]+$/, '')}
-          </Typography>
 
-          <Box className="content">
-            {/* <BoxSelect className="franchise">
+            <Box className="content">
+              {/* <BoxSelect className="franchise">
               <GeneralSelect
                 id="franchise"
                 lableText={content.label.FRANSHISE_TEXT}
@@ -287,115 +302,125 @@ const Company = ({
                 $optionsOnTop={lastItem}
               />
             </BoxSelect> */}
-            <BoxSelect>
-              <GeneralSelect
-                id="2"
-                lableText={content.label.ADDITIONAL_COVER_TEXT}
-                helper={content.label.ADDITIONAL_COVER_HELPER}
-                color={theme.palette.primary.main}
-                optionsArr={companyObject?.dgo?.tariff || []}
-                changeCB={handleChangeDgoSelect}
-                getOptionLabel={(option) =>
-                  `+${option.limit} за ${option.discountedPayment} грн`
-                }
-                getOptionValue={(option) => option.discountedPayment}
-                currentValue={chooseDgo}
-                isDisabled={
-                  !companyObject?.dgo /* ||
+              <BoxSelect>
+                <GeneralSelect
+                  id="2"
+                  lableText={content.label.ADDITIONAL_COVER_TEXT}
+                  helper={content.label.ADDITIONAL_COVER_HELPER}
+                  color={theme.palette.primary.main}
+                  optionsArr={companyObject?.dgo?.tariff || []}
+                  changeCB={handleChangeDgoSelect}
+                  getOptionLabel={(option) =>
+                    `+${option.limit} за ${option.discountedPayment} грн`
+                  }
+                  getOptionValue={(option) => option.discountedPayment}
+                  currentValue={chooseDgo}
+                  isDisabled={
+                    !companyObject?.dgo /* ||
                   registrationType === REGISTRATION_TYPES.PERMANENT_WITH_OTK */
-                    ? true
-                    : false
-                }
-                optionsOnTop={lastItem}
-              />
-            </BoxSelect>
+                      ? true
+                      : false
+                  }
+                  optionsOnTop={lastItem}
+                />
+              </BoxSelect>
 
-            <BoxSelect>
-              <GeneralSelect
-                id="3"
-                lableText={
-                  <>
-                    {driverAgesList.length > 1 && (
-                      <>
-                        <span style={{ color: 'red', fontWeight: 600 }}>
-                          {content.label.DRIVER_AGE_TEXT_ATTENTION}
-                        </span>{' '}
-                      </>
-                    )}
-                    {content.label.DRIVER_AGE_TEXT_NORMAL}
-                  </>
-                }
-                helper={content.label.DRIVER_AGE_HELPER}
-                color={theme.palette.primary.main}
-                optionsArr={driverAgesList}
-                changeCB={(option) => {
-                  setDriverAge(option);
-                }}
-                getOptionLabel={(option) =>
-                  !option.driverMinAge || option.driverMinAge === 18
-                    ? 'Без обмежень'
-                    : `Від ${option.driverMinAge} років`
-                }
-                getOptionValue={(option) => option.coeff}
-                currentValue={driverAge}
-                isDisabled={driverAgesList.length <= 1}
-                optionsOnTop={lastItem}
-              />
-            </BoxSelect>
-          </Box>
-        </BoxContent>
-        <WrapperStyled className="footer">
-          <BoxFooter>
-            {fullPrice && (
-              <>
-                <Box className="rowWrapper">
-                  <Typography component="span">Вартість</Typography>
-                  <Typography
-                    variant="h4"
-                    component="span"
-                    className="noDiscounted"
-                  >
-                    {fullPrice} грн
-                  </Typography>
-                </Box>
-                <Box className="rowWrapper">
-                  <Typography component="span">Вигода</Typography>
-                  <Typography variant="h3" component="span" className="price">
-                    {fullPrice - price} грн
-                  </Typography>
-                </Box>
-              </>
-            )}
-            <Box className="rowWrapper">
-              <Typography component="span">До сплати</Typography>
-              <Typography variant="h3" component="span" className="price">
-                {Math.round(price)} грн
-              </Typography>
+              <BoxSelect>
+                <GeneralSelect
+                  id="3"
+                  lableText={
+                    <>
+                      {driverAgesList.length > 1 && (
+                        <>
+                          <span style={{ color: 'red', fontWeight: 600 }}>
+                            {content.label.DRIVER_AGE_TEXT_ATTENTION}
+                          </span>{' '}
+                        </>
+                      )}
+                      {content.label.DRIVER_AGE_TEXT_NORMAL}
+                    </>
+                  }
+                  helper={content.label.DRIVER_AGE_HELPER}
+                  color={theme.palette.primary.main}
+                  optionsArr={driverAgesList}
+                  changeCB={(option) => {
+                    setDriverAge(option);
+                  }}
+                  getOptionLabel={(option) =>
+                    !option.driverMinAge || option.driverMinAge === 18
+                      ? 'Без обмежень'
+                      : `Від ${option.driverMinAge} років`
+                  }
+                  getOptionValue={(option) => option.coeff}
+                  currentValue={driverAge}
+                  isDisabled={driverAgesList.length <= 1}
+                  optionsOnTop={lastItem}
+                />
+              </BoxSelect>
             </Box>
-          </BoxFooter>
-          <ButtonStyled
-            // type={isPrivileged ? 'button' : 'submit'}
-            // onClick={isPrivileged ? handleOpenSuportModal : null}
-            type="submit"
-          >
-            Придбати
-          </ButtonStyled>
-          {additionalDescription[companyObject.insurerName] && (
-            <Typography
-              variant="subtitle2"
-              component="span"
-              className="additionalDescr"
+          </BoxContent>
+          <WrapperStyled className="footer">
+            <BoxFooter>
+              {fullPrice && (
+                <>
+                  <Box className="rowWrapper">
+                    <Typography component="span">Вартість</Typography>
+                    <Typography
+                      variant="h4"
+                      component="span"
+                      className="noDiscounted"
+                    >
+                      {fullPrice} грн
+                    </Typography>
+                  </Box>
+                  <Box className="rowWrapper">
+                    <Typography component="span">Вигода</Typography>
+                    <Typography variant="h3" component="span" className="price">
+                      {fullPrice - price} грн
+                    </Typography>
+                  </Box>
+                </>
+              )}
+              <Box className="rowWrapper">
+                <Typography component="span">До сплати</Typography>
+                <Typography variant="h3" component="span" className="price">
+                  {Math.round(price)} грн
+                </Typography>
+              </Box>
+            </BoxFooter>
+            <ButtonStyled
+              // type={isPrivileged ? 'button' : 'submit'}
+              // onClick={isPrivileged ? handleOpenSuportModal : null}
+              type="submit"
             >
-              {additionalDescription[companyObject.insurerName]}
-            </Typography>
-          )}
+              Придбати
+            </ButtonStyled>
+            {additionalDescription[companyObject.insurerName] && (
+              <Typography
+                variant="subtitle2"
+                component="span"
+                className="additionalDescr"
+              >
+                {additionalDescription[companyObject.insurerName]}
+              </Typography>
+            )}
+          </WrapperStyled>
         </WrapperStyled>
-      </WrapperStyled>
-      <CompanyInfo
-        {...((companyObject.tariff && companyObject.tariff[0]) || {})}
-        dgo={companyObject.dgo}
-      />
-    </CardStyled>
+        <CompanyInfo
+          {...((companyObject.tariff && companyObject.tariff[0]) || {})}
+          dgo={companyObject.dgo}
+        />
+      </CardStyled>
+      {isModalOpen &&
+        createPortal(
+          <ModalConfirmAge
+            onClose={handleCloseModal}
+            onConfirm={formik.handleSubmit}
+            isModalOpen={isModalOpen}
+          />,
+          modalRoot,
+        )}
+    </>
   );
 };
 
@@ -411,4 +436,5 @@ Company.propTypes = {
     dgo: PropTypes.any,
   }),
   lastItem: PropTypes.bool,
+  modalRoot: PropTypes.object,
 };

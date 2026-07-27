@@ -50,6 +50,8 @@ const withAddidtionalLabelCompanyDict = {
   },
 };
 
+const modalConfirmAgeEl = document.querySelector('#modal-confirm-age');
+
 const CompanyList = () => {
   let dgo = null;
 
@@ -92,6 +94,7 @@ const CompanyList = () => {
         lastItem={idx === arr.length - 1}
         isRecommended={isRecommended}
         additionalLabel={additionalLabel?.text}
+        modalRoot={modalConfirmAgeEl}
         // isPrivileged={isPrivileged}
         // handleOpenSuportModal={handleOpenSuportModal}
       />
