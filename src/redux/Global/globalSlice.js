@@ -38,12 +38,6 @@ export const globalSlice = createSlice({
     setHomeAddress: (state, { payload }) => {
       state.homeAddress = payload;
     },
-    setIsContractOSAGO: (state, { payload }) => {
-      state.isContractOSAGO = payload;
-    },
-    setIsContractDGO: (state, { payload }) => {
-      state.isContractDGO = payload;
-    },
     setIsOrderRequested: (state, { payload }) => {
       state.isOrderRequested = payload;
     },
@@ -79,6 +73,10 @@ export const globalSlice = createSlice({
           state.order = {};
         }
         state.order = { ...state.order, ...payload };
+        state.isContractOSAGO = payload.isContract.osago;
+        if (payload.isContract.dgo) {
+          state.isContractDGO = payload.isContract.dgo;
+        }
       })
       .addCase(contractSave.rejected, (state, { payload = {} }) => {
         const { message, errorResponse } = payload;
@@ -89,7 +87,7 @@ export const globalSlice = createSlice({
               return false;
             }
             return true;
-          }
+          },
         );
         const erroMessage =
           combinedMessage.length === 0
@@ -125,8 +123,6 @@ export const {
   setGlobalCustomerDataCustomer,
   setFormData,
   setHomeAddress,
-  setIsContractOSAGO,
-  setIsContractDGO,
   setIsOrderRequested,
   setGlobError,
   resetOrderData,

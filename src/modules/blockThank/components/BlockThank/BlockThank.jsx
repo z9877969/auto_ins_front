@@ -8,21 +8,27 @@ import GeneralInput from 'components/GeneralInput/GeneralInput';
 import PushNotification from 'components/PushNotification/PushNotification';
 import CustomButtonLoading from 'components/Stepper/CustomButtonLoading';
 import PortmoneForm from '../PortmoneForm/PortmoneForm';
-import { SpriteSVG } from '../../../../images/SpriteSVG';
+import { SpriteSVG } from 'images/SpriteSVG';
 import { getOrderPasswordApi, checkOrderPasswordApi } from 'services/api';
-import { selectOrderData, selectPrevOrdersData } from '@redux/Global/selectors';
+import {
+  selectInsurerPhoneNum,
+  selectOrderData,
+  selectPrevOrdersData,
+} from '@redux/Global/selectors';
 import { useActions } from 'hooks/useActions';
-import { FORMIK_DATA_KEYS as formikDataKeys } from '../../../../constants';
+import { FORMIK_DATA_KEYS as formikDataKeys } from '@constants/index';
 import { orderTypes } from '../../data/orderTypes';
 import { blockContent } from '../../data/blockContent';
 import { useCanBlockThankRender } from 'modules/blockThank/hooks/useCanBlockThankRender';
 import { GeneralCheckbox } from 'components/GeneralCheckbox/GeneralCheckbox';
+import { InsurerPhoneNumber } from '../InsurerPhoneNumber/InsurerPhoneNumber';
 
 const BlockThank = () => {
   const navigate = useNavigate();
   const actions = useActions();
   const orderData = useSelector(selectOrderData);
   const previousOrdersData = useSelector(selectPrevOrdersData);
+  const insurerPhoneNumber = useSelector(selectInsurerPhoneNum);
   const { orderStage } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -194,9 +200,19 @@ const BlockThank = () => {
       </Typography>
       <Typography
         variant="body1"
-        sx={{ marginBottom: { xs: '16px', sm: '32px', lg: '48px' } }}
+        sx={{
+          marginBottom: { xs: '16px', sm: '32px', lg: '48px' },
+          ...(orderStage === orderTypes.ORDER_CHECK && { textAlign: 'center' }),
+        }}
       >
-        {orderStage && blockContent[orderStage].descr}
+        {orderStage && (
+          <>
+            {blockContent[orderStage].descr}
+            {orderStage === orderTypes.ORDER_CHECK && (
+              <InsurerPhoneNumber phone={insurerPhoneNumber} />
+            )}
+          </>
+        )}
       </Typography>
       {orderStage && orderStage === orderTypes.ORDER_EMMITED && (
         <S.Button to={'/'}>
