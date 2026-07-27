@@ -175,7 +175,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
   });
 
   const carDataFormik = useFormik({
-    initialValues: storage.getFromLS(formikDataKeys.CAR) ?? {
+    initialValues: /* storage.getFromLS(formikDataKeys.CAR) ?? */ {
       stateNumber: insurObject?.stateNumber || '',
       year: insurObject?.year || '',
       modelText: insurObject?.modelText || '',
