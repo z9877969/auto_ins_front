@@ -309,7 +309,12 @@ const ByParameters = () => {
             className={'baseLine'}
           />
           <CustomLabel
-            lableText="Дата початку дії поліса:"
+            labelJsx={
+              <p>
+                Дата початку дії поліса{' '}
+                <span style={{ color: 'red' }}>(змініть за потреби)</span>:
+              </p>
+            }
             labelColor={'#ffffff!important'}
             errorposition={{
               top: '100%',
