@@ -1,8 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { getError as calculatorError } from '../../redux/Calculator/selectors';
+import { getError as calculatorError } from '@redux/Calculator/selectors';
 
-import { getError as referencesError } from '../../redux/References/selectors';
-import { SAVED_ORDER_TYPE } from '../../constants';
+import { getError as referencesError } from '@redux/References/selectors';
+import { SAVED_ORDER_TYPE } from '@constants/index';
 
 export const getIsModalErrorOpen = (state) => state.global.isModalErrorOpen;
 export const getIsLoading = (state) => state.global.isLoading;
@@ -14,6 +14,8 @@ export const getIsOrderRequested = (state) => state.global.isOrderRequested;
 export const selectHomeAddress = (state) => state.global.homeAddress;
 export const selectBlackList = (state) => state.global.blackList || [];
 export const selectPrevOrdersData = (state) => state.global.prevOrdersData;
+export const selectInsurerPhoneNum = (state) =>
+  state.global.order.epolicy2025.customer.phone || '';
 
 export const selectCompanyAllDocTypes = (state) =>
   state.global.globalCustomerData.allowedDocTypes;
@@ -24,7 +26,7 @@ export const selectAllowedDocTypes = createSelector(
     const { epolicy, vcl } = docTypes || {};
     if (vcl) return epolicy.filter((type) => vcl?.includes(type));
     return epolicy;
-  }
+  },
 );
 
 export const combineError = createSelector(
@@ -33,7 +35,7 @@ export const combineError = createSelector(
   referencesError,
   (error, calculatorError, referencesError) => {
     return error || calculatorError || referencesError;
-  }
+  },
 );
 
 export const selectOrderData = createSelector(
@@ -63,5 +65,5 @@ export const selectOrderData = createSelector(
       };
     }
     return null;
-  }
+  },
 );

@@ -13,6 +13,7 @@ const CustomLabel = ({
   ref,
   errorposition,
   mustDefautErrorMessage = false,
+  labelJsx,
 }) => {
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up('sm'));
@@ -28,13 +29,16 @@ const CustomLabel = ({
           color: labelColor
             ? labelColor
             : isDisabled
-            ? 'darkgray!important'
-            : null,
+              ? 'darkgray!important'
+              : null,
         }}
         variant="inputLable"
         component="label"
       >
-        <span>{lableText}</span>
+        <div>
+          {lableText && <span>{lableText}</span>}
+          {labelJsx && labelJsx}
+        </div>
         {touchedMessage && errorMessage && (
           <span className="errorMessage">
             {smScreen || !mustDefautErrorMessage
@@ -51,7 +55,8 @@ const CustomLabel = ({
 export default CustomLabel;
 
 CustomLabel.propTypes = {
-  lableText: PropTypes.string.isRequired,
+  lableText: PropTypes.string,
+  labelJsx: PropTypes.object,
   isDisabled: PropTypes.bool,
   className: PropTypes.string,
   labelColor: PropTypes.string,
