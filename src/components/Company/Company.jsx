@@ -180,7 +180,7 @@ const Company = ({
         max: driverAge.driverMaxAge,
       });
 
-      if (!wasTry) {
+      if (!wasTry && driverAgesList.length > 1) {
         setIsModalOpen(true);
         setWasTry(true);
       } else {
