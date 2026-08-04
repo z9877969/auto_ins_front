@@ -15,7 +15,7 @@ export const selectHomeAddress = (state) => state.global.homeAddress;
 export const selectBlackList = (state) => state.global.blackList || [];
 export const selectPrevOrdersData = (state) => state.global.prevOrdersData;
 export const selectInsurerPhoneNum = (state) =>
-  state.global.order.epolicy2025.customer.phone || '';
+  state.global.order?.epolicy2025.customer.phone || '';
 
 export const selectCompanyAllDocTypes = (state) =>
   state.global.globalCustomerData.allowedDocTypes;

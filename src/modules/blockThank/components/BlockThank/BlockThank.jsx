@@ -10,11 +10,7 @@ import CustomButtonLoading from 'components/Stepper/CustomButtonLoading';
 import PortmoneForm from '../PortmoneForm/PortmoneForm';
 import { SpriteSVG } from 'images/SpriteSVG';
 import { getOrderPasswordApi, checkOrderPasswordApi } from 'services/api';
-import {
-  selectInsurerPhoneNum,
-  selectOrderData,
-  selectPrevOrdersData,
-} from '@redux/Global/selectors';
+import { selectOrderData, selectPrevOrdersData } from '@redux/Global/selectors';
 import { useActions } from 'hooks/useActions';
 import { FORMIK_DATA_KEYS as formikDataKeys } from '@constants/index';
 import { orderTypes } from '../../data/orderTypes';
@@ -28,7 +24,6 @@ const BlockThank = () => {
   const actions = useActions();
   const orderData = useSelector(selectOrderData);
   const previousOrdersData = useSelector(selectPrevOrdersData);
-  const insurerPhoneNumber = useSelector(selectInsurerPhoneNum);
   const { orderStage } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -208,9 +203,7 @@ const BlockThank = () => {
         {orderStage && (
           <>
             {blockContent[orderStage].descr}
-            {orderStage === orderTypes.ORDER_CHECK && (
-              <InsurerPhoneNumber phone={insurerPhoneNumber} />
-            )}
+            {orderStage === orderTypes.ORDER_CHECK && <InsurerPhoneNumber />}
           </>
         )}
       </Typography>
