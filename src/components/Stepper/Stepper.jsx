@@ -59,6 +59,7 @@ import {
 import { useDocTypesOptions } from '../../hooks/useDocTypesOptions';
 import { calcBirthdateFromIpn } from 'helpers/birthDate/calcBirthdateFromIpn';
 import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
+import Loader from 'components/Loader';
 import { GeneralCheckbox } from 'components/GeneralCheckbox/GeneralCheckbox';
 
 const steps = [
@@ -308,13 +309,13 @@ const Stepper = ({ backLinkRef, isLoading }) => {
     switch (step) {
       case 0:
         return (
-          <Suspense>
+          <Suspense fallback={<Loader size={80} minHeight="240px" />}>
             <FormContacts formik={contactsFormik} />
           </Suspense>
         );
       case 1:
         return (
-          <Suspense>
+          <Suspense fallback={<Loader size={80} minHeight="240px" />}>
             <InsuredDataForm
               formik={insurerDataFormik}
               docTypesOptions={docTypesOptions}
@@ -323,13 +324,13 @@ const Stepper = ({ backLinkRef, isLoading }) => {
         );
       case 2:
         return (
-          <Suspense>
+          <Suspense fallback={<Loader size={80} minHeight="240px" />}>
             <HomeAddressForm formik={homeAddressFormik} />
           </Suspense>
         );
       case 3:
         return (
-          <Suspense>
+          <Suspense fallback={<Loader size={80} minHeight="240px" />}>
             <SelectOrInputProvider>
               <CarDataForm formik={carDataFormik} userParams={userParams} />
             </SelectOrInputProvider>

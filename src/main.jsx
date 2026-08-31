@@ -9,6 +9,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary.jsx';
 import ErrorProvider from './context/ErrorProvider.jsx';
+import { initGlobalErrorLogging } from 'helpers/initGlobalErrorLogging';
+
+initGlobalErrorLogging();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
