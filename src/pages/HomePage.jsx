@@ -10,26 +10,28 @@ import Hero from '../components/Hero/Hero';
 import { useScrollToTop } from 'hooks/useScrollToTop';
 import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
 
-const CreatePolicyVideoSection = loadComponentWithRetry(() =>
-  import('../components/CreatePolicyVideoSection/CreatePolicyVideoSection')
+const CreatePolicyVideoSection = loadComponentWithRetry(
+  () =>
+    import('../components/CreatePolicyVideoSection/CreatePolicyVideoSection'),
 );
-const AccordionSection = loadComponentWithRetry(() =>
-  import('../components/AccordionSection/index')
+const AccordionSection = loadComponentWithRetry(
+  () => import('../components/AccordionSection/index'),
 );
-const CheckInsSection = loadComponentWithRetry(() =>
-  import('../components/CheckInsSection/index')
+const CheckInsSection = loadComponentWithRetry(
+  () => import('../components/CheckInsSection/index'),
 );
-const InfoSection = loadComponentWithRetry(() =>
-  import('../components/InfoSection/index')
+const InfoSection = loadComponentWithRetry(
+  () => import('../components/InfoSection/index'),
 );
-const AdvatagesSection = loadComponentWithRetry(() =>
-  import('../components/AdvantagesSection/index')
+const AdvatagesSection = loadComponentWithRetry(
+  () => import('../components/AdvantagesSection/index'),
 );
-const Partners = loadComponentWithRetry(() =>
-  import('../components/Partners/Partners')
+const Partners = loadComponentWithRetry(
+  () => import('../components/Partners/Partners'),
 );
-const FeedbackSection = loadComponentWithRetry(() =>
-  import('../modules/feedback/components/FeedbackSection/FeedbackSection')
+const FeedbackSection = loadComponentWithRetry(
+  () =>
+    import('../modules/feedback/components/FeedbackSection/FeedbackSection'),
 );
 
 const MemoizedCreatePolicyVideoSection = memo(CreatePolicyVideoSection);
@@ -43,7 +45,7 @@ const MemoizedAdvatagesSection = memo(AdvatagesSection);
 const HomePage = () => {
   useScrollToTop();
   const location = useLocation();
-  const { loginThunk } = useActions();
+  const { loginThunk, setIsModalErrorOpen } = useActions();
 
   const user = useSelector(getUser);
   const isError = useSelector(getIsModalErrorOpen);
@@ -59,6 +61,12 @@ const HomePage = () => {
     }
     // eslint-disable-next-line
   }, [location.state]);
+
+  // ==========
+  useEffect(() => {
+    setIsModalErrorOpen(false);
+  }, [setIsModalErrorOpen]);
+  // ==========
 
   useEffect(() => {
     if (user) return;

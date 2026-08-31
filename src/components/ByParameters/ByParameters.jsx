@@ -58,8 +58,6 @@ const ByParameters = () => {
     setTariffPolicyChoose,
     setTariffVcl,
     setContractPeriod,
-    // setRefError,
-    // setIsModalErrorOpen,
   } = useActions();
 
   const {
