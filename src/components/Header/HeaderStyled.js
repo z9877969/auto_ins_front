@@ -1,9 +1,12 @@
 import {
   Box,
+  ButtonBase,
   Container,
   Link,
   List,
   ListItem,
+  Menu,
+  MenuItem,
   Typography,
   styled,
 } from '@mui/material';
@@ -144,3 +147,62 @@ export const LinkS = styled(Link)(({ theme }) => ({
     stroke: theme.palette.primary.blue,
   },
 }));
+
+export const DropdownButtonHS = styled(ButtonBase)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '4px',
+  padding: 0,
+  fontFamily: 'Open Sans, sans-serif',
+  fontSize: '16px',
+  fontWeight: 600,
+  lineHeight: 1.5,
+  color: theme.palette.primary.white,
+  transition: 'color 250ms linear',
+  '&:hover': {
+    color: theme.palette.primary.blue,
+  },
+  '&.open': {
+    color: theme.palette.primary.blue,
+  },
+  '& .MuiSvgIcon-root': {
+    fontSize: '20px',
+    transition: 'transform 250ms linear',
+  },
+  '&.open .MuiSvgIcon-root': {
+    transform: 'rotate(180deg)',
+  },
+}));
+
+export const MenuHS = styled(Menu)(({ theme }) => ({
+  '& .MuiPaper-root': {
+    marginTop: '8px',
+    backgroundColor: theme.palette.primary.main,
+    backgroundImage: 'none',
+    border: `1px solid ${theme.palette.primary.secondaryWhite}`,
+    borderRadius: '10px',
+    maxWidth: '360px',
+  },
+  '& .MuiList-root': {
+    padding: '8px 0',
+  },
+}));
+
+export const MenuItemHS = styled(MenuItem)(({ theme }) => ({
+  fontFamily: 'Open Sans, sans-serif',
+  fontSize: '16px',
+  fontWeight: 600,
+  lineHeight: 1.5,
+  color: theme.palette.primary.white,
+  whiteSpace: 'normal',
+  padding: '10px 24px',
+  transition: 'color 250ms linear',
+  '&:hover': {
+    color: theme.palette.primary.blue,
+    backgroundColor: 'transparent',
+  },
+}));
+
+export const NavLinkHS = styled(Link)({
+  textDecoration: 'none',
+});

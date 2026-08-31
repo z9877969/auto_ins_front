@@ -63,3 +63,16 @@ export const BodyMenu = styled(Box)(({ theme }) => ({
 export const DividerStyled = styled(Divider)(({ theme }) => ({
   borderColor: theme.palette.primary.main,
 }));
+
+export const SubMenuStyled = styled(Box)(({ theme }) => ({
+  paddingLeft: '16px',
+  '& .MuiTypography-root': {
+    fontSize: '1rem',
+    fontWeight: 600,
+    lineHeight: '1.375rem',
+    padding: '8px 0',
+    [theme.breakpoints.up('sm')]: {
+      padding: '12px 0',
+    },
+  },
+}));

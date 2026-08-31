@@ -12,6 +12,7 @@ import {
   LinkS,
   LogoBoxS,
   LogoTextHS,
+  NavLinkHS,
   UlListHS,
 } from './HeaderStyled';
 // import BurgerMenu from "../BurgerMenu/BurgerMenu";
@@ -19,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { socialMediaDict } from '../../assets/utils/socialMedia';
 import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
 import { headerNavOptions } from './headerNavOptions';
+import HeaderDropdown from './HeaderDropdown';
 
 const BurgerMenu = loadComponentWithRetry(() =>
   import('../BurgerMenu/BurgerMenu')
@@ -45,20 +47,38 @@ const Header = () => {
           {isLargeScreen ? (
             <>
               <UlListHS>
-                {headerNavOptions.map(({ uniqueName, title, to }) => (
-                  <LiItemHS key={uniqueName} disablePadding={true}>
-                    <ScrollLink
-                      to={to}
-                      smooth={true}
-                      duration={700}
-                      style={{ cursor: 'pointer' }}
-                      activeClass="active"
-                      onClick={() => handleScrollToSection(to)}
-                    >
-                      <ChapterSpanHS className="chapterSpan">
-                        {title}
-                      </ChapterSpanHS>
-                    </ScrollLink>
+                {headerNavOptions.map((item) => (
+                  <LiItemHS key={item.uniqueName} disablePadding={true}>
+                    {item.type === 'dropdown' ? (
+                      <HeaderDropdown
+                        id={`header-${item.uniqueName}-menu`}
+                        title={item.title}
+                        items={item.children}
+                      />
+                    ) : item.type === 'link' ? (
+                      <NavLinkHS
+                        href={item.href}
+                        target={item.target}
+                        rel={item.rel}
+                      >
+                        <ChapterSpanHS className="chapterSpan">
+                          {item.title}
+                        </ChapterSpanHS>
+                      </NavLinkHS>
+                    ) : (
+                      <ScrollLink
+                        to={item.to}
+                        smooth={true}
+                        duration={700}
+                        style={{ cursor: 'pointer' }}
+                        activeClass="active"
+                        onClick={() => handleScrollToSection(item.to)}
+                      >
+                        <ChapterSpanHS className="chapterSpan">
+                          {item.title}
+                        </ChapterSpanHS>
+                      </ScrollLink>
+                    )}
                   </LiItemHS>
                 ))}
               </UlListHS>
