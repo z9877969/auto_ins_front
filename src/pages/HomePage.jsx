@@ -9,6 +9,7 @@ import AlertMUI from '../components/Alert/AlertMUI';
 import Hero from '../components/Hero/Hero';
 import { useScrollToTop } from 'hooks/useScrollToTop';
 import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
+import { scrollToElementWhenReady } from 'helpers/scrollToElementWhenReady';
 
 const CreatePolicyVideoSection = loadComponentWithRetry(
   () =>
@@ -43,23 +44,18 @@ const MemoizedCheckInsSection = memo(CheckInsSection);
 const MemoizedAdvatagesSection = memo(AdvatagesSection);
 
 const HomePage = () => {
-  useScrollToTop();
   const location = useLocation();
+  useScrollToTop(location.state?.id);
   const { loginThunk, setIsModalErrorOpen } = useActions();
 
   const user = useSelector(getUser);
   const isError = useSelector(getIsModalErrorOpen);
 
   useEffect(() => {
-    if (location.state) {
-      const { id } = location.state;
-      let element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        location.state = null;
-      }
-    }
-    // eslint-disable-next-line
+    const id = location.state?.id;
+    if (!id) return;
+
+    return scrollToElementWhenReady(id);
   }, [location.state]);
 
   // ==========

@@ -1,6 +1,13 @@
 import { Fragment, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, IconButton, ListItemButton, ListItemText } from '@mui/material';
+import {
+  Box,
+  Collapse,
+  IconButton,
+  ListItemButton,
+  ListItemText,
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BurgerSocialList from 'components/BurgerSocialList/BurgerSocialList';
 import { SpriteSVG } from '../../images/SpriteSVG';
 import {
@@ -9,11 +16,14 @@ import {
   DividerStyled,
   HeaderMenu,
   MenuContainer,
+  SubMenuStyled,
 } from './BurgerMenuStyled';
 import { BoxIconHS, LogoBoxS, LogoTextHS } from '../Header/HeaderStyled';
+import { headerNavOptions } from '../Header/headerNavOptions';
 
 const BurgerMenu = () => {
   const [open, setOpen] = useState(false);
+  const [openedDropdown, setOpenedDropdown] = useState(null);
   const navigate = useNavigate();
 
   const toggleDrawer = useCallback(
@@ -29,10 +39,13 @@ const BurgerMenu = () => {
     []
   );
 
-  const onNavClick = (event) => {
-    navigate('/', { state: { id: event.target.textContent.toLowerCase() } });
+  const onNavClick = (id) => () => {
+    navigate('/', { state: { id } });
     setOpen(false);
   };
+
+  const onDropdownClick = (uniqueName) => () =>
+    setOpenedDropdown((prev) => (prev === uniqueName ? null : uniqueName));
   return (
     <>
       <IconButton
@@ -69,21 +82,69 @@ const BurgerMenu = () => {
 
           <Box className="menuBodyWrapper">
             <BodyMenu>
-              {['Переваги', 'Партнери', 'Питання-відповіді'].map(
-                (text, index) => {
-                  return (
-                    <Fragment key={text + index}>
+              {headerNavOptions.map(
+                ({ uniqueName, title, type, to, href, target, rel, children }) => (
+                  <Fragment key={uniqueName}>
+                    {type === 'dropdown' ? (
+                      <>
+                        <ListItemButton
+                          onClick={onDropdownClick(uniqueName)}
+                          aria-expanded={openedDropdown === uniqueName}
+                          sx={{ p: '0' }}
+                        >
+                          <ListItemText primary={title} sx={{ m: 0 }} />
+                          <ExpandMoreIcon
+                            sx={{
+                              transition: 'transform 250ms linear',
+                              transform:
+                                openedDropdown === uniqueName
+                                  ? 'rotate(180deg)'
+                                  : 'none',
+                            }}
+                          />
+                        </ListItemButton>
+                        <Collapse
+                          in={openedDropdown === uniqueName}
+                          timeout="auto"
+                          unmountOnExit
+                        >
+                          <SubMenuStyled>
+                            {children.map((child) => (
+                              <ListItemButton
+                                key={child.uniqueName}
+                                component="a"
+                                href={child.href}
+                                target={child.target}
+                                rel={child.rel}
+                                sx={{ p: '0' }}
+                              >
+                                <ListItemText
+                                  primary={child.title}
+                                  sx={{ m: 0 }}
+                                />
+                              </ListItemButton>
+                            ))}
+                          </SubMenuStyled>
+                        </Collapse>
+                      </>
+                    ) : type === 'link' ? (
                       <ListItemButton
-                        key={text + index}
-                        onClick={onNavClick}
+                        component="a"
+                        href={href}
+                        target={target}
+                        rel={rel}
                         sx={{ p: '0' }}
                       >
-                        <ListItemText primary={text} sx={{ m: 0 }} />
+                        <ListItemText primary={title} sx={{ m: 0 }} />
                       </ListItemButton>
-                      <DividerStyled />
-                    </Fragment>
-                  );
-                }
+                    ) : (
+                      <ListItemButton onClick={onNavClick(to)} sx={{ p: '0' }}>
+                        <ListItemText primary={title} sx={{ m: 0 }} />
+                      </ListItemButton>
+                    )}
+                    <DividerStyled />
+                  </Fragment>
+                )
               )}
             </BodyMenu>
             <BurgerSocialList linkOnClick={toggleDrawer(false)} />
