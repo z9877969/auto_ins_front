@@ -32,6 +32,16 @@
   <link rel="preload" href="/src/fonts/open-sans-v36-cyrillic_latin-800.woff2" as="font" type="font/woff2"
     crossorigin />
 
+  <!-- LCP: зображення героя. Воно рендериться з JS, тож без preload фетч
+       стартує лише після виконання бандла. media розводить брейкпоінти так
+       само, як <picture> у HeroPicture. -->
+  <link rel="preload" as="image" type="image/webp" media="(max-width: 743px)"
+    imagesrcset="/src/images/heroCar/car_mobile.webp 1x, /src/images/heroCar/car_mobile@2x.webp 2x, /src/images/heroCar/car_mobile@3x.webp 3x" />
+  <link rel="preload" as="image" type="image/webp" media="(min-width: 744px) and (max-width: 1399px)"
+    imagesrcset="/src/images/heroCar/car_tablet.webp 1x, /src/images/heroCar/car_tablet@2x.webp 2x, /src/images/heroCar/car_tablet@3x.webp 3x" />
+  <link rel="preload" as="image" type="image/webp" media="(min-width: 1400px)"
+    imagesrcset="/src/images/heroCar/car_desktop.webp 1x, /src/images/heroCar/car_desktop@2x.webp 2x, /src/images/heroCar/car_desktop@3x.webp 3x" />
+
   <!-- <title>AUTO-INS | Автоцивілка без зайвих рухів</title> -->
   <title>Оформити автоцивілку онлайн ᐈ Автострахування від AUTO INS</title>
   <!-- <script>
