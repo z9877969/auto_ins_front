@@ -11,6 +11,7 @@ import {
   MenuContainer,
 } from './BurgerMenuStyled';
 import { BoxIconHS, LogoBoxS, LogoTextHS } from '../Header/HeaderStyled';
+import { headerNavOptions } from '../Header/headerNavOptions';
 
 const BurgerMenu = () => {
   const [open, setOpen] = useState(false);
@@ -29,8 +30,8 @@ const BurgerMenu = () => {
     []
   );
 
-  const onNavClick = (event) => {
-    navigate('/', { state: { id: event.target.textContent.toLowerCase() } });
+  const onNavClick = (id) => () => {
+    navigate('/', { state: { id } });
     setOpen(false);
   };
   return (
@@ -69,22 +70,14 @@ const BurgerMenu = () => {
 
           <Box className="menuBodyWrapper">
             <BodyMenu>
-              {['Переваги', 'Партнери', 'Питання-відповіді'].map(
-                (text, index) => {
-                  return (
-                    <Fragment key={text + index}>
-                      <ListItemButton
-                        key={text + index}
-                        onClick={onNavClick}
-                        sx={{ p: '0' }}
-                      >
-                        <ListItemText primary={text} sx={{ m: 0 }} />
-                      </ListItemButton>
-                      <DividerStyled />
-                    </Fragment>
-                  );
-                }
-              )}
+              {headerNavOptions.map(({ uniqueName, title, to }) => (
+                <Fragment key={uniqueName}>
+                  <ListItemButton onClick={onNavClick(to)} sx={{ p: '0' }}>
+                    <ListItemText primary={title} sx={{ m: 0 }} />
+                  </ListItemButton>
+                  <DividerStyled />
+                </Fragment>
+              ))}
             </BodyMenu>
             <BurgerSocialList linkOnClick={toggleDrawer(false)} />
           </Box>

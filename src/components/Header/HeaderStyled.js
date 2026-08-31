@@ -97,14 +97,16 @@ export const LogoTextHS = styled(Typography)(({ theme }) => ({
 }));
 
 export const UlListHS = styled(List)`
-  width: 370px;
+  width: auto;
   padding: 0;
   margin: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
   &.socialIcons {
     width: 184px;
+    gap: 0;
   }
 `;
 

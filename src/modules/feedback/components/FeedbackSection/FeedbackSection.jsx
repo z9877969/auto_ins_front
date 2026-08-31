@@ -49,7 +49,7 @@ const FeedbackSection = () => {
   if (!feedbacks.length) return null;
 
   return (
-    <S.Section>
+    <S.Section id="відгуки">
       <ContainerSection>
         <S.Header>
           <S.HeaderLeft>

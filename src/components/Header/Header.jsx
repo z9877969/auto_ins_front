@@ -18,6 +18,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { socialMediaDict } from '../../assets/utils/socialMedia';
 import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
+import { headerNavOptions } from './headerNavOptions';
 
 const BurgerMenu = loadComponentWithRetry(() =>
   import('../BurgerMenu/BurgerMenu')
@@ -44,48 +45,22 @@ const Header = () => {
           {isLargeScreen ? (
             <>
               <UlListHS>
-                <LiItemHS disablePadding={true}>
-                  <ScrollLink
-                    to="переваги"
-                    smooth={true}
-                    duration={700}
-                    style={{ cursor: 'pointer' }}
-                    activeClass="active"
-                    onClick={() => handleScrollToSection('переваги')}
-                  >
-                    <ChapterSpanHS className="chapterSpan">
-                      Переваги
-                    </ChapterSpanHS>
-                  </ScrollLink>
-                </LiItemHS>
-                <LiItemHS disablePadding={true}>
-                  <ScrollLink
-                    to="партнери"
-                    smooth={true}
-                    duration={700}
-                    style={{ cursor: 'pointer' }}
-                    activeClass="active"
-                    onClick={() => handleScrollToSection('партнери')}
-                  >
-                    <ChapterSpanHS className="chapterSpan">
-                      Партнери
-                    </ChapterSpanHS>
-                  </ScrollLink>
-                </LiItemHS>
-                <LiItemHS disablePadding={true}>
-                  <ScrollLink
-                    to="питання-відповіді"
-                    smooth={true}
-                    duration={700}
-                    style={{ cursor: 'pointer' }}
-                    activeClass="active"
-                    onClick={() => handleScrollToSection('питання-відповіді')}
-                  >
-                    <ChapterSpanHS className="chapterSpan">
-                      Питання-відповіді
-                    </ChapterSpanHS>
-                  </ScrollLink>
-                </LiItemHS>
+                {headerNavOptions.map(({ uniqueName, title, to }) => (
+                  <LiItemHS key={uniqueName} disablePadding={true}>
+                    <ScrollLink
+                      to={to}
+                      smooth={true}
+                      duration={700}
+                      style={{ cursor: 'pointer' }}
+                      activeClass="active"
+                      onClick={() => handleScrollToSection(to)}
+                    >
+                      <ChapterSpanHS className="chapterSpan">
+                        {title}
+                      </ChapterSpanHS>
+                    </ScrollLink>
+                  </LiItemHS>
+                ))}
               </UlListHS>
               <UlListHS className="socialIcons">
                 <LiItemHS disablePadding={true}>
