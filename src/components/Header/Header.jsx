@@ -18,6 +18,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { socialMediaDict } from '../../assets/utils/socialMedia';
 import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
+import Loader from 'components/Loader';
 
 const BurgerMenu = loadComponentWithRetry(() =>
   import('../BurgerMenu/BurgerMenu')
@@ -139,7 +140,7 @@ const Header = () => {
               </UlListHS>
             </>
           ) : (
-            <Suspense>
+            <Suspense fallback={<Loader size={24} minHeight="32px" />}>
               <BurgerMenu sx={{ width: '32px' }} />
             </Suspense>
           )}

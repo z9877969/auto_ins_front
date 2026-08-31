@@ -9,6 +9,7 @@ import AlertMUI from '../components/Alert/AlertMUI';
 import Hero from '../components/Hero/Hero';
 import { useScrollToTop } from 'hooks/useScrollToTop';
 import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
+import Loader from 'components/Loader';
 
 const CreatePolicyVideoSection = loadComponentWithRetry(
   () =>
@@ -81,7 +82,7 @@ const HomePage = () => {
       <main style={{ height: '100%' }}>
         <AlertMUI type="info" message="Будь ласка, заповніть поля" />
         <Hero />
-        <Suspense>
+        <Suspense fallback={<Loader size={120} minHeight="300px" />}>
           <MemoizedCreatePolicyVideoSection />
           <MemoizedAdvatagesSection />
           <MemoizedFeedbackSection />

@@ -2,13 +2,13 @@ import { BallTriangle } from 'react-loader-spinner';
 // import { SpriteSVG } from '../../images/SpriteSVG';
 import { LoaderBox } from './LoaderStyled';
 
-const Loader = () => {
+const Loader = ({ size = 200, minHeight = '100vh' }) => {
   return (
-    <LoaderBox>
+    <LoaderBox sx={{ minHeight }}>
       {/* <SpriteSVG name={"icon-logo"} /> */}
       <BallTriangle
-        height={200}
-        width={200}
+        height={size}
+        width={size}
         radius={5.1}
         color="#1547F8"
         ariaLabel="ball-triangle-loading"
