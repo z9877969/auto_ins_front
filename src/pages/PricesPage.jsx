@@ -64,12 +64,12 @@ const PricesPage = () => {
         try {
           if (location.state.type === ORDER_TYPE.BY_PARAMS) {
             await osagoByParams(location.state.params).unwrap();
-            return;
           }
           if (location.state.type === ORDER_TYPE.BY_LICENSE_PLATE) {
             await osagoByDn(location.state.params).unwrap();
-            return;
           }
+          setIsModalErrorOpen(false);
+          return;
         } catch (error) {
           const isRegistrationError = error.message
             .toLowerCase()
