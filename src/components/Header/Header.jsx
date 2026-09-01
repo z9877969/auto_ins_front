@@ -1,5 +1,4 @@
 import { Suspense } from 'react';
-import { Link as ScrollLink } from 'react-scroll';
 import { useTheme } from '@mui/material';
 import { useMediaQuery } from '@mui/material';
 import { SpriteSVG } from '../../images/SpriteSVG';
@@ -12,6 +11,7 @@ import {
   LinkS,
   LogoBoxS,
   LogoTextHS,
+  NavButtonHS,
   NavLinkHS,
   UlListHS,
 } from './HeaderStyled';
@@ -66,18 +66,13 @@ const Header = () => {
                         </ChapterSpanHS>
                       </NavLinkHS>
                     ) : (
-                      <ScrollLink
-                        to={item.to}
-                        smooth={true}
-                        duration={700}
-                        style={{ cursor: 'pointer' }}
-                        activeClass="active"
+                      <NavButtonHS
                         onClick={() => handleScrollToSection(item.to)}
                       >
                         <ChapterSpanHS className="chapterSpan">
                           {item.title}
                         </ChapterSpanHS>
-                      </ScrollLink>
+                      </NavButtonHS>
                     )}
                   </LiItemHS>
                 ))}

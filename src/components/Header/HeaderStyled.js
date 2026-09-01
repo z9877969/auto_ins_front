@@ -206,3 +206,8 @@ export const MenuItemHS = styled(MenuItem)(({ theme }) => ({
 export const NavLinkHS = styled(Link)({
   textDecoration: 'none',
 });
+
+export const NavButtonHS = styled(ButtonBase)({
+  padding: 0,
+  textAlign: 'left',
+});

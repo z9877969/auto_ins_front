@@ -1,12 +1,11 @@
-import { Link as ReactScrollLink } from 'react-scroll';
 import * as S from './ScrollLink.styled';
 
-const ScrollLink = ({ to, smooth, title, duration }) => (
-  <ReactScrollLink to={to} smooth={smooth} duration={duration}>
-    <S.ChapterSpan className="chapterSpan" component="span">
-      {title}
-    </S.ChapterSpan>
-  </ReactScrollLink>
+// Скрол виконує onClick на елементі списку (navigate -> state.id ->
+// scrollToElementWhenReady у HomePage), тож обгортка react-scroll була зайвою.
+const ScrollLink = ({ title }) => (
+  <S.ChapterSpan className="chapterSpan" component="span">
+    {title}
+  </S.ChapterSpan>
 );
 
 export default ScrollLink;
