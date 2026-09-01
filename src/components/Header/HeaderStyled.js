@@ -5,8 +5,6 @@ import {
   Link,
   List,
   ListItem,
-  Menu,
-  MenuItem,
   Typography,
   styled,
 } from '@mui/material';
@@ -174,34 +172,6 @@ export const DropdownButtonHS = styled(ButtonBase)(({ theme }) => ({
   },
 }));
 
-export const MenuHS = styled(Menu)(({ theme }) => ({
-  '& .MuiPaper-root': {
-    marginTop: '8px',
-    backgroundColor: theme.palette.primary.main,
-    backgroundImage: 'none',
-    border: `1px solid ${theme.palette.primary.secondaryWhite}`,
-    borderRadius: '10px',
-    maxWidth: '360px',
-  },
-  '& .MuiList-root': {
-    padding: '8px 0',
-  },
-}));
-
-export const MenuItemHS = styled(MenuItem)(({ theme }) => ({
-  fontFamily: 'Open Sans, sans-serif',
-  fontSize: '16px',
-  fontWeight: 600,
-  lineHeight: 1.5,
-  color: theme.palette.primary.white,
-  whiteSpace: 'normal',
-  padding: '10px 24px',
-  transition: 'color 250ms linear',
-  '&:hover': {
-    color: theme.palette.primary.blue,
-    backgroundColor: 'transparent',
-  },
-}));
 
 export const NavLinkHS = styled(Link)({
   textDecoration: 'none',

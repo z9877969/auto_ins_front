@@ -1,12 +1,22 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { DropdownButtonHS, MenuHS, MenuItemHS } from './HeaderStyled';
+import { loadComponentWithRetry } from 'helpers/loadComponentWithRetry';
+import { DropdownButtonHS } from './HeaderStyled';
+
+const HeaderDropdownMenu = loadComponentWithRetry(() =>
+  import('./HeaderDropdownMenu')
+);
 
 const HeaderDropdown = ({ id, title, items }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  // Чанк меню підвантажуємо наперед при наведенні, щоб перший клік не чекав.
+  const [isMenuLoaded, setIsMenuLoaded] = useState(false);
   const isOpen = Boolean(anchorEl);
 
-  const handleOpen = (event) => setAnchorEl(event.currentTarget);
+  const handleOpen = (event) => {
+    setIsMenuLoaded(true);
+    setAnchorEl(event.currentTarget);
+  };
   const handleClose = () => setAnchorEl(null);
 
   return (
@@ -14,6 +24,8 @@ const HeaderDropdown = ({ id, title, items }) => {
       <DropdownButtonHS
         className={isOpen ? 'open' : ''}
         onClick={handleOpen}
+        onPointerEnter={() => setIsMenuLoaded(true)}
+        onFocus={() => setIsMenuLoaded(true)}
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-controls={isOpen ? id : undefined}
@@ -21,27 +33,17 @@ const HeaderDropdown = ({ id, title, items }) => {
         {title}
         <ExpandMoreIcon />
       </DropdownButtonHS>
-      <MenuHS
-        id={id}
-        anchorEl={anchorEl}
-        open={isOpen}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-      >
-        {items.map(({ uniqueName, title: itemTitle, href, target, rel }) => (
-          <MenuItemHS
-            key={uniqueName}
-            component="a"
-            href={href}
-            target={target}
-            rel={rel}
-            onClick={handleClose}
-          >
-            {itemTitle}
-          </MenuItemHS>
-        ))}
-      </MenuHS>
+      {isMenuLoaded && (
+        <Suspense fallback={null}>
+          <HeaderDropdownMenu
+            id={id}
+            anchorEl={anchorEl}
+            open={isOpen}
+            onClose={handleClose}
+            items={items}
+          />
+        </Suspense>
+      )}
     </>
   );
 };
