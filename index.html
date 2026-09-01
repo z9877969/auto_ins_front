@@ -35,11 +35,11 @@
   <!-- LCP: зображення героя. Воно рендериться з JS, тож без preload фетч
        стартує лише після виконання бандла. media розводить брейкпоінти так
        само, як <picture> у HeroPicture. -->
-  <link rel="preload" as="image" type="image/webp" media="(max-width: 743px)"
+  <link rel="preload" as="image" type="image/webp" media="(max-width: 743px)" fetchpriority="high"
     imagesrcset="/src/images/heroCar/car_mobile.webp 1x, /src/images/heroCar/car_mobile@2x.webp 2x, /src/images/heroCar/car_mobile@3x.webp 3x" />
-  <link rel="preload" as="image" type="image/webp" media="(min-width: 744px) and (max-width: 1399px)"
+  <link rel="preload" as="image" type="image/webp" media="(min-width: 744px) and (max-width: 1399px)" fetchpriority="high"
     imagesrcset="/src/images/heroCar/car_tablet.webp 1x, /src/images/heroCar/car_tablet@2x.webp 2x, /src/images/heroCar/car_tablet@3x.webp 3x" />
-  <link rel="preload" as="image" type="image/webp" media="(min-width: 1400px)"
+  <link rel="preload" as="image" type="image/webp" media="(min-width: 1400px)" fetchpriority="high"
     imagesrcset="/src/images/heroCar/car_desktop.webp 1x, /src/images/heroCar/car_desktop@2x.webp 2x, /src/images/heroCar/car_desktop@3x.webp 3x" />
 
   <!-- <title>AUTO-INS | Автоцивілка без зайвих рухів</title> -->
@@ -137,6 +137,13 @@
         align-items: stretch;
         min-height: 100vh;
       "></div>
+  <!-- Прередерена розмітка першого екрана (якщо є — постбілд-скрипт
+       scripts/prerender/index.mjs вкладає її в #root) валідна лише на "/".
+       netlify.toml віддає той самий index.html на всі маршрути, тож без
+       цього шелл героя блимнув би і на /form, /prices, /order/*. У dev-режимі
+       та до першого build #__ssg відсутній — optional chaining робить рядок
+       безпечним і там, і там. -->
+  <script>if(location.pathname!=='/')document.getElementById('__ssg')?.remove()</script>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 

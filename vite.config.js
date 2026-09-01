@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import fs from 'fs';
+import path from 'path';
 
 import dotenv from 'dotenv';
 
@@ -30,6 +32,27 @@ const rewriteHtmlAssetUrls = () => ({
   },
 });
 
+// Постбілд-прередер (scripts/prerender/index.mjs) рендерить HeroTabs/
+// HeroPicture окремим SSR-білдом і мусить підставити ті самі хешовані
+// імена картинок, що й основний клієнтський бандл. Дублювати логіку
+// вище (name -> fileName) сенсу нема — просто скидаємо ту саму мапу
+// у dist/.asset-map.json одразу після запису бандла на диск.
+const emitAssetMap = () => ({
+  name: 'emit-asset-map',
+  writeBundle(options, bundle) {
+    const map = {};
+    for (const output of Object.values(bundle)) {
+      if (output.type === 'asset' && output.name) {
+        map[output.name] = output.fileName;
+      }
+    }
+    fs.writeFileSync(
+      path.join(options.dir, '.asset-map.json'),
+      JSON.stringify(map)
+    );
+  },
+});
+
 // https://vitejs.dev/config/
 export default defineConfig(() => {
   return {
@@ -39,6 +62,7 @@ export default defineConfig(() => {
     },
     plugins: [
       rewriteHtmlAssetUrls(),
+      emitAssetMap(),
       react({
         jsxImportSource: '@emotion/react',
         babel: {

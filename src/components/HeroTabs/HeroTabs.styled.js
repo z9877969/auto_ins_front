@@ -62,6 +62,16 @@ export const TabsContainer = styled('div')(({ theme }) => ({
   },
 }));
 
+// Раніше перенос рядка контролювався через useMediaQuery в JS (isMobile &&
+// <br/>) — це не працює на сервері (renderToStaticMarkup завжди віддає
+// false) і додає зайвий ре-рендер на клієнті. CSS-медіа-запит прибирає
+// обидві проблеми: сервер і клієнт малюють однаковий DOM.
+export const MobileBreakStyled = styled('br')({
+  '@media (min-width: 768px)': {
+    display: 'none',
+  },
+});
+
 export const TitleStaled = styled(Typography)(({ theme }) => ({
   textAlign: 'center',
   marginBottom: '24px',

@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "node ../autoins_back/scripts/updateSchema.js --back-url=https://api.auto-ins.com.ua/api --index-path=./dist/index.html || true",
+    "postbuild": "node scripts/prerender/index.mjs && (node ../autoins_back/scripts/updateSchema.js --back-url=https://api.auto-ins.com.ua/api --index-path=./dist/index.html || true)",
     "lint": "eslint ./src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint ./src --ext js,jsx --report-unused-disable-directives --max-warnings 0 --fix",
     "preview": "vite preview",
@@ -46,6 +46,8 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/server": "^11.11.0",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^4.7.0",
