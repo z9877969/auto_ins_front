@@ -1,0 +1,72 @@
+/* Ці стилі свідомо лежать у статичному CSS, а не в MuiCssBaseline.styleOverrides:
+   звідти вони інжектяться JavaScript'ом і застосовуються лише після виконання
+   бандла. Vite лінкує цей файл у <head> як окремий stylesheet, тож шрифти й
+   базовий вигляд сторінки доступні браузеру ще до старту React. */
+
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('OpenSan-Regular'),
+    url('./fonts/open-sans-v36-cyrillic_latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/open-sans-v36-cyrillic_latin-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./fonts/open-sans-v36-cyrillic_latin-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: url('./fonts/open-sans-v36-cyrillic_latin-800.woff2') format('woff2');
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  background-color: #030303;
+  color: #fefeff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5em;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}

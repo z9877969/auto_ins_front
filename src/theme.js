@@ -1,8 +1,4 @@
 import { createTheme } from '@mui/material/styles';
-import OpenSansRegular from './fonts/open-sans-v36-cyrillic_latin-regular.woff2';
-import OpenSansSemiBold from './fonts/open-sans-v36-cyrillic_latin-600.woff2';
-import OpenSansBold from './fonts/open-sans-v36-cyrillic_latin-700.woff2';
-import OpenSansExtraBold from './fonts/open-sans-v36-cyrillic_latin-800.woff2';
 export const theme = createTheme({
   palette: {
     primary: {
@@ -70,47 +66,10 @@ export const theme = createTheme({
       },
     },
     MuiCssBaseline: {
-      styleOverrides: `@font-face {
-             font-display: swap;
-             font-family: 'Open Sans';
-             font-style: normal;
-             font-weight: 400;
-             src: local('OpenSan-Regular'), url(${OpenSansRegular}) format('woff2');
-         }
-         @font-face {
-             font-display: swap;
-             font-family: 'Open Sans';
-             font-style: normal;
-             font-weight: 600;
-             src: url(${OpenSansSemiBold}) format('woff2');
-         }
-         @font-face {
-            font-display: swap;  
-            font-family: 'Open Sans';
-            font-style: normal;
-            font-weight: 700;
-            src: url(${OpenSansBold}) format('woff2');   
-        }
-
-        @font-face {
-            font-display: swap;   
-            font-family: 'Open Sans';
-            font-style: normal;
-            font-weight: 800;
-            src: url(${OpenSansExtraBold}) format('woff2');   
-        }
-         
-         html {font-size: 16px}
-         body {background-color: #030303; font-family: 'Open Sans', sans-serif; font-weight: 400; color: #FEFEFF; font-size: 1rem; line-height: 1.5em; }
-         img {display: block; max-width: 100%; height: auto}
-         ul {margin: 0; padding: 0}
-         h1 {margin: 0; padding: 0}
-         h2 {margin: 0; padding: 0}
-         h3 {margin: 0; padding: 0}
-         h4 {margin: 0; padding: 0}
-         h5 {margin: 0; padding: 0}
-         h6 {margin: 0; padding: 0}
-         p {margin: 0; padding: 0}`,
+      // CssBaseline у рантаймі сам виставляє body { color; background-color }
+      // з палітри, тож ці два значення мусять лишитись тут, щоб перебити його.
+      // Решта базових стилів і всі @font-face — у src/index.css.
+      styleOverrides: 'body {background-color: #030303; color: #FEFEFF}',
     },
   },
 });
