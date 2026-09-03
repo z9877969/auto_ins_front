@@ -58,7 +58,7 @@
     });
   </script> -->
   <!-- Meta Pixel Code -->
-  <script>
+  <script type="text/plain" data-gated>
     !(function (f, b, e, v, n, t, s) {
       if (f.fbq) return;
       n = f.fbq = function () {
@@ -90,7 +90,7 @@
   <!-- End Meta Pixel Code -->
 
   <!-- Google Tag Manager -->
-  <script>
+  <script type="text/plain" data-gated>
     (function (w, d, s, l, i) {
       w[l] = w[l] || [];
       w[l].push({
@@ -106,6 +106,43 @@
     })(window, document, "script", "dataLayer", "GTM-MW3ZL97W");
   </script>
   <!-- End Google Tag Manager -->
+
+  <!-- Обидва снипети вище позначені type="text/plain" data-gated, тож браузер
+       їх не виконує. Цей завантажувач запускає їх на першій взаємодії
+       користувача. Причина: у трасі проду довгі задачі GTM тримали головний
+       потік і відсували монтування React — LCP-елемент малювався на 11-й
+       секунді, хоча весь JS приходив за 450 мс. Ціна: відвідувачі, які пішли
+       до першої взаємодії, не потрапляють в аналітику.
+
+       СТАТУС: ТЕСТОВЕ РІШЕННЯ, не остаточне. Взяте як найдешевший спосіб
+       прибрати сторонні скрипти з головного потоку; те саме без втрати даних
+       дають server-side GTM або Partytown, але вони коштують днів і грошей.
+       Якщо втрата статистики виявиться неприйнятною — знімається повністю:
+       прибрати цей <script> і атрибути type="text/plain" data-gated з двох
+       снипетів вище, більше нічого не зачеплено. Деталі, наслідки й
+       альтернативи — .claude/performance/plan-v2.md, розділ 8.5. -->
+  <script>
+    (function () {
+      var started = false;
+
+      function start() {
+        if (started) return;
+        started = true;
+        var gated = document.querySelectorAll("script[data-gated]");
+        for (var i = 0; i < gated.length; i++) {
+          var s = document.createElement("script");
+          s.text = gated[i].textContent;
+          document.head.appendChild(s);
+        }
+      }
+
+      ["pointerdown", "keydown", "touchstart", "scroll", "wheel"].forEach(
+        function (evt) {
+          window.addEventListener(evt, start, { once: true, passive: true });
+        }
+      );
+    })();
+  </script>
 
   <!-- <script type="application/ld+json">
   {
