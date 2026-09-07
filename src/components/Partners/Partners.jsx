@@ -30,7 +30,7 @@ const Partners = () => {
               <SinglePartner key={partner?.imgSrc} partner={partner} />
             ))}
 
-            <Collapse in={showAdditionalPartners} timeout={500}>
+            <Collapse in={showAdditionalPartners} timeout={500} unmountOnExit>
               <UlPartnersListS className="additionalPartners">
                 {additionalPartners.map((partner) => (
                   <SinglePartner key={partner?.imgSrc} partner={partner} />

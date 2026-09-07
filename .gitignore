@@ -40,3 +40,6 @@ _backup/
 
 # local server
 server/
+
+# postbuild prerender: тимчасовий SSR-білд entry.jsx, прибирається скриптом
+.tmp-prerender-*

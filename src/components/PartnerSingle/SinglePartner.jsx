@@ -8,7 +8,7 @@ import {
 } from './SinglePartnerStyled';
 
 const SinglePartner = ({ partner }) => {
-  const { id, imgSrc, imgAlt, rating } = partner;
+  const { id, imgSrc, imgAlt, imgWidth, imgHeight, rating } = partner;
   return (
     <>
       <SinglePartnerContainerS id={id}>
@@ -18,6 +18,10 @@ const SinglePartner = ({ partner }) => {
               src={imgSrc}
               alt={imgAlt}
               id={id}
+              width={imgWidth}
+              height={imgHeight}
+              loading="lazy"
+              decoding="async"
               style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             />
           </LogoBoxPartnerS>
@@ -36,6 +40,8 @@ SinglePartner.propTypes = {
     id: PropTypes.number.isRequired,
     imgSrc: PropTypes.string.isRequired,
     imgAlt: PropTypes.string.isRequired,
+    imgWidth: PropTypes.number,
+    imgHeight: PropTypes.number,
     rating: PropTypes.number.isRequired,    
   }).isRequired,
 };

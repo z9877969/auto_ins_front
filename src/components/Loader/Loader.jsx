@@ -1,21 +1,22 @@
-import { BallTriangle } from 'react-loader-spinner';
-// import { SpriteSVG } from '../../images/SpriteSVG';
-import { LoaderBox } from './LoaderStyled';
+import { LoaderBox, SpinnerSvg } from './LoaderStyled';
 
 const Loader = () => {
   return (
     <LoaderBox>
-      {/* <SpriteSVG name={"icon-logo"} /> */}
-      <BallTriangle
-        height={200}
+      <SpinnerSvg
         width={200}
-        radius={5.1}
-        color="#1547F8"
-        ariaLabel="ball-triangle-loading"
-        wrapperClass={{}}
-        wrapperStyle=""
-        visible={true}
-      />
+        height={200}
+        viewBox="0 0 57 57"
+        stroke="#1547F8"
+        fill="none"
+        strokeWidth="2"
+        role="status"
+        aria-label="Завантаження"
+      >
+        <circle cx="5" cy="50" r="5.1" />
+        <circle cx="27" cy="5" r="5.1" />
+        <circle cx="49" cy="50" r="5.1" />
+      </SpinnerSvg>
     </LoaderBox>
   );
 };

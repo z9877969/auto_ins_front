@@ -1,101 +1,130 @@
 [
-    {        
-        "id": 1,
-        "imgSrc": "/companies/1-arx.png",        
-        "imgAlt": "arx logo",
-        "rating": 5        
-    },
-    {        
-        "id": 17,
-        "imgSrc": "/companies/17-arsenal.jpg",        
-        "imgAlt": "арсенал logo",
-        "rating": 5        
-    },
-    {        
-        "id": 2,
-        "imgSrc": "/companies/2-інго.png",        
-        "imgAlt": "інго logo",
-        "rating": 5        
-    },
-    {        
-        "id": 3,
-        "imgSrc": "/companies/3-usg.png",        
-        "imgAlt": "usg logo",
-        "rating": 5        
-    },
-    {        
-        "id": 4,
-        "imgSrc": "/companies/4-pzu.png",        
-        "imgAlt": "pzu logo",
-        "rating": 5        
-    },
-    {        
-        "id": 5,
-        "imgSrc": "/companies/5-оранта.png",        
-        "imgAlt": "оранта logo",
-        "rating": 5        
-    },
-    {        
-        "id": 6,
-        "imgSrc": "/companies/6-uniqa.png",        
-        "imgAlt": "uniqa logo",
-        "rating": 5        
-    },
-    {        
-        "id": 7,
-        "imgSrc": "/companies/7-княжа.png",        
-        "imgAlt": "княжа logo",
-        "rating": 5        
-    },
-    {        
-        "id": 8,
-        "imgSrc": "/companies/8-вусо.png",        
-        "imgAlt": "вусо logo",
-        "rating": 5       
-    },
-    {        
-        "id": 9,
-        "imgSrc": "/companies/9-універсальна.png",        
-        "imgAlt": "універсальна logo",
-        "rating": 5        
-    },
-    {        
-        "id": 10,
-        "imgSrc": "/companies/10-експрес-страхування.png",        
-        "imgAlt": "експрес-страхування logo",
-        "rating": 5        
-    },
-    {        
-        "id": 11,
-        "imgSrc": "/companies/11-європейський-страховий-альянс.png",        
-        "imgAlt": "європейський-страховий-альянс logo",
-        "rating": 5        
-    },
-    {        
-        "id": 12,
-        "imgSrc": "/companies/12-утск.png",        
-        "imgAlt": "утск logo",
-        "rating": 5        
-    },
-    {        
-        "id": 14,
-        "imgSrc": "/companies/14-еталон.png",        
-        "imgAlt": "еталон logo",
-        "rating": 4      
-    },
-    {        
-        "id": 16,
-        "imgSrc": "/companies/інтер-поліс.png",        
-        "imgAlt": "інтер-поліс logo",
-        "rating": 4        
-    },
-    {        
-        "id": 18,
-        "imgSrc": "/companies/18-evroins.webp",        
-        "imgAlt": "евроінс logo",
-        "rating": 4
-    }    
+  {
+    "id": 1,
+    "imgSrc": "/companies/1-arx.webp",
+    "imgAlt": "arx logo",
+    "rating": 5,
+    "imgWidth": 500,
+    "imgHeight": 290
+  },
+  {
+    "id": 17,
+    "imgSrc": "/companies/17-arsenal.webp",
+    "imgAlt": "арсенал logo",
+    "rating": 5,
+    "imgWidth": 1049,
+    "imgHeight": 240
+  },
+  {
+    "id": 2,
+    "imgSrc": "/companies/2-інго.webp",
+    "imgAlt": "інго logo",
+    "rating": 5,
+    "imgWidth": 1900,
+    "imgHeight": 405
+  },
+  {
+    "id": 3,
+    "imgSrc": "/companies/3-usg.png",
+    "imgAlt": "usg logo",
+    "rating": 5,
+    "imgWidth": 2501,
+    "imgHeight": 1050
+  },
+  {
+    "id": 4,
+    "imgSrc": "/companies/4-pzu.webp",
+    "imgAlt": "pzu logo",
+    "rating": 5,
+    "imgWidth": 700,
+    "imgHeight": 699
+  },
+  {
+    "id": 5,
+    "imgSrc": "/companies/5-оранта.webp",
+    "imgAlt": "оранта logo",
+    "rating": 5,
+    "imgWidth": 597,
+    "imgHeight": 184
+  },
+  {
+    "id": 6,
+    "imgSrc": "/companies/6-uniqa.png",
+    "imgAlt": "uniqa logo",
+    "rating": 5,
+    "imgWidth": 600,
+    "imgHeight": 108
+  },
+  {
+    "id": 7,
+    "imgSrc": "/companies/7-княжа.webp",
+    "imgAlt": "княжа logo",
+    "rating": 5,
+    "imgWidth": 480,
+    "imgHeight": 176
+  },
+  {
+    "id": 8,
+    "imgSrc": "/companies/8-вусо.png",
+    "imgAlt": "вусо logo",
+    "rating": 5,
+    "imgWidth": 800,
+    "imgHeight": 250
+  },
+  {
+    "id": 9,
+    "imgSrc": "/companies/9-універсальна.webp",
+    "imgAlt": "універсальна logo",
+    "rating": 5,
+    "imgWidth": 976,
+    "imgHeight": 255
+  },
+  {
+    "id": 10,
+    "imgSrc": "/companies/10-експрес-страхування.webp",
+    "imgAlt": "експрес-страхування logo",
+    "rating": 5,
+    "imgWidth": 1891,
+    "imgHeight": 966
+  },
+  {
+    "id": 11,
+    "imgSrc": "/companies/11-європейський-страховий-альянс.webp",
+    "imgAlt": "європейський-страховий-альянс logo",
+    "rating": 5,
+    "imgWidth": 800,
+    "imgHeight": 188
+  },
+  {
+    "id": 12,
+    "imgSrc": "/companies/12-утск.webp",
+    "imgAlt": "утск logo",
+    "rating": 5,
+    "imgWidth": 1062,
+    "imgHeight": 276
+  },
+  {
+    "id": 14,
+    "imgSrc": "/companies/14-еталон.webp",
+    "imgAlt": "еталон logo",
+    "rating": 4,
+    "imgWidth": 300,
+    "imgHeight": 96
+  },
+  {
+    "id": 16,
+    "imgSrc": "/companies/інтер-поліс.webp",
+    "imgAlt": "інтер-поліс logo",
+    "rating": 4,
+    "imgWidth": 250,
+    "imgHeight": 130
+  },
+  {
+    "id": 18,
+    "imgSrc": "/companies/18-evroins.webp",
+    "imgAlt": "евроінс logo",
+    "rating": 4,
+    "imgWidth": 720,
+    "imgHeight": 193
+  }
 ]
-
-
-
