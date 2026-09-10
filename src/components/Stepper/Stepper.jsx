@@ -100,7 +100,7 @@ const Stepper = ({ backLinkRef, isLoading }) => {
   const userParams = useSelector(getSubmitObject);
   const registrationPlaceData = useSelector(getRegistrationPlaceData);
   const [insurObject] = useSelector(getAutoByNumber);
-  const engineType = useSelector(getEngineType);
+  const engineTypeByParams = useSelector(getEngineType);
   const hasVclOrder = useSelector(getHasVclOrder);
   const driverAge = useSelector(selectDriverAge);
   const contractPeriod = useSelector(selectContractPeriod);
@@ -109,6 +109,8 @@ const Stepper = ({ backLinkRef, isLoading }) => {
 
   const [activeStep, setActiveStep] = useState(0);
   const [isDataConfirm, setIsDataConfirm] = useState(false);
+
+  const engineType = insurObject.vehicleType || engineTypeByParams;
 
   // =======================Formik======================================
   const contactsFormik = useFormik({
