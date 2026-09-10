@@ -1,4 +1,7 @@
 import * as Yup from 'yup';
+import { isDate, parse } from 'date-fns';
+import { insurerDocsDict } from 'assets/utils/insurerDocsDict';
+import { validateIsTrailerType } from './validateIsTrailerType';
 import {
   DNUMBER_REGEX,
   NAME_REGEX,
@@ -8,8 +11,6 @@ import {
   DATE_MESSAGE_ERRORS,
   VEHICLES_GROUPS,
 } from '../constants';
-import { isDate, parse } from 'date-fns';
-import { insurerDocsDict } from 'assets/utils/insurerDocsDict';
 
 export const validationName = () =>
   Yup.string()
@@ -124,6 +125,7 @@ export const carDataFormValidationSchema = ({
   engineType,
   hasVclOrder,
 } = {}) => {
+  const isTrailerType = validateIsTrailerType(engineType);
   const schemaOptions = {
     outsideUkraine: Yup.boolean(),
     stateNumber: Yup.string()
@@ -154,42 +156,50 @@ export const carDataFormValidationSchema = ({
     bodyNumber: Yup.string()
       .required(REQUIRED_FIELD)
       .matches(VIN_REGEX, 'VIN повинен містити до 17 літер'),
-    grossWeight: Yup.number()
-      .integer('Повинно бути ціле число')
-      .required(REQUIRED_FIELD),
-    curbWeight: Yup.number()
-      .integer('Повинно бути ціле число')
-      .required(REQUIRED_FIELD),
-    seatingCapacity: Yup.number()
-      .integer('Повинно бути ціле число')
-      .required(REQUIRED_FIELD),
-    electricMotorPower:
-      engineType === VEHICLES_GROUPS.B.B5
-        ? Yup.number().required(REQUIRED_FIELD)
-        : Yup.string(),
+    ...(!isTrailerType && {
+      grossWeight: Yup.number()
+        .integer('Повинно бути ціле число')
+        .required(REQUIRED_FIELD),
+    }),
+    ...(!isTrailerType && {
+      curbWeight: Yup.number()
+        .integer('Повинно бути ціле число')
+        .required(REQUIRED_FIELD),
+    }),
+    ...(!isTrailerType && {
+      seatingCapacity: Yup.number()
+        .integer('Повинно бути ціле число')
+        .required(REQUIRED_FIELD),
+    }),
+    ...(!isTrailerType && {
+      electricMotorPower:
+        engineType === VEHICLES_GROUPS.B.B5
+          ? Yup.number().required(REQUIRED_FIELD)
+          : Yup.string(),
+    }),
     mileage: Yup.number()
-      .test(
-        'no-decimal',
-        'Повинно бути цілим числом',
-        (_, ctx) => /^\d+$/.test(String(ctx.originalValue ?? ''))
+      .test('no-decimal', 'Повинно бути цілим числом', (_, ctx) =>
+        /^\d+$/.test(String(ctx.originalValue ?? '')),
       )
       .integer('Повинно бути цілим числом')
       .min(1, 'Повинно бути 1 або більше')
       .max(99999999, 'Значення занадто велике')
       .required(REQUIRED_FIELD),
   };
-  if (isPrivilege && engineType) {
-    schemaOptions.engineVolume = getIsValidEngineType(engineType)
-      .max(
-        2500,
-        // eslint-disable-next-line
-        "Об'єм двигуна для пільговиків не може перевищувати 2500",
-      )
-      .required(REQUIRED_FIELD);
-  } else if (hasVclOrder) {
-    schemaOptions.engineVolume = Yup.number()
-      .min(0, 'Повинно бути 0 або більше')
-      .required(REQUIRED_FIELD);
+  if (!isTrailerType) {
+    if (isPrivilege && engineType) {
+      schemaOptions.engineVolume = getIsValidEngineType(engineType)
+        .max(
+          2500,
+          // eslint-disable-next-line
+          "Об'єм двигуна для пільговиків не може перевищувати 2500",
+        )
+        .required(REQUIRED_FIELD);
+    } else if (hasVclOrder) {
+      schemaOptions.engineVolume = Yup.number()
+        .min(0, 'Повинно бути 0 або більше')
+        .required(REQUIRED_FIELD);
+    }
   }
   return Yup.object().shape(schemaOptions);
 };
